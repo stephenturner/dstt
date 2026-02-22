@@ -8,7 +8,7 @@
 
 <meta name="author" content="Stephen D. Turner">
 
-<title>2&nbsp; Version Control – Data Science Team Training</title>
+<title>1&nbsp; Version Control – Data Science Team Training</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,8 +66,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./ai.html" rel="next">
-<link href="./dashboards.html" rel="prev">
+<link href="./dataorg.html" rel="next">
+<link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -122,7 +122,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dashboards.html">Technical</a></li><li class="breadcrumb-item"><a href="./git.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Version Control</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./git.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Version Control</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -184,20 +184,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dashboards.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Dashboards</span></span></a>
+  <a href="./git.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Version Control</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./git.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Version Control</span></span></a>
+  <a href="./dataorg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Organization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ai.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Coding with AI</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dashboards.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dashboards</span></span></a>
   </div>
 </li>
       </ul>
@@ -213,8 +219,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dataorg.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Organization</span></span></a>
+  <a href="./pm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
   </div>
 </li>
       </ul>
@@ -252,23 +258,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-git-github" id="toc-sec-git-github" class="nav-link active" data-scroll-target="#sec-git-github"><span class="header-section-number">2.1</span> GitHub Setup</a>
+  <li><a href="#sec-git-github" id="toc-sec-git-github" class="nav-link active" data-scroll-target="#sec-git-github"><span class="header-section-number">1.1</span> GitHub Setup</a>
   <ul class="collapse">
-  <li><a href="#creating-a-github-account" id="toc-creating-a-github-account" class="nav-link" data-scroll-target="#creating-a-github-account"><span class="header-section-number">2.1.1</span> Creating a GitHub Account</a></li>
-  <li><a href="#adding-an-ssh-key" id="toc-adding-an-ssh-key" class="nav-link" data-scroll-target="#adding-an-ssh-key"><span class="header-section-number">2.1.2</span> Adding an SSH Key</a></li>
-  <li><a href="#cloning-a-repository-via-ssh" id="toc-cloning-a-repository-via-ssh" class="nav-link" data-scroll-target="#cloning-a-repository-via-ssh"><span class="header-section-number">2.1.3</span> Cloning a Repository via SSH</a></li>
-  <li><a href="#pulling-and-pushing" id="toc-pulling-and-pushing" class="nav-link" data-scroll-target="#pulling-and-pushing"><span class="header-section-number">2.1.4</span> Pulling and Pushing</a></li>
+  <li><a href="#creating-a-github-account" id="toc-creating-a-github-account" class="nav-link" data-scroll-target="#creating-a-github-account"><span class="header-section-number">1.1.1</span> Creating a GitHub Account</a></li>
+  <li><a href="#adding-an-ssh-key" id="toc-adding-an-ssh-key" class="nav-link" data-scroll-target="#adding-an-ssh-key"><span class="header-section-number">1.1.2</span> Adding an SSH Key</a></li>
+  <li><a href="#cloning-a-repository-via-ssh" id="toc-cloning-a-repository-via-ssh" class="nav-link" data-scroll-target="#cloning-a-repository-via-ssh"><span class="header-section-number">1.1.3</span> Cloning a Repository via SSH</a></li>
+  <li><a href="#pulling-and-pushing" id="toc-pulling-and-pushing" class="nav-link" data-scroll-target="#pulling-and-pushing"><span class="header-section-number">1.1.4</span> Pulling and Pushing</a></li>
   </ul></li>
-  <li><a href="#sec-git-branching" id="toc-sec-git-branching" class="nav-link" data-scroll-target="#sec-git-branching"><span class="header-section-number">2.2</span> Branching and Merging</a>
+  <li><a href="#sec-git-branching" id="toc-sec-git-branching" class="nav-link" data-scroll-target="#sec-git-branching"><span class="header-section-number">1.2</span> Branching and Merging</a>
   <ul class="collapse">
-  <li><a href="#internal-organizational-workflow" id="toc-internal-organizational-workflow" class="nav-link" data-scroll-target="#internal-organizational-workflow"><span class="header-section-number">2.2.1</span> Internal Organizational Workflow</a></li>
-  <li><a href="#contributing-to-external-repositories" id="toc-contributing-to-external-repositories" class="nav-link" data-scroll-target="#contributing-to-external-repositories"><span class="header-section-number">2.2.2</span> Contributing to External Repositories</a></li>
+  <li><a href="#internal-organizational-workflow" id="toc-internal-organizational-workflow" class="nav-link" data-scroll-target="#internal-organizational-workflow"><span class="header-section-number">1.2.1</span> Internal Organizational Workflow</a></li>
+  <li><a href="#contributing-to-external-repositories" id="toc-contributing-to-external-repositories" class="nav-link" data-scroll-target="#contributing-to-external-repositories"><span class="header-section-number">1.2.2</span> Contributing to External Repositories</a></li>
   </ul></li>
-  <li><a href="#sec-git-positron" id="toc-sec-git-positron" class="nav-link" data-scroll-target="#sec-git-positron"><span class="header-section-number">2.3</span> Git in Positron</a></li>
-  <li><a href="#sec-git-conflicts" id="toc-sec-git-conflicts" class="nav-link" data-scroll-target="#sec-git-conflicts"><span class="header-section-number">2.4</span> Merge Conflicts</a>
+  <li><a href="#sec-git-positron" id="toc-sec-git-positron" class="nav-link" data-scroll-target="#sec-git-positron"><span class="header-section-number">1.3</span> Git in Positron</a></li>
+  <li><a href="#sec-git-conflicts" id="toc-sec-git-conflicts" class="nav-link" data-scroll-target="#sec-git-conflicts"><span class="header-section-number">1.4</span> Merge Conflicts</a>
   <ul class="collapse">
-  <li><a href="#what-conflict-markers-look-like" id="toc-what-conflict-markers-look-like" class="nav-link" data-scroll-target="#what-conflict-markers-look-like"><span class="header-section-number">2.4.1</span> What conflict markers look like</a></li>
-  <li><a href="#resolving-conflicts" id="toc-resolving-conflicts" class="nav-link" data-scroll-target="#resolving-conflicts"><span class="header-section-number">2.4.2</span> Resolving conflicts</a></li>
+  <li><a href="#what-conflict-markers-look-like" id="toc-what-conflict-markers-look-like" class="nav-link" data-scroll-target="#what-conflict-markers-look-like"><span class="header-section-number">1.4.1</span> What conflict markers look like</a></li>
+  <li><a href="#resolving-conflicts" id="toc-resolving-conflicts" class="nav-link" data-scroll-target="#resolving-conflicts"><span class="header-section-number">1.4.2</span> Resolving conflicts</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -276,9 +282,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dashboards.html">Technical</a></li><li class="breadcrumb-item"><a href="./git.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Version Control</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./git.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Version Control</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-git" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Version Control</span></span></h1>
+<h1 class="title"><span id="sec-git" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Version Control</span></span></h1>
 </div>
 
 
@@ -296,14 +302,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Git is a distributed version control system that tracks changes to files over time, allowing you to review history, revert mistakes, and collaborate without overwriting each other’s work. For data science teams, version control is essential for reproducibility (knowing exactly which code produced which results), collaboration (multiple people working on the same project safely), and auditability (a clear record of what changed and why). GitHub is the most widely used platform for hosting Git repositories and adds features like pull requests, code review, and issue tracking on top of Git’s core capabilities.</p>
-<section id="sec-git-github" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="sec-git-github"><span class="header-section-number">2.1</span> GitHub Setup</h2>
-<section id="creating-a-github-account" class="level3" data-number="2.1.1">
-<h3 data-number="2.1.1" class="anchored" data-anchor-id="creating-a-github-account"><span class="header-section-number">2.1.1</span> Creating a GitHub Account</h3>
+<section id="sec-git-github" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="sec-git-github"><span class="header-section-number">1.1</span> GitHub Setup</h2>
+<section id="creating-a-github-account" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="creating-a-github-account"><span class="header-section-number">1.1.1</span> Creating a GitHub Account</h3>
 <p>Visit <a href="https://github.com">github.com</a> and sign up for a free account. The free tier includes unlimited public and private repositories and is sufficient for most team workflows.</p>
 </section>
-<section id="adding-an-ssh-key" class="level3" data-number="2.1.2">
-<h3 data-number="2.1.2" class="anchored" data-anchor-id="adding-an-ssh-key"><span class="header-section-number">2.1.2</span> Adding an SSH Key</h3>
+<section id="adding-an-ssh-key" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="adding-an-ssh-key"><span class="header-section-number">1.1.2</span> Adding an SSH Key</h3>
 <p>SSH keys let you authenticate with GitHub without entering your username and password on every push or pull. To generate a key:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-t</span> ed25519 <span class="at">-C</span> <span class="st">"your_email@example.com"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Accept the default file location (<code>~/.ssh/id_ed25519</code>) and optionally set a passphrase. Then copy the public key:</p>
@@ -313,14 +319,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-T</span> git@github.com</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You should see a message like <code>Hi username! You've successfully authenticated</code>.</p>
 </section>
-<section id="cloning-a-repository-via-ssh" class="level3" data-number="2.1.3">
-<h3 data-number="2.1.3" class="anchored" data-anchor-id="cloning-a-repository-via-ssh"><span class="header-section-number">2.1.3</span> Cloning a Repository via SSH</h3>
+<section id="cloning-a-repository-via-ssh" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="cloning-a-repository-via-ssh"><span class="header-section-number">1.1.3</span> Cloning a Repository via SSH</h3>
 <p>When cloning a repository, prefer the SSH URL over HTTPS. On any GitHub repository page, click <strong>Code</strong> and select the <strong>SSH</strong> tab to get the URL.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone git@github.com:org/repo.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Using SSH avoids repeated password prompts and works with SSH agent forwarding for server-based workflows.</p>
 </section>
-<section id="pulling-and-pushing" class="level3" data-number="2.1.4">
-<h3 data-number="2.1.4" class="anchored" data-anchor-id="pulling-and-pushing"><span class="header-section-number">2.1.4</span> Pulling and Pushing</h3>
+<section id="pulling-and-pushing" class="level3" data-number="1.1.4">
+<h3 data-number="1.1.4" class="anchored" data-anchor-id="pulling-and-pushing"><span class="header-section-number">1.1.4</span> Pulling and Pushing</h3>
 <p>After cloning, your local repository is linked to the remote (called <code>origin</code> by default). To sync your local branch with the latest changes from the remote:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>After committing changes locally, push them to the remote:</p>
@@ -328,11 +334,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Git tracks the relationship between your local branch and the corresponding remote branch automatically, so these short-form commands will work once the tracking relationship is established.</p>
 </section>
 </section>
-<section id="sec-git-branching" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="sec-git-branching"><span class="header-section-number">2.2</span> Branching and Merging</h2>
+<section id="sec-git-branching" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="sec-git-branching"><span class="header-section-number">1.2</span> Branching and Merging</h2>
 <p>Branches let multiple people work on different features or fixes simultaneously without interfering with each other. The <code>main</code> branch (or <code>master</code> in older repositories) typically represents the stable, production-ready state of the project.</p>
-<section id="internal-organizational-workflow" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="internal-organizational-workflow"><span class="header-section-number">2.2.1</span> Internal Organizational Workflow</h3>
+<section id="internal-organizational-workflow" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="internal-organizational-workflow"><span class="header-section-number">1.2.1</span> Internal Organizational Workflow</h3>
 <p>In most team workflows, the <code>main</code> branch is protected — direct pushes are disabled and changes must go through a pull request (PR) with at least one reviewer. Developers create short-lived branches for each piece of work, then open a PR when ready.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
@@ -411,17 +417,19 @@ Note
 </div>
 </div>
 </section>
-<section id="contributing-to-external-repositories" class="level3" data-number="2.2.2">
-<h3 data-number="2.2.2" class="anchored" data-anchor-id="contributing-to-external-repositories"><span class="header-section-number">2.2.2</span> Contributing to External Repositories</h3>
+<section id="contributing-to-external-repositories" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="contributing-to-external-repositories"><span class="header-section-number">1.2.2</span> Contributing to External Repositories</h3>
 <p>When contributing to a repository you don’t have write access to — such as an open-source tool or a public project from another team — the fork workflow is used instead. A fork is a personal copy of the repository under your GitHub account.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">flowchart LR
-    U["upstream\nORIGINAL_ORG/repo"]
-    O["origin\nYOUR_USERNAME/repo"]
+<pre class="mermaid mermaid-js">flowchart TD
+    U["upstream
+       ORIGINAL_ORG/repo"]
+    O["origin
+       YOUR_USERNAME/repo"]
     L["local clone"]
     U --&gt;|"fork"| O
     O --&gt;|"clone"| L
@@ -470,8 +478,8 @@ Note
 </div>
 </section>
 </section>
-<section id="sec-git-positron" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="sec-git-positron"><span class="header-section-number">2.3</span> Git in Positron</h2>
+<section id="sec-git-positron" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="sec-git-positron"><span class="header-section-number">1.3</span> Git in Positron</h2>
 <p>Positron includes a built-in Source Control panel (the branching icon in the left sidebar, or <code>Ctrl+Shift+G</code> / <code>Cmd+Shift+G</code>) that provides a graphical interface for the most common Git operations.</p>
 <p><strong>Viewing changes</strong></p>
 <p>The Source Control panel lists all files with uncommitted changes. Files are grouped into <strong>Staged Changes</strong> and <strong>Changes</strong> (unstaged). Click any file to open a diff view showing exactly what was added or removed.</p>
@@ -497,8 +505,8 @@ Tip
 </div>
 </div>
 </section>
-<section id="sec-git-conflicts" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="sec-git-conflicts"><span class="header-section-number">2.4</span> Merge Conflicts</h2>
+<section id="sec-git-conflicts" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="sec-git-conflicts"><span class="header-section-number">1.4</span> Merge Conflicts</h2>
 <p>A merge conflict occurs when two branches have made changes to the same lines of the same file, and Git cannot automatically determine which version to keep. Conflicts most commonly arise during <code>git merge</code>, <code>git rebase</code>, or when accepting a pull request that conflicts with recent changes to <code>main</code>.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
@@ -530,8 +538,8 @@ config:
 </div>
 </div>
 </div>
-<section id="what-conflict-markers-look-like" class="level3" data-number="2.4.1">
-<h3 data-number="2.4.1" class="anchored" data-anchor-id="what-conflict-markers-look-like"><span class="header-section-number">2.4.1</span> What conflict markers look like</h3>
+<section id="what-conflict-markers-look-like" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="what-conflict-markers-look-like"><span class="header-section-number">1.4.1</span> What conflict markers look like</h3>
 <p>When a conflict occurs, Git edits the affected file to mark the conflicting regions:</p>
 <pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
 result &lt;- model |&gt; predict(new_data)
@@ -543,8 +551,8 @@ result &lt;- model %&gt;% predict(new_data)
 <li>Everything between <code>=======</code> and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> is the version from the branch being merged in.</li>
 </ul>
 </section>
-<section id="resolving-conflicts" class="level3" data-number="2.4.2">
-<h3 data-number="2.4.2" class="anchored" data-anchor-id="resolving-conflicts"><span class="header-section-number">2.4.2</span> Resolving conflicts</h3>
+<section id="resolving-conflicts" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="resolving-conflicts"><span class="header-section-number">1.4.2</span> Resolving conflicts</h3>
 <ol type="1">
 <li><p>Run <code>git merge &lt;branch&gt;</code> (or let a PR trigger the conflict). Git will report which files have conflicts.</p></li>
 <li><p>Open each conflicted file. Positron highlights conflict regions with inline buttons: <strong>Accept Current Change</strong>, <strong>Accept Incoming Change</strong>, <strong>Accept Both Changes</strong>, or <strong>Compare Changes</strong>. Click the appropriate option or edit the file manually to produce the correct final version.</p></li>
@@ -991,13 +999,13 @@ Tip
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./dashboards.html" class="pagination-link" aria-label="Dashboards">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Dashboards</span></span>
+      <a href="./index.html" class="pagination-link" aria-label="Preface">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ai.html" class="pagination-link" aria-label="Coding with AI">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Coding with AI</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./dataorg.html" class="pagination-link" aria-label="Data Organization">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Organization</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

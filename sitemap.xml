@@ -2,23 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://dstt.stephenturner.us/index.html</loc>
-    <lastmod>2026-02-22T16:03:26.707Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dstt.stephenturner.us/dashboards.html</loc>
-    <lastmod>2026-02-22T17:53:23.815Z</lastmod>
+    <lastmod>2026-02-22T20:57:26.988Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/git.html</loc>
-    <lastmod>2026-02-22T17:53:23.815Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dstt.stephenturner.us/ai.html</loc>
-    <lastmod>2026-02-22T15:51:03.608Z</lastmod>
+    <lastmod>2026-02-22T20:57:26.988Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/dataorg.html</loc>
-    <lastmod>2026-02-22T15:51:03.609Z</lastmod>
+    <lastmod>2026-02-22T20:57:26.988Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dstt.stephenturner.us/ai.html</loc>
+    <lastmod>2026-02-22T20:57:26.987Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dstt.stephenturner.us/dashboards.html</loc>
+    <lastmod>2026-02-22T20:57:26.987Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dstt.stephenturner.us/pm.html</loc>
+    <lastmod>2026-02-22T20:57:26.988Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/references.html</loc>
@@ -26,14 +30,14 @@
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/resources.html</loc>
-    <lastmod>2026-02-22T15:51:03.609Z</lastmod>
+    <lastmod>2026-02-22T20:57:26.989Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/Data-Science-Team-Training.pdf</loc>
-    <lastmod>2026-02-22T17:53:53.509Z</lastmod>
+    <lastmod>2026-02-22T20:58:16.893Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/Data-Science-Team-Training.epub</loc>
-    <lastmod>2026-02-22T17:53:54.009Z</lastmod>
+    <lastmod>2026-02-22T20:58:17.684Z</lastmod>
   </url>
 </urlset>
