@@ -1,8 +1,305 @@
 ---
-execute: 
+execute:
   message: false
   warning: false
 ---
 
 # Version Control {#sec-git}
 
+Git is a distributed version control system that tracks changes to files over time, allowing you to review history, revert mistakes, and collaborate without overwriting each other's work. For data science teams, version control is essential for reproducibility (knowing exactly which code produced which results), collaboration (multiple people working on the same project safely), and auditability (a clear record of what changed and why). GitHub is the most widely used platform for hosting Git repositories and adds features like pull requests, code review, and issue tracking on top of Git's core capabilities.
+
+## GitHub Setup {#sec-git-github}
+
+### Creating a GitHub Account
+
+Visit [github.com](https://github.com) and sign up for a free account. The free tier includes unlimited public and private repositories and is sufficient for most team workflows.
+
+### Adding an SSH Key
+
+SSH keys let you authenticate with GitHub without entering your username and password on every push or pull. To generate a key:
+
+```bash
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
+Accept the default file location (`~/.ssh/id_ed25519`) and optionally set a passphrase. Then copy the public key:
+
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+
+In GitHub, go to **Settings → SSH and GPG keys → New SSH key**, paste the output, give it a descriptive title (e.g., your machine name), and save.
+
+Verify the connection works:
+
+```bash
+ssh -T git@github.com
+```
+
+You should see a message like `Hi username! You've successfully authenticated`.
+
+### Cloning a Repository via SSH
+
+When cloning a repository, prefer the SSH URL over HTTPS. On any GitHub repository page, click **Code** and select the **SSH** tab to get the URL.
+
+```bash
+git clone git@github.com:org/repo.git
+```
+
+Using SSH avoids repeated password prompts and works with SSH agent forwarding for server-based workflows.
+
+### Pulling and Pushing
+
+After cloning, your local repository is linked to the remote (called `origin` by default). To sync your local branch with the latest changes from the remote:
+
+```bash
+git pull
+```
+
+After committing changes locally, push them to the remote:
+
+```bash
+git push
+```
+
+Git tracks the relationship between your local branch and the corresponding remote branch automatically, so these short-form commands will work once the tracking relationship is established.
+
+## Branching and Merging {#sec-git-branching}
+
+Branches let multiple people work on different features or fixes simultaneously without interfering with each other. The `main` branch (or `master` in older repositories) typically represents the stable, production-ready state of the project.
+
+### Internal Organizational Workflow
+
+In most team workflows, the `main` branch is protected — direct pushes are disabled and changes must go through a pull request (PR) with at least one reviewer. Developers create short-lived branches for each piece of work, then open a PR when ready.
+
+```{mermaid}
+---
+config:
+  theme: 'default'
+  themeVariables:
+      'git0': '#006eff8e'
+      'git1': '#ffcc00ff'
+---
+  gitGraph
+  commit id: "previous work"
+  branch feature/my-analysis
+  checkout feature/my-analysis
+  commit id: "add analysis"
+  commit id: "add figures"
+  checkout main
+  merge feature/my-analysis
+  commit id: "next commit"
+```
+
+**Step 1: Create a branch from `main`**
+
+```bash
+git checkout main
+git pull
+git checkout -b feature/my-analysis
+```
+
+**Step 2: Make changes, stage, and commit**
+
+```bash
+git add analysis.R writeup.qmd
+git commit -m "Add initial exploratory analysis for Q1 data"
+```
+
+**Step 3: Push the branch to GitHub**
+
+```bash
+git push -u origin feature/my-analysis
+```
+
+The `-u` flag sets the upstream tracking branch so future `git push` and `git pull` commands work without specifying the remote and branch name.
+
+**Step 4: Open a pull request**
+
+On GitHub, navigate to the repository. A banner will appear prompting you to open a PR from your recently pushed branch. Click **Compare & pull request**, add a description, assign reviewers, and submit.
+
+**Step 5: Review, merge, and delete**
+
+A reviewer approves the PR and merges it into `main` via the GitHub UI. After merging, delete the branch on GitHub (there is a button on the merged PR page). Locally, clean up with:
+
+```bash
+git checkout main
+git pull
+git branch -d feature/my-analysis
+```
+
+:::{.callout-tip}
+**Branch naming conventions** help the team understand what a branch is for at a glance. Common prefixes:
+
+- `feature/` — new functionality (e.g., `feature/survival-analysis`)
+- `fix/` — bug fixes (e.g., `fix/date-parsing-error`)
+- `analysis/` — exploratory or one-off analyses (e.g., `analysis/q2-cohort`)
+- `docs/` — documentation updates
+:::
+
+:::{.callout-note}
+Keep branches short-lived — ideally merged within a few days. Long-running branches diverge significantly from `main`, making merges painful and increasing the likelihood of conflicts.
+:::
+
+### Contributing to External Repositories
+
+When contributing to a repository you don't have write access to — such as an open-source tool or a public project from another team — the fork workflow is used instead. A fork is a personal copy of the repository under your GitHub account.
+
+```{mermaid}
+flowchart LR
+    U["upstream\nORIGINAL_ORG/repo"]
+    O["origin\nYOUR_USERNAME/repo"]
+    L["local clone"]
+    U -->|"fork"| O
+    O -->|"clone"| L
+    L -->|"push"| O
+    O -->|"pull request"| U
+    U -->|"fetch upstream"| L
+```
+
+**Step 1: Fork the repository**
+
+On the GitHub repository page, click **Fork** (top right) and choose your account as the destination.
+
+**Step 2: Clone your fork**
+
+```bash
+git clone git@github.com:YOUR_USERNAME/repo.git
+cd repo
+```
+
+**Step 3: Add the original repository as `upstream`**
+
+```bash
+git remote add upstream git@github.com:ORIGINAL_ORG/repo.git
+```
+
+**Step 4: Branch, work, commit, and push to your fork**
+
+```bash
+git checkout -b fix/typo-in-readme
+# ... make changes ...
+git add README.md
+git commit -m "Fix typo in installation section"
+git push -u origin fix/typo-in-readme
+```
+
+**Step 5: Open a pull request to the upstream repository**
+
+On your fork's GitHub page, click **Contribute → Open pull request**. This creates a PR from your fork's branch into the original repository's `main` branch.
+
+**Step 6: Keep your fork in sync with upstream**
+
+As the original repository receives new commits, your fork will fall behind. Sync it with:
+
+```bash
+git fetch upstream
+git checkout main
+git merge upstream/main
+git push origin main
+```
+
+:::{.callout-note}
+In the fork workflow, `origin` refers to **your fork** and `upstream` refers to the **original repository**. Keeping these straight avoids accidentally pushing to or pulling from the wrong remote.
+:::
+
+## Git in Positron {#sec-git-positron}
+
+Positron includes a built-in Source Control panel (the branching icon in the left sidebar, or `Ctrl+Shift+G` / `Cmd+Shift+G`) that provides a graphical interface for the most common Git operations.
+
+**Viewing changes**
+
+The Source Control panel lists all files with uncommitted changes. Files are grouped into **Staged Changes** and **Changes** (unstaged). Click any file to open a diff view showing exactly what was added or removed.
+
+**Staging files**
+
+Hover over a file and click the `+` icon to stage it, or click the `+` next to the **Changes** heading to stage all modified files at once. To unstage, click the `-` icon next to a staged file.
+
+**Committing**
+
+Type a commit message in the text box at the top of the Source Control panel and click the **Commit** button (or press `Ctrl+Enter` / `Cmd+Enter`). This is equivalent to `git commit -m "your message"`.
+
+**Branching**
+
+The current branch name appears in the status bar at the bottom of the window. Click it to open the branch picker, where you can switch to an existing branch or create a new one. This is equivalent to `git checkout` or `git checkout -b`.
+
+**Pushing and pulling**
+
+The Source Control panel has **Push** and **Pull** buttons in its toolbar (the `...` menu or the sync icon in the status bar). The sync button performs a pull followed by a push in one action.
+
+:::{.callout-tip}
+The integrated terminal in Positron (**Terminal → New Terminal**) is always available for Git operations that the UI doesn't expose — such as adding a remote, rebasing, cherry-picking, or any command requiring flags. The UI and terminal work on the same repository state, so you can mix both freely.
+:::
+
+## Merge Conflicts {#sec-git-conflicts}
+
+A merge conflict occurs when two branches have made changes to the same lines of the same file, and Git cannot automatically determine which version to keep. Conflicts most commonly arise during `git merge`, `git rebase`, or when accepting a pull request that conflicts with recent changes to `main`.
+
+```{mermaid}
+---
+config:
+  theme: 'default'
+  themeVariables:
+      'git0': '#006eff8e'
+      'git1': '#ffcc00ff'
+---
+    gitGraph LR:
+      commit id: "shared history"
+      branch feature-a
+      checkout feature-a
+      commit id: "edit analysis.R"
+      checkout main
+      branch feature-b
+      checkout feature-b
+      commit id: "also edit analysis.R"
+      checkout main
+      merge feature-a
+      merge feature-b id: "conflict!" type: HIGHLIGHT
+```
+
+### What conflict markers look like
+
+When a conflict occurs, Git edits the affected file to mark the conflicting regions:
+
+```
+<<<<<<< HEAD
+result <- model |> predict(new_data)
+=======
+result <- model %>% predict(new_data)
+>>>>>>> feature/update-pipe-syntax
+```
+
+- Everything between `<<<<<<< HEAD` and `=======` is the version from your current branch.
+- Everything between `=======` and `>>>>>>>` is the version from the branch being merged in.
+
+### Resolving conflicts
+
+1. Run `git merge <branch>` (or let a PR trigger the conflict). Git will report which files have conflicts.
+
+2. Open each conflicted file. Positron highlights conflict regions with inline buttons: **Accept Current Change**, **Accept Incoming Change**, **Accept Both Changes**, or **Compare Changes**. Click the appropriate option or edit the file manually to produce the correct final version.
+
+3. After resolving all conflicts in a file, save it and stage it:
+
+```bash
+git add path/to/resolved-file.R
+```
+
+4. Once all conflicted files are resolved and staged, complete the merge:
+
+```bash
+git commit
+```
+
+Git will pre-populate a commit message describing the merge; you can accept it as-is.
+
+:::{.callout-warning}
+Never leave conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) in committed code. The file will be syntactically broken and the code will not run. Always verify the conflict is fully resolved before staging.
+:::
+
+:::{.callout-tip}
+`git status` is your best friend during a conflict. It lists which files are in conflict (`both modified`), which are already resolved and staged, and what step to take next (commit or continue a rebase).
+
+```bash
+git status
+```
+:::
