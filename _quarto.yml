@@ -19,6 +19,8 @@ book:
         href: https://bsky.app/profile/stephenturner.us
   date: today
   downloads: [pdf, epub]
+  site-url: https://dstt.stephenturner.us
+  repo-url: https://github.com/stephenturner/dstt
 
   chapters:
     - index.qmd
@@ -46,7 +48,7 @@ format:
       - brand
     code-link: true
     author-meta: "Stephen D. Turner"
-pdf:
-  documentclass: scrreprt
-epub:
-  theme: default
+  pdf:
+    documentclass: scrreprt
+  epub:
+    theme: default
