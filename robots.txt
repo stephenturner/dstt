@@ -1,1 +1,1 @@
-Sitemap: https://dstt.stephenturner.us/sitemap.xml
+Sitemap: https://stephenturner.github.io/dstt/sitemap.xml
