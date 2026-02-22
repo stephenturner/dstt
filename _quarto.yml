@@ -19,7 +19,7 @@ book:
         href: https://bsky.app/profile/stephenturner.us
   date: today
   downloads: [pdf, epub]
-  site-url: https://dstt.stephenturner.us
+  site-url: https://stephenturner.github.io/dstt/
   repo-url: https://github.com/stephenturner/dstt
 
   chapters:
