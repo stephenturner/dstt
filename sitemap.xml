@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://stephenturner.github.io/dstt/index.html</loc>
+    <loc>https://dstt.stephenturner.us/index.html</loc>
     <lastmod>2026-02-22T16:03:26.707Z</lastmod>
   </url>
   <url>
-    <loc>https://stephenturner.github.io/dstt/dashboards.html</loc>
+    <loc>https://dstt.stephenturner.us/dashboards.html</loc>
+    <lastmod>2026-02-22T17:53:23.815Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dstt.stephenturner.us/git.html</loc>
+    <lastmod>2026-02-22T17:53:23.815Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dstt.stephenturner.us/ai.html</loc>
     <lastmod>2026-02-22T15:51:03.608Z</lastmod>
   </url>
   <url>
-    <loc>https://stephenturner.github.io/dstt/git.html</loc>
+    <loc>https://dstt.stephenturner.us/dataorg.html</loc>
     <lastmod>2026-02-22T15:51:03.609Z</lastmod>
   </url>
   <url>
-    <loc>https://stephenturner.github.io/dstt/ai.html</loc>
-    <lastmod>2026-02-22T15:51:03.608Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stephenturner.github.io/dstt/dataorg.html</loc>
+    <loc>https://dstt.stephenturner.us/references.html</loc>
     <lastmod>2026-02-22T15:51:03.609Z</lastmod>
   </url>
   <url>
-    <loc>https://stephenturner.github.io/dstt/references.html</loc>
+    <loc>https://dstt.stephenturner.us/resources.html</loc>
     <lastmod>2026-02-22T15:51:03.609Z</lastmod>
   </url>
   <url>
-    <loc>https://stephenturner.github.io/dstt/resources.html</loc>
-    <lastmod>2026-02-22T15:51:03.609Z</lastmod>
+    <loc>https://dstt.stephenturner.us/Data-Science-Team-Training.pdf</loc>
+    <lastmod>2026-02-22T17:53:53.509Z</lastmod>
   </url>
   <url>
-    <loc>https://stephenturner.github.io/dstt/Data-Science-Team-Training.pdf</loc>
-    <lastmod>2026-02-22T16:09:59.029Z</lastmod>
-  </url>
-  <url>
-    <loc>https://stephenturner.github.io/dstt/Data-Science-Team-Training.epub</loc>
-    <lastmod>2026-02-22T16:09:59.227Z</lastmod>
+    <loc>https://dstt.stephenturner.us/Data-Science-Team-Training.epub</loc>
+    <lastmod>2026-02-22T17:53:54.009Z</lastmod>
   </url>
 </urlset>
