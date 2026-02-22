@@ -32,9 +32,10 @@ book:
         - git.qmd
         - dashboards.qmd
         - ai.qmd
+        - dataorg.qmd
     - part: "Nontechnical"
       chapters:
-      - dataorg.qmd
+        - pm.qmd
   appendices:
   - references.qmd
   - resources.qmd

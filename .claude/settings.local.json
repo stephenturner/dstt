@@ -5,7 +5,10 @@
       "Bash(mkdir:*)",
       "WebFetch(domain:quarto.org)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "WebFetch(domain:positron.posit.co)"
+      "WebFetch(domain:positron.posit.co)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:www.tandfonline.com)",
+      "WebSearch"
     ]
   }
 }

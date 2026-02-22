@@ -1,8 +1,220 @@
 ---
-execute: 
+execute:
   message: false
   warning: false
 ---
 
 # Data Organization {#sec-dataorg}
 
+Good data organization is foundational to reproducible, efficient research. Decisions made at the moment of data collection and storage ripple through every downstream step—analysis, visualization, sharing, and archiving. This chapter covers practical principles for organizing data in spreadsheets, naming files consistently, structuring project directories, and storing data in formats that work well with code.
+
+## Data Organization in Spreadsheets
+
+Broman and Woo's ["Data Organization in Spreadsheets"](https://www.tandfonline.com/doi/full/10.1080/00031305.2017.1375989) [@broman2018] offers twelve practical recommendations for anyone who stores data in Excel or similar tools. The core philosophy: structure your data so that it can be read directly into R or Python without manual cleanup.
+
+### Be Consistent
+
+Consistency is the single most important principle. Pick conventions and stick to them within a project:
+
+- Use the same codes for categorical variables (e.g., always `"M"` and `"F"`, not sometimes `"Male"`)
+- Use the same missing value code throughout (e.g., `NA`)
+- Use the same variable names across files and time points
+- Use the same date format everywhere
+
+### Make It a Rectangle
+
+Raw data should be a single, clean rectangle:
+
+- **Rows are observations** (subjects, samples, time points)
+- **Columns are variables**
+- **One header row** at the top with short, meaningful column names
+- No merged cells, no blank rows used for visual separation, no summary rows mixed in
+
+This is consistent with the principles of **tidy data** [@wickham2014], where each variable forms a column, each observation forms a row, and each type of observational unit forms a table.
+
+### One Thing Per Cell
+
+Each cell should contain exactly one value. Don't cram multiple pieces of information into a single cell (e.g., `"120/80"` for blood pressure—use two columns instead). Don't use a cell to store a note alongside a value.
+
+### Fill in All Cells
+
+Don't leave cells blank to imply "same as above." Every cell should contain an explicit value. Use a consistent missing data code (e.g., `NA`) rather than leaving cells empty—blank cells are ambiguous: was the value missing, not collected, or zero?
+
+### Write Dates as YYYY-MM-DD
+
+Use [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format for all dates: `2024-03-15`. This format:
+
+- Sorts correctly alphabetically
+- Is unambiguous across locales (`03/04/2024` means different things in the US vs. Europe)
+- Is not mangled by Excel (unlike many other date formats)
+
+::: {.callout-warning}
+Excel silently converts many text strings to dates (e.g., `SEPT1` becomes a date). Consider storing year, month, and day in separate columns if you're collecting data in Excel, or prefix dates with an apostrophe to force text storage.
+:::
+
+### Choose Good Names for Things
+
+Apply consistent naming rules to columns, sheets, and files:
+
+- No spaces—use underscores (`_`) or hyphens (`-`)
+- No special characters (`@`, `#`, `%`, `(`, `)`)
+- Short but meaningful (`participant_id`, not `p` or `the_participant_identifier_number`)
+- All lowercase is a safe default
+- Avoid starting names with numbers
+
+### No Calculations in Raw Data Files
+
+Keep raw data raw. Don't add sum rows, averages, or derived columns to the data file—do that in your analysis script. The raw data file is a permanent record of what was collected; calculations belong in code that can be inspected, corrected, and rerun.
+
+### Don't Use Formatting as Data
+
+Color-coding, bold text, or cell highlighting to indicate something (e.g., red = outlier, bold = reviewed) is invisible to code. Add an explicit column instead: `is_outlier` (TRUE/FALSE) or `review_status` ("reviewed", "pending").
+
+### Create a Data Dictionary
+
+Every dataset should be accompanied by a data dictionary (also called a codebook) that documents:
+
+- Variable name
+- Description of what it measures
+- Units
+- Allowable values or range
+- How missing values are coded
+
+A simple spreadsheet or CSV with one row per variable works fine.
+
+### Save Data in Plain Text
+
+Save the analysis-ready version of your data as CSV (comma-separated values), not as `.xlsx`. CSV files:
+
+- Can be opened by any software
+- Are readable in version control diffs
+- Don't have hidden formatting or macros
+- Are stable long-term
+
+Keep the original Excel file if needed, but always export a clean CSV as the file you hand off to analysis.
+
+### Make Backups
+
+Raw data should be treated as read-only and backed up in at least two places (e.g., local drive + cloud storage). Consider these tiers:
+
+- **Primary:** Your working copy
+- **Local backup:** External drive or NAS
+- **Off-site/cloud:** Institutional storage, OneDrive, or similar
+
+Version control (see @sec-git) is excellent for code and small text files but is not ideal for large binary data files.
+
+---
+
+## File Naming
+
+Jenny Bryan's ["How to Name Files"](https://github.com/jennybc/how-to-name-files) [@bryan2015] lays out three principles that make file names work well for both humans and computers.
+
+### The Three Principles
+
+**1. Machine readable**
+
+File names should be parseable by code without heroics:
+
+- No spaces (use `_` or `-` instead)
+- No special characters (`&`, `*`, `#`, `(`, `)`, accented letters)
+- No case sensitivity issues—stick to lowercase
+- Use delimiters consistently so you can split on them: underscores between metadata fields, hyphens within a field
+
+**2. Human readable**
+
+The name should tell you what's in the file without opening it:
+
+- Include a descriptive "slug" that summarizes the content
+- `2024-03-15-enrollment-summary.csv` is better than `data_v3_FINAL.csv`
+
+**3. Plays well with default ordering**
+
+Files should sort into a useful order automatically:
+
+- Use ISO 8601 dates (`YYYY-MM-DD`) at the start of the name so files sort chronologically
+- Left-pad numbers with zeros: `fig-01.png`, `fig-02.png`, ..., `fig-10.png` (not `fig-1.png`, `fig-2.png`, `fig-10.png`)
+
+### Recommended Pattern: `YYYY-MM-DD-slug`
+
+For dated outputs (reports, snapshots, exports), the pattern `YYYY-MM-DD-descriptive-slug.ext` works well:
+
+```
+2024-03-15-enrollment-summary.csv
+2024-06-01-adverse-events-cleaned.csv
+2024-09-30-q3-interim-analysis.html
+```
+
+For numbered sequences (figures, scripts with a natural order), use zero-padded numbers:
+
+```
+01-import-data.R
+02-clean-data.R
+03-fit-models.R
+04-make-figures.R
+```
+
+For files that don't change often and aren't dated, a simple descriptive slug is fine:
+
+```
+protocol.pdf
+data-dictionary.xlsx
+consent-form-v2.pdf
+```
+
+::: {.callout-tip}
+A good file name is essentially metadata. When you can glob a directory and parse the file names with code—extracting dates, conditions, or sample IDs—you've done it right.
+:::
+
+---
+
+## Project Directory Structure
+
+A consistent folder structure makes projects navigable by collaborators (and your future self). One widely used convention:
+
+```
+project/
+├── data/
+│   ├── raw/          # Original data, never modified
+│   └── processed/    # Cleaned/derived data from scripts
+├── code/             # Analysis scripts (R, Python, etc.)
+├── output/
+│   ├── figures/
+│   └── tables/
+├── docs/             # Reports, protocols, manuscripts
+└── README.md         # Project overview and instructions
+```
+
+Key rules:
+
+- **Raw data is sacred.** The `data/raw/` folder is read-only. Never overwrite or edit raw data files.
+- **All data manipulation is scripted.** Cleaned data in `data/processed/` is generated by a script, not by hand.
+- **One project = one directory.** Keep all files related to a project together.
+
+The [ProjectTemplate](http://projecttemplate.net/) (R) and [Cookiecutter Data Science](https://drivendata.github.io/cookiecutter-data-science/) (Python) tools can scaffold these structures automatically.
+
+---
+
+## File Formats
+
+| Format | Best for | Avoid when |
+|--------|----------|------------|
+| `.csv` | Tabular data, analysis input/output | Binary data, very wide datasets |
+| `.tsv` | Tabular data with commas in values | — |
+| `.json` | Nested/hierarchical data, configs | Large flat tables |
+| `.parquet` | Large tabular data, columnar access | Simple small datasets |
+| `.xlsx` | Data entry, sharing with non-coders | Final analysis-ready data |
+| `.rds` / `.pkl` | R or Python objects (with caveats) | Cross-language sharing |
+
+Plain text formats (CSV, TSV, JSON) are preferred for long-term storage and reproducibility. Proprietary binary formats (`.xlsx`, `.sav`, `.sas7bdat`) may become unreadable as software evolves.
+
+---
+
+## Additional Best Practices
+
+**Use version control for code, not data.** Git is designed for text files. Large or binary data files should live in dedicated storage (cloud drives, data repositories, databases) and be referenced in your code, not committed to the repository.
+
+**Document your cleaning steps.** The gap between raw and processed data should be bridged entirely by a script that anyone can run. Comments in that script explaining *why* you made certain decisions are invaluable.
+
+**Plan for sharing.** Before a project ends, ask: could someone else reproduce this analysis from the raw data? Good file organization, consistent naming, and a clear README make the answer yes.
+
+**Avoid "final" in file names.** `analysis-final-FINAL-v3-USE-THIS-ONE.R` is a sign that version control was not used. Use Git instead, and name the file simply `analysis.R`.
