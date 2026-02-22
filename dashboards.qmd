@@ -1,8 +1,350 @@
 ---
-execute: 
+execute:
+  eval: false
   message: false
   warning: false
 ---
 
 # Dashboards {#sec-dashboards}
 
+Quarto dashboards use `format: dashboard` to create multi-panel HTML data displays — no server required. They're a middle ground between a static report (a single linear document) and a Shiny app (interactive but requires a running R process). Dashboards are ideal for sharing summaries, KPIs, and charts that need to look polished without the overhead of maintaining a server.
+
+The examples in this chapter are drawn from a real dashboard tracking U.S. drug overdose mortality data from the National Vital Statistics System (2015–2023).
+
+:::{.callout-note}
+**Live demo:** [stephenturner.github.io/quarto-dashboard-demo](https://stephenturner.github.io/quarto-dashboard-demo)
+
+Source code: [github.com/stephenturner/quarto-dashboard-demo](https://github.com/stephenturner/quarto-dashboard-demo)
+:::
+
+## Dashboard Anatomy {#sec-dashboards-anatomy}
+
+### YAML Front Matter
+
+A minimal Quarto dashboard needs only two things in the front matter: a title and `format: dashboard`.
+
+```yaml
+---
+title: "My Dashboard"
+format: dashboard
+---
+```
+
+Additional options control the theme, layout behavior, and navigation elements:
+
+```yaml
+---
+title: "Drug Overdose Mortality"
+subtitle: "National Vital Statistics System, 2015–2023"
+format:
+  dashboard:
+    scrolling: false
+    theme: cosmo
+date: today
+---
+```
+
+Setting `scrolling: false` (the default) sizes each row to fill the viewport height, producing a fixed-height layout. Setting `scrolling: true` allows the page to scroll freely, which is useful when the content is too tall to fit on one screen.
+
+### Rows and Columns
+
+Quarto dashboards lay out content in rows by default. Level-2 headings (`##`) define rows, and each code cell within a row becomes a card that fills its share of the available width.
+
+```markdown
+## Row {height=25%}
+
+[cards here — share the row equally]
+
+## Row {height=75%}
+
+[cards here — taller row for charts]
+```
+
+The `{height=}` attribute (as a percentage or pixel value) controls how much vertical space each row takes. To switch to a column-based layout, use `orientation: columns` in the YAML and `{width=}` attributes on headings instead.
+
+### Cards
+
+Every executable code cell in a dashboard automatically becomes a card. The cell's output (a plot, a table, text) fills the card. Use the `#| title:` cell option to give the card a header:
+
+```r
+#| title: "Monthly Admissions"
+
+ggplot(admissions, aes(x = month, y = n)) +
+  geom_col()
+```
+
+### Value Boxes
+
+Value boxes are compact summary cards ideal for KPIs and headline numbers. They are created with the `#| content: valuebox` cell option. The cell should return a named list with `icon`, `color`, and `value` keys.
+
+```r
+#| content: valuebox
+#| title: "Total Patients"
+
+list(
+  icon  = "person-fill",
+  color = "primary",
+  value = nrow(patients)
+)
+```
+
+Icons are [Bootstrap Icons](https://icons.getbootstrap.com/) names (without the `bi-` prefix). Colors can be Bootstrap theme colors (`"primary"`, `"success"`, `"danger"`, `"warning"`, `"info"`) or any CSS color string.
+
+### Tabsets
+
+Adding `.tabset` to a row makes each card within that row a tab instead of a side-by-side panel. Each cell's `#| title:` becomes the tab label.
+
+```markdown
+## Row {.tabset}
+
+```r
+#| title: "Chart"
+
+# plot code
+```
+
+```r
+#| title: "Data"
+
+# table code
+```
+```
+
+Tabsets are useful when you have multiple views of the same data (e.g., a chart and the underlying table) and don't want them to compete for screen space.
+
+## Building a Dashboard {#sec-dashboards-build}
+
+This section walks through building the overdose mortality dashboard step by step. All code blocks here are display-only; the executable versions live in the demo repository.
+
+### Project Structure
+
+A Quarto dashboard lives in its own project directory with a `_quarto.yml` file and an `index.qmd`:
+
+```
+quarto-dashboard-demo/
+├── _quarto.yml
+├── index.qmd
+└── od-data-clean.csv
+```
+
+The `_quarto.yml` sets the project type and default format options:
+
+```yaml
+project:
+  type: default
+
+format:
+  dashboard:
+    theme: cosmo
+    scrolling: false
+```
+
+### Loading Data
+
+The setup chunk loads packages and reads the data. Compute any summary values you'll reuse across multiple cells here so they're available throughout the document.
+
+```r
+#| label: setup
+#| message: false
+#| warning: false
+
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(plotly)
+library(DT)
+
+od <- read_csv("od-data-clean.csv")
+
+# Computed once, reused in value boxes and charts
+total_state_years <- nrow(od)
+year_min          <- min(od$year)
+year_max          <- max(od$year)
+
+top_state_recent <- od |>
+  filter(year == max(year)) |>
+  arrange(desc(pod)) |>
+  slice(1)
+```
+
+The `pod` column is the proportion of all deaths attributable to overdose — the primary metric throughout the dashboard.
+
+### Value Boxes
+
+Three value boxes occupy the first row. Each is a separate code cell with `#| content: valuebox` and a `#| title:`. Place them all under the same `## Row` heading so they share the row equally.
+
+```markdown
+## Row {height=20%}
+```
+
+```r
+#| content: valuebox
+#| title: "State-Year Observations"
+
+list(
+  icon  = "table",
+  color = "primary",
+  value = scales::comma(total_state_years)
+)
+```
+
+```r
+#| content: valuebox
+#| title: "Years Covered"
+
+list(
+  icon  = "calendar-range",
+  color = "info",
+  value = paste0(year_min, "–", year_max)
+)
+```
+
+```r
+#| content: valuebox
+#| title: "Highest OD % (Most Recent Year)"
+
+list(
+  icon  = "graph-up-arrow",
+  color = "danger",
+  value = paste0(
+    top_state_recent$state, " — ",
+    scales::percent(top_state_recent$pod, accuracy = 0.1)
+  )
+)
+```
+
+### Charts — Static (ggplot2)
+
+A static ggplot2 chart renders as a PNG image inside a card. It works well for PDF exports and environments without JavaScript, but users can't hover for values or zoom in.
+
+```r
+#| title: "Overdose % Over Time — Selected States"
+
+highlight_states <- c("WV", "DC", "OH", "KY")
+
+od |>
+  filter(state %in% highlight_states) |>
+  ggplot(aes(x = year, y = pod, color = state, group = state)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 0.1)) +
+  scale_x_continuous(breaks = year_min:year_max) +
+  labs(
+    x     = NULL,
+    y     = "Overdose deaths (% of all deaths)",
+    color = "State"
+  ) +
+  theme_minimal(base_size = 13)
+```
+
+### Charts — Interactive (plotly)
+
+Wrapping a ggplot in `plotly::ggplotly()` converts it to an interactive chart with hover tooltips, zoom, and pan — no layout changes needed.
+
+```r
+#| title: "Overdose % Over Time — Selected States"
+
+p <- od |>
+  filter(state %in% highlight_states) |>
+  ggplot(aes(x = year, y = pod, color = state, group = state)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 0.1)) +
+  scale_x_continuous(breaks = year_min:year_max) +
+  labs(
+    x     = NULL,
+    y     = "Overdose deaths (% of all deaths)",
+    color = "State"
+  ) +
+  theme_minimal(base_size = 13)
+
+ggplotly(p)
+```
+
+:::{.callout-tip}
+Swapping a static ggplot2 chart for `ggplotly()` is a one-line change that requires no modifications to the dashboard layout. Add interactivity where it helps users explore data; keep static charts where simplicity or export quality matters more.
+:::
+
+For finer control over tooltips, use the `text` aesthetic and pass `tooltip = "text"` to `ggplotly()`:
+
+```r
+bar_data |>
+  ggplot(aes(
+    x    = reorder(state, total_od),
+    y    = total_od,
+    fill = highlighted,
+    text = paste0(state, ": ", scales::comma(total_od))
+  )) +
+  geom_col() +
+  coord_flip()
+
+ggplotly(p2, tooltip = "text")
+```
+
+### Tables (DT)
+
+`DT::datatable()` produces an interactive HTML table with built-in search, sorting, and pagination.
+
+```r
+#| title: "Data"
+
+od |>
+  mutate(pod = scales::percent(pod, accuracy = 0.01)) |>
+  rename(
+    State          = state,
+    Year           = year,
+    `Total Deaths` = ndeath,
+    `OD Deaths`    = nod,
+    `OD %`         = pod
+  ) |>
+  DT::datatable(
+    filter   = "top",
+    options  = list(pageLength = 10, scrollX = TRUE),
+    rownames = FALSE
+  )
+```
+
+`filter = "top"` adds a per-column search box above each column header, allowing users to filter by state or year without any server-side code.
+
+## Previewing and Rendering {#sec-dashboards-render}
+
+From inside the project directory:
+
+```bash
+quarto preview index.qmd   # live-reload preview in browser
+quarto render index.qmd    # render to index.html
+```
+
+:::{.callout-note}
+`quarto preview` on a dashboard opens a standalone browser window showing the dashboard itself. If you also have the book open in another preview, they run independently — the dashboard preview is not embedded in the book.
+:::
+
+## Hosting on GitHub Pages {#sec-dashboards-hosting}
+
+Because `format: dashboard` is incompatible with `format: html` (the book format used here), a dashboard cannot be a page in a Quarto book. The cleanest solution is to keep the dashboard in its own GitHub repository and deploy it separately.
+
+### Repository Setup
+
+Create a new GitHub repository (e.g., `quarto-dashboard-demo`) and push the project files:
+
+```bash
+git init
+git add .
+git commit -m "Initial dashboard"
+git remote add origin git@github.com:stephenturner/quarto-dashboard-demo.git
+git push -u origin main
+```
+
+### Publishing
+
+`quarto publish gh-pages` renders the project and pushes the output to the `gh-pages` branch. GitHub Pages serves that branch automatically.
+
+```bash
+quarto publish gh-pages
+```
+
+After the first publish, GitHub Pages will be available at `https://stephenturner.github.io/quarto-dashboard-demo`. Subsequent publishes update the live site.
+
+:::{.callout-tip}
+**Automate with GitHub Actions.** Instead of running `quarto publish` manually on your local machine, you can set up a GitHub Actions workflow that re-renders and deploys on every push to `main`. The [Quarto documentation](https://quarto.org/docs/publishing/github-pages.html#github-action) provides a ready-to-use workflow YAML — copy it into `.github/workflows/publish.yml` in your repository and GitHub will handle the rest.
+:::
