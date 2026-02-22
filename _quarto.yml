@@ -30,9 +30,9 @@ book:
     - part: "Technical"
       chapters:
         - git.qmd
-        - dashboards.qmd
-        - ai.qmd
         - dataorg.qmd
+        - ai.qmd
+        - dashboards.qmd
     - part: "Nontechnical"
       chapters:
         - pm.qmd

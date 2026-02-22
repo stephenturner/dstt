@@ -1,13 +1,6 @@
----
-execute:
-  eval: false
-  message: false
-  warning: false
----
-
 # Dashboards {#sec-dashboards}
 
-Quarto dashboards use `format: dashboard` to create multi-panel HTML data displays — no server required. They're a middle ground between a static report (a single linear document) and a Shiny app (interactive but requires a running R process). Dashboards are ideal for sharing summaries, KPIs, and charts that need to look polished without the overhead of maintaining a server.
+Quarto dashboards use `format: dashboard` to create multi-panel HTML data displays — no server required. They're a middle ground between a static report (a single linear document) and a Shiny app (interactive but requires a running R process). Dashboards are ideal for sharing summaries, KPIs, and plots that need to look polished without the overhead of maintaining a server.
 
 The examples in this chapter are drawn from a real dashboard tracking U.S. drug overdose mortality data from the National Vital Statistics System (2015–2023).
 
@@ -63,7 +56,7 @@ Quarto dashboards lay out content in rows by default. Level-2 headings (`##`) de
 
 ## Row {height=75%}
 
-[cards here — taller row for charts]
+[cards here — taller row for plots]
 ```
 
 The `{height=}` attribute (as a percentage or pixel value) controls how much vertical space each row takes. To switch to a column-based layout, use `orientation: columns` in the YAML and `{width=}` attributes on headings instead.
@@ -104,7 +97,7 @@ Adding `.tabset` to a row makes each card within that row a tab instead of a sid
 ## Row {.tabset}
 
 ```r
-#| title: "Chart"
+#| title: "Plot"
 
 # plot code
 ```
@@ -114,9 +107,8 @@ Adding `.tabset` to a row makes each card within that row a tab instead of a sid
 
 # table code
 ```
-```
 
-Tabsets are useful when you have multiple views of the same data (e.g., a chart and the underlying table) and don't want them to compete for screen space.
+Tabsets are useful when you have multiple views of the same data (e.g., a plot and the underlying table) and don't want them to compete for screen space.
 
 ## Building a Dashboard {#sec-dashboards-build}
 
@@ -162,7 +154,7 @@ library(DT)
 
 od <- read_csv("od-data-clean.csv")
 
-# Computed once, reused in value boxes and charts
+# Computed once, reused in value boxes and plots
 total_state_years <- nrow(od)
 year_min          <- min(od$year)
 year_max          <- max(od$year)
@@ -219,9 +211,9 @@ list(
 )
 ```
 
-### Charts — Static (ggplot2)
+### Static plots (ggplot2)
 
-A static ggplot2 chart renders as a PNG image inside a card. It works well for PDF exports and environments without JavaScript, but users can't hover for values or zoom in.
+A static ggplot2 plot renders as a PNG image inside a card. It works well for PDF exports and environments without JavaScript, but users can't hover for values or zoom in.
 
 ```r
 #| title: "Overdose % Over Time — Selected States"
@@ -243,9 +235,9 @@ od |>
   theme_minimal(base_size = 13)
 ```
 
-### Charts — Interactive (plotly)
+### Interactive plots (plotly)
 
-Wrapping a ggplot in `plotly::ggplotly()` converts it to an interactive chart with hover tooltips, zoom, and pan — no layout changes needed.
+Wrapping a ggplot in `plotly::ggplotly()` converts it to an interactive plot with hover tooltips, zoom, and pan — no layout changes needed.
 
 ```r
 #| title: "Overdose % Over Time — Selected States"
@@ -268,7 +260,7 @@ ggplotly(p)
 ```
 
 :::{.callout-tip}
-Swapping a static ggplot2 chart for `ggplotly()` is a one-line change that requires no modifications to the dashboard layout. Add interactivity where it helps users explore data; keep static charts where simplicity or export quality matters more.
+Swapping a static ggplot2 plot for `ggplotly()` is a one-line change that requires no modifications to the dashboard layout. Add interactivity where it helps users explore data; keep static plots where simplicity or export quality matters more.
 :::
 
 For finer control over tooltips, use the `text` aesthetic and pass `tooltip = "text"` to `ggplotly()`:

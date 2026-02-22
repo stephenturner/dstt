@@ -1,16 +1,10 @@
----
-execute:
-  message: false
-  warning: false
----
-
 # Data Organization {#sec-dataorg}
 
 Good data organization is foundational to reproducible, efficient research. Decisions made at the moment of data collection and storage ripple through every downstream step—analysis, visualization, sharing, and archiving. This chapter covers practical principles for organizing data in spreadsheets, naming files consistently, structuring project directories, and storing data in formats that work well with code.
 
 ## Data Organization in Spreadsheets
 
-Broman and Woo's ["Data Organization in Spreadsheets"](https://www.tandfonline.com/doi/full/10.1080/00031305.2017.1375989) [@broman2018] offers twelve practical recommendations for anyone who stores data in Excel or similar tools. The core philosophy: structure your data so that it can be read directly into R or Python without manual cleanup.
+Broman and Woo's "Data Organization in Spreadsheets" [@broman2018] offers twelve practical recommendations for anyone who stores data in Excel or similar tools. The core philosophy: structure your data so that it can be read directly into R or Python without manual cleanup.
 
 ### Be Consistent
 
@@ -49,7 +43,7 @@ Use [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format for all dates: `20
 - Is not mangled by Excel (unlike many other date formats)
 
 ::: {.callout-warning}
-Excel silently converts many text strings to dates (e.g., `SEPT1` becomes a date). Consider storing year, month, and day in separate columns if you're collecting data in Excel, or prefix dates with an apostrophe to force text storage.
+Excel silently converts many text strings to dates (e.g., the human gene name `SEPT1` becomes a date). Consider storing year, month, and day in separate columns if you're collecting data in Excel, or prefix dates with an apostrophe to force text storage.
 :::
 
 ### Choose Good Names for Things
@@ -68,7 +62,7 @@ Keep raw data raw. Don't add sum rows, averages, or derived columns to the data 
 
 ### Don't Use Formatting as Data
 
-Color-coding, bold text, or cell highlighting to indicate something (e.g., red = outlier, bold = reviewed) is invisible to code. Add an explicit column instead: `is_outlier` (TRUE/FALSE) or `review_status` ("reviewed", "pending").
+Color-coding, bold text, or cell highlighting to indicate something (e.g., red = outlier, bold = reviewed) is invisible to code. Add an explicit column instead: `is_outlier` (`TRUE`/`FALSE`) or `review_status` ("reviewed", "pending").
 
 ### Create a Data Dictionary
 
@@ -103,13 +97,13 @@ Raw data should be treated as read-only and backed up in at least two places (e.
 
 Version control (see @sec-git) is excellent for code and small text files but is not ideal for large binary data files.
 
----
-
 ## File Naming
 
-Jenny Bryan's ["How to Name Files"](https://github.com/jennybc/how-to-name-files) [@bryan2015] lays out three principles that make file names work well for both humans and computers.
+Jenny Bryan's ["How to Name Files"](https://github.com/jennybc/how-to-name-files) [@bryan2015] lays out three principles that make file names work well for both humans and computers. See also her talk from NormConf 2022:
 
-### The Three Principles
+{{< video https://www.youtube.com/watch?v=ES1LTlnpLMk >}}
+
+### Three Principles
 
 **1. Machine readable**
 
@@ -165,34 +159,93 @@ consent-form-v2.pdf
 A good file name is essentially metadata. When you can glob a directory and parse the file names with code—extracting dates, conditions, or sample IDs—you've done it right.
 :::
 
----
-
 ## Project Directory Structure
 
-A consistent folder structure makes projects navigable by collaborators (and your future self). One widely used convention:
+### Simple project-oriented workflow
+
+A consistent folder structure makes projects navigable by collaborators (and your future self). One convention is shown below:
 
 ```
-project/
+project-name/
 ├── data/
-│   ├── raw/          # Original data, never modified
-│   └── processed/    # Cleaned/derived data from scripts
-├── code/             # Analysis scripts (R, Python, etc.)
+│   ├── .gitignore    # Don't commit data to version control.
+│   ├── raw/          # original data -- never edited directly
+│   └── processed/    # cleaned, analysis-ready files
+├── R/                # scripts and functions
 ├── output/
+│   ├── .gitignore    # Don't commit large output files.
 │   ├── figures/
 │   └── tables/
-├── docs/             # Reports, protocols, manuscripts
-└── README.md         # Project overview and instructions
+└── report.qmd
 ```
 
 Key rules:
 
-- **Raw data is sacred.** The `data/raw/` folder is read-only. Never overwrite or edit raw data files.
+- **Raw data is sacred.** The `data/raw/` folder is read-only. Never overwrite or edit raw data files. Also, you don't want to commit large files to version control, so be careful with your `.gitignore`.
 - **All data manipulation is scripted.** Cleaned data in `data/processed/` is generated by a script, not by hand.
 - **One project = one directory.** Keep all files related to a project together.
 
-The [ProjectTemplate](http://projecttemplate.net/) (R) and [Cookiecutter Data Science](https://drivendata.github.io/cookiecutter-data-science/) (Python) tools can scaffold these structures automatically.
+The [ProjectTemplate](http://projecttemplate.net/) (R) and [Cookiecutter Data Science](https://cookiecutter-data-science.drivendata.org/) (Python) tools can scaffold these structures automatically.
 
----
+### Version controlling code with data on a shared drive
+
+Finally, it's not uncommon in public health settings to have a setup where you're working with collaborators version controlling code as described in @sec-git, but the data lives on a secure shared drive that cannot be moved or copied into the repository. This creates a tension between reproducibility and security that can be resolved with careful project organization and path management.
+
+Imagine that you have a distributed research team working with sensitive data that:
+
+- Lives on a secure shared drive that cannot be moved
+- Is organized in nested folders, for example, by state and year (e.g., `Lab/StateA/2023/`, `Lab/StateB/2024/`, etc.)
+- Requires collaborative code development across Windows, Mac, and Linux machines
+- Needs version control for reproducibility and collaboration
+
+Storing data in a _database_ would be preferable to a shared drive, but many public health agencies don't have the resources or infrastructure to set up and maintain databases. So how can we manage this?
+
+#### The Conflict
+
+Traditional approaches create impossible trade-offs:
+
+**❌ Option 1: One code repository without proper path management**
+
+- Forces hardcoded paths: `setwd("Z:/Lab/StateA/2024")`
+- Breaks on different operating systems (Z:/ vs /Volumes/)
+- Breaks when different team members have different drive mappings
+- Violates[ project-oriented workflow](https://tidyverse.org/blog/2017/12/workflow-vs-script/) principles
+- Code is not reproducible
+
+**❌ Option 2: Code repositories inside each data folder**
+
+- Creates dozens of scattered git repositories
+- Makes code reuse nearly impossible
+- Version control nightmare (which repo has what function?)
+- Accidental data commits to version control
+- Multiple people doing git operations in the same shared folder causes conflicts. Not merge conflicts, but file locking and permission issues that can break everyone's workflow.
+
+**❌ Option 3: Move data into code repository**
+
+- Violates data security requirements
+- Data cannot leave the secure shared drive
+- Makes git repository enormous and slow
+- Not feasible
+
+#### A Better Way: Centralized Code Repository with Configurable Paths
+
+✅ One way to manage this is with a **single centralized code repository with configurable paths**:
+
+- One repository for all analysis code (easy to find, maintain, collaborate)  
+- Reproducible across team members with different operating systems  
+- Secure: data never leaves the shared drive or enters version control  
+- Flexible: works with nested folder structures  
+- Collaborative: proper git workflow without conflicts  
+- Project-oriented: no `setwd()`, paths are configurable not hardcoded
+
+See [stephenturner/demo-project-path-config](https://github.com/stephenturner/demo-project-path-config) for an example of one way to do this using configuration files. This can also be achieved with environment variables. **How it works:**
+
+- Code lives in a git repository on each person's **local machine**
+- Each team member has a personal `config.yml` file (not version controlled) with their specific paths
+- Code uses helper functions to construct paths dynamically
+- Data stays on the shared drive (read-only for most operations)
+- Outputs go to each person's local directories
+- Everyone commits code changes, never data
 
 ## File Formats
 
@@ -203,15 +256,12 @@ The [ProjectTemplate](http://projecttemplate.net/) (R) and [Cookiecutter Data Sc
 | `.json` | Nested/hierarchical data, configs | Large flat tables |
 | `.parquet` | Large tabular data, columnar access | Simple small datasets |
 | `.xlsx` | Data entry, sharing with non-coders | Final analysis-ready data |
-| `.rds` / `.pkl` | R or Python objects (with caveats) | Cross-language sharing |
 
 Plain text formats (CSV, TSV, JSON) are preferred for long-term storage and reproducibility. Proprietary binary formats (`.xlsx`, `.sav`, `.sas7bdat`) may become unreadable as software evolves.
 
----
-
 ## Additional Best Practices
 
-**Use version control for code, not data.** Git is designed for text files. Large or binary data files should live in dedicated storage (cloud drives, data repositories, databases) and be referenced in your code, not committed to the repository.
+**Use version control for code, not data.** Git is designed for text files. Large or binary data files should live in dedicated storage (cloud drives, data repositories, databases) and be referenced in your code, not committed to the repository. Use a good `.gitignore`. 
 
 **Document your cleaning steps.** The gap between raw and processed data should be bridged entirely by a script that anyone can run. Comments in that script explaining *why* you made certain decisions are invaluable.
 

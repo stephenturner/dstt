@@ -1,9 +1,3 @@
----
-execute:
-  message: false
-  warning: false
----
-
 # Coding with AI {#sec-ai}
 
 AI tools for coding have matured rapidly, covering a spectrum from simple inline completions to fully autonomous agents that can read, write, and execute code across an entire project. This chapter provides a brief orientation to the tools most relevant to data scientists working in Positron.

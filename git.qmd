@@ -1,9 +1,3 @@
----
-execute:
-  message: false
-  warning: false
----
-
 # Version Control {#sec-git}
 
 Git is a distributed version control system that tracks changes to files over time, allowing you to review history, revert mistakes, and collaborate without overwriting each other's work. For data science teams, version control is essential for reproducibility (knowing exactly which code produced which results), collaboration (multiple people working on the same project safely), and auditability (a clear record of what changed and why). GitHub is the most widely used platform for hosting Git repositories and adds features like pull requests, code review, and issue tracking on top of Git's core capabilities.
@@ -146,9 +140,11 @@ Keep branches short-lived — ideally merged within a few days. Long-running bra
 When contributing to a repository you don't have write access to — such as an open-source tool or a public project from another team — the fork workflow is used instead. A fork is a personal copy of the repository under your GitHub account.
 
 ```{mermaid}
-flowchart LR
-    U["upstream\nORIGINAL_ORG/repo"]
-    O["origin\nYOUR_USERNAME/repo"]
+flowchart TD
+    U["upstream
+       ORIGINAL_ORG/repo"]
+    O["origin
+       YOUR_USERNAME/repo"]
     L["local clone"]
     U -->|"fork"| O
     O -->|"clone"| L
