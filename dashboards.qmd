@@ -12,9 +12,15 @@ Quarto dashboards use `format: dashboard` to create multi-panel HTML data displa
 The examples in this chapter are drawn from a real dashboard tracking U.S. drug overdose mortality data from the National Vital Statistics System (2015–2023).
 
 :::{.callout-note}
-**Live demo:** [stephenturner.github.io/quarto-dashboard-demo](https://stephenturner.github.io/quarto-dashboard-demo)
+## Live demo and code
+- **Live demo:** [stephenturner.github.io/quarto-dashboard-demo](https://stephenturner.github.io/quarto-dashboard-demo)
+- **Source code:** [github.com/stephenturner/quarto-dashboard-demo](https://github.com/stephenturner/quarto-dashboard-demo)
+:::
 
-Source code: [github.com/stephenturner/quarto-dashboard-demo](https://github.com/stephenturner/quarto-dashboard-demo)
+::: {.callout-tip}
+## Quarto dashboard documentation
+
+The [Quarto documentation](https://quarto.org/docs/dashboards/) is the definitive resource for dashboard features, options, and examples. This chapter provides a practical walkthrough of building a dashboard, but the Quarto docs are the place to go for comprehensive reference material.
 :::
 
 ## Dashboard Anatomy {#sec-dashboards-anatomy}

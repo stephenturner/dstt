@@ -29,8 +29,8 @@ book:
     - index.qmd
     - part: "Technical"
       chapters:
-        - dashboards.qmd
         - git.qmd
+        - dashboards.qmd
         - ai.qmd
     - part: "Nontechnical"
       chapters:
