@@ -1,5 +1,5 @@
 # Preface {.unnumbered}
 
-This book is reference material for the CSTE Data Science Team Training (DSTT) program provided by project coach Dr. Stephen Turner. This book contains a collection of useful code, resources, workshop material, and other useful guidance collected over several years of serving as a DSTT coach.
+This book was originally developed as reference material for the [CSTE Data Science Team Training (DSTT)](https://www.cste.org/) program, where project coach Dr. Stephen D. Turner works with public health agencies across the country to build data science capacity in the public health workforce. It contains a collection of useful code, resources, workshop material, and other guidance accumulated over several years of DSTT coaching.
 
-Cross-references: and [Appendix -@sec-resources].
+While this material was created with CSTE DSTT participants in mind, it is intended to be broadly useful to anyone working at the intersection of data science and public health—whether you are a current or former DSTT participant, a public health practitioner looking to strengthen your analytical skills, or someone new to data science in a public health context.

@@ -1,8 +1,89 @@
 ---
-execute: 
+execute:
   message: false
   warning: false
 ---
 
 # Coding with AI {#sec-ai}
 
+AI tools for coding have matured rapidly, covering a spectrum from simple inline completions to fully autonomous agents that can read, write, and execute code across an entire project. This chapter provides a brief orientation to the tools most relevant to data scientists working in Positron.
+
+## Code Completion with GitHub Copilot {#sec-ai-copilot}
+
+[GitHub Copilot](https://github.com/features/copilot) is a code completion service that suggests code as you type. Install the **GitHub Copilot** extension in Positron, and suggestions will appear inline in the editor and in notebooks — press Tab to accept a suggestion or Escape to dismiss it.
+
+Copilot draws on the surrounding code and comments to infer what you're trying to write. It works well for boilerplate, common patterns, and filling in function arguments you'd otherwise have to look up.
+
+A GitHub Copilot subscription is required; a free tier is available for individual developers.
+
+## Positron Assistant {#sec-ai-positron-assistant}
+
+Positron has a built-in AI assistant (available since version 2025.07.0-204) accessible via the chat panel in the left sidebar. Unlike Copilot, which only completes code, the assistant understands your full session context — loaded data frames, console history, plots, and project structure — making it well-suited to data analysis workflows.
+
+The assistant operates in three modes:
+
+- **Ask** — conversational Q&A. Use it to explain error messages, get help with a function, or talk through an analysis approach without modifying any files.
+- **Edit** — makes targeted changes to selected code based on a natural-language instruction. Useful for refactoring, renaming, or reformatting a block of code.
+- **Agent** — more autonomous. The agent can create and modify files, run terminal commands, and work across multiple files to complete a larger task.
+
+The assistant uses a bring-your-own-key model: you connect it to an AI provider (Anthropic, OpenAI, GitHub Copilot, or AWS Bedrock) using your own API key. Posit does not see your prompts or code.
+
+:::{.callout-tip}
+## Positron Assistant documentation
+The [Positron Assistant documentation](https://positron.posit.co/assistant.html) covers setup, model configuration, and mode details.
+:::
+
+## Databot {#sec-ai-databot}
+
+Databot is an experimental Positron extension purpose-built for exploratory data analysis. Where Positron Assistant helps you write code, Databot *writes and executes* short analysis snippets on your behalf, treating insights as the goal rather than the code. You describe what you want to understand about your data, and Databot iterates through code execution to get there.
+
+Databot is currently in research preview and requires an Anthropic API key. It is designed for experienced R and Python users who can critically evaluate the code it produces — AI models can and do make mistakes in open-ended data exploration.
+
+Open Databot via the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) and search for "Databot".
+
+:::{.callout-tip}
+See the [Databot documentation](https://positron.posit.co/databot.html) for installation instructions and warnings that are worth reading.
+:::
+
+## Claude Code {#sec-ai-claude-code}
+
+Claude Code is a terminal-based AI coding agent from Anthropic. Unlike the Positron Assistant chat panel, Claude Code operates directly in a shell session with full access to the filesystem: it can read and write files, search the codebase, run commands, and coordinate changes across many files in a single session.
+
+Install it (instructions below for MacOS, Linux, WSL, see [docs](https://code.claude.com/docs/en/quickstart) for Windows).
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+Then launch it from Positron's integrated terminal (**Terminal → New Terminal**):
+
+```bash
+claude
+```
+
+Claude Code is particularly effective for multi-file refactors, complex debugging sessions, and tasks that are tedious to coordinate manually.
+
+## Cost, Privacy, and Model Choice {#sec-ai-models}
+
+### Capability
+
+Frontier models from OpenAI and Anthropic are substantially more capable than open-weight alternatives for complex reasoning and coding tasks. For most everyday coding work (fixing errors, writing functions, refactoring) a mid-tier model like Anthropic's Claude Sonnet is fast, inexpensive, and more than capable enough. Save the most powerful (and expensive) frontier models for genuinely hard problems.
+
+### Cost
+
+API pricing is metered by token (roughly, by word). Typical coding assistance sessions cost cents to a few dollars; heavy agent sessions that read and write many files may cost a bit more. GitHub Copilot charges a flat monthly subscription instead, which can be more predictable for high-volume users.
+
+### Privacy
+
+A common concern is whether proprietary code sent to a cloud AI service will be used to train future models. The short answer is: **not if you're paying for API access**.
+
+Both Anthropic and OpenAI state explicitly that inputs and outputs from paid API usage are not used for model training. This is distinct from their free consumer products, which may use interactions for improvement. If your team is using Positron Assistant, Claude Code, or the OpenAI API with your own key, your code is not becoming training data.
+
+:::{.callout-note}
+See the authoritative statements directly:
+
+- [Anthropic's privacy policy](https://www.anthropic.com/legal/privacy)
+- [OpenAI's privacy policy](https://openai.com/policies/privacy-policy)
+:::
+
+Open-weight models (such as Meta's Llama or Google's Gemma) can be run entirely on local hardware, which provides the strongest possible privacy guarantee and meets strict data-residency or air-gap requirements. The trade-off is lower capability and the infrastructure overhead of running the model yourself. For most teams using cloud APIs with a commercial agreement, the privacy risk is lower than it is commonly assumed to be.
