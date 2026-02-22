@@ -1,0 +1,5 @@
+# Preface {.unnumbered}
+
+This book is reference material for the CSTE Data Science Team Training (DSTT) program provided by project coach Dr. Stephen Turner. This book contains a collection of useful code, resources, workshop material, and other useful guidance collected over several years of serving as a DSTT coach.
+
+Cross-references: and [Appendix -@sec-resources].

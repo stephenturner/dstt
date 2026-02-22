@@ -1,0 +1,52 @@
+project:
+  type: book
+
+book:
+  title: "Data Science Team Training"
+  author: "Stephen D. Turner, Ph.D."
+  page-footer:
+    left: "&copy; 2026 Stephen D. Turner"
+    right:
+      - icon: github
+        href: https://github.com/stephenturner
+      - icon: linkedin
+        href: https://www.linkedin.com/in/turnersd/
+      - icon: house-fill
+        href: https://stephenturner.us/
+      - icon: rss
+        href: https://blog.stephenturner.us/
+      - icon: bluesky
+        href: https://bsky.app/profile/stephenturner.us
+  date: today
+  downloads: [pdf, epub]
+
+  chapters:
+    - index.qmd
+    - part: "Technical"
+      chapters:
+        - dashboards.qmd
+        - git.qmd
+        - ai.qmd
+    - part: "Nontechnical"
+      chapters:
+      - dataorg.qmd
+  appendices:
+  - references.qmd
+  - resources.qmd
+
+callout-appearance: default
+callout-icon: true
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+    code-link: true
+    author-meta: "Stephen D. Turner"
+pdf:
+  documentclass: scrreprt
+epub:
+  theme: default
