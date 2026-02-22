@@ -16,3 +16,4 @@ _book/
 .RData
 .Rhistory
 .DS_Store
+.memory
