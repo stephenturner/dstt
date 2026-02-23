@@ -1,0 +1,25 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.5.2 Chrome/142.0.7444.265 Electron/39.6.1 Safari/537.36" version="29.5.2">
+  <diagram name="Page-1" id="1CmrSYEq8dbEuFitc_R3">
+    <mxGraphModel dx="3178" dy="3075" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1040" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Y2lxJQqU7OgszLwGQgsR-3" parent="1" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;rotation=90;size=298.8299999999999;strokeColor=none;fillColor=#000000;" value="" vertex="1">
+          <mxGeometry height="1040" width="1200" x="-80" y="-1120" as="geometry" />
+        </mxCell>
+        <mxCell id="Y2lxJQqU7OgszLwGQgsR-4" parent="1" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;rotation=90;size=280;" value="" vertex="1">
+          <mxGeometry height="970.67" width="1120" x="-40" y="-1085.33" as="geometry" />
+        </mxCell>
+        <mxCell id="Y2lxJQqU7OgszLwGQgsR-5" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=340;fontStyle=1" value="DSTT" vertex="1">
+          <mxGeometry height="230" width="980" x="30" y="-715" as="geometry" />
+        </mxCell>
+        <mxCell id="Y2lxJQqU7OgszLwGQgsR-7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=100;fontStyle=0" value="&lt;font&gt;Data Science&lt;/font&gt;" vertex="1">
+          <mxGeometry height="230" width="980" x="30" y="-980" as="geometry" />
+        </mxCell>
+        <mxCell id="Y2lxJQqU7OgszLwGQgsR-8" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=100;fontStyle=0" value="&lt;font&gt;Team Training&lt;/font&gt;" vertex="1">
+          <mxGeometry height="230" width="980" x="30" y="-460" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
