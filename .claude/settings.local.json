@@ -11,7 +11,8 @@
       "WebSearch",
       "Bash(head:*)",
       "WebFetch(domain:arxiv.org)",
-      "WebFetch(domain:rocker-project.org)"
+      "WebFetch(domain:rocker-project.org)",
+      "WebFetch(domain:docs.ropensci.org)"
     ]
   }
 }
