@@ -9,3 +9,45 @@ The chapters cover the foundational practices that make data science work sustai
 While this material was created with DSTT participants in mind, it is intended to be broadly useful to anyone working at the intersection of data science and public health, whether you are a current or former DSTT participant, a public health practitioner looking to strengthen your analytical skills, or someone new to data science in a public health context.
 
 No single book can cover everything, and this one does not try to. @sec-resources points to additional reading and training for topics that go deeper than what is covered here.
+
+
+```{r cover-image}
+#| eval: false
+#| echo: false
+#| message: false
+#| warning: false
+#| include: false
+
+# fmt: skip file
+
+library(ggplot2)
+library(ggraph)
+library(tidygraph)
+
+set.seed(42)
+nodes <- data.frame(
+  id = 1:14,
+  x = c(-2.5, -1.8, -1.2, -0.5, 0.2, 0.8, 1.5, 2.5,
+        -1.0, 0.5, 1.8, -0.2, 0.8, -1.5),
+  y = c(0.3, 1.8, 0.8, 1.5, 2.0, 0.9, 1.4, 1.6,
+        -0.5, -0.7, 0.5, -1.2, -0.3, -0.8)
+)
+
+edges <- data.frame(
+  from = c(1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,9,9,10,10,11,12,13,14,3,1,12,6),
+  to   = c(3,9,4,5,4,9,5,6,7,6,7,10,8,11,11,14,12,12,13,13,11,14,3,14,14,10,13)
+)
+
+graph <- tbl_graph(nodes = nodes, edges = edges, directed = FALSE)
+
+p <- ggraph(graph, layout = "manual", x = nodes$x, y = nodes$y) +
+  geom_edge_link(edge_colour = "#ffb300ff", edge_width = 0.4) +
+  geom_node_point(colour = "#344472ff", size = 4) +
+  theme_void() +
+  theme(
+    plot.background = element_rect(fill = "transparent", colour = NA),
+    panel.background = element_rect(fill = "transparent", colour = NA)
+  )
+p
+# ggsave("cover-pre.png", p, width = 6, height = 4, dpi = 300, bg = "transparent")
+```
