@@ -22,7 +22,7 @@ book:
   site-url: https://dstt.stephenturner.us/
   repo-url: https://github.com/stephenturner/dstt
   cover-image: cover.jpg
-  # favicon: hex.png
+  favicon: hex.png
 
 
   chapters:
@@ -33,6 +33,7 @@ book:
         - dataorg.qmd
         - ai.qmd
         - dashboards.qmd
+        - environments.qmd
     - part: "Nontechnical"
       chapters:
         - pm.qmd

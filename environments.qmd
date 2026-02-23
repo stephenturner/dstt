@@ -1,0 +1,369 @@
+# Reproducible Environments {#sec-environments}
+
+Code that runs correctly today may fail six months from now—not because you changed anything, but because a package updated, R released a new version, or a system library changed underneath your analysis. This is sometimes called the "works on my machine" problem, and it is one of the most frustrating failure modes in data science work. Reproducible environments are the solution: explicit records of the exact software versions your code depends on, packaged in a way that others (and future you) can restore exactly.
+
+This chapter covers two levels of environment management:
+
+- **Package-level** with `renv`, which records and restores R package versions
+- **System-level** with Docker and the Rocker project, which captures the entire computing environment including R itself, system libraries, and non-R tools
+- **Bridging both** with `pracpac`, which containerizes R packages by combining `renv` dependency capture with Docker image generation
+
+These tools exist on a spectrum of complexity and completeness. A good rule of thumb: start with `renv` for any analysis project involving collaborators, and reach for Docker when you need to share a full deployment or guarantee identical results across different operating systems.
+
+## Package Environments with renv {#sec-environments-renv}
+
+The [`renv` package](https://rstudio.github.io/renv/) gives each R project its own private library. Instead of every project sharing a single system-wide package library—where upgrading a package for one project might break another—`renv` isolates dependencies per project and records the exact versions in a lockfile.
+
+### How renv Works
+
+`renv` maintains three things:
+
+1. **A project-private library** at `renv/library/` -- packages installed here don't affect other projects
+2. **A lockfile** (`renv.lock`) -- a plain-text record of every package version used in the project
+3. **An activation script** (`renv/activate.R`) -- auto-loaded by `.Rprofile` to activate the project library when R starts in that directory
+
+The lockfile is what makes sharing and restoring the environment possible. It records the package name, version, source (CRAN, Bioconductor, GitHub), and a hash for verification:
+
+```json
+{
+  "R": {
+    "Version": "4.4.1",
+    "Repositories": [
+      {
+        "Name": "CRAN",
+        "URL": "https://packagemanager.posit.co/cran/latest"
+      }
+    ]
+  },
+  "Packages": {
+    "dplyr": {
+      "Package": "dplyr",
+      "Version": "1.1.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "fedd9d00c2944ff00a0e2696ccf048ec"
+    }
+  }
+}
+```
+
+This file should be committed to version control (see @sec-git). It's how collaborators and future you restore the same environment.
+
+### Core Workflow
+
+**Starting a new project:**
+
+```r
+renv::init()
+```
+
+This initializes `renv` in the current project: creates the private library, scans your scripts for `library()` and `require()` calls to discover dependencies, installs those packages, and writes the initial `renv.lock`.
+
+**After installing or updating packages:**
+
+```r
+# Install packages as usual
+install.packages("ggplot2")
+
+# or use renv's wrapper -- preferred
+renv::install("tidyr")       
+
+# Then snapshot to record the new state
+renv::snapshot()
+```
+
+`renv::snapshot()` updates `renv.lock` to reflect the current state of your project library. Run it whenever you add or update packages, then commit the updated lockfile.
+
+**Restoring an environment (e.g., on a new machine or after cloning a repo):**
+
+```r
+renv::restore()
+```
+
+This reads `renv.lock` and installs exactly the recorded versions. This is the key command for reproducibility -- any collaborator who clones your repository and runs `renv::restore()` ends up with the identical package environment.
+
+::: {.callout-tip}
+When you open a project with an existing `renv.lock`, `renv` will notice if your local library is out of sync with the lockfile and suggest running `renv::restore()`. You can also check status explicitly:
+
+```r
+renv::status()
+```
+
+This reports any discrepancies between your installed packages and `renv.lock`.
+:::
+
+**Checking for package updates:**
+
+```r
+renv::update()      # update all packages to latest versions
+renv::snapshot()    # then re-record the new state
+```
+
+### Working as a Team
+
+When collaborating on a project with `renv`:
+
+1. One person initializes `renv` and commits `renv.lock`, `renv/activate.R`, and `.Rprofile` to the repository
+2. Everyone else clones the repo and runs `renv::restore()` to set up their local environment
+3. When anyone installs or updates a package, they run `renv::snapshot()` and commit the updated `renv.lock`
+
+Commit these files; do not commit the `renv/library/` folder itself (add it to `.gitignore`—`renv` does this automatically). The library can be rebuilt from the lockfile; committing it would add thousands of binary files to your repository.
+
+::: {.callout-note}
+`renv` uses a global package cache on each machine, so packages are only downloaded and installed once even if you use them in multiple projects. Restoring an environment the second time is nearly instant if the packages are already cached.
+:::
+
+### What renv Does Not Solve
+
+`renv` captures R package versions but not:
+
+- The **R version itself**: if collaborator A runs R 4.3 and collaborator B runs R 4.4, results may differ even with identical packages
+- **System libraries**: packages that depend on compiled system libraries (e.g., `sf` needs GDAL, `xml2` needs libxml2) can still break if system libraries differ
+- **Non-R software**: any external tools called from R (Python, command-line tools, etc.)
+
+For these cases, Docker provides a more complete solution.
+
+## Containers with Docker {#sec-environments-docker}
+
+Docker is a tool for packaging an entire computing environment—the operating system, system libraries, R, R packages, and any other software—into a portable, self-contained unit called a **container**. Containers run identically on any machine with Docker installed, regardless of the host operating system.
+
+### Key Concepts
+
+**Image:** A read-only template that defines the environment. Think of it as a snapshot of a fully configured system.
+
+**Container:** A running instance of an image. You can run multiple containers from the same image.
+
+**Dockerfile:** A text file containing the instructions for building an image. Like a recipe: start from this base, install these packages, copy these files, run this command.
+
+**Registry:** A place to store and share images. Docker Hub is the public default; organizations may run private registries.
+
+### Why Docker for R?
+
+The limitations of `renv` described above—R version, system libraries, non-R software—are exactly what Docker addresses. A Docker image built with a specific R version and specific system libraries will behave identically on a laptop, a server, or a cloud VM, six months or six years from now, as long as the image is preserved.
+
+Docker is especially useful for:
+
+- **Deploying analyses to servers** -- the same image that works locally runs in production
+- **Sharing complete analyses** -- collaborators run your container without installing anything
+- **Pipelines that mix R with other tools** -- Python, command-line tools, databases, and R all coexist in one image
+- **Shiny apps** -- containerized apps can be deployed anywhere without managing a server environment
+
+### The Rocker Project {#sec-environments-rocker}
+
+Setting up Docker for R from scratch requires some Linux knowledge and wrestling around with installing R from source. The [Rocker project](https://rocker-project.org/) solves this by providing a curated set of R Docker images that are well-maintained, regularly updated, and designed specifically for data science workflows.
+
+#### The Versioned Stack
+
+The Rocker versioned stack is built around pinned R versions, making it the right choice for reproducible work:
+
+| Image | Built on | Contents |
+|---|---|---|
+| `rocker/r-ver` | Ubuntu LTS | Base R at a specific version |
+| `rocker/rstudio` | `r-ver` | Adds RStudio Server |
+| `rocker/tidyverse` | `rstudio` | Adds tidyverse, devtools, remotes |
+| `rocker/verse` | `tidyverse` | Adds TeX, Pandoc, Quarto |
+| `rocker/geospatial` | `verse` | Adds spatial libraries (sf, terra, GDAL) |
+
+The versioned images accept an R version tag, which pins both R and the package repository snapshot to that time period:
+
+```bash
+# R 4.4.1 with RStudio Server
+docker pull rocker/rstudio:4.4.1
+
+# R 4.3.0 with tidyverse
+docker pull rocker/tidyverse:4.3.0
+```
+
+::: {.callout-tip}
+Use a specific version tag rather than `latest` in production work. `rocker/rstudio:latest` will point to different R versions as new releases come out; `rocker/rstudio:4.4.1` always means exactly that version.
+:::
+
+#### Running Rocker Containers
+
+To start an RStudio Server session in your browser with R 4.4.1:
+
+```bash
+docker run --rm \
+  -p 8787:8787 \
+  -e PASSWORD=yourpassword \
+  -v "$(pwd)":/home/rstudio/project \
+  rocker/rstudio:4.4.1
+```
+
+Then open `http://localhost:8787` in a browser and log in with username `rstudio` and the password you set. The `-v` flag mounts your current directory into the container so you can access your local files.
+
+Key flags:
+- `--rm` -- remove the container when it exits (avoids accumulating stopped containers)
+- `-p 8787:8787` -- map host port 8787 to container port 8787
+- `-e PASSWORD=...` -- set the RStudio login password
+- `-v host_path:container_path` -- mount a local directory into the container
+
+#### Writing a Dockerfile
+
+For projects that need packages beyond what the base Rocker images provide, you write a Dockerfile that extends a Rocker image:
+
+```dockerfile
+FROM rocker/tidyverse:4.4.1
+
+# Install system dependencies (if needed)
+RUN apt-get update && apt-get install -y \
+    libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install additional R packages
+RUN R -e "install.packages(c('janitor', 'gt', 'gtsummary'))"
+
+# Copy project files
+COPY . /home/rstudio/project
+```
+
+Build and run the image:
+
+```bash
+docker build -t my-analysis:latest .
+docker run --rm -p 8787:8787 -e PASSWORD=pass my-analysis:latest
+```
+
+::: {.callout-note}
+**Docker and renv together.** For the most complete reproducibility, use both: a Dockerfile that pins the R version (via a versioned Rocker base) and `renv` inside the container to pin package versions. The `renv.lock` file is copied into the image at build time, and `renv::restore()` installs the exact package versions during the build. This combination captures the full stack—OS, R, and packages.
+:::
+
+## pracpac: R Packaging with Docker {#sec-environments-pracpac}
+
+[`pracpac`](https://signaturescience.github.io/pracpac/) (Practical R Packaging with Docker) [@pracpac2023] bridges the R package development workflow and Docker. It provides a `usethis`-style interface that automates the generation of Docker configuration for R packages under development, using `renv` to capture dependencies.
+
+While `renv` and basic Rocker Dockerfiles cover many use cases, `pracpac` is aimed at teams that have structured their analysis code as an R package and want to containerize that package—along with all its dependencies—for deployment or sharing.
+
+### What pracpac Does
+
+`pracpac` automates a four-step process that would otherwise require manual effort:
+
+1. **Dependency capture**: uses `renv` to snapshot all package dependencies matching the developer's current environment.
+2. **Package building**: creates a source tarball (`.tar.gz`) of the R package.
+3. **Dockerfile generation**: writes a Dockerfile that installs the captured dependencies and the package from source.
+4. **Image building**: optionally builds the Docker image with version tags drawn from the package `DESCRIPTION` file.
+
+The generated Dockerfile uses a Rocker base image, installs `renv` and `BiocManager`, restores dependencies from the `renv.lock`, and installs the package—mirroring the developer's environment inside the container.
+
+### Installation
+
+```r
+install.packages("pracpac")
+```
+
+### Workflow
+
+#### Step 1: Set up your R package with renv
+
+`pracpac` assumes your analysis is structured as an R package (with a `DESCRIPTION` file) and that `renv` is initialized:
+
+```r
+renv::init()
+# ... develop your package, install dependencies ...
+renv::snapshot()
+```
+
+#### Step 2: Generate Docker configuration
+
+From inside your R package project:
+
+```r
+library(pracpac)
+use_docker()
+```
+
+This creates a `docker/` subdirectory containing three artifacts:
+
+```
+your-package/
+├── DESCRIPTION
+├── R/
+├── renv.lock
+└── docker/
+    ├── Dockerfile
+    ├── renv.lock       # copy of the project lockfile
+    └── your-package_1.0.0.tar.gz   # built source package
+```
+
+#### Step 3: Build the Docker image
+
+Either pass `build = TRUE` to `use_docker()` to do everything in one step, or build separately:
+
+```r
+# One-step: generate and build
+use_docker(build = TRUE)
+
+# Two-step: generate first, inspect/customize, then build
+use_docker()
+# ... optionally edit docker/Dockerfile ...
+build_image()
+```
+
+The two-step approach is useful when you want to customize the generated Dockerfile before building—for example, to add system library dependencies or additional non-R tools.
+
+#### Step 4: Run and share the image
+
+```bash
+# Run the container
+docker run --rm -it your-package:1.0.0
+
+# Share via Docker Hub or a private registry
+docker push your-org/your-package:1.0.0
+```
+
+The image tag is derived from the package version in `DESCRIPTION`, so image versions stay in sync with package versions automatically.
+
+::: {.callout-tip}
+`pracpac` is particularly useful for deploying R-based pipelines alongside non-R tools. After `use_docker()` generates the initial Dockerfile, you can extend it to install Python, command-line bioinformatics tools, or any other software your pipeline needs. The R dependencies are already handled by `renv`—you just add the additional layers on top.
+:::
+
+### Use Cases
+
+**Analysis pipelines.** Structure your analysis as an R package, containerize with `pracpac`, and deploy to a server or cloud environment with a guarantee that the environment is identical to your development machine.
+
+**Shiny applications.** An R package that contains a Shiny app can be containerized with `pracpac`, then deployed to any Docker-capable hosting environment.
+
+**Reproducible publications.** Sharing a Docker image alongside a paper or report means reviewers and readers can reproduce your results exactly, regardless of what software is installed on their machine.
+
+**Mixed-language pipelines.** If your R package calls Python scripts or command-line tools, customize the generated Dockerfile to add those dependencies. The result is a single container that runs the complete pipeline.
+
+## Choosing Your Approach {#sec-environments-choosing}
+
+These tools are complementary, not competing. The right level of environment management depends on how much isolation and portability you need:
+
+| Scenario | Recommended approach |
+|---|---|
+| Solo project, short duration | `renv` only |
+| Team collaboration on analysis code | `renv` + commit `renv.lock` to git |
+| Need identical results across OS and R versions | `renv` + Docker (Rocker base) |
+| Deploying an analysis or app to a server | Docker (Rocker base) |
+| Analysis structured as an R package | `pracpac` |
+| Pipeline mixing R with other tools | `pracpac` with customized Dockerfile |
+
+The most common entry point for DSTT teams is `renv`: add it to any collaborative project, commit the lockfile, and let teammates restore the environment with `renv::restore()`. This alone eliminates most "it doesn't work on my machine" problems. Docker and `pracpac` become relevant when you need to share a fully self-contained environment or move an analysis into production.
+
+## Further Reading {#sec-environments-further}
+
+The tools covered in this chapter—`renv`, Docker/Rocker, and `pracpac`—are the most practical starting points for most teams. The reproducibility landscape is broader, however, and a few other tools are worth knowing about, specifically **Nix and rix**.
+
+[Nix](https://nixos.org/) is a package manager built around the principle of fully reproducible, declarative builds. Unlike `renv` (which captures R package versions) or Docker (which captures a container image), Nix works at the level of the entire software supply chain: every package, system library, compiler, and tool is described by a precise specification and built from source in an isolated environment. The result is a level of reproducibility that is difficult to achieve any other way.
+
+For R users, Nix's power is most accessible through [`rix`](https://docs.ropensci.org/rix/), an rOpenSci package developed by Bruno Rodrigues and Philipp Baumann. `rix` provides an R-native interface for generating Nix environments—you specify the R version, packages, and system dependencies in R code, and `rix` writes the `default.nix` file that Nix uses to build the environment:
+
+```r
+library(rix)
+
+rix(
+  r_ver = "4.4.1",
+  r_pkgs = c("dplyr", "ggplot2", "tidyr"),
+  system_pkgs = NULL,
+  git_pkgs = NULL,
+  ide = "rstudio",
+  project_path = "."
+)
+```
+
+This generates a `default.nix` file that, when built with Nix, produces an environment with exactly that R version and those packages—down to the system library level, without Docker, and with no mutable state that can drift over time.
+
+`rix` is a compelling option if your team is willing to install Nix and invest in learning its model. The payoff is reproducibility that is more rigorous than `renv` alone and less operationally complex than Docker for day-to-day development. Bruno Rodrigues's book [*Building Reproducible Analytical Pipelines with R*](https://raps-with-r.dev/) covers this approach in depth.
+
