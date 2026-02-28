@@ -2,14 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Stephen D. Turner">
 
-<title>4&nbsp; Dashboards – Data Science Team Training</title>
+<title>6&nbsp; Dashboards – Data Science Team Training</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -76,10 +79,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-076ecbd647e1f0418c5051713cd9b730.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -120,7 +123,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./dashboards.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dashboards</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./dashboards.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dashboards</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -194,20 +197,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Validation and QA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reporting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Reproducible Reporting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./ai.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Coding with AI</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Coding with AI</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dashboards.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dashboards</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dashboards</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./environments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Reproducible Environments</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reproducible Environments</span></span></a>
   </div>
 </li>
       </ul>
@@ -224,7 +239,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./governance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./comms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
   </div>
 </li>
       </ul>
@@ -247,7 +274,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Other resources</span></span></a>
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Additional Resources</span></span></a>
   </div>
 </li>
       </ul>
@@ -262,28 +289,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-dashboards-anatomy" id="toc-sec-dashboards-anatomy" class="nav-link active" data-scroll-target="#sec-dashboards-anatomy"><span class="header-section-number">4.1</span> Dashboard Anatomy</a>
+  <li><a href="#sec-dashboards-anatomy" id="toc-sec-dashboards-anatomy" class="nav-link active" data-scroll-target="#sec-dashboards-anatomy"><span class="header-section-number">6.1</span> Dashboard Anatomy</a>
   <ul class="collapse">
-  <li><a href="#yaml-front-matter" id="toc-yaml-front-matter" class="nav-link" data-scroll-target="#yaml-front-matter"><span class="header-section-number">4.1.1</span> YAML Front Matter</a></li>
-  <li><a href="#rows-and-columns" id="toc-rows-and-columns" class="nav-link" data-scroll-target="#rows-and-columns"><span class="header-section-number">4.1.2</span> Rows and Columns</a></li>
-  <li><a href="#cards" id="toc-cards" class="nav-link" data-scroll-target="#cards"><span class="header-section-number">4.1.3</span> Cards</a></li>
-  <li><a href="#value-boxes" id="toc-value-boxes" class="nav-link" data-scroll-target="#value-boxes"><span class="header-section-number">4.1.4</span> Value Boxes</a></li>
-  <li><a href="#tabsets" id="toc-tabsets" class="nav-link" data-scroll-target="#tabsets"><span class="header-section-number">4.1.5</span> Tabsets</a></li>
+  <li><a href="#yaml-front-matter" id="toc-yaml-front-matter" class="nav-link" data-scroll-target="#yaml-front-matter"><span class="header-section-number">6.1.1</span> YAML Front Matter</a></li>
+  <li><a href="#rows-and-columns" id="toc-rows-and-columns" class="nav-link" data-scroll-target="#rows-and-columns"><span class="header-section-number">6.1.2</span> Rows and Columns</a></li>
+  <li><a href="#cards" id="toc-cards" class="nav-link" data-scroll-target="#cards"><span class="header-section-number">6.1.3</span> Cards</a></li>
+  <li><a href="#value-boxes" id="toc-value-boxes" class="nav-link" data-scroll-target="#value-boxes"><span class="header-section-number">6.1.4</span> Value Boxes</a></li>
+  <li><a href="#tabsets" id="toc-tabsets" class="nav-link" data-scroll-target="#tabsets"><span class="header-section-number">6.1.5</span> Tabsets</a></li>
   </ul></li>
-  <li><a href="#sec-dashboards-build" id="toc-sec-dashboards-build" class="nav-link" data-scroll-target="#sec-dashboards-build"><span class="header-section-number">4.2</span> Building a Dashboard</a>
+  <li><a href="#sec-dashboards-build" id="toc-sec-dashboards-build" class="nav-link" data-scroll-target="#sec-dashboards-build"><span class="header-section-number">6.2</span> Building a Dashboard</a>
   <ul class="collapse">
-  <li><a href="#project-structure" id="toc-project-structure" class="nav-link" data-scroll-target="#project-structure"><span class="header-section-number">4.2.1</span> Project Structure</a></li>
-  <li><a href="#loading-data" id="toc-loading-data" class="nav-link" data-scroll-target="#loading-data"><span class="header-section-number">4.2.2</span> Loading Data</a></li>
-  <li><a href="#value-boxes-1" id="toc-value-boxes-1" class="nav-link" data-scroll-target="#value-boxes-1"><span class="header-section-number">4.2.3</span> Value Boxes</a></li>
-  <li><a href="#static-plots-ggplot2" id="toc-static-plots-ggplot2" class="nav-link" data-scroll-target="#static-plots-ggplot2"><span class="header-section-number">4.2.4</span> Static plots (ggplot2)</a></li>
-  <li><a href="#interactive-plots-plotly" id="toc-interactive-plots-plotly" class="nav-link" data-scroll-target="#interactive-plots-plotly"><span class="header-section-number">4.2.5</span> Interactive plots (plotly)</a></li>
-  <li><a href="#tables-dt" id="toc-tables-dt" class="nav-link" data-scroll-target="#tables-dt"><span class="header-section-number">4.2.6</span> Tables (DT)</a></li>
+  <li><a href="#project-structure" id="toc-project-structure" class="nav-link" data-scroll-target="#project-structure"><span class="header-section-number">6.2.1</span> Project Structure</a></li>
+  <li><a href="#loading-data" id="toc-loading-data" class="nav-link" data-scroll-target="#loading-data"><span class="header-section-number">6.2.2</span> Loading Data</a></li>
+  <li><a href="#value-boxes-1" id="toc-value-boxes-1" class="nav-link" data-scroll-target="#value-boxes-1"><span class="header-section-number">6.2.3</span> Value Boxes</a></li>
+  <li><a href="#static-plots-ggplot2" id="toc-static-plots-ggplot2" class="nav-link" data-scroll-target="#static-plots-ggplot2"><span class="header-section-number">6.2.4</span> Static plots (ggplot2)</a></li>
+  <li><a href="#interactive-plots-plotly" id="toc-interactive-plots-plotly" class="nav-link" data-scroll-target="#interactive-plots-plotly"><span class="header-section-number">6.2.5</span> Interactive plots (plotly)</a></li>
+  <li><a href="#tables-dt" id="toc-tables-dt" class="nav-link" data-scroll-target="#tables-dt"><span class="header-section-number">6.2.6</span> Tables (DT)</a></li>
   </ul></li>
-  <li><a href="#sec-dashboards-render" id="toc-sec-dashboards-render" class="nav-link" data-scroll-target="#sec-dashboards-render"><span class="header-section-number">4.3</span> Previewing and Rendering</a></li>
-  <li><a href="#sec-dashboards-hosting" id="toc-sec-dashboards-hosting" class="nav-link" data-scroll-target="#sec-dashboards-hosting"><span class="header-section-number">4.4</span> Hosting on GitHub Pages</a>
+  <li><a href="#sec-dashboards-render" id="toc-sec-dashboards-render" class="nav-link" data-scroll-target="#sec-dashboards-render"><span class="header-section-number">6.3</span> Previewing and Rendering</a></li>
+  <li><a href="#sec-dashboards-hosting" id="toc-sec-dashboards-hosting" class="nav-link" data-scroll-target="#sec-dashboards-hosting"><span class="header-section-number">6.4</span> Hosting on GitHub Pages</a>
   <ul class="collapse">
-  <li><a href="#repository-setup" id="toc-repository-setup" class="nav-link" data-scroll-target="#repository-setup"><span class="header-section-number">4.4.1</span> Repository Setup</a></li>
-  <li><a href="#publishing" id="toc-publishing" class="nav-link" data-scroll-target="#publishing"><span class="header-section-number">4.4.2</span> Publishing</a></li>
+  <li><a href="#repository-setup" id="toc-repository-setup" class="nav-link" data-scroll-target="#repository-setup"><span class="header-section-number">6.4.1</span> Repository Setup</a></li>
+  <li><a href="#publishing" id="toc-publishing" class="nav-link" data-scroll-target="#publishing"><span class="header-section-number">6.4.2</span> Publishing</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -291,9 +318,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./dashboards.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dashboards</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./dashboards.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dashboards</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-dashboards" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dashboards</span></span></h1>
+<h1 class="title"><span id="sec-dashboards" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dashboards</span></span></h1>
 </div>
 
 
@@ -310,7 +337,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Quarto dashboards use <code>format: dashboard</code> to create multi-panel HTML data displays — no server required. They’re a middle ground between a static report (a single linear document) and a Shiny app (interactive but requires a running R process). Dashboards are ideal for sharing summaries, KPIs, and plots that need to look polished without the overhead of maintaining a server.</p>
+<p>Quarto dashboards use <code>format: dashboard</code> to create multi-panel HTML data displays — no server required. They’re a middle ground between a static report (a single linear document) and a Shiny app (interactive but requires a running R process). Dashboards are ideal for sharing summaries, KPIs, and plots that need to look polished without the overhead of maintaining a server. <a href="comms.html" class="quarto-xref"><span>Chapter 10</span></a> covers how to decide whether a dashboard is the right output format for a given audience and finding.</p>
 <p>The examples in this chapter are drawn from a real dashboard tracking U.S. drug overdose mortality data from the National Vital Statistics System (2015–2023).</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -341,10 +368,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The <a href="https://quarto.org/docs/dashboards/">Quarto documentation</a> is the definitive resource for dashboard features, options, and examples. This chapter provides a practical walkthrough of building a dashboard, but the Quarto docs are the place to go for comprehensive reference material.</p>
 </div>
 </div>
-<section id="sec-dashboards-anatomy" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="sec-dashboards-anatomy"><span class="header-section-number">4.1</span> Dashboard Anatomy</h2>
-<section id="yaml-front-matter" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1" class="anchored" data-anchor-id="yaml-front-matter"><span class="header-section-number">4.1.1</span> YAML Front Matter</h3>
+<section id="sec-dashboards-anatomy" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="sec-dashboards-anatomy"><span class="header-section-number">6.1</span> Dashboard Anatomy</h2>
+<section id="yaml-front-matter" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="yaml-front-matter"><span class="header-section-number">6.1.1</span> YAML Front Matter</h3>
 <p>A minimal Quarto dashboard needs only two things in the front matter: a title and <code>format: dashboard</code>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Dashboard"</span></span>
@@ -362,8 +389,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Setting <code>scrolling: false</code> (the default) sizes each row to fill the viewport height, producing a fixed-height layout. Setting <code>scrolling: true</code> allows the page to scroll freely, which is useful when the content is too tall to fit on one screen.</p>
 </section>
-<section id="rows-and-columns" class="level3" data-number="4.1.2">
-<h3 data-number="4.1.2" class="anchored" data-anchor-id="rows-and-columns"><span class="header-section-number">4.1.2</span> Rows and Columns</h3>
+<section id="rows-and-columns" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="rows-and-columns"><span class="header-section-number">6.1.2</span> Rows and Columns</h3>
 <p>Quarto dashboards lay out content in rows by default. Level-2 headings (<code>##</code>) define rows, and each code cell within a row becomes a card that fills its share of the available width.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Row {height=25%}</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -374,16 +401,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">cards here — taller row for plots</span><span class="co">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>{height=}</code> attribute (as a percentage or pixel value) controls how much vertical space each row takes. To switch to a column-based layout, use <code>orientation: columns</code> in the YAML and <code>{width=}</code> attributes on headings instead.</p>
 </section>
-<section id="cards" class="level3" data-number="4.1.3">
-<h3 data-number="4.1.3" class="anchored" data-anchor-id="cards"><span class="header-section-number">4.1.3</span> Cards</h3>
+<section id="cards" class="level3" data-number="6.1.3">
+<h3 data-number="6.1.3" class="anchored" data-anchor-id="cards"><span class="header-section-number">6.1.3</span> Cards</h3>
 <p>Every executable code cell in a dashboard automatically becomes a card. The cell’s output (a plot, a table, text) fills the card. Use the <code>#| title:</code> cell option to give the card a header:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "Monthly Admissions"</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(admissions, <span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> n)) <span class="sc">+</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="value-boxes" class="level3" data-number="4.1.4">
-<h3 data-number="4.1.4" class="anchored" data-anchor-id="value-boxes"><span class="header-section-number">4.1.4</span> Value Boxes</h3>
+<section id="value-boxes" class="level3" data-number="6.1.4">
+<h3 data-number="6.1.4" class="anchored" data-anchor-id="value-boxes"><span class="header-section-number">6.1.4</span> Value Boxes</h3>
 <p>Value boxes are compact summary cards ideal for KPIs and headline numbers. They are created with the <code>#| content: valuebox</code> cell option. The cell should return a named list with <code>icon</code>, <code>color</code>, and <code>value</code> keys.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| content: valuebox</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "Total Patients"</span></span>
@@ -395,8 +422,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Icons are <a href="https://icons.getbootstrap.com/">Bootstrap Icons</a> names (without the <code>bi-</code> prefix). Colors can be Bootstrap theme colors (<code>"primary"</code>, <code>"success"</code>, <code>"danger"</code>, <code>"warning"</code>, <code>"info"</code>) or any CSS color string.</p>
 </section>
-<section id="tabsets" class="level3" data-number="4.1.5">
-<h3 data-number="4.1.5" class="anchored" data-anchor-id="tabsets"><span class="header-section-number">4.1.5</span> Tabsets</h3>
+<section id="tabsets" class="level3" data-number="6.1.5">
+<h3 data-number="6.1.5" class="anchored" data-anchor-id="tabsets"><span class="header-section-number">6.1.5</span> Tabsets</h3>
 <p>Adding <code>.tabset</code> to a row makes each card within that row a tab instead of a side-by-side panel. Each cell’s <code>#| title:</code> becomes the tab label.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Row {.tabset}</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -410,11 +437,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Tabsets are useful when you have multiple views of the same data (e.g., a plot and the underlying table) and don’t want them to compete for screen space.</p>
 </section>
 </section>
-<section id="sec-dashboards-build" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="sec-dashboards-build"><span class="header-section-number">4.2</span> Building a Dashboard</h2>
+<section id="sec-dashboards-build" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="sec-dashboards-build"><span class="header-section-number">6.2</span> Building a Dashboard</h2>
 <p>This section walks through building the overdose mortality dashboard step by step. All code blocks here are display-only; the executable versions live in the demo repository.</p>
-<section id="project-structure" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="project-structure"><span class="header-section-number">4.2.1</span> Project Structure</h3>
+<section id="project-structure" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="project-structure"><span class="header-section-number">6.2.1</span> Project Structure</h3>
 <p>A Quarto dashboard lives in its own project directory with a <code>_quarto.yml</code> file and an <code>index.qmd</code>:</p>
 <pre><code>quarto-dashboard-demo/
 ├── _quarto.yml
@@ -429,8 +456,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> cosmo</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">scrolling</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="loading-data" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2" class="anchored" data-anchor-id="loading-data"><span class="header-section-number">4.2.2</span> Loading Data</h3>
+<section id="loading-data" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="loading-data"><span class="header-section-number">6.2.2</span> Loading Data</h3>
 <p>The setup chunk loads packages and reads the data. Compute any summary values you’ll reuse across multiple cells here so they’re available throughout the document.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
@@ -455,8 +482,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>pod</code> column is the proportion of all deaths attributable to overdose — the primary metric throughout the dashboard.</p>
 </section>
-<section id="value-boxes-1" class="level3" data-number="4.2.3">
-<h3 data-number="4.2.3" class="anchored" data-anchor-id="value-boxes-1"><span class="header-section-number">4.2.3</span> Value Boxes</h3>
+<section id="value-boxes-1" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="value-boxes-1"><span class="header-section-number">6.2.3</span> Value Boxes</h3>
 <p>Three value boxes occupy the first row. Each is a separate code cell with <code>#| content: valuebox</code> and a <code>#| title:</code>. Place them all under the same <code>## Row</code> heading so they share the row equally.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Row {height=20%}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| content: valuebox</span></span>
@@ -487,8 +514,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="static-plots-ggplot2" class="level3" data-number="4.2.4">
-<h3 data-number="4.2.4" class="anchored" data-anchor-id="static-plots-ggplot2"><span class="header-section-number">4.2.4</span> Static plots (ggplot2)</h3>
+<section id="static-plots-ggplot2" class="level3" data-number="6.2.4">
+<h3 data-number="6.2.4" class="anchored" data-anchor-id="static-plots-ggplot2"><span class="header-section-number">6.2.4</span> Static plots (ggplot2)</h3>
 <p>A static ggplot2 plot renders as a PNG image inside a card. It works well for PDF exports and environments without JavaScript, but users can’t hover for values or zoom in.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "Overdose % Over Time — Selected States"</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -508,8 +535,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="interactive-plots-plotly" class="level3" data-number="4.2.5">
-<h3 data-number="4.2.5" class="anchored" data-anchor-id="interactive-plots-plotly"><span class="header-section-number">4.2.5</span> Interactive plots (plotly)</h3>
+<section id="interactive-plots-plotly" class="level3" data-number="6.2.5">
+<h3 data-number="6.2.5" class="anchored" data-anchor-id="interactive-plots-plotly"><span class="header-section-number">6.2.5</span> Interactive plots (plotly)</h3>
 <p>Wrapping a ggplot in <code>plotly::ggplotly()</code> converts it to an interactive plot with hover tooltips, zoom, and pan — no layout changes needed.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "Overdose % Over Time — Selected States"</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -554,8 +581,8 @@ Tip
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(p2, <span class="at">tooltip =</span> <span class="st">"text"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="tables-dt" class="level3" data-number="4.2.6">
-<h3 data-number="4.2.6" class="anchored" data-anchor-id="tables-dt"><span class="header-section-number">4.2.6</span> Tables (DT)</h3>
+<section id="tables-dt" class="level3" data-number="6.2.6">
+<h3 data-number="6.2.6" class="anchored" data-anchor-id="tables-dt"><span class="header-section-number">6.2.6</span> Tables (DT)</h3>
 <p><code>DT::datatable()</code> produces an interactive HTML table with built-in search, sorting, and pagination.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| title: "Data"</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -576,8 +603,8 @@ Tip
 <p><code>filter = "top"</code> adds a per-column search box above each column header, allowing users to filter by state or year without any server-side code.</p>
 </section>
 </section>
-<section id="sec-dashboards-render" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="sec-dashboards-render"><span class="header-section-number">4.3</span> Previewing and Rendering</h2>
+<section id="sec-dashboards-render" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="sec-dashboards-render"><span class="header-section-number">6.3</span> Previewing and Rendering</h2>
 <p>From inside the project directory:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview index.qmd   <span class="co"># live-reload preview in browser</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render index.qmd    <span class="co"># render to index.html</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -595,11 +622,11 @@ Note
 </div>
 </div>
 </section>
-<section id="sec-dashboards-hosting" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="sec-dashboards-hosting"><span class="header-section-number">4.4</span> Hosting on GitHub Pages</h2>
+<section id="sec-dashboards-hosting" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="sec-dashboards-hosting"><span class="header-section-number">6.4</span> Hosting on GitHub Pages</h2>
 <p>Because <code>format: dashboard</code> is incompatible with <code>format: html</code> (the book format used here), a dashboard cannot be a page in a Quarto book. The cleanest solution is to keep the dashboard in its own GitHub repository and deploy it separately.</p>
-<section id="repository-setup" class="level3" data-number="4.4.1">
-<h3 data-number="4.4.1" class="anchored" data-anchor-id="repository-setup"><span class="header-section-number">4.4.1</span> Repository Setup</h3>
+<section id="repository-setup" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="repository-setup"><span class="header-section-number">6.4.1</span> Repository Setup</h3>
 <p>Create a new GitHub repository (e.g., <code>quarto-dashboard-demo</code>) and push the project files:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
@@ -607,8 +634,8 @@ Note
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin git@github.com:stephenturner/quarto-dashboard-demo.git</span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="publishing" class="level3" data-number="4.4.2">
-<h3 data-number="4.4.2" class="anchored" data-anchor-id="publishing"><span class="header-section-number">4.4.2</span> Publishing</h3>
+<section id="publishing" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="publishing"><span class="header-section-number">6.4.2</span> Publishing</h3>
 <p><code>quarto publish gh-pages</code> renders the project and pushes the output to the <code>gh-pages</code> branch. GitHub Pages serves that branch automatically.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> publish gh-pages</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>After the first publish, GitHub Pages will be available at <code>https://stephenturner.github.io/quarto-dashboard-demo</code>. Subsequent publishes update the live site.</p>
@@ -1034,12 +1061,12 @@ Tip
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./ai.html" class="pagination-link" aria-label="Coding with AI">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Coding with AI</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Coding with AI</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./environments.html" class="pagination-link" aria-label="Reproducible Environments">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Reproducible Environments</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reproducible Environments</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

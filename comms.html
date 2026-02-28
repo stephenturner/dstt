@@ -8,7 +8,7 @@
 
 <meta name="author" content="Stephen D. Turner">
 
-<title>5&nbsp; Coding with AI – Data Science Team Training</title>
+<title>10&nbsp; Communicating Findings – Data Science Team Training</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,41 +24,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -69,8 +34,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./dashboards.html" rel="next">
-<link href="./reporting.html" rel="prev">
+<link href="./references.html" rel="next">
+<link href="./governance.html" rel="prev">
 <link href="./hex.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -123,7 +88,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./ai.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Coding with AI</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pm.html">Nontechnical</a></li><li class="breadcrumb-item"><a href="./comms.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Communicating Findings</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -209,7 +174,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ai.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ai.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Coding with AI</span></span></a>
   </div>
 </li>
@@ -250,7 +215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./comms.html" class="sidebar-item-text sidebar-link">
+  <a href="./comms.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
   </div>
 </li>
@@ -289,15 +254,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-ai-copilot" id="toc-sec-ai-copilot" class="nav-link active" data-scroll-target="#sec-ai-copilot"><span class="header-section-number">5.1</span> Code Completion with GitHub Copilot</a></li>
-  <li><a href="#sec-ai-positron-assistant" id="toc-sec-ai-positron-assistant" class="nav-link" data-scroll-target="#sec-ai-positron-assistant"><span class="header-section-number">5.2</span> Positron Assistant</a></li>
-  <li><a href="#sec-ai-databot" id="toc-sec-ai-databot" class="nav-link" data-scroll-target="#sec-ai-databot"><span class="header-section-number">5.3</span> Databot</a></li>
-  <li><a href="#sec-ai-claude-code" id="toc-sec-ai-claude-code" class="nav-link" data-scroll-target="#sec-ai-claude-code"><span class="header-section-number">5.4</span> Claude Code</a></li>
-  <li><a href="#sec-ai-models" id="toc-sec-ai-models" class="nav-link" data-scroll-target="#sec-ai-models"><span class="header-section-number">5.5</span> Cost, Privacy, and Model Choice</a>
+  <li><a href="#sec-comms-bottomline" id="toc-sec-comms-bottomline" class="nav-link active" data-scroll-target="#sec-comms-bottomline"><span class="header-section-number">10.1</span> Start with the Bottom Line</a>
   <ul class="collapse">
-  <li><a href="#capability" id="toc-capability" class="nav-link" data-scroll-target="#capability"><span class="header-section-number">5.5.1</span> Capability</a></li>
-  <li><a href="#cost" id="toc-cost" class="nav-link" data-scroll-target="#cost"><span class="header-section-number">5.5.2</span> Cost</a></li>
-  <li><a href="#privacy" id="toc-privacy" class="nav-link" data-scroll-target="#privacy"><span class="header-section-number">5.5.3</span> Privacy</a></li>
+  <li><a href="#the-so-what-test" id="toc-the-so-what-test" class="nav-link" data-scroll-target="#the-so-what-test"><span class="header-section-number">10.1.1</span> The “So What” Test</a></li>
+  </ul></li>
+  <li><a href="#sec-comms-audience" id="toc-sec-comms-audience" class="nav-link" data-scroll-target="#sec-comms-audience"><span class="header-section-number">10.2</span> Audience and Format</a>
+  <ul class="collapse">
+  <li><a href="#decision-makers" id="toc-decision-makers" class="nav-link" data-scroll-target="#decision-makers"><span class="header-section-number">10.2.1</span> Decision-Makers</a></li>
+  <li><a href="#program-staff" id="toc-program-staff" class="nav-link" data-scroll-target="#program-staff"><span class="header-section-number">10.2.2</span> Program Staff</a></li>
+  <li><a href="#technical-peers" id="toc-technical-peers" class="nav-link" data-scroll-target="#technical-peers"><span class="header-section-number">10.2.3</span> Technical Peers</a></li>
+  <li><a href="#an-executive-summary-template" id="toc-an-executive-summary-template" class="nav-link" data-scroll-target="#an-executive-summary-template"><span class="header-section-number">10.2.4</span> An Executive Summary Template</a></li>
+  </ul></li>
+  <li><a href="#sec-comms-format" id="toc-sec-comms-format" class="nav-link" data-scroll-target="#sec-comms-format"><span class="header-section-number">10.3</span> Choosing the Right Output</a></li>
+  <li><a href="#sec-comms-viz" id="toc-sec-comms-viz" class="nav-link" data-scroll-target="#sec-comms-viz"><span class="header-section-number">10.4</span> Visualizing to Communicate</a>
+  <ul class="collapse">
+  <li><a href="#match-chart-type-to-message" id="toc-match-chart-type-to-message" class="nav-link" data-scroll-target="#match-chart-type-to-message"><span class="header-section-number">10.4.1</span> Match Chart Type to Message</a></li>
+  <li><a href="#design-for-the-finding-not-the-data" id="toc-design-for-the-finding-not-the-data" class="nav-link" data-scroll-target="#design-for-the-finding-not-the-data"><span class="header-section-number">10.4.2</span> Design for the Finding, Not the Data</a></li>
+  </ul></li>
+  <li><a href="#sec-comms-uncertainty" id="toc-sec-comms-uncertainty" class="nav-link" data-scroll-target="#sec-comms-uncertainty"><span class="header-section-number">10.5</span> Communicating Uncertainty</a>
+  <ul class="collapse">
+  <li><a href="#natural-language-over-statistical-formalism" id="toc-natural-language-over-statistical-formalism" class="nav-link" data-scroll-target="#natural-language-over-statistical-formalism"><span class="header-section-number">10.5.1</span> Natural Language Over Statistical Formalism</a></li>
+  <li><a href="#null-results-are-findings" id="toc-null-results-are-findings" class="nav-link" data-scroll-target="#null-results-are-findings"><span class="header-section-number">10.5.2</span> Null Results Are Findings</a></li>
+  <li><a href="#preliminary-and-provisional-data" id="toc-preliminary-and-provisional-data" class="nav-link" data-scroll-target="#preliminary-and-provisional-data"><span class="header-section-number">10.5.3</span> Preliminary and Provisional Data</a></li>
+  <li><a href="#data-quality-problems" id="toc-data-quality-problems" class="nav-link" data-scroll-target="#data-quality-problems"><span class="header-section-number">10.5.4</span> Data Quality Problems</a></li>
+  <li><a href="#suppression" id="toc-suppression" class="nav-link" data-scroll-target="#suppression"><span class="header-section-number">10.5.5</span> Suppression</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -305,9 +285,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./ai.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Coding with AI</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pm.html">Nontechnical</a></li><li class="breadcrumb-item"><a href="./comms.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Communicating Findings</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-ai" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Coding with AI</span></span></h1>
+<h1 class="title"><span id="sec-comms" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></h1>
 </div>
 
 
@@ -324,97 +304,252 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>AI tools for coding have matured rapidly, covering a spectrum from simple inline completions to fully autonomous agents that can read, write, and execute code across an entire project. This chapter provides a brief orientation to the tools most relevant to data scientists working in Positron.</p>
-<section id="sec-ai-copilot" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="sec-ai-copilot"><span class="header-section-number">5.1</span> Code Completion with GitHub Copilot</h2>
-<p><a href="https://github.com/features/copilot">GitHub Copilot</a> is a code completion service that suggests code as you type. Install the <strong>GitHub Copilot</strong> extension in Positron, and suggestions will appear inline in the editor and in notebooks — press Tab to accept a suggestion or Escape to dismiss it.</p>
-<p>Copilot draws on the surrounding code and comments to infer what you’re trying to write. It works well for boilerplate, common patterns, and filling in function arguments you’d otherwise have to look up.</p>
-<p>A GitHub Copilot subscription is required; a free tier is available for individual developers.</p>
+<p>A technically correct analysis that does not reach its audience (or reaches them in a form they cannot act on) has not done its job. In public health, findings inform decisions made by program directors, health officers, elected officials, and practitioners who did not run the analysis and may not read a methods section. Getting from rigorous analysis to useful communication is its own skill, and one that is easy to underinvest in when the pressure is on to finish the analysis itself.</p>
+<p><a href="pm.html#sec-pm-communication" class="quarto-xref"><span>Section 8.5</span></a> introduces the core principles: know your audience, communicate uncertainty honestly, match the output format to the need. This chapter goes deeper on each, with concrete guidance on structure, visualization, and how to handle the cases that are hardest to communicate well.</p>
+<section id="sec-comms-bottomline" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="sec-comms-bottomline"><span class="header-section-number">10.1</span> Start with the Bottom Line</h2>
+<p>The most common failure mode in communicating analysis results is burying the finding. Reports structured like academic papers (Introduction, Methods, Results, Discussion) force busy decision-makers to read through to the end to learn what the analysis concluded. Many do not make it that far.</p>
+<p>The fix is to lead with the finding, not with the context. State the bottom line first. Then provide the evidence that supports it.</p>
+<p>Compare these two openings for the same analysis:</p>
+<blockquote class="blockquote">
+<p><em>Version A:</em> “Overdose mortality in the state has been a growing public health concern. This analysis used death certificate data from the National Vital Statistics System for 2015–2023 to examine trends in overdose deaths by county and age group. The results showed that rates in rural counties increased substantially.”</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><em>Version B:</em> “Overdose death rates in rural counties increased 34% from 2019 to 2023, compared to a 22% increase in urban counties, a reversal from the 2015–2019 period, when urban rates were higher. The shift is driven primarily by illicitly manufactured fentanyl, which first appeared in rural county toxicology reports at scale in 2020.”</p>
+</blockquote>
+<p>Version B leads with what changed, by how much, and what is driving it. A health officer who reads only the first two sentences of Version B has the main finding. Version A makes them work for it.</p>
+<section id="the-so-what-test" class="level3" data-number="10.1.1">
+<h3 data-number="10.1.1" class="anchored" data-anchor-id="the-so-what-test"><span class="header-section-number">10.1.1</span> The “So What” Test</h3>
+<p>After stating a finding, ask: <em>So what?</em> What should a program manager, health officer, or policymaker consider doing differently because of this finding? The analysis team often knows the answer but leaves it unstated, assuming the audience will draw the right implication. They often do not.</p>
+<p>A finding without an implication is incomplete:</p>
+<blockquote class="blockquote">
+<p><em>Finding only:</em> “Rural overdose death rates increased 34%.”</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><em>Finding with implication:</em> “Rural overdose death rates increased 34%, and rural counties currently have significantly less harm reduction infrastructure per capita than urban counties, suggesting that expanding naloxone distribution and syringe services to rural areas is a priority intervention point.”</p>
+</blockquote>
+<p>This does not mean advocating for a specific policy. It means stating what the data implies for programmatic decisions. The program can decide what to do with that implication; the analyst’s job is to make it explicit.</p>
 </section>
-<section id="sec-ai-positron-assistant" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="sec-ai-positron-assistant"><span class="header-section-number">5.2</span> Positron Assistant</h2>
-<p>Positron has a built-in AI assistant (available since version 2025.07.0-204) accessible via the chat panel in the left sidebar. Unlike Copilot, which only completes code, the assistant understands your full session context — loaded data frames, console history, plots, and project structure — making it well-suited to data analysis workflows.</p>
-<p>The assistant operates in three modes:</p>
+</section>
+<section id="sec-comms-audience" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="sec-comms-audience"><span class="header-section-number">10.2</span> Audience and Format</h2>
+<p>Different stakeholders need different outputs from the same underlying analysis. Plan to produce more than one. The analysis runs once; the communication takes multiple forms.</p>
+<section id="decision-makers" class="level3" data-number="10.2.1">
+<h3 data-number="10.2.1" class="anchored" data-anchor-id="decision-makers"><span class="header-section-number">10.2.1</span> Decision-Makers</h3>
+<p>Health officers, board members, program directors, and elected officials typically need:</p>
 <ul>
-<li><strong>Ask</strong> — conversational Q&amp;A. Use it to explain error messages, get help with a function, or talk through an analysis approach without modifying any files.</li>
-<li><strong>Edit</strong> — makes targeted changes to selected code based on a natural-language instruction. Useful for refactoring, renaming, or reformatting a block of code.</li>
-<li><strong>Agent</strong> — more autonomous. The agent can create and modify files, run terminal commands, and work across multiple files to complete a larger task.</li>
+<li>The bottom line first (what is the finding and what does it imply?)</li>
+<li>One or two key numbers, not a table of 40 statistics</li>
+<li>Uncertainty stated plainly in language they can repeat to others</li>
+<li>A clear sense of what decision or consideration the finding should inform</li>
+<li>One page, or one slide</li>
 </ul>
-<p>The assistant uses a bring-your-own-key model: you connect it to an AI provider (Anthropic, OpenAI, GitHub Copilot, or AWS Bedrock) using your own API key. Posit does not see your prompts or code.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Positron Assistant documentation
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The <a href="https://positron.posit.co/assistant.html">Positron Assistant documentation</a> covers setup, model configuration, and mode details.</p>
-</div>
-</div>
+<p>They do not need methods details unless they specifically ask. If the methods are rigorous, say so briefly (“These findings are based on complete death certificate data; preliminary estimates from provisional data are consistent with these results”) and move on.</p>
 </section>
-<section id="sec-ai-databot" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="sec-ai-databot"><span class="header-section-number">5.3</span> Databot</h2>
-<p>Databot is an experimental Positron extension purpose-built for exploratory data analysis. Where Positron Assistant helps you write code, Databot <em>writes and executes</em> short analysis snippets on your behalf, treating insights as the goal rather than the code. You describe what you want to understand about your data, and Databot iterates through code execution to get there.</p>
-<p>Databot is currently in research preview and requires an Anthropic API key. It is designed for experienced R and Python users who can critically evaluate the code it produces — AI models can and do make mistakes in open-ended data exploration.</p>
-<p>Open Databot via the Command Palette (<code>Ctrl+Shift+P</code> / <code>Cmd+Shift+P</code>) and search for “Databot”.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>See the <a href="https://positron.posit.co/databot.html">Databot documentation</a> for installation instructions and warnings that are worth reading.</p>
-</div>
-</div>
-</section>
-<section id="sec-ai-claude-code" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="sec-ai-claude-code"><span class="header-section-number">5.4</span> Claude Code</h2>
-<p>Claude Code is a terminal-based AI coding agent from Anthropic. Unlike the Positron Assistant chat panel, Claude Code operates directly in a shell session with full access to the filesystem: it can read and write files, search the codebase, run commands, and coordinate changes across many files in a single session.</p>
-<p>Install it (instructions below for MacOS, Linux, WSL, see <a href="https://code.claude.com/docs/en/quickstart">docs</a> for Windows).</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://claude.ai/install.sh <span class="kw">|</span> <span class="fu">bash</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Then launch it from Positron’s integrated terminal (<strong>Terminal → New Terminal</strong>):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Claude Code is particularly effective for multi-file refactors, complex debugging sessions, and tasks that are tedious to coordinate manually.</p>
-</section>
-<section id="sec-ai-models" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="sec-ai-models"><span class="header-section-number">5.5</span> Cost, Privacy, and Model Choice</h2>
-<section id="capability" class="level3" data-number="5.5.1">
-<h3 data-number="5.5.1" class="anchored" data-anchor-id="capability"><span class="header-section-number">5.5.1</span> Capability</h3>
-<p>Frontier models from OpenAI and Anthropic are substantially more capable than open-weight alternatives for complex reasoning and coding tasks. For most everyday coding work (fixing errors, writing functions, refactoring) a mid-tier model like Anthropic’s Claude Sonnet is fast, inexpensive, and more than capable enough. Save the most powerful (and expensive) frontier models for genuinely hard problems.</p>
-</section>
-<section id="cost" class="level3" data-number="5.5.2">
-<h3 data-number="5.5.2" class="anchored" data-anchor-id="cost"><span class="header-section-number">5.5.2</span> Cost</h3>
-<p>API pricing is metered by token (roughly, by word). Typical coding assistance sessions cost cents to a few dollars; heavy agent sessions that read and write many files may cost a bit more. GitHub Copilot charges a flat monthly subscription instead, which can be more predictable for high-volume users.</p>
-</section>
-<section id="privacy" class="level3" data-number="5.5.3">
-<h3 data-number="5.5.3" class="anchored" data-anchor-id="privacy"><span class="header-section-number">5.5.3</span> Privacy</h3>
-<p>A common concern is whether proprietary code sent to a cloud AI service will be used to train future models. The short answer is: <strong>not if you’re paying for API access</strong>.</p>
-<p>Both Anthropic and OpenAI state explicitly that inputs and outputs from paid API usage are not used for model training. This is distinct from their free consumer products, which may use interactions for improvement. If your team is using Positron Assistant, Claude Code, or the OpenAI API with your own key, your code is not becoming training data.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>See the authoritative statements directly:</p>
+<section id="program-staff" class="level3" data-number="10.2.2">
+<h3 data-number="10.2.2" class="anchored" data-anchor-id="program-staff"><span class="header-section-number">10.2.2</span> Program Staff</h3>
+<p>Staff doing day-to-day work (case investigators, disease intervention specialists, program coordinators) need findings they can act on. The most useful outputs for this audience:</p>
 <ul>
-<li><a href="https://www.anthropic.com/legal/privacy">Anthropic’s privacy policy</a></li>
-<li><a href="https://openai.com/policies/privacy-policy">OpenAI’s privacy policy</a></li>
+<li>Are specific enough to change what they do tomorrow</li>
+<li>Include enough supporting data that they can answer follow-up questions from the people they work with</li>
+<li>Are formatted for reuse in their own presentations and communications</li>
 </ul>
-</div>
-</div>
-<p>Open-weight models (such as Meta’s Llama or Google’s Gemma) can be run entirely on local hardware, which provides the strongest possible privacy guarantee and meets strict data-residency or air-gap requirements. The trade-off is lower capability and the infrastructure overhead of running the model yourself. For most teams using cloud APIs with a commercial agreement, the privacy risk is lower than it is commonly assumed to be.</p>
+<p>A table they can sort, a chart they can copy into a slide, or a brief they can forward to a partner agency is often more valuable than a polished report they cannot extract from.</p>
+</section>
+<section id="technical-peers" class="level3" data-number="10.2.3">
+<h3 data-number="10.2.3" class="anchored" data-anchor-id="technical-peers"><span class="header-section-number">10.2.3</span> Technical Peers</h3>
+<p>Epidemiologists, biostatisticians, and methodologically sophisticated collaborators need the full picture: data sources, methods, sensitivity analyses, limitations, and honest uncertainty. For this audience, the concerns are whether the analysis was done correctly and whether the conclusions are defensible, not whether the one-page summary is clear.</p>
+<p>When sharing work with technical peers for review (see <a href="git.html" class="quarto-xref"><span>Chapter 1</span></a> for making code available), include the analysis code alongside the report. A methods section that says “code available at [repository]” is more credible than one that does not.</p>
+</section>
+<section id="an-executive-summary-template" class="level3" data-number="10.2.4">
+<h3 data-number="10.2.4" class="anchored" data-anchor-id="an-executive-summary-template"><span class="header-section-number">10.2.4</span> An Executive Summary Template</h3>
+<p>For findings that need to reach multiple audiences, a structured one-page executive summary gives decision-makers what they need while pointing technical readers to the full report. A minimal template:</p>
+<pre><code>SUMMARY
+
+[One to two sentences: the main finding and its most important implication.]
+
+KEY FINDINGS
+
+- [Finding 1, stated plainly, with the key number]
+- [Finding 2]
+- [Finding 3]
+
+IMPLICATIONS
+
+[One to two sentences on what the findings suggest for programs, policy,
+or practice. Frame as considerations, not mandates.]
+
+DATA AND METHODS
+
+[One sentence: data source, time period, geographic scope, population.]
+Full methods available at [link or report title].</code></pre>
+<p>The summary fits on one page. The full report follows. Decision-makers read the summary; technical reviewers read both.</p>
+</section>
+</section>
+<section id="sec-comms-format" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="sec-comms-format"><span class="header-section-number">10.3</span> Choosing the Right Output</h2>
+<p>The analysis determines what can be said; the output format determines whether it is heard. A well-chosen format reduces friction between the finding and the decision-maker.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situation</th>
+<th>Best format</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>One-time finding for a decision</td>
+<td>Written brief or slide deck</td>
+</tr>
+<tr class="even">
+<td>Ongoing data that updates regularly</td>
+<td>Parameterized report (<a href="reporting.html" class="quarto-xref"><span>Chapter 4</span></a>) or dashboard (<a href="dashboards.html" class="quarto-xref"><span>Chapter 6</span></a>)</td>
+</tr>
+<tr class="odd">
+<td>Data that stakeholders need to explore</td>
+<td>Interactive dashboard</td>
+</tr>
+<tr class="even">
+<td>Findings for public release</td>
+<td>Report with executive summary</td>
+</tr>
+<tr class="odd">
+<td>Technical findings for peer review</td>
+<td>Full report with methods appendix and code</td>
+</tr>
+<tr class="even">
+<td>Data that will be used in others’ presentations</td>
+<td>Table or chart files, clearly labeled</td>
+</tr>
+</tbody>
+</table>
+<p>A few questions that sharpen the choice:</p>
+<p><strong>Will the audience consume a summary or explore the data?</strong> If the finding can be stated in a few sentences and a chart, a brief is right. If stakeholders will want to slice by county, time period, or demographic group, a dashboard lets them do that without requiring a new analysis each time.</p>
+<p><strong>Is this a one-time analysis or will it recur?</strong> If the analysis will be repeated monthly or annually with updated data, building a reproducible, parameterized report (see <a href="reporting.html" class="quarto-xref"><span>Chapter 4</span></a>) costs more upfront and dramatically less over time. If it is truly one-time, a polished static output is fine.</p>
+<p><strong>Will this be printed?</strong> HTML dashboards and interactive reports do not print well. If physical copies or PDFs are a requirement, design for that from the start.</p>
+</section>
+<section id="sec-comms-viz" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="sec-comms-viz"><span class="header-section-number">10.4</span> Visualizing to Communicate</h2>
+<p>Visualization for communication is different from visualization for exploration. Exploratory charts help you understand data; communication charts help an audience understand a specific finding. The design goal shifts from “show me what is in this data” to “make this one finding impossible to miss.”</p>
+<section id="match-chart-type-to-message" class="level3" data-number="10.4.1">
+<h3 data-number="10.4.1" class="anchored" data-anchor-id="match-chart-type-to-message"><span class="header-section-number">10.4.1</span> Match Chart Type to Message</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Message</th>
+<th>Chart type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Compare values across categories</td>
+<td>Horizontal bar chart (especially with many categories)</td>
+</tr>
+<tr class="even">
+<td>Show change over time</td>
+<td>Line chart</td>
+</tr>
+<tr class="odd">
+<td>Show a part of a whole</td>
+<td>Stacked bar, waffle chart; avoid pie charts with more than 3 slices</td>
+</tr>
+<tr class="even">
+<td>Show a relationship between two variables</td>
+<td>Scatter plot</td>
+</tr>
+<tr class="odd">
+<td>Show geographic distribution</td>
+<td>Choropleth map (with caution, since land area ≠ population)</td>
+</tr>
+<tr class="even">
+<td>Show a single number</td>
+<td>Large text, value box</td>
+</tr>
+</tbody>
+</table>
+<p>No chart type is universally wrong, but some common combinations fail reliably:</p>
+<ul>
+<li><strong>Pie charts with many slices:</strong> humans cannot judge angles accurately; a bar chart is almost always clearer</li>
+<li><strong>Dual y-axes:</strong> charts with two y-axes are nearly always misleading because the visual relationship between the two lines depends entirely on how the axes are scaled, which the designer chooses</li>
+<li><strong>3D charts:</strong> the added dimension carries no data but introduces distortion; never use them</li>
+<li><strong>Truncated y-axes:</strong> starting a bar chart’s y-axis above zero exaggerates differences; if differences are small, say so in text rather than making them look large on a chart</li>
+</ul>
+</section>
+<section id="design-for-the-finding-not-the-data" class="level3" data-number="10.4.2">
+<h3 data-number="10.4.2" class="anchored" data-anchor-id="design-for-the-finding-not-the-data"><span class="header-section-number">10.4.2</span> Design for the Finding, Not the Data</h3>
+<p>A communication chart has one job: make the finding clear. Every element that does not support that job should be removed.</p>
+<p><strong>Highlight what matters.</strong> Use color, annotations, or callout lines to draw attention to the specific element that supports the finding. A line chart showing trends for 50 states, all in gray, with a single state highlighted in the primary color, is far more effective than 50 differently-colored lines competing for attention.</p>
+<p><strong>Label directly.</strong> Annotations on the chart (for example, “34% increase” at the relevant data point, or a text label at the end of each line) are clearer than legends the reader has to match to the chart. If the chart requires a legend to interpret, consider whether direct labeling is possible.</p>
+<p><strong>Use accessible colors.</strong> Approximately 8% of men have color vision deficiency. Red/green combinations are the most common problem. Colorblind-friendly palettes (such as the Okabe-Ito palette used by default in many ggplot2 themes) are safe choices. Check any palette at a tool like <a href="https://www.color-blindness.com/coblis-color-blindness-simulator/">Coblis</a> before finalizing.</p>
+<p><strong>Remove decoration that carries no information.</strong> Heavy gridlines, background colors, borders, and 3D effects subtract from clarity. The data should be the most visually prominent element on the chart.</p>
+</section>
+</section>
+<section id="sec-comms-uncertainty" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="sec-comms-uncertainty"><span class="header-section-number">10.5</span> Communicating Uncertainty</h2>
+<p>Every analysis involves uncertainty, and communicating it honestly, without either overstating it into uselessness or understating it into false precision, is one of the harder craft challenges in public health communication. <a href="pm.html#sec-pm-communication" class="quarto-xref"><span>Section 8.5</span></a> introduces this; what follows is more specific guidance.</p>
+<section id="natural-language-over-statistical-formalism" class="level3" data-number="10.5.1">
+<h3 data-number="10.5.1" class="anchored" data-anchor-id="natural-language-over-statistical-formalism"><span class="header-section-number">10.5.1</span> Natural Language Over Statistical Formalism</h3>
+<p>Decision-makers who did not take a statistics course will not correctly interpret “95% confidence interval.” Many will read a CI as a margin of error or, worse, as the probability that the true value falls in the range. Natural language is clearer:</p>
+<blockquote class="blockquote">
+<p><em>Avoid:</em> “The estimated increase was 34.2% (95% CI: 28.1%–40.3%).”</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><em>Prefer:</em> “We estimate the increase was between 28% and 40%, with our best estimate at 34%.”</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><em>Or:</em> “We estimate the increase was roughly 34%, though the true figure could reasonably be as low as 28% or as high as 40%.”</p>
+</blockquote>
+<p>When explaining what drives the uncertainty, be specific: “The estimate is imprecise because few deaths occurred in this county” is more useful than “the confidence interval is wide” or “p = 0.07.”</p>
+</section>
+<section id="null-results-are-findings" class="level3" data-number="10.5.2">
+<h3 data-number="10.5.2" class="anchored" data-anchor-id="null-results-are-findings"><span class="header-section-number">10.5.2</span> Null Results Are Findings</h3>
+<p>An analysis that finds no statistically significant difference has found something: the absence of a detectable effect with the available data. This is not a failure; it is a result, and it should be communicated as one.</p>
+<blockquote class="blockquote">
+<p><em>Weak:</em> “There was no statistically significant difference in rates between the two groups (p = 0.23).”</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><em>Stronger:</em> “We found no evidence of a meaningful difference in rates between the two groups. With the available data, we would have been able to detect a difference of 15 percentage points or larger; smaller differences, if they exist, are not detectable with this dataset.”</p>
+</blockquote>
+<p>The second version tells the reader what the analysis could and could not detect, which helps them calibrate what further inquiry is warranted.</p>
+</section>
+<section id="preliminary-and-provisional-data" class="level3" data-number="10.5.3">
+<h3 data-number="10.5.3" class="anchored" data-anchor-id="preliminary-and-provisional-data"><span class="header-section-number">10.5.3</span> Preliminary and Provisional Data</h3>
+<p>Public health data is often released in provisional form before it is final. Death certificate data typically takes 12–24 months to complete as late reports arrive and codes are finalized. When using provisional data, say so explicitly:</p>
+<blockquote class="blockquote">
+<p>“These counts are based on provisional data as of [date]. Counts are typically revised upward by 5–10% as late reports arrive; the trend is reliable even if specific numbers will change.”</p>
+</blockquote>
+<p>Telling the audience the direction and magnitude of likely revision is more useful than a generic caveat.</p>
+</section>
+<section id="data-quality-problems" class="level3" data-number="10.5.4">
+<h3 data-number="10.5.4" class="anchored" data-anchor-id="data-quality-problems"><span class="header-section-number">10.5.4</span> Data Quality Problems</h3>
+<p>When data has known quality issues (a reporting system that changed, a year with underreporting, a jurisdiction that did not report), be transparent about them without letting them swallow the finding.</p>
+<p>A pattern that holds despite a known data quality problem is stronger evidence than one that depends on a single year or jurisdiction. Point that out explicitly:</p>
+<blockquote class="blockquote">
+<p>“Reporting completeness improved in 2021 after the new case management system was deployed, which contributes to the apparent increase that year. The trend from 2022 onward, when reporting was stable, shows a continued increase of approximately 8% per year.”</p>
+</blockquote>
+</section>
+<section id="suppression" class="level3" data-number="10.5.5">
+<h3 data-number="10.5.5" class="anchored" data-anchor-id="suppression"><span class="header-section-number">10.5.5</span> Suppression</h3>
+<p>When cells are suppressed due to small counts (see <a href="governance.html#sec-governance-disclosure" class="quarto-xref"><span>Section 9.6</span></a>), explain why in plain language rather than leaving an unexplained asterisk:</p>
+<blockquote class="blockquote">
+<p>“Data for counties with fewer than 5 deaths in a given year are not shown to protect individual privacy.”</p>
+</blockquote>
+<p>If the suppression is consequential (meaning the reader might draw incorrect conclusions from the visible cells because suppressed cells would change the picture), say so:</p>
+<blockquote class="blockquote">
+<p>“Several small rural counties are not shown due to small counts, but their inclusion would not change the overall trend.”</p>
+</blockquote>
+<p>Or, if suppression does change the picture:</p>
+<blockquote class="blockquote">
+<p>“Data for several small counties are suppressed. Statewide totals include these counties; county-level rates for the suppressed jurisdictions are not available.”</p>
+</blockquote>
 
 
 </section>
@@ -823,13 +958,13 @@ Note
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./reporting.html" class="pagination-link" aria-label="Reproducible Reporting">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Reproducible Reporting</span></span>
+      <a href="./governance.html" class="pagination-link" aria-label="Working with IT and Data Governance">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./dashboards.html" class="pagination-link" aria-label="Dashboards">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dashboards</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
