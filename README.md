@@ -1,5 +1,7 @@
 # Data Science Team Training
 
+Read online: **<https://dstt.stephenturner.us>**
+
 This book is reference material for the Data Science Team Training (DSTT) program provided by project coach Dr. Stephen D. Turner. This book contains a collection of useful code, resources, workshop material, and other useful guidance collected over several years of serving as a DSTT coach.
 
 ## Contributing
