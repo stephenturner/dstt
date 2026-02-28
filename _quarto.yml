@@ -36,6 +36,7 @@ book:
         - ai.qmd
         - dashboards.qmd
         - environments.qmd
+        - databases.qmd
     - part: "Nontechnical"
       chapters:
         - pm.qmd

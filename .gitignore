@@ -2,7 +2,7 @@
 resources_cache
 _book/
 site_libs/
-git_files/
+*_files
 **/*.quarto_ipynb
 .DS_Store*
 ._*
