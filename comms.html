@@ -8,7 +8,7 @@
 
 <meta name="author" content="Stephen D. Turner">
 
-<title>10&nbsp; Communicating Findings – Data Science Team Training</title>
+<title>11&nbsp; Communicating Findings – Data Science Team Training</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -88,7 +88,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pm.html">Nontechnical</a></li><li class="breadcrumb-item"><a href="./comms.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Communicating Findings</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pm.html">Nontechnical</a></li><li class="breadcrumb-item"><a href="./comms.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Communicating Findings</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -190,6 +190,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reproducible Environments</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./databases.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Databases from R</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -204,19 +210,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./governance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./comms.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
   </div>
 </li>
       </ul>
@@ -254,30 +260,30 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-comms-bottomline" id="toc-sec-comms-bottomline" class="nav-link active" data-scroll-target="#sec-comms-bottomline"><span class="header-section-number">10.1</span> Start with the Bottom Line</a>
+  <li><a href="#sec-comms-bottomline" id="toc-sec-comms-bottomline" class="nav-link active" data-scroll-target="#sec-comms-bottomline"><span class="header-section-number">11.1</span> Start with the Bottom Line</a>
   <ul class="collapse">
-  <li><a href="#the-so-what-test" id="toc-the-so-what-test" class="nav-link" data-scroll-target="#the-so-what-test"><span class="header-section-number">10.1.1</span> The “So What” Test</a></li>
+  <li><a href="#the-so-what-test" id="toc-the-so-what-test" class="nav-link" data-scroll-target="#the-so-what-test"><span class="header-section-number">11.1.1</span> The “So What” Test</a></li>
   </ul></li>
-  <li><a href="#sec-comms-audience" id="toc-sec-comms-audience" class="nav-link" data-scroll-target="#sec-comms-audience"><span class="header-section-number">10.2</span> Audience and Format</a>
+  <li><a href="#sec-comms-audience" id="toc-sec-comms-audience" class="nav-link" data-scroll-target="#sec-comms-audience"><span class="header-section-number">11.2</span> Audience and Format</a>
   <ul class="collapse">
-  <li><a href="#decision-makers" id="toc-decision-makers" class="nav-link" data-scroll-target="#decision-makers"><span class="header-section-number">10.2.1</span> Decision-Makers</a></li>
-  <li><a href="#program-staff" id="toc-program-staff" class="nav-link" data-scroll-target="#program-staff"><span class="header-section-number">10.2.2</span> Program Staff</a></li>
-  <li><a href="#technical-peers" id="toc-technical-peers" class="nav-link" data-scroll-target="#technical-peers"><span class="header-section-number">10.2.3</span> Technical Peers</a></li>
-  <li><a href="#an-executive-summary-template" id="toc-an-executive-summary-template" class="nav-link" data-scroll-target="#an-executive-summary-template"><span class="header-section-number">10.2.4</span> An Executive Summary Template</a></li>
+  <li><a href="#decision-makers" id="toc-decision-makers" class="nav-link" data-scroll-target="#decision-makers"><span class="header-section-number">11.2.1</span> Decision-Makers</a></li>
+  <li><a href="#program-staff" id="toc-program-staff" class="nav-link" data-scroll-target="#program-staff"><span class="header-section-number">11.2.2</span> Program Staff</a></li>
+  <li><a href="#technical-peers" id="toc-technical-peers" class="nav-link" data-scroll-target="#technical-peers"><span class="header-section-number">11.2.3</span> Technical Peers</a></li>
+  <li><a href="#an-executive-summary-template" id="toc-an-executive-summary-template" class="nav-link" data-scroll-target="#an-executive-summary-template"><span class="header-section-number">11.2.4</span> An Executive Summary Template</a></li>
   </ul></li>
-  <li><a href="#sec-comms-format" id="toc-sec-comms-format" class="nav-link" data-scroll-target="#sec-comms-format"><span class="header-section-number">10.3</span> Choosing the Right Output</a></li>
-  <li><a href="#sec-comms-viz" id="toc-sec-comms-viz" class="nav-link" data-scroll-target="#sec-comms-viz"><span class="header-section-number">10.4</span> Visualizing to Communicate</a>
+  <li><a href="#sec-comms-format" id="toc-sec-comms-format" class="nav-link" data-scroll-target="#sec-comms-format"><span class="header-section-number">11.3</span> Choosing the Right Output</a></li>
+  <li><a href="#sec-comms-viz" id="toc-sec-comms-viz" class="nav-link" data-scroll-target="#sec-comms-viz"><span class="header-section-number">11.4</span> Visualizing to Communicate</a>
   <ul class="collapse">
-  <li><a href="#match-chart-type-to-message" id="toc-match-chart-type-to-message" class="nav-link" data-scroll-target="#match-chart-type-to-message"><span class="header-section-number">10.4.1</span> Match Chart Type to Message</a></li>
-  <li><a href="#design-for-the-finding-not-the-data" id="toc-design-for-the-finding-not-the-data" class="nav-link" data-scroll-target="#design-for-the-finding-not-the-data"><span class="header-section-number">10.4.2</span> Design for the Finding, Not the Data</a></li>
+  <li><a href="#match-chart-type-to-message" id="toc-match-chart-type-to-message" class="nav-link" data-scroll-target="#match-chart-type-to-message"><span class="header-section-number">11.4.1</span> Match Chart Type to Message</a></li>
+  <li><a href="#design-for-the-finding-not-the-data" id="toc-design-for-the-finding-not-the-data" class="nav-link" data-scroll-target="#design-for-the-finding-not-the-data"><span class="header-section-number">11.4.2</span> Design for the Finding, Not the Data</a></li>
   </ul></li>
-  <li><a href="#sec-comms-uncertainty" id="toc-sec-comms-uncertainty" class="nav-link" data-scroll-target="#sec-comms-uncertainty"><span class="header-section-number">10.5</span> Communicating Uncertainty</a>
+  <li><a href="#sec-comms-uncertainty" id="toc-sec-comms-uncertainty" class="nav-link" data-scroll-target="#sec-comms-uncertainty"><span class="header-section-number">11.5</span> Communicating Uncertainty</a>
   <ul class="collapse">
-  <li><a href="#natural-language-over-statistical-formalism" id="toc-natural-language-over-statistical-formalism" class="nav-link" data-scroll-target="#natural-language-over-statistical-formalism"><span class="header-section-number">10.5.1</span> Natural Language Over Statistical Formalism</a></li>
-  <li><a href="#null-results-are-findings" id="toc-null-results-are-findings" class="nav-link" data-scroll-target="#null-results-are-findings"><span class="header-section-number">10.5.2</span> Null Results Are Findings</a></li>
-  <li><a href="#preliminary-and-provisional-data" id="toc-preliminary-and-provisional-data" class="nav-link" data-scroll-target="#preliminary-and-provisional-data"><span class="header-section-number">10.5.3</span> Preliminary and Provisional Data</a></li>
-  <li><a href="#data-quality-problems" id="toc-data-quality-problems" class="nav-link" data-scroll-target="#data-quality-problems"><span class="header-section-number">10.5.4</span> Data Quality Problems</a></li>
-  <li><a href="#suppression" id="toc-suppression" class="nav-link" data-scroll-target="#suppression"><span class="header-section-number">10.5.5</span> Suppression</a></li>
+  <li><a href="#natural-language-over-statistical-formalism" id="toc-natural-language-over-statistical-formalism" class="nav-link" data-scroll-target="#natural-language-over-statistical-formalism"><span class="header-section-number">11.5.1</span> Natural Language Over Statistical Formalism</a></li>
+  <li><a href="#null-results-are-findings" id="toc-null-results-are-findings" class="nav-link" data-scroll-target="#null-results-are-findings"><span class="header-section-number">11.5.2</span> Null Results Are Findings</a></li>
+  <li><a href="#preliminary-and-provisional-data" id="toc-preliminary-and-provisional-data" class="nav-link" data-scroll-target="#preliminary-and-provisional-data"><span class="header-section-number">11.5.3</span> Preliminary and Provisional Data</a></li>
+  <li><a href="#data-quality-problems" id="toc-data-quality-problems" class="nav-link" data-scroll-target="#data-quality-problems"><span class="header-section-number">11.5.4</span> Data Quality Problems</a></li>
+  <li><a href="#suppression" id="toc-suppression" class="nav-link" data-scroll-target="#suppression"><span class="header-section-number">11.5.5</span> Suppression</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -285,9 +291,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pm.html">Nontechnical</a></li><li class="breadcrumb-item"><a href="./comms.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Communicating Findings</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pm.html">Nontechnical</a></li><li class="breadcrumb-item"><a href="./comms.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Communicating Findings</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-comms" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></h1>
+<h1 class="title"><span id="sec-comms" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></h1>
 </div>
 
 
@@ -305,9 +311,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>A technically correct analysis that does not reach its audience (or reaches them in a form they cannot act on) has not done its job. In public health, findings inform decisions made by program directors, health officers, elected officials, and practitioners who did not run the analysis and may not read a methods section. Getting from rigorous analysis to useful communication is its own skill, and one that is easy to underinvest in when the pressure is on to finish the analysis itself.</p>
-<p><a href="pm.html#sec-pm-communication" class="quarto-xref"><span>Section 8.5</span></a> introduces the core principles: know your audience, communicate uncertainty honestly, match the output format to the need. This chapter goes deeper on each, with concrete guidance on structure, visualization, and how to handle the cases that are hardest to communicate well.</p>
-<section id="sec-comms-bottomline" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="sec-comms-bottomline"><span class="header-section-number">10.1</span> Start with the Bottom Line</h2>
+<p><a href="pm.html#sec-pm-communication" class="quarto-xref"><span>Section 9.5</span></a> introduces the core principles: know your audience, communicate uncertainty honestly, match the output format to the need. This chapter goes deeper on each, with concrete guidance on structure, visualization, and how to handle the cases that are hardest to communicate well.</p>
+<section id="sec-comms-bottomline" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="sec-comms-bottomline"><span class="header-section-number">11.1</span> Start with the Bottom Line</h2>
 <p>The most common failure mode in communicating analysis results is burying the finding. Reports structured like academic papers (Introduction, Methods, Results, Discussion) force busy decision-makers to read through to the end to learn what the analysis concluded. Many do not make it that far.</p>
 <p>The fix is to lead with the finding, not with the context. State the bottom line first. Then provide the evidence that supports it.</p>
 <p>Compare these two openings for the same analysis:</p>
@@ -318,8 +324,8 @@ ul.task-list li input[type="checkbox"] {
 <p><em>Version B:</em> “Overdose death rates in rural counties increased 34% from 2019 to 2023, compared to a 22% increase in urban counties, a reversal from the 2015–2019 period, when urban rates were higher. The shift is driven primarily by illicitly manufactured fentanyl, which first appeared in rural county toxicology reports at scale in 2020.”</p>
 </blockquote>
 <p>Version B leads with what changed, by how much, and what is driving it. A health officer who reads only the first two sentences of Version B has the main finding. Version A makes them work for it.</p>
-<section id="the-so-what-test" class="level3" data-number="10.1.1">
-<h3 data-number="10.1.1" class="anchored" data-anchor-id="the-so-what-test"><span class="header-section-number">10.1.1</span> The “So What” Test</h3>
+<section id="the-so-what-test" class="level3" data-number="11.1.1">
+<h3 data-number="11.1.1" class="anchored" data-anchor-id="the-so-what-test"><span class="header-section-number">11.1.1</span> The “So What” Test</h3>
 <p>After stating a finding, ask: <em>So what?</em> What should a program manager, health officer, or policymaker consider doing differently because of this finding? The analysis team often knows the answer but leaves it unstated, assuming the audience will draw the right implication. They often do not.</p>
 <p>A finding without an implication is incomplete:</p>
 <blockquote class="blockquote">
@@ -331,11 +337,11 @@ ul.task-list li input[type="checkbox"] {
 <p>This does not mean advocating for a specific policy. It means stating what the data implies for programmatic decisions. The program can decide what to do with that implication; the analyst’s job is to make it explicit.</p>
 </section>
 </section>
-<section id="sec-comms-audience" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="sec-comms-audience"><span class="header-section-number">10.2</span> Audience and Format</h2>
+<section id="sec-comms-audience" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="sec-comms-audience"><span class="header-section-number">11.2</span> Audience and Format</h2>
 <p>Different stakeholders need different outputs from the same underlying analysis. Plan to produce more than one. The analysis runs once; the communication takes multiple forms.</p>
-<section id="decision-makers" class="level3" data-number="10.2.1">
-<h3 data-number="10.2.1" class="anchored" data-anchor-id="decision-makers"><span class="header-section-number">10.2.1</span> Decision-Makers</h3>
+<section id="decision-makers" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="decision-makers"><span class="header-section-number">11.2.1</span> Decision-Makers</h3>
 <p>Health officers, board members, program directors, and elected officials typically need:</p>
 <ul>
 <li>The bottom line first (what is the finding and what does it imply?)</li>
@@ -346,8 +352,8 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p>They do not need methods details unless they specifically ask. If the methods are rigorous, say so briefly (“These findings are based on complete death certificate data; preliminary estimates from provisional data are consistent with these results”) and move on.</p>
 </section>
-<section id="program-staff" class="level3" data-number="10.2.2">
-<h3 data-number="10.2.2" class="anchored" data-anchor-id="program-staff"><span class="header-section-number">10.2.2</span> Program Staff</h3>
+<section id="program-staff" class="level3" data-number="11.2.2">
+<h3 data-number="11.2.2" class="anchored" data-anchor-id="program-staff"><span class="header-section-number">11.2.2</span> Program Staff</h3>
 <p>Staff doing day-to-day work (case investigators, disease intervention specialists, program coordinators) need findings they can act on. The most useful outputs for this audience:</p>
 <ul>
 <li>Are specific enough to change what they do tomorrow</li>
@@ -356,13 +362,13 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p>A table they can sort, a chart they can copy into a slide, or a brief they can forward to a partner agency is often more valuable than a polished report they cannot extract from.</p>
 </section>
-<section id="technical-peers" class="level3" data-number="10.2.3">
-<h3 data-number="10.2.3" class="anchored" data-anchor-id="technical-peers"><span class="header-section-number">10.2.3</span> Technical Peers</h3>
+<section id="technical-peers" class="level3" data-number="11.2.3">
+<h3 data-number="11.2.3" class="anchored" data-anchor-id="technical-peers"><span class="header-section-number">11.2.3</span> Technical Peers</h3>
 <p>Epidemiologists, biostatisticians, and methodologically sophisticated collaborators need the full picture: data sources, methods, sensitivity analyses, limitations, and honest uncertainty. For this audience, the concerns are whether the analysis was done correctly and whether the conclusions are defensible, not whether the one-page summary is clear.</p>
 <p>When sharing work with technical peers for review (see <a href="git.html" class="quarto-xref"><span>Chapter 1</span></a> for making code available), include the analysis code alongside the report. A methods section that says “code available at [repository]” is more credible than one that does not.</p>
 </section>
-<section id="an-executive-summary-template" class="level3" data-number="10.2.4">
-<h3 data-number="10.2.4" class="anchored" data-anchor-id="an-executive-summary-template"><span class="header-section-number">10.2.4</span> An Executive Summary Template</h3>
+<section id="an-executive-summary-template" class="level3" data-number="11.2.4">
+<h3 data-number="11.2.4" class="anchored" data-anchor-id="an-executive-summary-template"><span class="header-section-number">11.2.4</span> An Executive Summary Template</h3>
 <p>For findings that need to reach multiple audiences, a structured one-page executive summary gives decision-makers what they need while pointing technical readers to the full report. A minimal template:</p>
 <pre><code>SUMMARY
 
@@ -386,8 +392,8 @@ Full methods available at [link or report title].</code></pre>
 <p>The summary fits on one page. The full report follows. Decision-makers read the summary; technical reviewers read both.</p>
 </section>
 </section>
-<section id="sec-comms-format" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="sec-comms-format"><span class="header-section-number">10.3</span> Choosing the Right Output</h2>
+<section id="sec-comms-format" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="sec-comms-format"><span class="header-section-number">11.3</span> Choosing the Right Output</h2>
 <p>The analysis determines what can be said; the output format determines whether it is heard. A well-chosen format reduces friction between the finding and the decision-maker.</p>
 <table class="caption-top table">
 <colgroup>
@@ -432,11 +438,11 @@ Full methods available at [link or report title].</code></pre>
 <p><strong>Is this a one-time analysis or will it recur?</strong> If the analysis will be repeated monthly or annually with updated data, building a reproducible, parameterized report (see <a href="reporting.html" class="quarto-xref"><span>Chapter 4</span></a>) costs more upfront and dramatically less over time. If it is truly one-time, a polished static output is fine.</p>
 <p><strong>Will this be printed?</strong> HTML dashboards and interactive reports do not print well. If physical copies or PDFs are a requirement, design for that from the start.</p>
 </section>
-<section id="sec-comms-viz" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="sec-comms-viz"><span class="header-section-number">10.4</span> Visualizing to Communicate</h2>
+<section id="sec-comms-viz" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="sec-comms-viz"><span class="header-section-number">11.4</span> Visualizing to Communicate</h2>
 <p>Visualization for communication is different from visualization for exploration. Exploratory charts help you understand data; communication charts help an audience understand a specific finding. The design goal shifts from “show me what is in this data” to “make this one finding impossible to miss.”</p>
-<section id="match-chart-type-to-message" class="level3" data-number="10.4.1">
-<h3 data-number="10.4.1" class="anchored" data-anchor-id="match-chart-type-to-message"><span class="header-section-number">10.4.1</span> Match Chart Type to Message</h3>
+<section id="match-chart-type-to-message" class="level3" data-number="11.4.1">
+<h3 data-number="11.4.1" class="anchored" data-anchor-id="match-chart-type-to-message"><span class="header-section-number">11.4.1</span> Match Chart Type to Message</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -483,8 +489,8 @@ Full methods available at [link or report title].</code></pre>
 <li><strong>Truncated y-axes:</strong> starting a bar chart’s y-axis above zero exaggerates differences; if differences are small, say so in text rather than making them look large on a chart</li>
 </ul>
 </section>
-<section id="design-for-the-finding-not-the-data" class="level3" data-number="10.4.2">
-<h3 data-number="10.4.2" class="anchored" data-anchor-id="design-for-the-finding-not-the-data"><span class="header-section-number">10.4.2</span> Design for the Finding, Not the Data</h3>
+<section id="design-for-the-finding-not-the-data" class="level3" data-number="11.4.2">
+<h3 data-number="11.4.2" class="anchored" data-anchor-id="design-for-the-finding-not-the-data"><span class="header-section-number">11.4.2</span> Design for the Finding, Not the Data</h3>
 <p>A communication chart has one job: make the finding clear. Every element that does not support that job should be removed.</p>
 <p><strong>Highlight what matters.</strong> Use color, annotations, or callout lines to draw attention to the specific element that supports the finding. A line chart showing trends for 50 states, all in gray, with a single state highlighted in the primary color, is far more effective than 50 differently-colored lines competing for attention.</p>
 <p><strong>Label directly.</strong> Annotations on the chart (for example, “34% increase” at the relevant data point, or a text label at the end of each line) are clearer than legends the reader has to match to the chart. If the chart requires a legend to interpret, consider whether direct labeling is possible.</p>
@@ -492,11 +498,11 @@ Full methods available at [link or report title].</code></pre>
 <p><strong>Remove decoration that carries no information.</strong> Heavy gridlines, background colors, borders, and 3D effects subtract from clarity. The data should be the most visually prominent element on the chart.</p>
 </section>
 </section>
-<section id="sec-comms-uncertainty" class="level2" data-number="10.5">
-<h2 data-number="10.5" class="anchored" data-anchor-id="sec-comms-uncertainty"><span class="header-section-number">10.5</span> Communicating Uncertainty</h2>
-<p>Every analysis involves uncertainty, and communicating it honestly, without either overstating it into uselessness or understating it into false precision, is one of the harder craft challenges in public health communication. <a href="pm.html#sec-pm-communication" class="quarto-xref"><span>Section 8.5</span></a> introduces this; what follows is more specific guidance.</p>
-<section id="natural-language-over-statistical-formalism" class="level3" data-number="10.5.1">
-<h3 data-number="10.5.1" class="anchored" data-anchor-id="natural-language-over-statistical-formalism"><span class="header-section-number">10.5.1</span> Natural Language Over Statistical Formalism</h3>
+<section id="sec-comms-uncertainty" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="sec-comms-uncertainty"><span class="header-section-number">11.5</span> Communicating Uncertainty</h2>
+<p>Every analysis involves uncertainty, and communicating it honestly, without either overstating it into uselessness or understating it into false precision, is one of the harder craft challenges in public health communication. <a href="pm.html#sec-pm-communication" class="quarto-xref"><span>Section 9.5</span></a> introduces this; what follows is more specific guidance.</p>
+<section id="natural-language-over-statistical-formalism" class="level3" data-number="11.5.1">
+<h3 data-number="11.5.1" class="anchored" data-anchor-id="natural-language-over-statistical-formalism"><span class="header-section-number">11.5.1</span> Natural Language Over Statistical Formalism</h3>
 <p>Decision-makers who did not take a statistics course will not correctly interpret “95% confidence interval.” Many will read a CI as a margin of error or, worse, as the probability that the true value falls in the range. Natural language is clearer:</p>
 <blockquote class="blockquote">
 <p><em>Avoid:</em> “The estimated increase was 34.2% (95% CI: 28.1%–40.3%).”</p>
@@ -509,8 +515,8 @@ Full methods available at [link or report title].</code></pre>
 </blockquote>
 <p>When explaining what drives the uncertainty, be specific: “The estimate is imprecise because few deaths occurred in this county” is more useful than “the confidence interval is wide” or “p = 0.07.”</p>
 </section>
-<section id="null-results-are-findings" class="level3" data-number="10.5.2">
-<h3 data-number="10.5.2" class="anchored" data-anchor-id="null-results-are-findings"><span class="header-section-number">10.5.2</span> Null Results Are Findings</h3>
+<section id="null-results-are-findings" class="level3" data-number="11.5.2">
+<h3 data-number="11.5.2" class="anchored" data-anchor-id="null-results-are-findings"><span class="header-section-number">11.5.2</span> Null Results Are Findings</h3>
 <p>An analysis that finds no statistically significant difference has found something: the absence of a detectable effect with the available data. This is not a failure; it is a result, and it should be communicated as one.</p>
 <blockquote class="blockquote">
 <p><em>Weak:</em> “There was no statistically significant difference in rates between the two groups (p = 0.23).”</p>
@@ -520,25 +526,25 @@ Full methods available at [link or report title].</code></pre>
 </blockquote>
 <p>The second version tells the reader what the analysis could and could not detect, which helps them calibrate what further inquiry is warranted.</p>
 </section>
-<section id="preliminary-and-provisional-data" class="level3" data-number="10.5.3">
-<h3 data-number="10.5.3" class="anchored" data-anchor-id="preliminary-and-provisional-data"><span class="header-section-number">10.5.3</span> Preliminary and Provisional Data</h3>
+<section id="preliminary-and-provisional-data" class="level3" data-number="11.5.3">
+<h3 data-number="11.5.3" class="anchored" data-anchor-id="preliminary-and-provisional-data"><span class="header-section-number">11.5.3</span> Preliminary and Provisional Data</h3>
 <p>Public health data is often released in provisional form before it is final. Death certificate data typically takes 12–24 months to complete as late reports arrive and codes are finalized. When using provisional data, say so explicitly:</p>
 <blockquote class="blockquote">
 <p>“These counts are based on provisional data as of [date]. Counts are typically revised upward by 5–10% as late reports arrive; the trend is reliable even if specific numbers will change.”</p>
 </blockquote>
 <p>Telling the audience the direction and magnitude of likely revision is more useful than a generic caveat.</p>
 </section>
-<section id="data-quality-problems" class="level3" data-number="10.5.4">
-<h3 data-number="10.5.4" class="anchored" data-anchor-id="data-quality-problems"><span class="header-section-number">10.5.4</span> Data Quality Problems</h3>
+<section id="data-quality-problems" class="level3" data-number="11.5.4">
+<h3 data-number="11.5.4" class="anchored" data-anchor-id="data-quality-problems"><span class="header-section-number">11.5.4</span> Data Quality Problems</h3>
 <p>When data has known quality issues (a reporting system that changed, a year with underreporting, a jurisdiction that did not report), be transparent about them without letting them swallow the finding.</p>
 <p>A pattern that holds despite a known data quality problem is stronger evidence than one that depends on a single year or jurisdiction. Point that out explicitly:</p>
 <blockquote class="blockquote">
 <p>“Reporting completeness improved in 2021 after the new case management system was deployed, which contributes to the apparent increase that year. The trend from 2022 onward, when reporting was stable, shows a continued increase of approximately 8% per year.”</p>
 </blockquote>
 </section>
-<section id="suppression" class="level3" data-number="10.5.5">
-<h3 data-number="10.5.5" class="anchored" data-anchor-id="suppression"><span class="header-section-number">10.5.5</span> Suppression</h3>
-<p>When cells are suppressed due to small counts (see <a href="governance.html#sec-governance-disclosure" class="quarto-xref"><span>Section 9.6</span></a>), explain why in plain language rather than leaving an unexplained asterisk:</p>
+<section id="suppression" class="level3" data-number="11.5.5">
+<h3 data-number="11.5.5" class="anchored" data-anchor-id="suppression"><span class="header-section-number">11.5.5</span> Suppression</h3>
+<p>When cells are suppressed due to small counts (see <a href="governance.html#sec-governance-disclosure" class="quarto-xref"><span>Section 10.6</span></a>), explain why in plain language rather than leaving an unexplained asterisk:</p>
 <blockquote class="blockquote">
 <p>“Data for counties with fewer than 5 deaths in a given year are not shown to protect individual privacy.”</p>
 </blockquote>
@@ -959,7 +965,7 @@ Full methods available at [link or report title].</code></pre>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./governance.html" class="pagination-link" aria-label="Working with IT and Data Governance">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
