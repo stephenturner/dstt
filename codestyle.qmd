@@ -1,0 +1,194 @@
+# Code Style {#sec-style}
+
+Writing code that works is necessary. Writing code that others can read and modify is what makes a team functional over time. As teams grow, people rotate, and analyses are revisited months after they were written, the gap between "it runs" and "anyone can understand and extend it" becomes the gap between a one-time deliverable and a sustainable workflow.
+
+Style conventions close that gap. They are agreements, sometimes explicit and sometimes just accumulated habit, about how code is written: how things are named, where spaces go, how long lines get before they break. None of these decisions affect what the code computes, but all of them affect how quickly a reader can understand it and how cleanly changes show up in version control.
+
+This chapter covers the [Tidyverse Style Guide](https://style.tidyverse.org/) as the standard for R, the [Air formatter](https://posit-dev.github.io/air/) for automatically applying that standard, and the [`lintr`](https://lintr.r-lib.org/) package for catching issues that a formatter cannot.
+
+## The Tidyverse Style Guide {#sec-style-guide}
+
+The [Tidyverse Style Guide](https://style.tidyverse.org/) is the de facto standard for R code in data science. It is opinionated but well-reasoned, and following it means your code will look immediately familiar to anyone else working in R.
+
+The most important conventions:
+
+- **Names**: use `snake_case`, all lowercase, words separated by underscores. Prefer `flu_cases` over `fluCases` or `FluCases`. Object names should be nouns; function names should be verbs.
+- **Spacing**: put spaces around most operators (`<-`, `+`, `-`, `==`, and others) and after commas. Do not put spaces inside parentheses or before a comma.
+- **Line length**: keep lines to 80 characters or fewer. Long expressions should be broken across lines with consistent indentation.
+- **Indentation**: two spaces per level. Not tabs.
+- **Assignment**: use `<-` for assignment, not `=`.
+- **Pipes**: when chaining multiple operations, put each step on its own line, indented two spaces.
+
+The full guide covers function naming, documentation, ggplot2 layering, and much more. It is worth reading once and returning to when questions arise. The key practical point: you do not have to memorize all of it. A formatter handles most of the mechanical rules automatically.
+
+## Formatting with Air {#sec-style-air}
+
+[Air](https://posit-dev.github.io/air/) is an R code formatter written in Rust. When you save a file, it reformats the code to follow consistent conventions for spacing, indentation, and line breaks. It does not rename variables or change logic, only whitespace and layout.
+
+The value of a formatter is that it removes style decisions from the development loop entirely. You write code, save, and Air handles presentation. Code review conversations shift from "this line is too long" or "there should be a space here" to the actual logic. Diffs in version control (see @sec-git) show only meaningful changes, not incidental reformatting.
+
+### Setting Up Format on Save in Positron
+
+Air ships bundled with [Positron](https://positron.posit.co/), so no separate installation is needed. To enable format on save, configure a `.vscode/settings.json` file in your project root. The quickest way:
+
+```r
+usethis::use_air()
+```
+
+This creates the settings file with the correct entries. Alternatively, create or edit `.vscode/settings.json` manually:
+
+```json
+{
+    "[r]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "Posit.air-vscode"
+    }
+}
+```
+
+Committing `.vscode/settings.json` to version control means every collaborator on the project gets format-on-save behavior automatically, without any manual setup.
+
+For Quarto documents, add a second entry so that R code cells inside `.qmd` files are also formatted:
+
+```json
+{
+    "[r]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "Posit.air-vscode"
+    },
+    "[quarto]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "quarto.quarto"
+    }
+}
+```
+
+To format a single R cell inside a `.qmd` file without saving the whole document, place your cursor in the cell and press `Cmd+K Cmd+F` (Mac) or `Ctrl+K Ctrl+F` (Windows/Linux).
+
+::: {.callout-tip}
+## Formatting a whole project at once
+
+To format every R file in a project at once, open the Command Palette (`Cmd+Shift+P` on Mac, `Ctrl+Shift+P` on Windows/Linux) and run **Air: Format Workspace Folder**. This is useful when first introducing Air to an existing codebase.
+:::
+
+### Before and After
+
+The following two blocks show the same code before and after Air formats it. The computation is identical in both versions; only the layout changes.
+
+**Before:**
+
+```r
+flu_summary<-flu|>filter(cases>0,!is.na(county))|>group_by(county,disease)|>summarise(total_cases=sum(cases),avg_rate=mean(rate,na.rm=TRUE),.groups="drop")|>arrange(desc(total_cases))
+```
+
+**After:**
+
+```r
+flu_summary <- flu |>
+  filter(cases > 0, !is.na(county)) |>
+  group_by(county, disease) |>
+  summarise(
+    total_cases = sum(cases),
+    avg_rate = mean(rate, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  arrange(desc(total_cases))
+```
+
+The formatted version is longer in line count but far shorter in reading time. Each transformation appears on its own line, arguments that belong together are grouped, and indentation reflects the structure of the pipeline. When this code appears in a pull request, a reviewer can check each step independently rather than scanning a wall of characters for the one thing that changed.
+
+::: {.callout-note}
+Air's configuration lives in an optional `air.toml` file at the project root. The defaults (2-space indentation, 80-character line width) follow the Tidyverse Style Guide and are suitable for most projects. The most common reason to configure `air.toml` is to exclude specific functions from Air's table-formatting behavior, using the `skip` field.
+:::
+
+## Linting with lintr {#sec-style-lintr}
+
+A formatter handles whitespace. A linter goes further: it reads code statically and flags patterns that are likely wrong or poor style, without running the code and without changing anything. Think of it as a careful reviewer pointing out potential problems for you to decide on.
+
+The [`lintr`](https://lintr.r-lib.org/) package is the standard linting tool for R. It checks for issues including:
+
+- Assignment with `=` instead of `<-`
+- Missing or extra spaces around operators
+- Use of `T` or `F` instead of `TRUE` or `FALSE` (fragile, because `T` can be overwritten as a variable name)
+- Redundant comparisons like `x == TRUE`
+- Lines that exceed the recommended length
+- Variable names that do not follow `snake_case` convention
+
+Unlike Air, lintr does not fix anything. It reports what it finds and leaves decisions to you. This is useful for catching issues that a formatter cannot handle: semantic shortcuts, naming violations, and patterns that are syntactically valid but likely to cause confusion.
+
+### Getting Started
+
+Install lintr from CRAN:
+
+```r
+install.packages("lintr")
+```
+
+The primary interface is `lintr::lint("your_file.R")`, which reads a file from disk and prints a list of warnings. To lint every R file in a project at once, use `lintr::lint_dir()`. Each line of output identifies the file, the line and column, the severity, and the name of the rule that triggered it.
+
+### Examples
+
+Consider an R script, `analysis.R`, with several common problems:
+
+```r
+x = 10
+y<-x*2
+flag = T
+if (flag == TRUE) print(y)
+```
+
+Running `lintr::lint("analysis.R")` produces:
+
+```
+analysis.R:2:3: style: [assignment_linter] Use one of <-, <<- for assignment, not =.
+x = 10
+  ^
+analysis.R:3:2: style: [infix_spaces_linter] Put spaces around all infix operators.
+y<-x*2
+ ^~
+analysis.R:3:5: style: [infix_spaces_linter] Put spaces around all infix operators.
+y<-x*2
+    ^
+analysis.R:4:6: style: [assignment_linter] Use one of <-, <<- for assignment, not =.
+flag = T
+     ^
+analysis.R:4:9: style: [T_and_F_symbol_linter] Use TRUE instead of the symbol T.
+flag = T
+       ~^
+analysis.R:5:27: style: [trailing_blank_lines_linter] Add a terminal newline.
+if (flag == TRUE) print(y)
+```
+
+Working through these one at a time: `=` for assignment is flagged because `<-` is the R convention and `=` is reserved for function arguments. The missing spaces around `<-` and `*` on the second line are spacing violations. `T` as a shorthand for `TRUE` is flagged because `T` is just a variable that happens to default to `TRUE` and can be overwritten (`T <- 42` is legal R). And `flag == TRUE` is redundant: if `flag` is already a logical value, `if (flag)` says exactly the same thing.
+
+A second example shows naming convention warnings. Given a file with:
+
+```r
+totalCases <- 100
+meanRate <- totalCases / 30
+ReportTitle <- paste("Weekly report:", format(Sys.Date(), "%B %Y"))
+```
+
+lintr flags all three names:
+
+```
+analysis.R:2:1: style: [object_name_linter] Variable and function name style should match snake_case or symbols.
+totalCases <- 100
+^~~~~~~~~~
+analysis.R:3:1: style: [object_name_linter] Variable and function name style should match snake_case or symbols.
+meanRate <- totalCases / 30
+^~~~~~~~
+analysis.R:4:1: style: [object_name_linter] Variable and function name style should match snake_case or symbols.
+ReportTitle <- paste("Weekly report:", format(Sys.Date(), "%B %Y"))
+^~~~~~~~~~~
+analysis.R:4:68: style: [trailing_blank_lines_linter] Add a terminal newline.
+ReportTitle <- paste("Weekly report:", format(Sys.Date(), "%B %Y"))
+```
+
+All three names are flagged for camelCase or PascalCase. In an analysis that will be maintained and extended, consistent `snake_case` naming is worth the small upfront effort of renaming.
+
+::: {.callout-tip}
+## Using Air and lintr together
+
+Air and lintr complement each other. Air handles layout automatically on every save. lintr catches things that layout cannot: semantic shortcuts like `T` for `TRUE`, naming convention violations, and redundant expressions. A practical workflow is to let Air format on save and run `lintr::lint_dir()` periodically to catch the issues Air does not touch.
+:::

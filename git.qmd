@@ -116,6 +116,10 @@ On GitHub, navigate to the repository. A banner will appear prompting you to ope
 
 A reviewer approves the PR and merges it into `main` via the GitHub UI. After merging, delete the branch on GitHub (there is a button on the merged PR page). Locally, clean up with:
 
+::: {.callout-note}
+Code review is easier when diffs contain only meaningful changes. If one contributor reformats a file by hand and another does not, a PR's diff may be dominated by whitespace changes that obscure the actual logic. Using a formatter like Air (see @sec-style-air) on every save means diffs reflect intent, not style preferences.
+:::
+
 ```bash
 git checkout main
 git pull
@@ -259,10 +263,10 @@ When a conflict occurs, Git edits the affected file to mark the conflicting regi
 
 ```
 <<<<<<< HEAD
-result <- model |> predict(new_data)
+flu_clean <- flu |> filter(cases > 0, !is.na(county))
 =======
-result <- model %>% predict(new_data)
->>>>>>> feature/update-pipe-syntax
+flu_clean <- flu |> filter(!is.na(county), cases >= 1)
+>>>>>>> feature/update-filter-logic
 ```
 
 - Everything between `<<<<<<< HEAD` and `=======` is the version from your current branch.

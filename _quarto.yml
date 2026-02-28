@@ -37,6 +37,7 @@ book:
         - dashboards.qmd
         - environments.qmd
         - databases.qmd
+        - codestyle.qmd
     - part: "Nontechnical"
       chapters:
         - pm.qmd

@@ -89,6 +89,10 @@ Code block options like `#| label:` and `#| fig-cap:` are set with the `#|` pref
 
 A setup block at the top of the document -- typically labeled `#| label: setup` with `#| include: false` -- is the right place to load packages and read data so the rest of the document has access to them without displaying that machinery to readers.
 
+::: {.callout-tip}
+R code cells inside `.qmd` files can be formatted with the Air formatter (see @sec-style-air). Place your cursor in a cell and press `Cmd+K Cmd+F` (Mac) or `Ctrl+K Ctrl+F` (Windows/Linux) to format that cell. With format-on-save enabled for both `[r]` and `[quarto]` in your workspace settings, the active cell formats automatically when you save the document.
+:::
+
 ## One Input, Many Output Formats {#sec-reporting-formats}
 
 The same `.qmd` file can produce different output formats by changing the `format` key in the YAML header. This means you can share an HTML version with colleagues for day-to-day review, render a PDF for formal submission, and produce a Word document for stakeholders who need to annotate -- all from one source file.

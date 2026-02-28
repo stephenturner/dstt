@@ -13,7 +13,9 @@
       "WebFetch(domain:arxiv.org)",
       "WebFetch(domain:rocker-project.org)",
       "WebFetch(domain:docs.ropensci.org)",
-      "Bash(Rscript:*)"
+      "Bash(Rscript:*)",
+      "WebFetch(domain:posit-dev.github.io)",
+      "WebFetch(domain:style.tidyverse.org)"
     ]
   }
 }
