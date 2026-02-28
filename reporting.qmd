@@ -1,0 +1,306 @@
+# Reproducible Reporting {#sec-reporting}
+
+Every data team has lived through some version of this: the analysis is done, tables and figures have been generated, and now begins the tedious work of copying numbers into a Word document. Then the data updates. Or a reviewer catches an error in the underlying code. And every number in the document has to be found and replaced -- manually, one at a time, with no guarantee that any were missed. Meanwhile, the number in the executive summary and the number in the appendix table, which should be identical, have quietly drifted apart.
+
+Reproducible reporting breaks this cycle. Instead of treating code and document as separate artifacts, the report *is* the code: prose, tables, and figures are assembled from a single source file that executes the analysis and weaves results directly into the output. Update the data, re-render, and every number updates automatically -- because it was never copied in the first place.
+
+Quarto is the tool that makes this practical. A Quarto document (`.qmd`) is a plain-text file that combines a YAML header describing the output format, prose, and code blocks that execute and embed their results. Render it once and get an HTML page. Change one line and render again to get a PDF or a Word document from the same source.
+
+::: {.callout-tip}
+## Quarto documentation
+The [Quarto documentation](https://quarto.org/docs/) is the definitive reference for document options, output formats, and formatting syntax. This chapter covers the concepts and patterns that matter most for reproducible reporting; the Quarto docs are the place to go for comprehensive reference material.
+:::
+
+## Not Just R {#sec-reporting-python}
+
+Quarto works with R, Python, Julia, and Observable JavaScript -- in the same document if needed. The rest of this chapter uses R in most examples because R is the primary language in many public health teams, but Python code blocks work exactly the same way: they execute when the document renders and their output appears in the report.
+
+A Python block that requires no external packages:
+
+```python
+import statistics
+
+weekly_cases = [127, 143, 98, 112, 156, 134, 89]
+mean_cases = statistics.mean(weekly_cases)
+peak_week  = max(weekly_cases)
+
+print(f"Mean weekly cases: {mean_cases:.1f}")
+print(f"Peak week: {peak_week}")
+```
+
+Output:
+
+```
+Mean weekly cases: 122.7
+Peak week: 156
+```
+
+The `statistics` module is part of the Python standard library. The block executes at render time and its printed output appears in the document -- no manual copying required.
+
+::: {.callout-note}
+R and Python can coexist in the same `.qmd` file. R objects and Python objects live in separate sessions, but the [`reticulate`](https://rstudio.github.io/reticulate/) package allows data to flow between them: `py$my_python_object` is useful when a team's data cleaning lives in Python and their visualization in R.
+:::
+
+## Document Anatomy {#sec-reporting-anatomy}
+
+A Quarto document has three parts:
+
+**YAML front matter**: a header block delimited by `---` that controls the title, author, date, and output format.
+
+**Prose**: written in Markdown. The [Quarto authoring guide](https://quarto.org/docs/authoring/markdown-basics.html) covers formatting. The short version: `**bold**`, `*italic*`, `# Heading 1`, `## Heading 2`, and `- list item` cover the majority of what you need.
+
+**Code blocks**: fenced blocks labeled with the language (```` ```r ```` or ```` ```python ````). When the document renders, each block executes in sequence and its output -- printed values, tables, plots -- is embedded in the output.
+
+A minimal Quarto document:
+
+````
+---
+title: "Influenza Surveillance Summary"
+author: "Epidemiology Team"
+date: today
+format: html
+---
+
+## Overview
+
+This report summarizes influenza activity for the current surveillance week.
+
+```r
+#| label: fig-trend
+#| fig-cap: "Weekly influenza case counts"
+
+library(ggplot2)
+ggplot(flu_data, aes(x = week, y = cases)) +
+  geom_line()
+```
+````
+
+Render from the terminal with `quarto render report.qmd`, or from within Positron or RStudio using the Render button. The output file (here, `report.html`) appears in the same directory.
+
+Code block options like `#| label:` and `#| fig-cap:` are set with the `#|` prefix on lines at the top of a block. Common options include:
+
+| Option | Effect |
+|---|---|
+| `echo: false` | Run the code but hide the source in the output |
+| `include: false` | Run the code but hide both source and output |
+| `message: false` | Suppress package loading messages |
+| `warning: false` | Suppress warnings |
+| `fig-cap: "..."` | Add a caption below a figure |
+
+A setup block at the top of the document -- typically labeled `#| label: setup` with `#| include: false` -- is the right place to load packages and read data so the rest of the document has access to them without displaying that machinery to readers.
+
+## One Input, Many Output Formats {#sec-reporting-formats}
+
+The same `.qmd` file can produce different output formats by changing the `format` key in the YAML header. This means you can share an HTML version with colleagues for day-to-day review, render a PDF for formal submission, and produce a Word document for stakeholders who need to annotate -- all from one source file.
+
+```yaml
+format: html    # interactive HTML page
+format: pdf     # PDF via LaTeX
+format: docx    # Microsoft Word
+format: typst   # PDF via Typst (no TeX installation required)
+```
+
+To render multiple formats at once, list them:
+
+```yaml
+format:
+  html: default
+  docx: default
+  pdf: default
+```
+
+Running `quarto render report.qmd` then produces all three.
+
+The practical benefit of format independence is durability. A report that exists only as a finished Word document is locked to the moment it was created -- any change requires re-opening it and editing manually. The `.qmd` file is the permanent, authoritative version. The Word document is just one of its outputs, and it can always be regenerated.
+
+::: {.callout-note}
+Some content behaves differently across formats. Interactive elements like `plotly` charts and `DT` tables work in HTML but fall back to static output in PDF and Word. If Word or PDF is a primary deliverable, test your render early -- not after a report is due -- so you aren't surprised by what doesn't translate.
+:::
+
+## Code Is the Report {#sec-reporting-inline}
+
+The most consequential feature of reproducible reporting is not the output format -- it is that computed values appear in prose automatically, without copy-paste.
+
+In a Quarto document, inline R expressions surrounded by backticks evaluate and inject their result directly into text. Given a data frame called `cases` and an object `pct_change` computed in a prior code block:
+
+```markdown
+A total of `r nrow(cases)` cases were reported in `r params$county` County
+during `r params$year`, a `r pct_change`% change from the prior year.
+```
+
+When rendered, this becomes prose like:
+
+> A total of 1,847 cases were reported in Fairfax County during 2024, a 12.3% change from the prior year.
+
+Every number came from code. If the underlying data is revised and the document is re-rendered, every figure that depends on it updates everywhere it appears -- the executive summary, the body, the footnote. There is no list of cells to hunt down in a Word document, and no way for the number on page one to silently disagree with the table on page seven.
+
+::: {.callout-tip}
+Use `format()` or `scales::comma()` to control how numbers look inline. A raw expression produces `1847`; `scales::comma(nrow(cases))` produces `1,847`. For percentages, `scales::percent(pct_change, accuracy = 0.1)` gives `12.3%`. This formatting belongs in the inline expression, not in a separate variable, so the display logic stays close to where it's used.
+:::
+
+This approach also makes the analytical decision trail explicit. A number that appears in a report had to come from somewhere in the code. That traceability is exactly what public health accountability requires -- when a number is questioned, you can show exactly how it was produced.
+
+## Paths and Project Structure {#sec-reporting-paths}
+
+The most common way a reproducible report breaks on a different machine -- or for a different team member -- is an absolute file path. A path like `/Users/maria/Documents/Projects/flu-report/data/flu-2024.csv` works exactly once, on Maria's laptop, and nowhere else.
+
+The solution is to use paths relative to the project root and to structure the project so that the `.qmd` file and its data live in the same directory tree. As described in @sec-dataorg, a well-organized project directory has a clear, stable structure:
+
+```
+flu-report/
+├── flu-report.qmd
+├── data/
+│   └── flu-2024.csv
+└── output/
+```
+
+From `flu-report.qmd`, the data file is simply `"data/flu-2024.csv"` -- no absolute path, no machine-specific prefix.
+
+If `.qmd` files are nested in subdirectories, the [`here` package](https://here.r-lib.org/) resolves paths relative to the project root regardless of where the file sits:
+
+```r
+library(here)
+flu_data <- read_csv(here::here("data", "flu-2024.csv"))
+```
+
+`here::here()` finds the project root by looking for a `.Rproj`, `.git`, or similar marker file. It works whether code runs interactively from the console or from within a render.
+
+::: {.callout-warning}
+Never use `setwd()` inside a `.qmd` file. It changes the working directory mid-execution and will almost certainly break for anyone else who renders the document. Relative paths and `here()` are the right tools.
+:::
+
+## Parameterized Reports {#sec-reporting-params}
+
+[Parameterized reports](https://posit.co/blog/parameterized-quarto/) take the reproducibility model one step further: instead of hardcoding a county, disease, or time period into the analysis, you declare those values as parameters and pass them in at render time. One template becomes many reports.
+
+### Declaring Parameters
+
+Parameters are declared in the YAML front matter under the `params` key. Each parameter gets a name and a default value:
+
+```yaml
+---
+title: "County Disease Surveillance Report"
+subtitle: "`r params$county` County -- `r params$year`"
+date: today
+format: html
+
+params:
+  county:  "Fairfax"
+  year:    2024
+  disease: "Influenza"
+---
+```
+
+The default values are what render when you run `quarto render` with no additional arguments. They also define the parameter type: a quoted string is a character, a bare number is numeric.
+
+### Using Parameters
+
+Inside the document, parameters are available as `params$name` -- in code blocks and in inline expressions alike:
+
+```r
+#| label: setup
+#| include: false
+
+library(dplyr)
+library(ggplot2)
+
+# Filter to the selected county, year, and disease
+county_data <- surveillance |>
+  filter(
+    county  == params$county,
+    year    == params$year,
+    disease == params$disease
+  )
+
+total_cases <- nrow(county_data)
+pct_change  <- round((total_cases / prior_year_cases - 1) * 100, 1)
+```
+
+Then in prose:
+
+```markdown
+This report summarizes `r params$disease` surveillance data for
+`r params$county` County during `r params$year`.
+
+A total of `r scales::comma(total_cases)` cases were reported,
+a `r pct_change`% change from the prior year.
+```
+
+Nothing in the body of the document is hardcoded to a specific county or year. The entire report adapts to whatever parameters are supplied at render time.
+
+### Rendering with Different Parameters
+
+To render the report for a different county without editing the file, pass parameters on the command line:
+
+```bash
+quarto render report.qmd \
+  -P county:"Arlington" \
+  -P year:2024 \
+  --output "arlington-2024.html"
+```
+
+To generate one report per county automatically, use `quarto_render()` from the `quarto` R package:
+
+```r
+library(quarto)
+library(purrr)
+
+counties <- c("Fairfax", "Arlington", "Alexandria", "Loudoun")
+
+walk(counties, function(county) {
+  quarto_render(
+    "report.qmd",
+    execute_params = list(county = county, year = 2024),
+    output_file    = paste0(tolower(gsub(" ", "-", county)), "-2024.html")
+  )
+})
+```
+
+This loop renders one HTML report per county -- same template, different data, different output file -- with no manual editing between runs. For recurring reports (weekly surveillance summaries, monthly dashboards), this loop can be driven by a script that pulls the current list of counties or time periods from the data itself.
+
+::: {.callout-tip}
+## Quarto parameters documentation
+The [Quarto documentation on parameterized reports](https://quarto.org/docs/computations/parameters.html) covers additional options including Knitr and Jupyter parameter handling, and how to use parameters with Quarto Projects to generate many outputs in a single command.
+:::
+
+## Consistent Branding with brand.yml {#sec-reporting-brand}
+
+When a team produces reports across multiple formats -- HTML pages, Word documents, PDFs -- maintaining consistent colors, fonts, and logos is tedious if each format is configured separately. [`brand.yml`](https://posit-dev.github.io/brand-yml/) is a specification for defining visual identity once and applying it across Quarto outputs and other Posit tools.
+
+A `_brand.yml` file defines the elements of an organization's visual identity:
+
+```yaml
+meta:
+  name: "County Health Department"
+  link: "https://health.example.gov"
+
+color:
+  palette:
+    navy:       "#1B4F72"
+    teal:       "#0E6655"
+    light-gray: "#F2F3F4"
+  foreground: navy
+  background: white
+  primary:    navy
+
+typography:
+  fonts:
+    - family: Source Sans Pro
+      source: google
+  base:     Source Sans Pro
+  headings: Source Sans Pro
+
+logo:
+  small:  "assets/logo-small.png"
+  medium: "assets/logo-medium.png"
+```
+
+Save this as `_brand.yml` in the project root. Quarto picks it up automatically at render time -- no additional configuration required in each document's YAML header.
+
+Brand settings cascade across formats: the same color palette applied to HTML output also applies to PDF, and both pick up the logo and typography definitions from the same file. Teams that produce recurring reports -- weekly surveillance summaries, monthly dashboards, annual reports -- can standardize the look across all outputs by maintaining a single `_brand.yml` rather than configuring each document separately.
+
+::: {.callout-note}
+## Documentation
+- **brand.yml specification:** [posit-dev.github.io/brand-yml](https://posit-dev.github.io/brand-yml/) -- the full reference for all supported fields, including color, typography, logo, and defaults.
+- **Quarto + brand.yml:** [quarto.org/docs/authoring/brand.html](https://quarto.org/docs/authoring/brand.html) -- how Quarto consumes a `brand.yml` file and which output formats support it.
+:::
