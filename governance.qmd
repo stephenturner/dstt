@@ -1,0 +1,173 @@
+# Working with IT and Data Governance {#sec-governance}
+
+Data science in public health does not happen in a vacuum. Before a single line of code is written, the data has to be located, accessed, and cleared for use. Doing that requires navigating institutional infrastructure, legal agreements, and policies that determine what can be done with health data and where. @sec-pm-it introduces IT as a project management concern; this chapter goes into the operational detail: the types of environments public health data scientists actually work in, the legal frameworks that govern data use, and the practical steps for getting access to data and staying on the right side of both.
+
+## Data Environments in Public Health {#sec-governance-environments}
+
+Public health data science happens across a wide range of computing environments, and the environment shapes what tools and workflows are feasible. Understanding where data lives, and what constraints that imposes, is the starting point.
+
+**Laptops and local files** are the simplest setup. Data is on your machine, code runs locally, and there are no network permissions to navigate. This works for small, non-sensitive datasets (public-use files, aggregated data, synthetic data) but fails for anything regulated: sensitive data should not live on a personal laptop without explicit authorization.
+
+**Shared network drives** are the most common data storage arrangement at state and local health departments. The data lives on a server managed by IT, mapped as a drive letter or network path on each authorized user's machine. As described in @sec-dataorg, this creates a specific challenge: code lives in version control, but data cannot leave the drive. The solution is project-relative paths that work from any authorized machine, not absolute paths tied to a specific user's drive mapping.
+
+**Institutional databases** (SQL Server, Oracle, PostgreSQL) are increasingly common for high-volume surveillance data, vital records, and claims. Queries run on the server and return only results, so raw data never has to move. This is generally preferable to a shared drive for structured, regularly updated data. @sec-resources covers R's database tools (DBI and dbplyr) in more detail.
+
+**Secure remote desktops and data enclaves** are used for the most sensitive data, including restricted-use vital records, Medicaid claims, and linked longitudinal datasets. Analysts connect via remote desktop to a server where the data lives. Copy-paste and file transfer are often disabled. Internet access may be restricted. The data never leaves the server; only approved outputs do, after passing a disclosure review. CDC's Research Data Center and many state-level restricted data programs work this way.
+
+**Air-gapped systems** go further: no external network connection at all. These are rare but exist for certain federal and state datasets. Code and packages must be brought in through an approved intake process, and every output leaves through a formal review.
+
+::: {.callout-tip}
+The more restrictive the environment, the more planning is required upfront. In a data enclave, you cannot install a package on a whim or look up documentation online. Test your code on a representative subset of data in a less restricted environment first, resolve all dependency questions, and then bring the finalized analysis into the enclave.
+:::
+
+## Data Use Agreements {#sec-governance-dua}
+
+A data use agreement (DUA) is a legal contract between the organization providing data and the organization receiving it. DUAs define what data is being shared, who is allowed to access it, what it can be used for, and what happens to it at the end of the project. They are routine in public health. Any time data is obtained from another agency, a federal program, a health system, or a research partner, expect a DUA.
+
+### What DUAs Cover
+
+The most consequential terms are:
+
+**Permitted uses.** DUAs typically specify the exact purpose for which the data was obtained. Using data for a secondary purpose (even one that seems obviously fine) may require an amendment. Read this section carefully before scoping the analysis.
+
+**Authorized users.** The agreement usually names individuals or roles who may access the data. Adding a new team member or sharing data with a collaborator at another agency requires notifying the data provider and may require an amendment.
+
+**Data environment requirements.** Many DUAs specify where data may be stored and processed, for example only on a designated secure server, only within the jurisdiction's network, or only in a HIPAA-compliant environment. "I'll just put it on my laptop for a quick look" is a DUA violation if the agreement prohibits local storage.
+
+**Dissemination restrictions.** Some DUAs restrict publication (requiring advance review by the data provider), prohibit releasing record-level data, or limit which findings can be publicly reported. Know these terms before drafting a report or dashboard.
+
+**Data destruction.** Most DUAs require that data be destroyed or returned at the end of the project period, and that destruction be documented. This includes copies, backups, and any data that was transferred for analysis.
+
+### Practical Guidance
+
+Get a copy of the DUA before the data arrives. It is much easier to negotiate terms before signing than to discover a constraint mid-project. Loop in your supervisor and, if the terms are unfamiliar or restrictive, your agency's legal or compliance office. When in doubt about whether a specific use is permitted, ask the data provider in writing (email creates a record).
+
+::: {.callout-warning}
+Data received informally (as an email attachment, a Dropbox link, or a thumb drive) still carries the same governance obligations as data received through a formal DUA process. "We didn't sign anything" does not mean "there are no restrictions." Ask how the data can be used before you use it.
+:::
+
+## HIPAA and Protected Health Information {#sec-governance-hipaa}
+
+The Health Insurance Portability and Accountability Act (HIPAA) establishes federal standards for protecting the privacy and security of individually identifiable health information. This section is not a comprehensive HIPAA guide (your organization's privacy officer is the right resource for that), but public health data scientists need a working understanding of what HIPAA covers and how it applies to their work.
+
+### What HIPAA Covers
+
+HIPAA applies to *covered entities* (healthcare providers, health plans, and healthcare clearinghouses) and their *business associates* (organizations that handle protected health information on their behalf). Many public health agencies are covered entities or business associates; many are not. The rules differ across jurisdictions, and some public health functions have explicit carve-outs under the HIPAA Privacy Rule (disease reporting, for example, is generally permitted without individual authorization).
+
+**Protected health information (PHI)** is any individually identifiable health information held or transmitted by a covered entity. HIPAA defines 18 identifiers whose presence in a dataset makes that dataset PHI:
+
+- Names
+- Geographic subdivisions smaller than a state (including ZIP codes, street addresses, cities in some cases)
+- All dates more specific than year (dates of service, birth dates, admission dates, death dates)
+- Telephone numbers, fax numbers, email addresses
+- Social Security numbers
+- Medical record numbers, health plan beneficiary numbers, account numbers
+- Certificate and license numbers
+- Vehicle identifiers (license plates, VINs)
+- Device identifiers and serial numbers
+- URLs and IP addresses
+- Biometric identifiers (fingerprints, voiceprints)
+- Full-face photographs
+- Any other unique identifying number or code
+
+If a dataset contains any of these and relates to an individual's health, it is PHI.
+
+### The Minimum Necessary Standard
+
+HIPAA's minimum necessary standard requires that covered entities use, disclose, or request only the minimum amount of PHI needed to accomplish the intended purpose. For a data scientist, this means requesting only the variables needed for the analysis, not pulling a complete medical record when you only need diagnosis codes and dates.
+
+### De-identification
+
+Properly de-identified data is not PHI and is not subject to HIPAA restrictions. HIPAA provides two paths to de-identification:
+
+**Safe harbor:** Remove all 18 identifiers listed above, plus ensure that the data provider has no actual knowledge that the remaining information could identify an individual. Geographic identifiers must be aggregated to the state level or to ZIP code prefixes with population greater than 20,000.
+
+**Expert determination:** A qualified statistician applies generally accepted statistical principles to certify that the risk of identifying any individual is very small. This allows more flexibility than safe harbor (for example, three-digit ZIP codes or specific dates) but requires documented statistical analysis.
+
+::: {.callout-note}
+De-identification under HIPAA is a formal process, not a judgment call. Simply removing a name is not de-identification. If you are preparing data for release or for use in a less restricted environment, work with your privacy officer to ensure the de-identification is compliant.
+:::
+
+## Getting Data Access {#sec-governance-access}
+
+Data access in public health institutions involves more parties than most analysts expect. A clear map of who needs to be involved, and what each party needs to hear, prevents the most common delays.
+
+**The data steward** owns or is responsible for the dataset within the source organization. They can tell you what is in the data, how it is structured, its known quality issues, and what access process is required. For internal datasets (data your own agency collects), the steward is typically in the program that runs the surveillance system. For external datasets (from another state agency, a federal program, or a partner organization), the steward is at the providing organization.
+
+**IT** controls the infrastructure: server access, database credentials, software installation, network permissions, and VPN. A request to IT should be specific: what software is needed (including version numbers), which database or server needs to be accessed, what level of compute and storage the analysis requires, and whether the data is sensitive or regulated.
+
+**Legal and compliance** reviews DUAs and data sharing agreements. Loop them in early (DUA review can take weeks at some institutions) and provide the full draft agreement rather than a summary.
+
+**Your supervisor** typically needs to sign DUAs and data sharing agreements on behalf of the agency. They should know about any data access requests that involve legal agreements before those agreements are presented for signature.
+
+### Framing Requests
+
+A request framed in terms of program need is easier to prioritize than a vague technical ask. Compare:
+
+> *"I need access to the vital records SQL Server database."*
+
+versus:
+
+> *"This analysis supports the quarterly overdose mortality report due to the State Health Officer in March. I need read access to the `vr_deaths` table in the vital records database and the ability to install `odbc` and `DBI` in my R environment. The data is governed by our existing MOU with vital records. I need this by February 15 to have time to validate before the report deadline."*
+
+The second version tells IT what the deadline is, what the legal basis is, and exactly what is needed. It also signals that someone outside IT will notice if the request is not addressed.
+
+## Working in Secure Data Environments {#sec-governance-secure}
+
+When data cannot leave a controlled environment, the analysis has to come to the data. Secure remote desktops and data enclaves impose constraints that require adapting the workflows described elsewhere in this book.
+
+### Common Constraints
+
+- **No internet access**, or access limited to specific approved sites
+- **No USB or removable media**, preventing local file transfer
+- **Copy-paste disabled** between the remote session and the local machine
+- **No administrator rights**, preventing ad-hoc software or package installation
+- **Output review**, meaning no file can leave the environment until it passes a disclosure review
+
+### Adapting Your Workflow
+
+**Resolve package dependencies before entering the environment.** Use `renv` (see @sec-environments) to capture your project's exact package list. Submit the lockfile to IT for review; they can pre-install those packages in the secure environment, or arrange an approved intake path. Discovering mid-analysis that a package is unavailable is a significant delay.
+
+**Plan the analysis before entering.** Write and test your code on a representative mock dataset (public-use data with similar structure, or synthetic data generated from the real data's structure) before bringing the code into the secure environment. The enclave is not the place to iterate on exploratory analysis.
+
+**Keep code in version control accessible from within the environment.** Some enclaves have access to an internal Git server, or allow code to be transferred via an approved intake process. Maintain your code in a repository (see @sec-git) so it can be moved in as a single unit.
+
+**Document outputs before requesting export.** Every output (tables, figures, and reports) that leaves the environment will be reviewed. Organize outputs clearly, understand the suppression rules that apply (see @sec-governance-disclosure), and apply them yourself before submission. Self-review before the formal review reduces round trips.
+
+## Disclosure Review and Small Number Suppression {#sec-governance-disclosure}
+
+Even properly de-identified data can allow re-identification when cell counts are small. A table showing that a specific rural county had 2 opioid overdose deaths among people aged 25–34 may effectively identify those individuals in a small community. Disclosure review is the process of checking whether outputs could allow such re-identification before they are released.
+
+### When Disclosure Review Applies
+
+Disclosure review is typically required for:
+
+- Any output leaving a secure data environment
+- Outputs derived from restricted-use data, regardless of environment
+- Public-facing reports and dashboards based on individual-level surveillance data
+- Analyses submitted for publication when the underlying data is restricted
+
+Your DUA and your agency's data governance policies will specify what review process applies. For internally-collected surveillance data, the process is usually internal. For federally restricted data (NCHS, CMS), the providing agency conducts the review.
+
+### Small Number Suppression
+
+The standard threshold in public health is to suppress cells where the count is fewer than 5. A count of 0, 1, 2, 3, or 4 is suppressed, typically displayed as an asterisk or "data not shown."
+
+**Complementary suppression** is required when suppressing one cell would allow back-calculation of another. If a row shows a total and several cells, and only one cell is suppressed, the suppressed value can be calculated by subtraction. The fix is to suppress an additional cell (typically the next-smallest) so that the suppressed value cannot be derived. This often requires checking row and column totals as well as individual cells.
+
+::: {.callout-note}
+**Example:** A county reports 7 total influenza deaths. By age group: 25–34: 4 (suppressed, < 5), 35–44: 2 (suppressed), 45+: 1 (suppressed). The total (7) may still be releasable if it is not small, but all three age group cells must be suppressed. If only the first cell were suppressed, the other two would reveal the suppressed value.
+
+In practice, suppression logic can be complex for multi-dimensional tables. Review tools or explicit code (rather than manual review) reduce the risk of errors.
+:::
+
+### What Disclosure Review Examines
+
+A reviewer will typically check:
+
+- All cells meet the minimum count threshold
+- Complementary suppression has been applied correctly
+- Geographic or demographic combinations that are highly specific (a single rural county × a specific age group × a specific cause) do not expose individuals even if each cell alone is above the threshold
+- Percentages, rates, and proportions are checked: a rate computed from a suppressed count is itself suppressed
+
+When reporting suppressed data to a lay audience, explain why: "Data suppressed to protect individual privacy" is preferable to an unexplained asterisk or blank cell.

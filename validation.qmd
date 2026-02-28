@@ -189,5 +189,5 @@ if (!all_passed(agent)) {
 Putting validation here means the failure is traceable to a specific data file and a specific expectation. The message tells you what was wrong, not just that something broke three steps later in an `aes()` call.
 
 ::: {.callout-tip}
-Commit your validation code to version control alongside the analysis (see @sec-git). When a data supplier changes a format, adds a new disease code, or starts providing a column in a different type, your validation catches it on the next render rather than silently producing wrong output.
+Commit your validation code to version control alongside the analysis (see @sec-git). When a data supplier changes a format, adds a new disease code, or starts providing a column in a different type, your validation catches it on the next render rather than silently producing wrong output. When validation failures trace back to a change in an upstream data system, @sec-governance covers how to work with IT and data stewards to resolve it.
 :::

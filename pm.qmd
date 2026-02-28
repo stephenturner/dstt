@@ -102,7 +102,7 @@ Framing requests in terms of the program need (e.g., "this analysis supports the
 
 Much of the data used in public health analytics is sensitive: vital records, case surveillance data, insurance claims, linked longitudinal datasets. Familiarize yourself with your organization's data governance policies and the specific terms of any data use agreements governing the datasets you work with. Some analyses must be conducted within designated secure environments (managed servers, data enclaves, air-gapped systems) and outputs may need to pass a disclosure review before leaving.
 
-These constraints shape what tools and workflows are actually feasible. It is better to understand them at project start than to build an analysis pipeline that cannot be used where the data actually lives.
+These constraints shape what tools and workflows are actually feasible. It is better to understand them at project start than to build an analysis pipeline that cannot be used where the data actually lives. See @sec-governance for a more detailed treatment of data use agreements, HIPAA, disclosure review, and working in secure data environments.
 
 ## Communicating Findings {#sec-pm-communication}
 
@@ -126,7 +126,7 @@ That said, excessive hedging is its own failure mode. When the data clearly show
 
 ### Match the output format to the need
 
-A written report, an interactive dashboard, a two-page brief, and a slide deck are all appropriate in different contexts. The analysis determines what can be said; the output format determines whether it is heard. See @sec-dashboards for guidance on building dashboards for data that needs to be explored or updated regularly.
+A written report, an interactive dashboard, a two-page brief, and a slide deck are all appropriate in different contexts. The analysis determines what can be said; the output format determines whether it is heard. See @sec-dashboards for guidance on building dashboards for data that needs to be explored or updated regularly. See @sec-comms for a more detailed treatment of message structure, visualization choices, and communicating uncertainty.
 
 ## Further Reading {#sec-pm-reading}
 

@@ -111,7 +111,7 @@ format:
 
 Running `quarto render report.qmd` then produces all three.
 
-The practical benefit of format independence is durability. A report that exists only as a finished Word document is locked to the moment it was created -- any change requires re-opening it and editing manually. The `.qmd` file is the permanent, authoritative version. The Word document is just one of its outputs, and it can always be regenerated.
+The practical benefit of format independence is durability. A report that exists only as a finished Word document is locked to the moment it was created -- any change requires re-opening it and editing manually. The `.qmd` file is the permanent, authoritative version. The Word document is just one of its outputs, and it can always be regenerated. For guidance on choosing which format best serves a given audience, see @sec-comms-format.
 
 ::: {.callout-note}
 Some content behaves differently across formats. Interactive elements like `plotly` charts and `DT` tables work in HTML but fall back to static output in PDF and Word. If Word or PDF is a primary deliverable, test your render early -- not after a report is due -- so you aren't surprised by what doesn't translate.

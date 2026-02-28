@@ -1,0 +1,202 @@
+# Communicating Findings {#sec-comms}
+
+A technically correct analysis that does not reach its audience (or reaches them in a form they cannot act on) has not done its job. In public health, findings inform decisions made by program directors, health officers, elected officials, and practitioners who did not run the analysis and may not read a methods section. Getting from rigorous analysis to useful communication is its own skill, and one that is easy to underinvest in when the pressure is on to finish the analysis itself.
+
+@sec-pm-communication introduces the core principles: know your audience, communicate uncertainty honestly, match the output format to the need. This chapter goes deeper on each, with concrete guidance on structure, visualization, and how to handle the cases that are hardest to communicate well.
+
+## Start with the Bottom Line {#sec-comms-bottomline}
+
+The most common failure mode in communicating analysis results is burying the finding. Reports structured like academic papers (Introduction, Methods, Results, Discussion) force busy decision-makers to read through to the end to learn what the analysis concluded. Many do not make it that far.
+
+The fix is to lead with the finding, not with the context. State the bottom line first. Then provide the evidence that supports it.
+
+Compare these two openings for the same analysis:
+
+> *Version A:* "Overdose mortality in the state has been a growing public health concern. This analysis used death certificate data from the National Vital Statistics System for 2015–2023 to examine trends in overdose deaths by county and age group. The results showed that rates in rural counties increased substantially."
+
+> *Version B:* "Overdose death rates in rural counties increased 34% from 2019 to 2023, compared to a 22% increase in urban counties, a reversal from the 2015–2019 period, when urban rates were higher. The shift is driven primarily by illicitly manufactured fentanyl, which first appeared in rural county toxicology reports at scale in 2020."
+
+Version B leads with what changed, by how much, and what is driving it. A health officer who reads only the first two sentences of Version B has the main finding. Version A makes them work for it.
+
+### The "So What" Test
+
+After stating a finding, ask: *So what?* What should a program manager, health officer, or policymaker consider doing differently because of this finding? The analysis team often knows the answer but leaves it unstated, assuming the audience will draw the right implication. They often do not.
+
+A finding without an implication is incomplete:
+
+> *Finding only:* "Rural overdose death rates increased 34%."
+
+> *Finding with implication:* "Rural overdose death rates increased 34%, and rural counties currently have significantly less harm reduction infrastructure per capita than urban counties, suggesting that expanding naloxone distribution and syringe services to rural areas is a priority intervention point."
+
+This does not mean advocating for a specific policy. It means stating what the data implies for programmatic decisions. The program can decide what to do with that implication; the analyst's job is to make it explicit.
+
+## Audience and Format {#sec-comms-audience}
+
+Different stakeholders need different outputs from the same underlying analysis. Plan to produce more than one. The analysis runs once; the communication takes multiple forms.
+
+### Decision-Makers
+
+Health officers, board members, program directors, and elected officials typically need:
+
+- The bottom line first (what is the finding and what does it imply?)
+- One or two key numbers, not a table of 40 statistics
+- Uncertainty stated plainly in language they can repeat to others
+- A clear sense of what decision or consideration the finding should inform
+- One page, or one slide
+
+They do not need methods details unless they specifically ask. If the methods are rigorous, say so briefly ("These findings are based on complete death certificate data; preliminary estimates from provisional data are consistent with these results") and move on.
+
+### Program Staff
+
+Staff doing day-to-day work (case investigators, disease intervention specialists, program coordinators) need findings they can act on. The most useful outputs for this audience:
+
+- Are specific enough to change what they do tomorrow
+- Include enough supporting data that they can answer follow-up questions from the people they work with
+- Are formatted for reuse in their own presentations and communications
+
+A table they can sort, a chart they can copy into a slide, or a brief they can forward to a partner agency is often more valuable than a polished report they cannot extract from.
+
+### Technical Peers
+
+Epidemiologists, biostatisticians, and methodologically sophisticated collaborators need the full picture: data sources, methods, sensitivity analyses, limitations, and honest uncertainty. For this audience, the concerns are whether the analysis was done correctly and whether the conclusions are defensible, not whether the one-page summary is clear.
+
+When sharing work with technical peers for review (see @sec-git for making code available), include the analysis code alongside the report. A methods section that says "code available at [repository]" is more credible than one that does not.
+
+### An Executive Summary Template
+
+For findings that need to reach multiple audiences, a structured one-page executive summary gives decision-makers what they need while pointing technical readers to the full report. A minimal template:
+
+```
+SUMMARY
+
+[One to two sentences: the main finding and its most important implication.]
+
+KEY FINDINGS
+
+- [Finding 1, stated plainly, with the key number]
+- [Finding 2]
+- [Finding 3]
+
+IMPLICATIONS
+
+[One to two sentences on what the findings suggest for programs, policy,
+or practice. Frame as considerations, not mandates.]
+
+DATA AND METHODS
+
+[One sentence: data source, time period, geographic scope, population.]
+Full methods available at [link or report title].
+```
+
+The summary fits on one page. The full report follows. Decision-makers read the summary; technical reviewers read both.
+
+## Choosing the Right Output {#sec-comms-format}
+
+The analysis determines what can be said; the output format determines whether it is heard. A well-chosen format reduces friction between the finding and the decision-maker.
+
+| Situation | Best format |
+|---|---|
+| One-time finding for a decision | Written brief or slide deck |
+| Ongoing data that updates regularly | Parameterized report (@sec-reporting) or dashboard (@sec-dashboards) |
+| Data that stakeholders need to explore | Interactive dashboard |
+| Findings for public release | Report with executive summary |
+| Technical findings for peer review | Full report with methods appendix and code |
+| Data that will be used in others' presentations | Table or chart files, clearly labeled |
+
+A few questions that sharpen the choice:
+
+**Will the audience consume a summary or explore the data?** If the finding can be stated in a few sentences and a chart, a brief is right. If stakeholders will want to slice by county, time period, or demographic group, a dashboard lets them do that without requiring a new analysis each time.
+
+**Is this a one-time analysis or will it recur?** If the analysis will be repeated monthly or annually with updated data, building a reproducible, parameterized report (see @sec-reporting) costs more upfront and dramatically less over time. If it is truly one-time, a polished static output is fine.
+
+**Will this be printed?** HTML dashboards and interactive reports do not print well. If physical copies or PDFs are a requirement, design for that from the start.
+
+## Visualizing to Communicate {#sec-comms-viz}
+
+Visualization for communication is different from visualization for exploration. Exploratory charts help you understand data; communication charts help an audience understand a specific finding. The design goal shifts from "show me what is in this data" to "make this one finding impossible to miss."
+
+### Match Chart Type to Message
+
+| Message | Chart type |
+|---|---|
+| Compare values across categories | Horizontal bar chart (especially with many categories) |
+| Show change over time | Line chart |
+| Show a part of a whole | Stacked bar, waffle chart; avoid pie charts with more than 3 slices |
+| Show a relationship between two variables | Scatter plot |
+| Show geographic distribution | Choropleth map (with caution, since land area ≠ population) |
+| Show a single number | Large text, value box |
+
+No chart type is universally wrong, but some common combinations fail reliably:
+
+- **Pie charts with many slices:** humans cannot judge angles accurately; a bar chart is almost always clearer
+- **Dual y-axes:** charts with two y-axes are nearly always misleading because the visual relationship between the two lines depends entirely on how the axes are scaled, which the designer chooses
+- **3D charts:** the added dimension carries no data but introduces distortion; never use them
+- **Truncated y-axes:** starting a bar chart's y-axis above zero exaggerates differences; if differences are small, say so in text rather than making them look large on a chart
+
+### Design for the Finding, Not the Data
+
+A communication chart has one job: make the finding clear. Every element that does not support that job should be removed.
+
+**Highlight what matters.** Use color, annotations, or callout lines to draw attention to the specific element that supports the finding. A line chart showing trends for 50 states, all in gray, with a single state highlighted in the primary color, is far more effective than 50 differently-colored lines competing for attention.
+
+**Label directly.** Annotations on the chart (for example, "34% increase" at the relevant data point, or a text label at the end of each line) are clearer than legends the reader has to match to the chart. If the chart requires a legend to interpret, consider whether direct labeling is possible.
+
+**Use accessible colors.** Approximately 8% of men have color vision deficiency. Red/green combinations are the most common problem. Colorblind-friendly palettes (such as the Okabe-Ito palette used by default in many ggplot2 themes) are safe choices. Check any palette at a tool like [Coblis](https://www.color-blindness.com/coblis-color-blindness-simulator/) before finalizing.
+
+**Remove decoration that carries no information.** Heavy gridlines, background colors, borders, and 3D effects subtract from clarity. The data should be the most visually prominent element on the chart.
+
+## Communicating Uncertainty {#sec-comms-uncertainty}
+
+Every analysis involves uncertainty, and communicating it honestly, without either overstating it into uselessness or understating it into false precision, is one of the harder craft challenges in public health communication. @sec-pm-communication introduces this; what follows is more specific guidance.
+
+### Natural Language Over Statistical Formalism
+
+Decision-makers who did not take a statistics course will not correctly interpret "95% confidence interval." Many will read a CI as a margin of error or, worse, as the probability that the true value falls in the range. Natural language is clearer:
+
+> *Avoid:* "The estimated increase was 34.2% (95% CI: 28.1%–40.3%)."
+
+> *Prefer:* "We estimate the increase was between 28% and 40%, with our best estimate at 34%."
+
+> *Or:* "We estimate the increase was roughly 34%, though the true figure could reasonably be as low as 28% or as high as 40%."
+
+When explaining what drives the uncertainty, be specific: "The estimate is imprecise because few deaths occurred in this county" is more useful than "the confidence interval is wide" or "p = 0.07."
+
+### Null Results Are Findings
+
+An analysis that finds no statistically significant difference has found something: the absence of a detectable effect with the available data. This is not a failure; it is a result, and it should be communicated as one.
+
+> *Weak:* "There was no statistically significant difference in rates between the two groups (p = 0.23)."
+
+> *Stronger:* "We found no evidence of a meaningful difference in rates between the two groups. With the available data, we would have been able to detect a difference of 15 percentage points or larger; smaller differences, if they exist, are not detectable with this dataset."
+
+The second version tells the reader what the analysis could and could not detect, which helps them calibrate what further inquiry is warranted.
+
+### Preliminary and Provisional Data
+
+Public health data is often released in provisional form before it is final. Death certificate data typically takes 12–24 months to complete as late reports arrive and codes are finalized. When using provisional data, say so explicitly:
+
+> "These counts are based on provisional data as of [date]. Counts are typically revised upward by 5–10% as late reports arrive; the trend is reliable even if specific numbers will change."
+
+Telling the audience the direction and magnitude of likely revision is more useful than a generic caveat.
+
+### Data Quality Problems
+
+When data has known quality issues (a reporting system that changed, a year with underreporting, a jurisdiction that did not report), be transparent about them without letting them swallow the finding.
+
+A pattern that holds despite a known data quality problem is stronger evidence than one that depends on a single year or jurisdiction. Point that out explicitly:
+
+> "Reporting completeness improved in 2021 after the new case management system was deployed, which contributes to the apparent increase that year. The trend from 2022 onward, when reporting was stable, shows a continued increase of approximately 8% per year."
+
+### Suppression
+
+When cells are suppressed due to small counts (see @sec-governance-disclosure), explain why in plain language rather than leaving an unexplained asterisk:
+
+> "Data for counties with fewer than 5 deaths in a given year are not shown to protect individual privacy."
+
+If the suppression is consequential (meaning the reader might draw incorrect conclusions from the visible cells because suppressed cells would change the picture), say so:
+
+> "Several small rural counties are not shown due to small counts, but their inclusion would not change the overall trend."
+
+Or, if suppression does change the picture:
+
+> "Data for several small counties are suppressed. Statewide totals include these counties; county-level rates for the suppressed jurisdictions are not available."

@@ -39,6 +39,8 @@ book:
     - part: "Nontechnical"
       chapters:
         - pm.qmd
+        - governance.qmd
+        - comms.qmd
   appendices:
   - references.qmd
   - resources.qmd

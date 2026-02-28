@@ -143,7 +143,7 @@ The limitations of `renv` described above—R version, system libraries, non-R s
 
 Docker is especially useful for:
 
-- **Deploying analyses to servers** -- the same image that works locally runs in production
+- **Deploying analyses to servers** -- the same image that works locally runs in production (see @sec-governance for working with IT on institutional deployment)
 - **Sharing complete analyses** -- collaborators run your container without installing anything
 - **Pipelines that mix R with other tools** -- Python, command-line tools, databases, and R all coexist in one image
 - **Shiny apps** -- containerized apps can be deployed anywhere without managing a server environment
