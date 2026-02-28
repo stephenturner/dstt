@@ -8,7 +8,7 @@
 
 <meta name="author" content="Stephen D. Turner">
 
-<title>2&nbsp; Data Organization – Data Science Team Training</title>
+<title>9&nbsp; Code Style – Data Science Team Training</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,26 +24,42 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -53,8 +69,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./validation.html" rel="next">
-<link href="./git.html" rel="prev">
+<link href="./pm.html" rel="next">
+<link href="./databases.html" rel="prev">
 <link href="./hex.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -107,7 +123,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./dataorg.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Organization</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./codestyle.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Code Style</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -175,7 +191,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dataorg.html" class="sidebar-item-text sidebar-link active">
+  <a href="./dataorg.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Organization</span></span></a>
   </div>
 </li>
@@ -217,7 +233,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./codestyle.html" class="sidebar-item-text sidebar-link">
+  <a href="./codestyle.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Code Style</span></span></a>
   </div>
 </li>
@@ -285,41 +301,26 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#data-organization-in-spreadsheets" id="toc-data-organization-in-spreadsheets" class="nav-link active" data-scroll-target="#data-organization-in-spreadsheets"><span class="header-section-number">2.1</span> Data Organization in Spreadsheets</a>
+  <li><a href="#sec-style-guide" id="toc-sec-style-guide" class="nav-link active" data-scroll-target="#sec-style-guide"><span class="header-section-number">9.1</span> The Tidyverse Style Guide</a></li>
+  <li><a href="#sec-style-air" id="toc-sec-style-air" class="nav-link" data-scroll-target="#sec-style-air"><span class="header-section-number">9.2</span> Formatting with Air</a>
   <ul class="collapse">
-  <li><a href="#be-consistent" id="toc-be-consistent" class="nav-link" data-scroll-target="#be-consistent"><span class="header-section-number">2.1.1</span> Be Consistent</a></li>
-  <li><a href="#make-it-a-rectangle" id="toc-make-it-a-rectangle" class="nav-link" data-scroll-target="#make-it-a-rectangle"><span class="header-section-number">2.1.2</span> Make It a Rectangle</a></li>
-  <li><a href="#one-thing-per-cell" id="toc-one-thing-per-cell" class="nav-link" data-scroll-target="#one-thing-per-cell"><span class="header-section-number">2.1.3</span> One Thing Per Cell</a></li>
-  <li><a href="#fill-in-all-cells" id="toc-fill-in-all-cells" class="nav-link" data-scroll-target="#fill-in-all-cells"><span class="header-section-number">2.1.4</span> Fill in All Cells</a></li>
-  <li><a href="#write-dates-as-yyyy-mm-dd" id="toc-write-dates-as-yyyy-mm-dd" class="nav-link" data-scroll-target="#write-dates-as-yyyy-mm-dd"><span class="header-section-number">2.1.5</span> Write Dates as YYYY-MM-DD</a></li>
-  <li><a href="#choose-good-names-for-things" id="toc-choose-good-names-for-things" class="nav-link" data-scroll-target="#choose-good-names-for-things"><span class="header-section-number">2.1.6</span> Choose Good Names for Things</a></li>
-  <li><a href="#no-calculations-in-raw-data-files" id="toc-no-calculations-in-raw-data-files" class="nav-link" data-scroll-target="#no-calculations-in-raw-data-files"><span class="header-section-number">2.1.7</span> No Calculations in Raw Data Files</a></li>
-  <li><a href="#dont-use-formatting-as-data" id="toc-dont-use-formatting-as-data" class="nav-link" data-scroll-target="#dont-use-formatting-as-data"><span class="header-section-number">2.1.8</span> Don’t Use Formatting as Data</a></li>
-  <li><a href="#create-a-data-dictionary" id="toc-create-a-data-dictionary" class="nav-link" data-scroll-target="#create-a-data-dictionary"><span class="header-section-number">2.1.9</span> Create a Data Dictionary</a></li>
-  <li><a href="#save-data-in-plain-text" id="toc-save-data-in-plain-text" class="nav-link" data-scroll-target="#save-data-in-plain-text"><span class="header-section-number">2.1.10</span> Save Data in Plain Text</a></li>
-  <li><a href="#make-backups" id="toc-make-backups" class="nav-link" data-scroll-target="#make-backups"><span class="header-section-number">2.1.11</span> Make Backups</a></li>
+  <li><a href="#setting-up-format-on-save-in-positron" id="toc-setting-up-format-on-save-in-positron" class="nav-link" data-scroll-target="#setting-up-format-on-save-in-positron"><span class="header-section-number">9.2.1</span> Setting Up Format on Save in Positron</a></li>
+  <li><a href="#before-and-after" id="toc-before-and-after" class="nav-link" data-scroll-target="#before-and-after"><span class="header-section-number">9.2.2</span> Before and After</a></li>
   </ul></li>
-  <li><a href="#file-naming" id="toc-file-naming" class="nav-link" data-scroll-target="#file-naming"><span class="header-section-number">2.2</span> File Naming</a>
+  <li><a href="#sec-style-lintr" id="toc-sec-style-lintr" class="nav-link" data-scroll-target="#sec-style-lintr"><span class="header-section-number">9.3</span> Linting with lintr</a>
   <ul class="collapse">
-  <li><a href="#three-principles" id="toc-three-principles" class="nav-link" data-scroll-target="#three-principles"><span class="header-section-number">2.2.1</span> Three Principles</a></li>
-  <li><a href="#recommended-pattern-yyyy-mm-dd-slug" id="toc-recommended-pattern-yyyy-mm-dd-slug" class="nav-link" data-scroll-target="#recommended-pattern-yyyy-mm-dd-slug"><span class="header-section-number">2.2.2</span> Recommended Pattern: <code>YYYY-MM-DD-slug</code></a></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started"><span class="header-section-number">9.3.1</span> Getting Started</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples"><span class="header-section-number">9.3.2</span> Examples</a></li>
   </ul></li>
-  <li><a href="#project-directory-structure" id="toc-project-directory-structure" class="nav-link" data-scroll-target="#project-directory-structure"><span class="header-section-number">2.3</span> Project Directory Structure</a>
-  <ul class="collapse">
-  <li><a href="#simple-project-oriented-workflow" id="toc-simple-project-oriented-workflow" class="nav-link" data-scroll-target="#simple-project-oriented-workflow"><span class="header-section-number">2.3.1</span> Simple project-oriented workflow</a></li>
-  <li><a href="#version-controlling-code-with-data-on-a-shared-drive" id="toc-version-controlling-code-with-data-on-a-shared-drive" class="nav-link" data-scroll-target="#version-controlling-code-with-data-on-a-shared-drive"><span class="header-section-number">2.3.2</span> Version controlling code with data on a shared drive</a></li>
-  </ul></li>
-  <li><a href="#file-formats" id="toc-file-formats" class="nav-link" data-scroll-target="#file-formats"><span class="header-section-number">2.4</span> File Formats</a></li>
-  <li><a href="#additional-best-practices" id="toc-additional-best-practices" class="nav-link" data-scroll-target="#additional-best-practices"><span class="header-section-number">2.5</span> Additional Best Practices</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./dataorg.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Organization</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./codestyle.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Code Style</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-dataorg" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Organization</span></span></h1>
+<h1 class="title"><span id="sec-style" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Code Style</span></span></h1>
 </div>
 
 
@@ -336,325 +337,174 @@ div.csl-indent {
 </header>
 
 
-<p>Good data organization is foundational to reproducible, efficient research. Decisions made at the moment of data collection and storage ripple through every downstream step—analysis, visualization, sharing, and archiving. This chapter covers practical principles for organizing data in spreadsheets, naming files consistently, structuring project directories, and storing data in formats that work well with code.</p>
-<section id="data-organization-in-spreadsheets" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="data-organization-in-spreadsheets"><span class="header-section-number">2.1</span> Data Organization in Spreadsheets</h2>
-<p>Broman and Woo’s “Data Organization in Spreadsheets” <span class="citation" data-cites="broman2018">(<a href="references.html#ref-broman2018" role="doc-biblioref">Broman and Woo 2018</a>)</span> offers twelve practical recommendations for anyone who stores data in Excel or similar tools. The core philosophy: structure your data so that it can be read directly into R or Python without manual cleanup.</p>
-<section id="be-consistent" class="level3" data-number="2.1.1">
-<h3 data-number="2.1.1" class="anchored" data-anchor-id="be-consistent"><span class="header-section-number">2.1.1</span> Be Consistent</h3>
-<p>Consistency is the single most important principle. Pick conventions and stick to them within a project:</p>
+<p>Writing code that works is necessary. Writing code that others can read and modify is what makes a team functional over time. As teams grow, people rotate, and analyses are revisited months after they were written, the gap between “it runs” and “anyone can understand and extend it” becomes the gap between a one-time deliverable and a sustainable workflow.</p>
+<p>Style conventions close that gap. They are agreements, sometimes explicit and sometimes just accumulated habit, about how code is written: how things are named, where spaces go, how long lines get before they break. None of these decisions affect what the code computes, but all of them affect how quickly a reader can understand it and how cleanly changes show up in version control.</p>
+<p>This chapter covers the <a href="https://style.tidyverse.org/">Tidyverse Style Guide</a> as the standard for R, the <a href="https://posit-dev.github.io/air/">Air formatter</a> for automatically applying that standard, and the <a href="https://lintr.r-lib.org/"><code>lintr</code></a> package for catching issues that a formatter cannot.</p>
+<section id="sec-style-guide" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="sec-style-guide"><span class="header-section-number">9.1</span> The Tidyverse Style Guide</h2>
+<p>The <a href="https://style.tidyverse.org/">Tidyverse Style Guide</a> is the de facto standard for R code in data science. It is opinionated but well-reasoned, and following it means your code will look immediately familiar to anyone else working in R.</p>
+<p>The most important conventions:</p>
 <ul>
-<li>Use the same codes for categorical variables (e.g., always <code>"M"</code> and <code>"F"</code>, not sometimes <code>"Male"</code>)</li>
-<li>Use the same missing value code throughout (e.g., <code>NA</code>)</li>
-<li>Use the same variable names across files and time points</li>
-<li>Use the same date format everywhere</li>
+<li><strong>Names</strong>: use <code>snake_case</code>, all lowercase, words separated by underscores. Prefer <code>flu_cases</code> over <code>fluCases</code> or <code>FluCases</code>. Object names should be nouns; function names should be verbs.</li>
+<li><strong>Spacing</strong>: put spaces around most operators (<code>&lt;-</code>, <code>+</code>, <code>-</code>, <code>==</code>, and others) and after commas. Do not put spaces inside parentheses or before a comma.</li>
+<li><strong>Line length</strong>: keep lines to 80 characters or fewer. Long expressions should be broken across lines with consistent indentation.</li>
+<li><strong>Indentation</strong>: two spaces per level. Not tabs.</li>
+<li><strong>Assignment</strong>: use <code>&lt;-</code> for assignment, not <code>=</code>.</li>
+<li><strong>Pipes</strong>: when chaining multiple operations, put each step on its own line, indented two spaces.</li>
 </ul>
+<p>The full guide covers function naming, documentation, ggplot2 layering, and much more. It is worth reading once and returning to when questions arise. The key practical point: you do not have to memorize all of it. A formatter handles most of the mechanical rules automatically.</p>
 </section>
-<section id="make-it-a-rectangle" class="level3" data-number="2.1.2">
-<h3 data-number="2.1.2" class="anchored" data-anchor-id="make-it-a-rectangle"><span class="header-section-number">2.1.2</span> Make It a Rectangle</h3>
-<p>Raw data should be a single, clean rectangle:</p>
-<ul>
-<li><strong>Rows are observations</strong> (subjects, samples, time points)</li>
-<li><strong>Columns are variables</strong></li>
-<li><strong>One header row</strong> at the top with short, meaningful column names</li>
-<li>No merged cells, no blank rows used for visual separation, no summary rows mixed in</li>
-</ul>
-<p>This is consistent with the principles of <strong>tidy data</strong> <span class="citation" data-cites="wickham2014">(<a href="references.html#ref-wickham2014" role="doc-biblioref">Wickham 2014</a>)</span>, where each variable forms a column, each observation forms a row, and each type of observational unit forms a table.</p>
-</section>
-<section id="one-thing-per-cell" class="level3" data-number="2.1.3">
-<h3 data-number="2.1.3" class="anchored" data-anchor-id="one-thing-per-cell"><span class="header-section-number">2.1.3</span> One Thing Per Cell</h3>
-<p>Each cell should contain exactly one value. Don’t cram multiple pieces of information into a single cell (e.g., <code>"120/80"</code> for blood pressure—use two columns instead). Don’t use a cell to store a note alongside a value.</p>
-</section>
-<section id="fill-in-all-cells" class="level3" data-number="2.1.4">
-<h3 data-number="2.1.4" class="anchored" data-anchor-id="fill-in-all-cells"><span class="header-section-number">2.1.4</span> Fill in All Cells</h3>
-<p>Don’t leave cells blank to imply “same as above.” Every cell should contain an explicit value. Use a consistent missing data code (e.g., <code>NA</code>) rather than leaving cells empty—blank cells are ambiguous: was the value missing, not collected, or zero?</p>
-</section>
-<section id="write-dates-as-yyyy-mm-dd" class="level3" data-number="2.1.5">
-<h3 data-number="2.1.5" class="anchored" data-anchor-id="write-dates-as-yyyy-mm-dd"><span class="header-section-number">2.1.5</span> Write Dates as YYYY-MM-DD</h3>
-<p>Use <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> format for all dates: <code>2024-03-15</code>. This format:</p>
-<ul>
-<li>Sorts correctly alphabetically</li>
-<li>Is unambiguous across locales (<code>03/04/2024</code> means different things in the US vs.&nbsp;Europe)</li>
-<li>Is not mangled by Excel (unlike many other date formats)</li>
-</ul>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Excel silently converts many text strings to dates (e.g., the human gene name <code>SEPT1</code> becomes a date). Consider storing year, month, and day in separate columns if you’re collecting data in Excel, or prefix dates with an apostrophe to force text storage.</p>
-</div>
-</div>
-</section>
-<section id="choose-good-names-for-things" class="level3" data-number="2.1.6">
-<h3 data-number="2.1.6" class="anchored" data-anchor-id="choose-good-names-for-things"><span class="header-section-number">2.1.6</span> Choose Good Names for Things</h3>
-<p>Apply consistent naming rules to columns, sheets, and files:</p>
-<ul>
-<li>No spaces—use underscores (<code>_</code>) or hyphens (<code>-</code>)</li>
-<li>No special characters (<code>@</code>, <code>#</code>, <code>%</code>, <code>(</code>, <code>)</code>)</li>
-<li>Short but meaningful (<code>participant_id</code>, not <code>p</code> or <code>the_participant_identifier_number</code>)</li>
-<li>All lowercase is a safe default</li>
-<li>Avoid starting names with numbers</li>
-</ul>
-</section>
-<section id="no-calculations-in-raw-data-files" class="level3" data-number="2.1.7">
-<h3 data-number="2.1.7" class="anchored" data-anchor-id="no-calculations-in-raw-data-files"><span class="header-section-number">2.1.7</span> No Calculations in Raw Data Files</h3>
-<p>Keep raw data raw. Don’t add sum rows, averages, or derived columns to the data file—do that in your analysis script. The raw data file is a permanent record of what was collected; calculations belong in code that can be inspected, corrected, and rerun.</p>
-</section>
-<section id="dont-use-formatting-as-data" class="level3" data-number="2.1.8">
-<h3 data-number="2.1.8" class="anchored" data-anchor-id="dont-use-formatting-as-data"><span class="header-section-number">2.1.8</span> Don’t Use Formatting as Data</h3>
-<p>Color-coding, bold text, or cell highlighting to indicate something (e.g., red = outlier, bold = reviewed) is invisible to code. Add an explicit column instead: <code>is_outlier</code> (<code>TRUE</code>/<code>FALSE</code>) or <code>review_status</code> (“reviewed”, “pending”).</p>
-</section>
-<section id="create-a-data-dictionary" class="level3" data-number="2.1.9">
-<h3 data-number="2.1.9" class="anchored" data-anchor-id="create-a-data-dictionary"><span class="header-section-number">2.1.9</span> Create a Data Dictionary</h3>
-<p>Every dataset should be accompanied by a data dictionary (also called a codebook) that documents:</p>
-<ul>
-<li>Variable name</li>
-<li>Description of what it measures</li>
-<li>Units</li>
-<li>Allowable values or range</li>
-<li>How missing values are coded</li>
-</ul>
-<p>A simple spreadsheet or CSV with one row per variable works fine.</p>
-</section>
-<section id="save-data-in-plain-text" class="level3" data-number="2.1.10">
-<h3 data-number="2.1.10" class="anchored" data-anchor-id="save-data-in-plain-text"><span class="header-section-number">2.1.10</span> Save Data in Plain Text</h3>
-<p>Save the analysis-ready version of your data as CSV (comma-separated values), not as <code>.xlsx</code>. CSV files:</p>
-<ul>
-<li>Can be opened by any software</li>
-<li>Are readable in version control diffs</li>
-<li>Don’t have hidden formatting or macros</li>
-<li>Are stable long-term</li>
-</ul>
-<p>Keep the original Excel file if needed, but always export a clean CSV as the file you hand off to analysis.</p>
-</section>
-<section id="make-backups" class="level3" data-number="2.1.11">
-<h3 data-number="2.1.11" class="anchored" data-anchor-id="make-backups"><span class="header-section-number">2.1.11</span> Make Backups</h3>
-<p>Raw data should be treated as read-only and backed up in at least two places (e.g., local drive + cloud storage). Consider these tiers:</p>
-<ul>
-<li><strong>Primary:</strong> Your working copy</li>
-<li><strong>Local backup:</strong> External drive or NAS</li>
-<li><strong>Off-site/cloud:</strong> Institutional storage, OneDrive, or similar</li>
-</ul>
-<p>Version control (see <a href="git.html" class="quarto-xref"><span>Chapter 1</span></a>) is excellent for code and small text files but is not ideal for large binary data files.</p>
-</section>
-</section>
-<section id="file-naming" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="file-naming"><span class="header-section-number">2.2</span> File Naming</h2>
-<p>Jenny Bryan’s <a href="https://github.com/jennybc/how-to-name-files">“How to Name Files”</a> <span class="citation" data-cites="bryan2015">(<a href="references.html#ref-bryan2015" role="doc-biblioref">Bryan 2015</a>)</span> lays out three principles that make file names work well for both humans and computers. See also her talk from NormConf 2022:</p>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/ES1LTlnpLMk" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<section id="three-principles" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="three-principles"><span class="header-section-number">2.2.1</span> Three Principles</h3>
-<p><strong>1. Machine readable</strong></p>
-<p>File names should be parseable by code without heroics:</p>
-<ul>
-<li>No spaces (use <code>_</code> or <code>-</code> instead)</li>
-<li>No special characters (<code>&amp;</code>, <code>*</code>, <code>#</code>, <code>(</code>, <code>)</code>, accented letters)</li>
-<li>No case sensitivity issues—stick to lowercase</li>
-<li>Use delimiters consistently so you can split on them: underscores between metadata fields, hyphens within a field</li>
-</ul>
-<p><strong>2. Human readable</strong></p>
-<p>The name should tell you what’s in the file without opening it:</p>
-<ul>
-<li>Include a descriptive “slug” that summarizes the content</li>
-<li><code>2024-03-15-enrollment-summary.csv</code> is better than <code>data_v3_FINAL.csv</code></li>
-</ul>
-<p><strong>3. Plays well with default ordering</strong></p>
-<p>Files should sort into a useful order automatically:</p>
-<ul>
-<li>Use ISO 8601 dates (<code>YYYY-MM-DD</code>) at the start of the name so files sort chronologically</li>
-<li>Left-pad numbers with zeros: <code>fig-01.png</code>, <code>fig-02.png</code>, …, <code>fig-10.png</code> (not <code>fig-1.png</code>, <code>fig-2.png</code>, <code>fig-10.png</code>)</li>
-</ul>
-</section>
-<section id="recommended-pattern-yyyy-mm-dd-slug" class="level3" data-number="2.2.2">
-<h3 data-number="2.2.2" class="anchored" data-anchor-id="recommended-pattern-yyyy-mm-dd-slug"><span class="header-section-number">2.2.2</span> Recommended Pattern: <code>YYYY-MM-DD-slug</code></h3>
-<p>For dated outputs (reports, snapshots, exports), the pattern <code>YYYY-MM-DD-descriptive-slug.ext</code> works well:</p>
-<pre><code>2024-03-15-enrollment-summary.csv
-2024-06-01-adverse-events-cleaned.csv
-2024-09-30-q3-interim-analysis.html</code></pre>
-<p>For numbered sequences (figures, scripts with a natural order), use zero-padded numbers:</p>
-<pre><code>01-import-data.R
-02-clean-data.R
-03-fit-models.R
-04-make-figures.R</code></pre>
-<p>For files that don’t change often and aren’t dated, a simple descriptive slug is fine:</p>
-<pre><code>protocol.pdf
-data-dictionary.xlsx
-consent-form-v2.pdf</code></pre>
+<section id="sec-style-air" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="sec-style-air"><span class="header-section-number">9.2</span> Formatting with Air</h2>
+<p><a href="https://posit-dev.github.io/air/">Air</a> is an R code formatter written in Rust. When you save a file, it reformats the code to follow consistent conventions for spacing, indentation, and line breaks. It does not rename variables or change logic, only whitespace and layout.</p>
+<p>The value of a formatter is that it removes style decisions from the development loop entirely. You write code, save, and Air handles presentation. Code review conversations shift from “this line is too long” or “there should be a space here” to the actual logic. Diffs in version control (see <a href="git.html" class="quarto-xref"><span>Chapter 1</span></a>) show only meaningful changes, not incidental reformatting.</p>
+<section id="setting-up-format-on-save-in-positron" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="setting-up-format-on-save-in-positron"><span class="header-section-number">9.2.1</span> Setting Up Format on Save in Positron</h3>
+<p>Air ships bundled with <a href="https://positron.posit.co/">Positron</a>, so no separate installation is needed. To enable format on save, configure a <code>.vscode/settings.json</code> file in your project root. The quickest way:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_air</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This creates the settings file with the correct entries. Alternatively, create or edit <code>.vscode/settings.json</code> manually:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"[r]"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"editor.formatOnSave"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"editor.defaultFormatter"</span><span class="fu">:</span> <span class="st">"Posit.air-vscode"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Committing <code>.vscode/settings.json</code> to version control means every collaborator on the project gets format-on-save behavior automatically, without any manual setup.</p>
+<p>For Quarto documents, add a second entry so that R code cells inside <code>.qmd</code> files are also formatted:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"[r]"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"editor.formatOnSave"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"editor.defaultFormatter"</span><span class="fu">:</span> <span class="st">"Posit.air-vscode"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">},</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"[quarto]"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"editor.formatOnSave"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"editor.defaultFormatter"</span><span class="fu">:</span> <span class="st">"quarto.quarto"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>To format a single R cell inside a <code>.qmd</code> file without saving the whole document, place your cursor in the cell and press <code>Cmd+K Cmd+F</code> (Mac) or <code>Ctrl+K Ctrl+F</code> (Windows/Linux).</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Tip
+<span class="screen-reader-only">Tip</span>Formatting a whole project at once
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A good file name is essentially metadata. When you can glob a directory and parse the file names with code—extracting dates, conditions, or sample IDs—you’ve done it right.</p>
+<p>To format every R file in a project at once, open the Command Palette (<code>Cmd+Shift+P</code> on Mac, <code>Ctrl+Shift+P</code> on Windows/Linux) and run <strong>Air: Format Workspace Folder</strong>. This is useful when first introducing Air to an existing codebase.</p>
+</div>
+</div>
+</section>
+<section id="before-and-after" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="before-and-after"><span class="header-section-number">9.2.2</span> Before and After</h3>
+<p>The following two blocks show the same code before and after Air formats it. The computation is identical in both versions; only the layout changes.</p>
+<p><strong>Before:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>flu_summary<span class="ot">&lt;-</span>flu<span class="sc">|&gt;</span><span class="fu">filter</span>(cases<span class="sc">&gt;</span><span class="dv">0</span>,<span class="sc">!</span><span class="fu">is.na</span>(county))<span class="sc">|&gt;</span><span class="fu">group_by</span>(county,disease)<span class="sc">|&gt;</span><span class="fu">summarise</span>(<span class="at">total_cases=</span><span class="fu">sum</span>(cases),<span class="at">avg_rate=</span><span class="fu">mean</span>(rate,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="at">.groups=</span><span class="st">"drop"</span>)<span class="sc">|&gt;</span><span class="fu">arrange</span>(<span class="fu">desc</span>(total_cases))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>After:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>flu_summary <span class="ot">&lt;-</span> flu <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(cases <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="sc">!</span><span class="fu">is.na</span>(county)) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(county, disease) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_cases =</span> <span class="fu">sum</span>(cases),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_rate =</span> <span class="fu">mean</span>(rate, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_cases))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The formatted version is longer in line count but far shorter in reading time. Each transformation appears on its own line, arguments that belong together are grouped, and indentation reflects the structure of the pipeline. When this code appears in a pull request, a reviewer can check each step independently rather than scanning a wall of characters for the one thing that changed.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Air’s configuration lives in an optional <code>air.toml</code> file at the project root. The defaults (2-space indentation, 80-character line width) follow the Tidyverse Style Guide and are suitable for most projects. The most common reason to configure <code>air.toml</code> is to exclude specific functions from Air’s table-formatting behavior, using the <code>skip</code> field.</p>
 </div>
 </div>
 </section>
 </section>
-<section id="project-directory-structure" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="project-directory-structure"><span class="header-section-number">2.3</span> Project Directory Structure</h2>
-<section id="simple-project-oriented-workflow" class="level3" data-number="2.3.1">
-<h3 data-number="2.3.1" class="anchored" data-anchor-id="simple-project-oriented-workflow"><span class="header-section-number">2.3.1</span> Simple project-oriented workflow</h3>
-<p>A consistent folder structure makes projects navigable by collaborators (and your future self). One convention is shown below:</p>
-<pre><code>project-name/
-├── data/
-│   ├── .gitignore    # Don't commit data to version control.
-│   ├── raw/          # original data -- never edited directly
-│   └── processed/    # cleaned, analysis-ready files
-├── R/                # scripts and functions
-├── output/
-│   ├── .gitignore    # Don't commit large output files.
-│   ├── figures/
-│   └── tables/
-└── report.qmd</code></pre>
-<p>Key rules:</p>
+<section id="sec-style-lintr" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="sec-style-lintr"><span class="header-section-number">9.3</span> Linting with lintr</h2>
+<p>A formatter handles whitespace. A linter goes further: it reads code statically and flags patterns that are likely wrong or poor style, without running the code and without changing anything. Think of it as a careful reviewer pointing out potential problems for you to decide on.</p>
+<p>The <a href="https://lintr.r-lib.org/"><code>lintr</code></a> package is the standard linting tool for R. It checks for issues including:</p>
 <ul>
-<li><strong>Raw data is sacred.</strong> The <code>data/raw/</code> folder is read-only. Never overwrite or edit raw data files. Also, you don’t want to commit large files to version control, so be careful with your <code>.gitignore</code>.</li>
-<li><strong>All data manipulation is scripted.</strong> Cleaned data in <code>data/processed/</code> is generated by a script, not by hand.</li>
-<li><strong>One project = one directory.</strong> Keep all files related to a project together.</li>
+<li>Assignment with <code>=</code> instead of <code>&lt;-</code></li>
+<li>Missing or extra spaces around operators</li>
+<li>Use of <code>T</code> or <code>F</code> instead of <code>TRUE</code> or <code>FALSE</code> (fragile, because <code>T</code> can be overwritten as a variable name)</li>
+<li>Redundant comparisons like <code>x == TRUE</code></li>
+<li>Lines that exceed the recommended length</li>
+<li>Variable names that do not follow <code>snake_case</code> convention</li>
 </ul>
-<p>The <a href="http://projecttemplate.net/">ProjectTemplate</a> (R) and <a href="https://cookiecutter-data-science.drivendata.org/">Cookiecutter Data Science</a> (Python) tools can scaffold these structures automatically.</p>
+<p>Unlike Air, lintr does not fix anything. It reports what it finds and leaves decisions to you. This is useful for catching issues that a formatter cannot handle: semantic shortcuts, naming violations, and patterns that are syntactically valid but likely to cause confusion.</p>
+<section id="getting-started" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="getting-started"><span class="header-section-number">9.3.1</span> Getting Started</h3>
+<p>Install lintr from CRAN:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"lintr"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The primary interface is <code>lintr::lint("your_file.R")</code>, which reads a file from disk and prints a list of warnings. To lint every R file in a project at once, use <code>lintr::lint_dir()</code>. Each line of output identifies the file, the line and column, the severity, and the name of the rule that triggered it.</p>
 </section>
-<section id="version-controlling-code-with-data-on-a-shared-drive" class="level3" data-number="2.3.2">
-<h3 data-number="2.3.2" class="anchored" data-anchor-id="version-controlling-code-with-data-on-a-shared-drive"><span class="header-section-number">2.3.2</span> Version controlling code with data on a shared drive</h3>
-<p>Finally, it’s not uncommon in public health settings to have a setup where you’re working with collaborators version controlling code as described in <a href="git.html" class="quarto-xref"><span>Chapter 1</span></a>, but the data lives on a secure shared drive that cannot be moved or copied into the repository. This creates a tension between reproducibility and security that can be resolved with careful project organization and path management. The governance and access implications of working with data on secure shared drives, including data use agreements and secure data environments, are covered in <a href="governance.html" class="quarto-xref"><span>Chapter 11</span></a>.</p>
-<p>Imagine that you have a distributed research team working with sensitive data that:</p>
-<ul>
-<li>Lives on a secure shared drive that cannot be moved</li>
-<li>Is organized in nested folders, for example, by state and year (e.g., <code>Lab/StateA/2023/</code>, <code>Lab/StateB/2024/</code>, etc.)</li>
-<li>Requires collaborative code development across Windows, Mac, and Linux machines</li>
-<li>Needs version control for reproducibility and collaboration</li>
-</ul>
-<p>Storing data in a <em>database</em> would be preferable to a shared drive, but many public health agencies don’t have the resources or infrastructure to set up and maintain databases. So how can we manage this?</p>
-<section id="the-conflict" class="level4" data-number="2.3.2.1">
-<h4 data-number="2.3.2.1" class="anchored" data-anchor-id="the-conflict"><span class="header-section-number">2.3.2.1</span> The Conflict</h4>
-<p>Traditional approaches create impossible trade-offs:</p>
-<p><strong>❌ Option 1: One code repository without proper path management</strong></p>
-<ul>
-<li>Forces hardcoded paths: <code>setwd("Z:/Lab/StateA/2024")</code></li>
-<li>Breaks on different operating systems (Z:/ vs /Volumes/)</li>
-<li>Breaks when different team members have different drive mappings</li>
-<li>Violates<a href="https://tidyverse.org/blog/2017/12/workflow-vs-script/">project-oriented workflow</a> principles</li>
-<li>Code is not reproducible</li>
-</ul>
-<p><strong>❌ Option 2: Code repositories inside each data folder</strong></p>
-<ul>
-<li>Creates dozens of scattered git repositories</li>
-<li>Makes code reuse nearly impossible</li>
-<li>Version control nightmare (which repo has what function?)</li>
-<li>Accidental data commits to version control</li>
-<li>Multiple people doing git operations in the same shared folder causes conflicts. Not merge conflicts, but file locking and permission issues that can break everyone’s workflow.</li>
-</ul>
-<p><strong>❌ Option 3: Move data into code repository</strong></p>
-<ul>
-<li>Violates data security requirements</li>
-<li>Data cannot leave the secure shared drive</li>
-<li>Makes git repository enormous and slow</li>
-<li>Not feasible</li>
-</ul>
-</section>
-<section id="a-better-way-centralized-code-repository-with-configurable-paths" class="level4" data-number="2.3.2.2">
-<h4 data-number="2.3.2.2" class="anchored" data-anchor-id="a-better-way-centralized-code-repository-with-configurable-paths"><span class="header-section-number">2.3.2.2</span> A Better Way: Centralized Code Repository with Configurable Paths</h4>
-<p>✅ One way to manage this is with a <strong>single centralized code repository with configurable paths</strong>:</p>
-<ul>
-<li>One repository for all analysis code (easy to find, maintain, collaborate)<br>
-</li>
-<li>Reproducible across team members with different operating systems<br>
-</li>
-<li>Secure: data never leaves the shared drive or enters version control<br>
-</li>
-<li>Flexible: works with nested folder structures<br>
-</li>
-<li>Collaborative: proper git workflow without conflicts<br>
-</li>
-<li>Project-oriented: no <code>setwd()</code>, paths are configurable not hardcoded</li>
-</ul>
-<p>See <a href="https://github.com/stephenturner/demo-project-path-config">stephenturner/demo-project-path-config</a> for an example of one way to do this using configuration files. This can also be achieved with environment variables. <strong>How it works:</strong></p>
-<ul>
-<li>Code lives in a git repository on each person’s <strong>local machine</strong></li>
-<li>Each team member has a personal <code>config.yml</code> file (not version controlled) with their specific paths</li>
-<li>Code uses helper functions to construct paths dynamically</li>
-<li>Data stays on the shared drive (read-only for most operations)</li>
-<li>Outputs go to each person’s local directories</li>
-<li>Everyone commits code changes, never data</li>
-</ul>
-</section>
-</section>
-</section>
-<section id="file-formats" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="file-formats"><span class="header-section-number">2.4</span> File Formats</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 26%">
-<col style="width: 33%">
-<col style="width: 40%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Format</th>
-<th>Best for</th>
-<th>Avoid when</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>.csv</code></td>
-<td>Tabular data, analysis input/output</td>
-<td>Binary data, very wide datasets</td>
-</tr>
-<tr class="even">
-<td><code>.tsv</code></td>
-<td>Tabular data with commas in values</td>
-<td>—</td>
-</tr>
-<tr class="odd">
-<td><code>.json</code></td>
-<td>Nested/hierarchical data, configs</td>
-<td>Large flat tables</td>
-</tr>
-<tr class="even">
-<td><code>.parquet</code></td>
-<td>Large tabular data, columnar access</td>
-<td>Simple small datasets</td>
-</tr>
-<tr class="odd">
-<td><code>.xlsx</code></td>
-<td>Data entry, sharing with non-coders</td>
-<td>Final analysis-ready data</td>
-</tr>
-</tbody>
-</table>
-<p>Plain text formats (CSV, TSV, JSON) are preferred for long-term storage and reproducibility. Proprietary binary formats (<code>.xlsx</code>, <code>.sav</code>, <code>.sas7bdat</code>) may become unreadable as software evolves.</p>
-</section>
-<section id="additional-best-practices" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="additional-best-practices"><span class="header-section-number">2.5</span> Additional Best Practices</h2>
-<p><strong>Use version control for code, not data.</strong> Git is designed for text files. Large or binary data files should live in dedicated storage (cloud drives, data repositories, databases) and be referenced in your code, not committed to the repository. Use a good <code>.gitignore</code>.</p>
-<p><strong>Document your cleaning steps.</strong> The gap between raw and processed data should be bridged entirely by a script that anyone can run. Comments in that script explaining <em>why</em> you made certain decisions are invaluable.</p>
-<p><strong>Plan for sharing.</strong> Before a project ends, ask: could someone else reproduce this analysis from the raw data? Good file organization, consistent naming, and a clear README make the answer yes.</p>
-<p><strong>Avoid “final” in file names.</strong> <code>analysis-final-FINAL-v3-USE-THIS-ONE.R</code> is a sign that version control was not used. Use Git instead, and name the file simply <code>analysis.R</code>.</p>
+<section id="examples" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="examples"><span class="header-section-number">9.3.2</span> Examples</h3>
+<p>Consider an R script, <code>analysis.R</code>, with several common problems:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">10</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>y<span class="ot">&lt;-</span>x<span class="sc">*</span><span class="dv">2</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>flag <span class="ot">=</span> T</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (flag <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">print</span>(y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Running <code>lintr::lint("analysis.R")</code> produces:</p>
+<pre><code>analysis.R:2:3: style: [assignment_linter] Use one of &lt;-, &lt;&lt;- for assignment, not =.
+x = 10
+  ^
+analysis.R:3:2: style: [infix_spaces_linter] Put spaces around all infix operators.
+y&lt;-x*2
+ ^~
+analysis.R:3:5: style: [infix_spaces_linter] Put spaces around all infix operators.
+y&lt;-x*2
+    ^
+analysis.R:4:6: style: [assignment_linter] Use one of &lt;-, &lt;&lt;- for assignment, not =.
+flag = T
+     ^
+analysis.R:4:9: style: [T_and_F_symbol_linter] Use TRUE instead of the symbol T.
+flag = T
+       ~^
+analysis.R:5:27: style: [trailing_blank_lines_linter] Add a terminal newline.
+if (flag == TRUE) print(y)</code></pre>
+<p>Working through these one at a time: <code>=</code> for assignment is flagged because <code>&lt;-</code> is the R convention and <code>=</code> is reserved for function arguments. The missing spaces around <code>&lt;-</code> and <code>*</code> on the second line are spacing violations. <code>T</code> as a shorthand for <code>TRUE</code> is flagged because <code>T</code> is just a variable that happens to default to <code>TRUE</code> and can be overwritten (<code>T &lt;- 42</code> is legal R). And <code>flag == TRUE</code> is redundant: if <code>flag</code> is already a logical value, <code>if (flag)</code> says exactly the same thing.</p>
+<p>A second example shows naming convention warnings. Given a file with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>totalCases <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>meanRate <span class="ot">&lt;-</span> totalCases <span class="sc">/</span> <span class="dv">30</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ReportTitle <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"Weekly report:"</span>, <span class="fu">format</span>(<span class="fu">Sys.Date</span>(), <span class="st">"%B %Y"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>lintr flags all three names:</p>
+<pre><code>analysis.R:2:1: style: [object_name_linter] Variable and function name style should match snake_case or symbols.
+totalCases &lt;- 100
+^~~~~~~~~~
+analysis.R:3:1: style: [object_name_linter] Variable and function name style should match snake_case or symbols.
+meanRate &lt;- totalCases / 30
+^~~~~~~~
+analysis.R:4:1: style: [object_name_linter] Variable and function name style should match snake_case or symbols.
+ReportTitle &lt;- paste("Weekly report:", format(Sys.Date(), "%B %Y"))
+^~~~~~~~~~~
+analysis.R:4:68: style: [trailing_blank_lines_linter] Add a terminal newline.
+ReportTitle &lt;- paste("Weekly report:", format(Sys.Date(), "%B %Y"))</code></pre>
+<p>All three names are flagged for camelCase or PascalCase. In an analysis that will be maintained and extended, consistent <code>snake_case</code> naming is worth the small upfront effort of renaming.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Using Air and lintr together
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Air and lintr complement each other. Air handles layout automatically on every save. lintr catches things that layout cannot: semantic shortcuts like <code>T</code> for <code>TRUE</code>, naming convention violations, and redundant expressions. A practical workflow is to let Air format on save and run <code>lintr::lint_dir()</code> periodically to catch the issues Air does not touch.</p>
+</div>
+</div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
-<div id="ref-broman2018" class="csl-entry" role="listitem">
-Broman, Karl W., and Kara H. Woo. 2018. <span>“Data Organization in Spreadsheets.”</span> <em>The American Statistician</em> 72 (1): 2–10. <a href="https://doi.org/10.1080/00031305.2017.1375989">https://doi.org/10.1080/00031305.2017.1375989</a>.
-</div>
-<div id="ref-bryan2015" class="csl-entry" role="listitem">
-Bryan, Jennifer. 2015. <em>How to Name Files</em>. <a href="https://github.com/jennybc/how-to-name-files">https://github.com/jennybc/how-to-name-files</a>.
-</div>
-<div id="ref-wickham2014" class="csl-entry" role="listitem">
-Wickham, Hadley. 2014. <span>“Tidy Data.”</span> <em>Journal of Statistical Software</em> 59 (10): 1–23. <a href="https://doi.org/10.18637/jss.v059.i10">https://doi.org/10.18637/jss.v059.i10</a>.
-</div>
-</div>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1060,13 +910,13 @@ Wickham, Hadley. 2014. <span>“Tidy Data.”</span> <em>Journal of Statistical 
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./git.html" class="pagination-link" aria-label="Version Control">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Version Control</span></span>
+      <a href="./databases.html" class="pagination-link" aria-label="Databases from R">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Databases from R</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./validation.html" class="pagination-link" aria-label="Data Validation and QA">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Validation and QA</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./pm.html" class="pagination-link" aria-label="Project Management">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Project Management</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
