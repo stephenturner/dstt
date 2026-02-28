@@ -1,0 +1,193 @@
+# Data Validation and QA {#sec-validation}
+
+The failure mode that causes the most damage in public health data work is not a crashed script — it is an analysis that runs to completion on bad data. A negative case count, a duplicate record, a silently coerced column type: these do not throw errors. They propagate quietly through every table, figure, and report downstream, and the problem surfaces only when someone questions a number that seems wrong. By then, it is often too late to trace the source.
+
+The remedy is to validate data at the moment of ingestion, before any analysis runs. If the data does not meet your expectations, the code should fail immediately and loudly, with a message that explains why. This chapter covers two tools for doing that: base R assertions for simple, targeted checks, and the `pointblank` package for structured validation of an entire dataset.
+
+Throughout this chapter, the examples use the following simulated weekly influenza surveillance dataset. It has four problems baked in: a negative case count, a missing county, a missing rate, and a duplicate record.
+
+```{r}
+#| label: setup-data
+
+flu <- data.frame(
+  week = c(1, 2, 3, 4, 4),
+  county = c("Fairfax", "Arlington", NA, "Loudoun", "Loudoun"),
+  disease = c("Flu", "Flu", "Flu", "Flu", "Flu"),
+  cases = c(23, 41, 18, -5, 12),
+  rate = c(2.1, 3.8, 1.6, NA, 1.1)
+)
+
+flu
+```
+
+## Failing Fast {#sec-validation-stop}
+
+The simplest validation is a condition check paired with `stop()`. If the condition fails, execution halts and the message you wrote appears in the console — and in a Quarto document, in the output.
+
+```{r}
+#| label: stop-example
+#| error: true
+
+if (any(flu$cases < 0, na.rm = TRUE)) {
+  stop("Negative case counts detected. Inspect raw data before proceeding.")
+}
+```
+
+The `error: true` chunk option lets the document continue rendering even after an error — useful for demonstrating what a failed check looks like. In a real analysis, you would not set this option; you would want rendering to stop until the data problem is fixed.
+
+For multiple checks, `stopifnot()` is more concise. Named arguments become the error message, so the output tells you which check failed:
+
+```{r}
+#| label: stopifnot-example
+#| error: true
+
+stopifnot(
+  "Negative case counts" = all(flu$cases >= 0, na.rm = TRUE),
+  "Missing county values" = !anyNA(flu$county),
+  "Duplicate records" = !anyDuplicated(flu[, c("week", "county")])
+)
+```
+
+The error stops at the first failure. If `cases` and `county` both have problems, you only learn about `cases` until you fix it and re-run. For a dataset with many potential issues, that feedback loop is slow.
+
+## Structured Validation with pointblank {#sec-validation-pointblank}
+
+[`pointblank`](https://rstudio.github.io/pointblank/) replaces the one-at-a-time assertion model with a declarative pipeline: you describe every expectation up front, run them all at once, and get a structured report showing which passed and which failed — without stopping at the first problem.
+
+```{r}
+#| label: install-pointblank
+#| eval: false
+
+install.packages("pointblank")
+```
+
+### Basic Workflow
+
+The core workflow has three steps: create an agent bound to the data, add validation steps, then interrogate. Running all three checks against `flu` — which has a negative case count, a missing county, and a duplicate row — should produce three failures.
+
+:::{.callout-note}
+The pointblank outputs are only rendered in html format at <https://dstt.stephenturner.us/>. These interactive formats are not rendered in the PDF or EPUB versions of this guide.
+:::
+
+```{r}
+#| label: pointblank-basic
+#| eval: !expr knitr::is_html_output()
+
+library(pointblank)
+
+agent <- create_agent(tbl = flu, label = "Weekly flu surveillance") |>
+  col_vals_gte(
+    columns = cases,
+    value = 0,
+    label = "Case counts must be non-negative"
+  ) |>
+  col_vals_not_null(
+    columns = c(week, county),
+    label = "Week and county cannot be missing"
+  ) |>
+  rows_distinct(
+    columns = c(week, county),
+    label = "No duplicate week/county records"
+  ) |>
+  interrogate()
+
+agent
+```
+
+All three checks fail: row 4 has `cases = -5`, row 3 has `county = NA`, and rows 4 and 5 are both `week = 4, county = "Loudoun"`. Each failure row shows the count of offending records. Critically, all three ran — the report does not stop at the first problem the way `stop()` does. You see the full picture at once.
+
+### Adding More Checks
+
+Real surveillance data has more constraints. A few more validations on the same dataset:
+
+```{r}
+#| label: pointblank-extended
+#| eval: !expr knitr::is_html_output()
+
+create_agent(tbl = flu, label = "Weekly flu surveillance — extended") |>
+  col_is_numeric(
+    columns = c(cases, rate),
+    label = "Case count and rate must be numeric"
+  ) |>
+  col_vals_in_set(
+    columns = disease,
+    set = c("Flu", "COVID-19", "RSV"),
+    label = "Disease must be from the approved list"
+  ) |>
+  col_vals_between(
+    columns = week,
+    left = 1,
+    right = 52,
+    label = "Week must be between 1 and 52"
+  ) |>
+  col_vals_gte(
+    columns = rate,
+    value = 0,
+    na_pass = TRUE,
+    label = "Rate must be non-negative (NAs allowed)"
+  ) |>
+  interrogate()
+```
+
+The `na_pass = TRUE` argument on the rate check lets missing values pass that particular step — sometimes a value being missing is acceptable, while a negative value never is. These two conditions are separate checks and should be stated separately.
+
+### Common Checks for Public Health Data
+
+| Validation | pointblank function | Use for |
+|---|---|---|
+| No negative counts | `col_vals_gte(value = 0)` | Case counts, deaths, population denominators |
+| No missing required fields | `col_vals_not_null()` | County, date, disease code |
+| No duplicate records | `rows_distinct()` | Surveillance records keyed by geography + time |
+| Values from a known list | `col_vals_in_set()` | Disease codes, county names, FIPS codes |
+| Dates within a valid range | `col_vals_between()` | Report dates, surveillance weeks |
+| Correct column type | `col_is_numeric()`, `col_is_date()` | Catches silent type coercion on import |
+| Counts match a known total | `col_vals_lte()` | Deaths ≤ total cases, OD deaths ≤ total deaths |
+
+### Stopping on Failure
+
+By default, `interrogate()` returns the full report without stopping execution. If any validation failure should halt the pipeline — for example, in an automated report where you never want to proceed with bad data — pass the agent to `all_passed()`:
+
+```{r}
+#| label: pointblank-stop
+#| error: true
+#| eval: !expr knitr::is_html_output()
+
+if (!all_passed(agent)) {
+  stop("Data validation failed. Review the agent report before proceeding.")
+}
+```
+
+This gives you the structured report from pointblank for diagnosis while still failing loudly enough to stop an automated run.
+
+## Where to Put Validation {#sec-validation-where}
+
+Validation belongs in the setup block, immediately after data is read in and before any transformation or analysis begins. This is the one place where bad data can be caught before it contaminates everything downstream.
+
+```{r}
+#| label: setup-pattern
+#| eval: false
+
+library(readr)
+library(pointblank)
+
+flu <- read_csv("data/flu-2024.csv")
+
+# Validate immediately after reading
+agent <- create_agent(tbl = flu, label = "flu-2024 validation") |>
+  col_vals_gte(columns = cases, value = 0, label = "No negative counts") |>
+  col_vals_not_null(columns = c(week, county), label = "No missing keys") |>
+  rows_distinct(columns = c(week, county), label = "No duplicate records") |>
+  interrogate()
+
+if (!all_passed(agent)) {
+  stop("Validation failed — see agent report above.")
+}
+
+# Analysis only runs if validation passes
+```
+
+Putting validation here means the failure is traceable to a specific data file and a specific expectation. The message tells you what was wrong, not just that something broke three steps later in an `aes()` call.
+
+::: {.callout-tip}
+Commit your validation code to version control alongside the analysis (see @sec-git). When a data supplier changes a format, adds a new disease code, or starts providing a column in a different type, your validation catches it on the next render rather than silently producing wrong output.
+:::
