@@ -10,6 +10,7 @@ While this material was created with DSTT participants in mind, it is intended t
 
 No single book can cover everything, and this one does not try to. @sec-resources points to additional reading and training for topics that go deeper than what is covered here.
 
+This work is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 ```{r cover-image}
 #| eval: false
