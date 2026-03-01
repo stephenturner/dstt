@@ -1,0 +1,144 @@
+# Peer Review for Data Analysis {#sec-peerreview}
+
+Analysis code is not the same as production software, but the reasons for reviewing it overlap substantially. Errors in analytical code produce wrong results. Wrong results inform wrong decisions. In public health, wrong decisions have consequences. Peer review is the primary mechanism for catching errors before they reach a decision-maker, and for building a team culture where good work is a shared responsibility rather than a solo performance.
+
+This chapter covers what analytical peer review looks like in practice, how to structure a review, and the tools that make it easier — including AI as a review aid.
+
+## What Analytical Peer Review Is (and Is Not) {#sec-peerreview-scope}
+
+Peer review in this context means having someone other than the original analyst read and evaluate the analysis before its results are communicated. This is different from:
+
+- **Software code review**, which focuses on correctness, security, and maintainability of code that runs in production. Analytical code has different concerns: Does the question match the data? Are the methods appropriate? Are the results interpreted correctly?
+- **Statistical peer review** in the academic sense, where a journal reviewer evaluates methodological rigor. The bar here is lower and the turnaround is much faster — the goal is to catch errors, not to grant imprimatur.
+- **Proofreading a report**, which catches writing problems but misses analytical ones. A clearly written report can present a wrong answer clearly.
+
+A good analytical peer review evaluates three things:
+
+1. **Correctness of the code**: Does the code do what the analyst says it does? Are there off-by-one errors, filter inversions, or joins that silently drop records?
+2. **Appropriateness of the methods**: Is the analysis designed to answer the question being asked? Are there obvious alternative interpretations the analyst did not consider?
+3. **Validity of the conclusions**: Do the stated findings follow from the results? Are uncertainty and limitations communicated accurately?
+
+None of these require the reviewer to rerun the analysis from scratch, though doing so is valuable when stakes are high.
+
+## Code Review Mechanics {#sec-peerreview-mechanics}
+
+The practical vehicle for analytical peer review is a pull request (see @sec-git-branching). When an analyst finishes a piece of work, they open a pull request from their branch to the main branch. The reviewer reads the diff, leaves comments, and either approves or requests changes before the code is merged.
+
+This workflow has several advantages over emailing scripts back and forth or reviewing a report after the fact:
+
+- The review is tied to the specific changes that were made, not a reconstruction from memory.
+- Comments are attached to specific lines of code, making feedback precise.
+- The history of the review (what was flagged, what was addressed) is preserved alongside the code.
+- Analysis results are not incorporated into a deliverable until the review is complete.
+
+### What to Look for in a Code Review
+
+When reviewing analytical code, focus on:
+
+**Data handling**
+
+- Are filters applied correctly? A common error is filtering to the wrong values (e.g., keeping `status != "active"` when the intent was to keep only active records).
+- Are joins producing the expected number of rows? Silent duplications or dropped records from a many-to-many join or a misspecified key are among the most consequential errors in analytical work.
+- Is missing data handled explicitly, or silently dropped? If dropped, is that appropriate?
+- Are date ranges and cutoffs correct? Off-by-one errors on dates are easy to introduce and easy to miss.
+
+**Calculations**
+
+- Do aggregations (sums, means, rates) match what is described in the analysis?
+- Are rates calculated with the correct denominators? Are numerator and denominator from the same population?
+- Are any constants hard-coded where they should be calculated from the data?
+
+**Outputs**
+
+- Do the summary statistics match reasonable expectations for the data? A mean that seems implausibly high or low is worth investigating.
+- Do the plots match what the code is computing? A chart labeled "rate per 100,000" should be computing and displaying a per-100,000 rate.
+- Are the conclusions stated in the narrative consistent with the numbers in the output?
+
+### Giving and Receiving Feedback
+
+A review is useful only if feedback is acted on, and feedback is acted on only if it is received well. A few principles that help:
+
+**For reviewers:** Be specific about what you are flagging and why. "This join might be producing duplicates: there are multiple rows per `case_id` in `contact_table`, which means a left join on `case_id` will multiply the case rows. Can you verify the row count before and after?" is more actionable than "check the join."
+
+**For analysts:** Treat a review comment as a question, not a criticism. The reviewer may be wrong; if so, a short explanation resolves it. But the reviewer may have caught something real and the fact that the analysis worked correctly in a different case does not mean it works correctly in this one.
+
+**For teams:** Normalize review as a default, not an exception reserved for high-stakes work. A team where review is standard for all analysis will catch errors earlier and distribute knowledge more evenly than one where review is triggered only by anxiety.
+
+## Checklists for Analytical Review {#sec-peerreview-checklist}
+
+Checklists help reviewers maintain consistency and avoid the bias of reading the analysis looking to confirm that it is correct. Reviewing analytically requires some skepticism, reading the code as if looking for errors rather than checking off steps.
+
+A basic checklist for most analytical peer reviews:
+
+**Data**
+
+- [ ] The data source is correctly identified and loaded
+- [ ] The date range and population scope match the stated analysis parameters
+- [ ] Filters are correctly specified and applied in the right order
+- [ ] Missing values are accounted for
+- [ ] Join keys are unique (or duplicates are intentional and handled)
+- [ ] Row counts at key steps are plausible
+
+**Analysis**
+
+- [ ] Numerators and denominators are correctly specified for any rates
+- [ ] Grouping variables match the level of the desired analysis
+- [ ] Any statistical tests or models use methods appropriate for the data and question
+- [ ] Results match expectations from prior knowledge of the data
+
+**Outputs**
+
+- [ ] Chart labels, titles, and units are correct
+- [ ] Summary tables match what the code computes
+- [ ] Stated conclusions follow from the results
+- [ ] Uncertainty and limitations are acknowledged appropriately
+
+Not every item applies to every analysis. For a simple descriptive summary, several of the statistical items are irrelevant. For a complex linked dataset with multiple joins and rates, the data section deserves more attention. Use judgment.
+
+## AI as a Review Aid {#sec-peerreview-ai}
+
+AI coding tools (see @sec-ai) can supplement but not replace human peer review. They are useful for certain review tasks and unreliable for others.
+
+**Where AI tools add value in review:**
+
+- Explaining what a section of code does, in plain language, so a reviewer can quickly verify that the code matches the analyst's stated intent
+- Identifying common patterns that are likely to be errors (filter inversions, joins without explicit key specification, implicit coercions)
+- Checking that variable names, column references, and function arguments are used consistently
+- Generating a summary of what changed between versions of a script
+
+**Where AI tools are not reliable:**
+
+- Verifying that the analytical methods are appropriate for the question (this requires domain knowledge)
+- Detecting errors that require understanding the real-world data (e.g., knowing that a particular jurisdiction stopped reporting in 2021, so a sudden drop is a data artifact rather than a true change)
+- Evaluating whether conclusions are well-supported (this requires both analytical judgment and knowledge of the context)
+
+A practical workflow: use the Positron Assistant (see @sec-ai-positron-assistant) or Claude Code (see @sec-ai-claude-code) to review a script for mechanical issues (does the logic match the description, are there obvious error patterns) and then have a human reviewer focus on whether the analysis is asking the right question and drawing the right conclusions from the results.
+
+::: {.callout-note}
+AI tools will sometimes confidently identify a "problem" that is not actually a problem. Any AI-generated review comment should be treated as a starting point for investigation, not a definitive finding. The human reviewer is responsible for the review.
+:::
+
+## High-Stakes Analyses {#sec-peerreview-highstakes}
+
+Routine analyses, i.e. a weekly case count report, a descriptive summary for an internal meeting, benefit from light-touch review. Analyses that inform significant decisions warrant more thorough review.
+
+Indicators that an analysis warrants a higher review standard:
+
+- The results will be used to allocate resources or change programs
+- The results will be released publicly or to the press
+- The analysis involves a method the team has not used before on this data
+- The analysis contradicts prior findings and there is no obvious explanation
+
+For high-stakes work, consider independent replication: a second analyst replicates the key computations independently and compares results. Discrepancies must be resolved before the analysis is finalized. This is more expensive than a standard review but is warranted when errors would have significant consequences.
+
+## Building a Review Culture {#sec-peerreview-culture}
+
+Peer review works best when it is a team norm, not a gatekeeping mechanism. Teams that review well share a few characteristics:
+
+**Review is not optional for consequential work.** There is a clear, shared expectation that analyses above a certain threshold of importance are reviewed before results are communicated.
+
+**Review is timely.** A review request that sits for two weeks creates pressure to skip it. Teams that review quickly, i.e. same or next business day for most requests, make review practical rather than theoretical.
+
+**Reviewers are recognized for good reviews.** Catching an error that would have been embarrassing is a contribution. Teams that treat review as invisible overhead underinvest in it.
+
+**Review is a learning mechanism.** The goal is not to police quality but to improve it. Analysts who receive good reviews get better. Reviewers who read a lot of others' code develop a broader perspective on the team's methods and practices.

@@ -38,10 +38,12 @@ book:
         - environments.qmd
         - databases.qmd
         - codestyle.qmd
+        - documentation.qmd
     - part: "Nontechnical"
       chapters:
         - pm.qmd
         - governance.qmd
+        - peerreview.qmd
         - comms.qmd
   appendices:
   - references.qmd

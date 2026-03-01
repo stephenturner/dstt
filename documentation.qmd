@@ -1,0 +1,180 @@
+# Documentation {#sec-documentation}
+
+Code that runs correctly but cannot be understood is a liability. Six months after writing an analysis, even the original author may not remember what a variable represents, why a particular filter was applied, or where a dataset came from. For a new team member inheriting existing work, undocumented code is essentially opaque.
+
+Documentation is the investment that makes analytical work reusable, reviewable, and transferable. It does not mean writing a manual for every script. It means leaving enough information that the next person (or your future self) can pick up the work without starting over.
+
+## READMEs {#sec-documentation-readme}
+
+Every project repository should have a README at the root. This is the first thing anyone sees when they open a project, and it should answer the questions a new reader has immediately:
+
+- What does this project do?
+- What data does it use, and where does that data come from?
+- How do you run the analysis?
+- What are the outputs and where do they go?
+
+A README does not need to be long. A one-page README that answers these questions is more valuable than a ten-page document that describes the history of the project and the background literature.
+
+### A Minimal README Template
+
+```markdown
+# Project Title
+
+One or two sentences describing what this analysis does and why it was done.
+
+## Data
+
+What data is used. Where it comes from (source, date accessed, any access 
+requirements). If data files are not in the repository (e.g., because 
+they contain PII), explain where they should be placed.
+
+## Running the Analysis
+
+How to reproduce the results. What to run first, what runs next.
+Any packages or environment requirements (see environments chapter).
+
+## Outputs
+
+What the analysis produces. Where outputs are written.
+```
+
+Commit the README with the project. Update it when something material changes. A stale README is worse than a brief one, because it creates false confidence that the instructions are current.
+
+### README for Shared Utility Code
+
+If a repository contains functions or tools that other projects use rather than a single self-contained analysis, the README should also document the interface: what the key functions are, what arguments they take, and a short example showing typical use.
+
+## Inline Comments {#sec-documentation-inline}
+
+Comments in code explain *why*, not *what*. The code itself shows what is happening; a comment adds value by explaining the reason behind a decision that might otherwise look arbitrary.
+
+A comment that adds no information:
+
+```r
+# filter to active cases
+cases <- cases |> filter(status == "active")
+```
+
+The code already says this. The comment is noise.
+
+A comment that adds information:
+
+```r
+# exclude cases with status "pending" and "transferred": these are not yet
+# reportable and would inflate counts. see data dictionary for full status codes.
+cases <- cases |> filter(status == "active")
+```
+
+This explains why only active cases are kept — information that is not in the code itself and that a reviewer or future maintainer genuinely needs.
+
+**Comment when:**
+
+- A non-obvious decision was made and the reason matters (a filter that excludes something, a constant that came from an external source)
+- A known data quality issue is being worked around
+- An approach was chosen over an obvious alternative for a specific reason
+
+**Do not comment:**
+
+- Code that reads naturally and does what it says
+- Every line as a matter of habit
+- To explain what R functions do (that is what documentation is for)
+
+### Sectioning Longer Scripts
+
+For analysis scripts that run longer than a screen, section headers help readers navigate. In R, headers recognized by RStudio and Positron use `# ----` or `# ====` suffixes:
+
+```r
+# Load data ---------------------------------------------------------------
+
+# Clean and filter --------------------------------------------------------
+
+# Calculate rates ---------------------------------------------------------
+
+# Produce outputs ---------------------------------------------------------
+```
+
+These create an outline in the document navigator (the panel at the bottom of the script editor in Positron) that lets readers jump directly to a section without scrolling.
+
+## Documenting Functions with roxygen2 {#sec-documentation-roxygen}
+
+When a function will be reused -- called from multiple scripts, shared across projects, or used by other team members -- it should be documented at the function definition, not in a separate file. The standard tool for this in R is [roxygen2](https://roxygen2.r-lib.org/).
+
+roxygen2 documentation lives in comments immediately above the function definition, starting with `#'`. The most important tags:
+
+- `@param` — documents each argument: its name, expected type, and what it does
+- `@return` — describes what the function returns
+- `@examples` — shows how to call the function, ideally with a runnable example
+
+A minimal documented function:
+
+```r
+#' Calculate age-adjusted rate per 100,000
+#'
+#' Applies direct standardization to compute an age-adjusted rate using
+#' the 2000 U.S. standard population weights.
+#'
+#' @param cases A data frame with columns `age_group`, `events`, and `population`.
+#' @param std_pop A data frame with columns `age_group` and `std_weight`. Defaults
+#'   to the 2000 U.S. standard population.
+#'
+#' @return A single numeric value: the age-adjusted rate per 100,000 population.
+#'
+#' @examples
+#' calculate_age_adjusted_rate(flu_cases_2023)
+calculate_age_adjusted_rate <- function(cases, std_pop = us_std_pop_2000) {
+  # ... function body
+}
+```
+
+Even a brief description, one `@param` per argument, and one `@return` is substantially better than no documentation at all. A future reader knows what the function expects without having to read and mentally execute the implementation.
+
+### When Functions Are More Than Utilities
+
+A handful of shared utility functions can live in a `functions/` or `R/` subdirectory in a project repository and be sourced with `source()`. This is a reasonable approach for a single project.
+
+When utility functions are shared across multiple projects, or when the team is maintaining a set of internal tools that need to be installed and versioned like any other package, the right container is an R package. A package brings in a testing framework, proper namespace management, and the formal documentation infrastructure that roxygen2 was designed for.
+
+Building a complete R package goes beyond the scope of this chapter. The definitive guide is [**R Packages**](https://r-pkgs.org/) by Wickham and Bryan, available free online. Even teams that do not plan to publish to CRAN benefit from the structure a package imposes, it is a format that R itself understands, which makes distribution, installation, and documentation tooling available for free.
+
+## Project-Level Documentation {#sec-documentation-project}
+
+Analysis projects involve more than code: there are data sources, methodological decisions, known data quality issues, and interpretive context that do not belong in code comments or README files but that someone needs to know.
+
+### Data Dictionaries
+
+If a project uses a dataset with non-obvious columns — abbreviated names, coded values, or columns whose meaning depends on context — maintain a data dictionary alongside the analysis. This can be a simple table in a Markdown or Quarto document:
+
+| Column | Type | Description |
+|---|---|---|
+| `case_id` | character | Unique case identifier; not persistent across system updates |
+| `epi_class` | character | Epidemiologic classification: `confirmed`, `probable`, `suspect` |
+| `rpt_cnty_cd` | integer | FIPS code of the county of report (not necessarily the county of residence) |
+| `onset_dt` | date | Symptom onset date as reported; missing if not collected for this condition |
+
+A data dictionary does not need to document every column. Document the columns that are confusing, the ones that carry important caveats, and the ones where the name does not tell the full story.
+
+### Decision Logs
+
+Analyses involve choices that are not visible in the code: why a particular date range was chosen, why a jurisdiction was excluded, why one method was preferred over another when both were defensible. These decisions are worth recording, because they will be questioned — by a reviewer, by a stakeholder, or by a future analyst who is maintaining the work.
+
+A simple decision log entry might look like:
+
+> **2024-11-14** — Excluded 2020 data from trend analysis. COVID-related disruptions to case reporting caused substantial undercounting across multiple conditions; the 2020 data points would distort trend estimates in ways that are not informative about the underlying epidemiology. Analysis covers 2018–2019 and 2021–2023.
+
+This does not need to be elaborate. A short paragraph with a date and a rationale is enough to reconstruct the reasoning later.
+
+### Methods Documentation
+
+For analyses with non-trivial statistical methods, a methods document that describes the approach in plain language (separate from the code) is worth maintaining. This is the document a reviewer (see @sec-peerreview) or stakeholder can read to understand what was done without reading R code. It should describe the data sources, the analytical approach, known limitations, and any validation steps taken.
+
+This document can be a section of the final report, a standalone Quarto document in the repository, or a README section, wherever it is most likely to be found and updated.
+
+## Documentation as a Team Practice {#sec-documentation-team}
+
+Documentation that exists only on an individual's laptop, or only in one person's head, does not help the team. Documentation practices are only effective when they are shared norms.
+
+**Establish a minimum standard.** Teams that define what "documented" means (e.g., a README, a data dictionary for any dataset with coded variables, roxygen comments on shared functions) can build review expectations around that standard. The @sec-peerreview chapter describes how code review (see @sec-peerreview-mechanics) creates a checkpoint for documentation quality.
+
+**Document as you go.** Documentation written after the analysis is finished is usually thinner and less accurate than documentation written alongside it. Writing the README before writing the code helps clarify what the analysis is supposed to do. Noting a methodological decision at the time it is made is more reliable than reconstructing the rationale later.
+
+**Treat stale documentation as a bug.** An incorrect README is worse than no README, because it creates false confidence. When something material changes (a data source is updated, a method is revised, a constant is recalculated), updating the documentation is part of the change, not an optional follow-up.
