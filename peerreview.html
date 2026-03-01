@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.9.23">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
 <meta name="author" content="Stephen D. Turner">
-<meta name="dcterms.date" content="2026-03-01">
-<title>Data Science Team Training</title>
+
+<title>13&nbsp; Peer Review for Data Analysis – Data Science Team Training</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,6 +26,7 @@ ul.task-list li input[type="checkbox"] {
 }
 </style>
 
+
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -31,7 +34,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./git.html" rel="next">
+<link href="./comms.html" rel="next">
+<link href="./governance.html" rel="prev">
 <link href="./hex.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -43,7 +47,8 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-076ecbd647e1f0418c5051713cd9b730.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -70,24 +75,33 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+
+
 </head>
+
 <body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pm.html">Nontechnical</a></li><li class="breadcrumb-item"><a href="./peerreview.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Science Team Training</a> 
         <div class="sidebar-tools-main">
@@ -95,7 +109,7 @@ ul.task-list li input[type="checkbox"] {
     <div class="dropdown">
       <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
-<li>
+          <li>
             <a class="dropdown-item sidebar-tools-main-item" href="./Data-Science-Team-Training.pdf">
               <i class="bi bi-file-pdf pe-1"></i>
             Download PDF
@@ -108,7 +122,7 @@ ul.task-list li input[type="checkbox"] {
             </a>
           </li>
       </ul>
-</div>
+    </div>
 </div>
     </div>
       </div>
@@ -119,9 +133,9 @@ ul.task-list li input[type="checkbox"] {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-<li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -133,8 +147,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./git.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Version Control</span></span></a>
@@ -195,7 +209,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
@@ -204,8 +218,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pm.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
@@ -219,7 +233,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./peerreview.html" class="sidebar-item-text sidebar-link">
+  <a href="./peerreview.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span></a>
   </div>
 </li>
@@ -230,7 +244,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
@@ -239,8 +253,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
@@ -253,40 +267,43 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-</li>
+  </li>
     </ul>
-</div>
-</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
-  </ul></nav>
+  <li><a href="#sec-peerreview-scope" id="toc-sec-peerreview-scope" class="nav-link active" data-scroll-target="#sec-peerreview-scope"><span class="header-section-number">13.1</span> What Analytical Peer Review Is (and Is Not)</a></li>
+  <li><a href="#sec-peerreview-mechanics" id="toc-sec-peerreview-mechanics" class="nav-link" data-scroll-target="#sec-peerreview-mechanics"><span class="header-section-number">13.2</span> Code Review Mechanics</a>
+  <ul class="collapse">
+  <li><a href="#what-to-look-for-in-a-code-review" id="toc-what-to-look-for-in-a-code-review" class="nav-link" data-scroll-target="#what-to-look-for-in-a-code-review"><span class="header-section-number">13.2.1</span> What to Look for in a Code Review</a></li>
+  <li><a href="#giving-and-receiving-feedback" id="toc-giving-and-receiving-feedback" class="nav-link" data-scroll-target="#giving-and-receiving-feedback"><span class="header-section-number">13.2.2</span> Giving and Receiving Feedback</a></li>
+  </ul></li>
+  <li><a href="#sec-peerreview-checklist" id="toc-sec-peerreview-checklist" class="nav-link" data-scroll-target="#sec-peerreview-checklist"><span class="header-section-number">13.3</span> Checklists for Analytical Review</a></li>
+  <li><a href="#sec-peerreview-ai" id="toc-sec-peerreview-ai" class="nav-link" data-scroll-target="#sec-peerreview-ai"><span class="header-section-number">13.4</span> AI as a Review Aid</a></li>
+  <li><a href="#sec-peerreview-highstakes" id="toc-sec-peerreview-highstakes" class="nav-link" data-scroll-target="#sec-peerreview-highstakes"><span class="header-section-number">13.5</span> High-Stakes Analyses</a></li>
+  <li><a href="#sec-peerreview-culture" id="toc-sec-peerreview-culture" class="nav-link" data-scroll-target="#sec-peerreview-culture"><span class="header-section-number">13.6</span> Building a Review Culture</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">Data Science Team Training</h1>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pm.html">Nontechnical</a></li><li class="breadcrumb-item"><a href="./peerreview.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-peerreview" class="quarto-section-identifier"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Stephen D. Turner, Ph.D. </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">March 1, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -294,15 +311,152 @@ ul.task-list li input[type="checkbox"] {
 
 
 </header>
-<section id="preface" class="level1 unnumbered"><h1 class="unnumbered">Preface</h1><p><img src="cover.jpg" title="Data Science Team Training" class="quarto-cover-image nolightbox img-fluid"></p>
-<p>Public health has always been a data-driven enterprise, but the tools available to practitioners have changed dramatically. Spreadsheets that once required weeks of manual work can now be analyzed in seconds. Reports that used to mean emailing static PDFs can now execute code, update automatically when data changes, and be produced in multiple formats from a single source file. And workflows that depended on one person’s institutional knowledge can be documented, versioned, and shared across teams. The goal of this book is to help public health professionals take advantage of these tools.</p>
-<p>This book grew out of the <a href="https://www.cste.org/">CSTE</a> <a href="https://www.cste.org/page/dstt-webpage">Data Science Team Training (DSTT)</a> program, I serve as a project coach working with public health agencies across the country to build data science capacity in the public health workforce. The material here includes code, resources, workshop notes, and practical guidance accumulated and refined over several years of coaching teams at local and state health departments.</p>
-<p>The chapters cover the foundational practices that make data science work sustainable and collaborative in a public health setting: organizing data well and validating it at the point of ingestion, using version control to track work and collaborate safely, producing reproducible reports and dashboards that update automatically when data changes, navigating the data governance and IT relationships that shape what public health teams can actually do with their data, and communicating findings clearly to audiences who did not run the analysis. These are not cutting-edge research topics. They are the practical skills that separate ad hoc analyses from reproducible, maintainable work.</p>
-<p>While this material was created with DSTT participants in mind, it is intended to be broadly useful to anyone working at the intersection of data science and public health, whether you are a current or former DSTT participant, a public health practitioner looking to strengthen your analytical skills, or someone new to data science in a public health context.</p>
-<p>No single book can cover everything, and this one does not try to. <a href="resources.html" class="quarto-xref"><span>Appendix A — Additional Resources</span></a> points to additional reading and training for topics that go deeper than what is covered here.</p>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+<p>Analysis code is not the same as production software, but the reasons for reviewing it overlap substantially. Errors in analytical code produce wrong results. Wrong results inform wrong decisions. In public health, wrong decisions have consequences. Peer review is the primary mechanism for catching errors before they reach a decision-maker, and for building a team culture where good work is a shared responsibility rather than a solo performance.</p>
+<p>This chapter covers what analytical peer review looks like in practice, how to structure a review, and the tools that make it easier — including AI as a review aid.</p>
+<section id="sec-peerreview-scope" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="sec-peerreview-scope"><span class="header-section-number">13.1</span> What Analytical Peer Review Is (and Is Not)</h2>
+<p>Peer review in this context means having someone other than the original analyst read and evaluate the analysis before its results are communicated. This is different from:</p>
+<ul>
+<li><strong>Software code review</strong>, which focuses on correctness, security, and maintainability of code that runs in production. Analytical code has different concerns: Does the question match the data? Are the methods appropriate? Are the results interpreted correctly?</li>
+<li><strong>Statistical peer review</strong> in the academic sense, where a journal reviewer evaluates methodological rigor. The bar here is lower and the turnaround is much faster — the goal is to catch errors, not to grant imprimatur.</li>
+<li><strong>Proofreading a report</strong>, which catches writing problems but misses analytical ones. A clearly written report can present a wrong answer clearly.</li>
+</ul>
+<p>A good analytical peer review evaluates three things:</p>
+<ol type="1">
+<li><strong>Correctness of the code</strong>: Does the code do what the analyst says it does? Are there off-by-one errors, filter inversions, or joins that silently drop records?</li>
+<li><strong>Appropriateness of the methods</strong>: Is the analysis designed to answer the question being asked? Are there obvious alternative interpretations the analyst did not consider?</li>
+<li><strong>Validity of the conclusions</strong>: Do the stated findings follow from the results? Are uncertainty and limitations communicated accurately?</li>
+</ol>
+<p>None of these require the reviewer to rerun the analysis from scratch, though doing so is valuable when stakes are high.</p>
+</section>
+<section id="sec-peerreview-mechanics" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="sec-peerreview-mechanics"><span class="header-section-number">13.2</span> Code Review Mechanics</h2>
+<p>The practical vehicle for analytical peer review is a pull request (see <a href="git.html#sec-git-branching" class="quarto-xref"><span>Section 1.2</span></a>). When an analyst finishes a piece of work, they open a pull request from their branch to the main branch. The reviewer reads the diff, leaves comments, and either approves or requests changes before the code is merged.</p>
+<p>This workflow has several advantages over emailing scripts back and forth or reviewing a report after the fact:</p>
+<ul>
+<li>The review is tied to the specific changes that were made, not a reconstruction from memory.</li>
+<li>Comments are attached to specific lines of code, making feedback precise.</li>
+<li>The history of the review (what was flagged, what was addressed) is preserved alongside the code.</li>
+<li>Analysis results are not incorporated into a deliverable until the review is complete.</li>
+</ul>
+<section id="what-to-look-for-in-a-code-review" class="level3" data-number="13.2.1">
+<h3 data-number="13.2.1" class="anchored" data-anchor-id="what-to-look-for-in-a-code-review"><span class="header-section-number">13.2.1</span> What to Look for in a Code Review</h3>
+<p>When reviewing analytical code, focus on:</p>
+<p><strong>Data handling</strong></p>
+<ul>
+<li>Are filters applied correctly? A common error is filtering to the wrong values (e.g., keeping <code>status != "active"</code> when the intent was to keep only active records).</li>
+<li>Are joins producing the expected number of rows? Silent duplications or dropped records from a many-to-many join or a misspecified key are among the most consequential errors in analytical work.</li>
+<li>Is missing data handled explicitly, or silently dropped? If dropped, is that appropriate?</li>
+<li>Are date ranges and cutoffs correct? Off-by-one errors on dates are easy to introduce and easy to miss.</li>
+</ul>
+<p><strong>Calculations</strong></p>
+<ul>
+<li>Do aggregations (sums, means, rates) match what is described in the analysis?</li>
+<li>Are rates calculated with the correct denominators? Are numerator and denominator from the same population?</li>
+<li>Are any constants hard-coded where they should be calculated from the data?</li>
+</ul>
+<p><strong>Outputs</strong></p>
+<ul>
+<li>Do the summary statistics match reasonable expectations for the data? A mean that seems implausibly high or low is worth investigating.</li>
+<li>Do the plots match what the code is computing? A chart labeled “rate per 100,000” should be computing and displaying a per-100,000 rate.</li>
+<li>Are the conclusions stated in the narrative consistent with the numbers in the output?</li>
+</ul>
+</section>
+<section id="giving-and-receiving-feedback" class="level3" data-number="13.2.2">
+<h3 data-number="13.2.2" class="anchored" data-anchor-id="giving-and-receiving-feedback"><span class="header-section-number">13.2.2</span> Giving and Receiving Feedback</h3>
+<p>A review is useful only if feedback is acted on, and feedback is acted on only if it is received well. A few principles that help:</p>
+<p><strong>For reviewers:</strong> Be specific about what you are flagging and why. “This join might be producing duplicates: there are multiple rows per <code>case_id</code> in <code>contact_table</code>, which means a left join on <code>case_id</code> will multiply the case rows. Can you verify the row count before and after?” is more actionable than “check the join.”</p>
+<p><strong>For analysts:</strong> Treat a review comment as a question, not a criticism. The reviewer may be wrong; if so, a short explanation resolves it. But the reviewer may have caught something real and the fact that the analysis worked correctly in a different case does not mean it works correctly in this one.</p>
+<p><strong>For teams:</strong> Normalize review as a default, not an exception reserved for high-stakes work. A team where review is standard for all analysis will catch errors earlier and distribute knowledge more evenly than one where review is triggered only by anxiety.</p>
+</section>
+</section>
+<section id="sec-peerreview-checklist" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="sec-peerreview-checklist"><span class="header-section-number">13.3</span> Checklists for Analytical Review</h2>
+<p>Checklists help reviewers maintain consistency and avoid the bias of reading the analysis looking to confirm that it is correct. Reviewing analytically requires some skepticism, reading the code as if looking for errors rather than checking off steps.</p>
+<p>A basic checklist for most analytical peer reviews:</p>
+<p><strong>Data</strong></p>
+<ul class="task-list">
+<li><label><input type="checkbox">The data source is correctly identified and loaded</label></li>
+<li><label><input type="checkbox">The date range and population scope match the stated analysis parameters</label></li>
+<li><label><input type="checkbox">Filters are correctly specified and applied in the right order</label></li>
+<li><label><input type="checkbox">Missing values are accounted for</label></li>
+<li><label><input type="checkbox">Join keys are unique (or duplicates are intentional and handled)</label></li>
+<li><label><input type="checkbox">Row counts at key steps are plausible</label></li>
+</ul>
+<p><strong>Analysis</strong></p>
+<ul class="task-list">
+<li><label><input type="checkbox">Numerators and denominators are correctly specified for any rates</label></li>
+<li><label><input type="checkbox">Grouping variables match the level of the desired analysis</label></li>
+<li><label><input type="checkbox">Any statistical tests or models use methods appropriate for the data and question</label></li>
+<li><label><input type="checkbox">Results match expectations from prior knowledge of the data</label></li>
+</ul>
+<p><strong>Outputs</strong></p>
+<ul class="task-list">
+<li><label><input type="checkbox">Chart labels, titles, and units are correct</label></li>
+<li><label><input type="checkbox">Summary tables match what the code computes</label></li>
+<li><label><input type="checkbox">Stated conclusions follow from the results</label></li>
+<li><label><input type="checkbox">Uncertainty and limitations are acknowledged appropriately</label></li>
+</ul>
+<p>Not every item applies to every analysis. For a simple descriptive summary, several of the statistical items are irrelevant. For a complex linked dataset with multiple joins and rates, the data section deserves more attention. Use judgment.</p>
+</section>
+<section id="sec-peerreview-ai" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="sec-peerreview-ai"><span class="header-section-number">13.4</span> AI as a Review Aid</h2>
+<p>AI coding tools (see <a href="ai.html" class="quarto-xref"><span>Chapter 5</span></a>) can supplement but not replace human peer review. They are useful for certain review tasks and unreliable for others.</p>
+<p><strong>Where AI tools add value in review:</strong></p>
+<ul>
+<li>Explaining what a section of code does, in plain language, so a reviewer can quickly verify that the code matches the analyst’s stated intent</li>
+<li>Identifying common patterns that are likely to be errors (filter inversions, joins without explicit key specification, implicit coercions)</li>
+<li>Checking that variable names, column references, and function arguments are used consistently</li>
+<li>Generating a summary of what changed between versions of a script</li>
+</ul>
+<p><strong>Where AI tools are not reliable:</strong></p>
+<ul>
+<li>Verifying that the analytical methods are appropriate for the question (this requires domain knowledge)</li>
+<li>Detecting errors that require understanding the real-world data (e.g., knowing that a particular jurisdiction stopped reporting in 2021, so a sudden drop is a data artifact rather than a true change)</li>
+<li>Evaluating whether conclusions are well-supported (this requires both analytical judgment and knowledge of the context)</li>
+</ul>
+<p>A practical workflow: use the Positron Assistant (see <a href="ai.html#sec-ai-positron-assistant" class="quarto-xref"><span>Section 5.2</span></a>) or Claude Code (see <a href="ai.html#sec-ai-claude-code" class="quarto-xref"><span>Section 5.4</span></a>) to review a script for mechanical issues (does the logic match the description, are there obvious error patterns) and then have a human reviewer focus on whether the analysis is asking the right question and drawing the right conclusions from the results.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>AI tools will sometimes confidently identify a “problem” that is not actually a problem. Any AI-generated review comment should be treated as a starting point for investigation, not a definitive finding. The human reviewer is responsible for the review.</p>
+</div>
+</div>
+</section>
+<section id="sec-peerreview-highstakes" class="level2" data-number="13.5">
+<h2 data-number="13.5" class="anchored" data-anchor-id="sec-peerreview-highstakes"><span class="header-section-number">13.5</span> High-Stakes Analyses</h2>
+<p>Routine analyses, i.e.&nbsp;a weekly case count report, a descriptive summary for an internal meeting, benefit from light-touch review. Analyses that inform significant decisions warrant more thorough review.</p>
+<p>Indicators that an analysis warrants a higher review standard:</p>
+<ul>
+<li>The results will be used to allocate resources or change programs</li>
+<li>The results will be released publicly or to the press</li>
+<li>The analysis involves a method the team has not used before on this data</li>
+<li>The analysis contradicts prior findings and there is no obvious explanation</li>
+</ul>
+<p>For high-stakes work, consider independent replication: a second analyst replicates the key computations independently and compares results. Discrepancies must be resolved before the analysis is finalized. This is more expensive than a standard review but is warranted when errors would have significant consequences.</p>
+</section>
+<section id="sec-peerreview-culture" class="level2" data-number="13.6">
+<h2 data-number="13.6" class="anchored" data-anchor-id="sec-peerreview-culture"><span class="header-section-number">13.6</span> Building a Review Culture</h2>
+<p>Peer review works best when it is a team norm, not a gatekeeping mechanism. Teams that review well share a few characteristics:</p>
+<p><strong>Review is not optional for consequential work.</strong> There is a clear, shared expectation that analyses above a certain threshold of importance are reviewed before results are communicated.</p>
+<p><strong>Review is timely.</strong> A review request that sits for two weeks creates pressure to skip it. Teams that review quickly, i.e.&nbsp;same or next business day for most requests, make review practical rather than theoretical.</p>
+<p><strong>Reviewers are recognized for good reviews.</strong> Catching an error that would have been embarrassing is a contribution. Teams that treat review as invisible overhead underinvest in it.</p>
+<p><strong>Review is a learning mechanism.</strong> The goal is not to police quality but to improve it. Analysts who receive good reviews get better. Reviewers who read a lot of others’ code develop a broader perspective on the team’s methods and practices.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -701,16 +855,22 @@ ul.task-list li input[type="checkbox"] {
       }
     }
   });
-  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./governance.html" class="pagination-link" aria-label="Working with IT and Data Governance">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./git.html" class="pagination-link" aria-label="Version Control">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Version Control</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./comms.html" class="pagination-link" aria-label="Communicating Findings">
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">
 <p>© 2026 Stephen D. Turner</p>
 </div>   
@@ -719,7 +879,7 @@ ul.task-list li input[type="checkbox"] {
     </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
-<li class="nav-item compact">
+    <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/stephenturner">
       <i class="bi bi-github" role="img">
 </i> 
@@ -750,9 +910,11 @@ ul.task-list li input[type="checkbox"] {
     </a>
   </li>  
 </ul>
-</div>
+    </div>
   </div>
 </footer>
+
+
 
 
 </body></html>

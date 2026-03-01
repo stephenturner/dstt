@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.9.23">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
 <meta name="author" content="Stephen D. Turner">
-<meta name="dcterms.date" content="2026-03-01">
-<title>Data Science Team Training</title>
+
+<title>10&nbsp; Documentation – Data Science Team Training</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -22,7 +24,43 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
+
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -31,7 +69,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./git.html" rel="next">
+<link href="./pm.html" rel="next">
+<link href="./codestyle.html" rel="prev">
 <link href="./hex.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -43,7 +82,8 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-076ecbd647e1f0418c5051713cd9b730.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -70,24 +110,33 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+
+
 </head>
+
 <body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./documentation.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Documentation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Science Team Training</a> 
         <div class="sidebar-tools-main">
@@ -95,7 +144,7 @@ ul.task-list li input[type="checkbox"] {
     <div class="dropdown">
       <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
-<li>
+          <li>
             <a class="dropdown-item sidebar-tools-main-item" href="./Data-Science-Team-Training.pdf">
               <i class="bi bi-file-pdf pe-1"></i>
             Download PDF
@@ -108,7 +157,7 @@ ul.task-list li input[type="checkbox"] {
             </a>
           </li>
       </ul>
-</div>
+    </div>
 </div>
     </div>
       </div>
@@ -119,9 +168,9 @@ ul.task-list li input[type="checkbox"] {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-<li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -133,8 +182,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./git.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Version Control</span></span></a>
@@ -190,12 +239,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./documentation.html" class="sidebar-item-text sidebar-link">
+  <a href="./documentation.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Documentation</span></span></a>
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
@@ -204,8 +253,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pm.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
@@ -230,7 +279,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
@@ -239,8 +288,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
@@ -253,40 +302,53 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-</li>
+  </li>
     </ul>
-</div>
-</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
-  </ul></nav>
+  <li><a href="#sec-documentation-readme" id="toc-sec-documentation-readme" class="nav-link active" data-scroll-target="#sec-documentation-readme"><span class="header-section-number">10.1</span> READMEs</a>
+  <ul class="collapse">
+  <li><a href="#a-minimal-readme-template" id="toc-a-minimal-readme-template" class="nav-link" data-scroll-target="#a-minimal-readme-template"><span class="header-section-number">10.1.1</span> A Minimal README Template</a></li>
+  <li><a href="#readme-for-shared-utility-code" id="toc-readme-for-shared-utility-code" class="nav-link" data-scroll-target="#readme-for-shared-utility-code"><span class="header-section-number">10.1.2</span> README for Shared Utility Code</a></li>
+  </ul></li>
+  <li><a href="#sec-documentation-inline" id="toc-sec-documentation-inline" class="nav-link" data-scroll-target="#sec-documentation-inline"><span class="header-section-number">10.2</span> Inline Comments</a>
+  <ul class="collapse">
+  <li><a href="#sectioning-longer-scripts" id="toc-sectioning-longer-scripts" class="nav-link" data-scroll-target="#sectioning-longer-scripts"><span class="header-section-number">10.2.1</span> Sectioning Longer Scripts</a></li>
+  </ul></li>
+  <li><a href="#sec-documentation-roxygen" id="toc-sec-documentation-roxygen" class="nav-link" data-scroll-target="#sec-documentation-roxygen"><span class="header-section-number">10.3</span> Documenting Functions with roxygen2</a>
+  <ul class="collapse">
+  <li><a href="#when-functions-are-more-than-utilities" id="toc-when-functions-are-more-than-utilities" class="nav-link" data-scroll-target="#when-functions-are-more-than-utilities"><span class="header-section-number">10.3.1</span> When Functions Are More Than Utilities</a></li>
+  </ul></li>
+  <li><a href="#sec-documentation-project" id="toc-sec-documentation-project" class="nav-link" data-scroll-target="#sec-documentation-project"><span class="header-section-number">10.4</span> Project-Level Documentation</a>
+  <ul class="collapse">
+  <li><a href="#data-dictionaries" id="toc-data-dictionaries" class="nav-link" data-scroll-target="#data-dictionaries"><span class="header-section-number">10.4.1</span> Data Dictionaries</a></li>
+  <li><a href="#decision-logs" id="toc-decision-logs" class="nav-link" data-scroll-target="#decision-logs"><span class="header-section-number">10.4.2</span> Decision Logs</a></li>
+  <li><a href="#methods-documentation" id="toc-methods-documentation" class="nav-link" data-scroll-target="#methods-documentation"><span class="header-section-number">10.4.3</span> Methods Documentation</a></li>
+  </ul></li>
+  <li><a href="#sec-documentation-team" id="toc-sec-documentation-team" class="nav-link" data-scroll-target="#sec-documentation-team"><span class="header-section-number">10.5</span> Documentation as a Team Practice</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">Data Science Team Training</h1>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./documentation.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Documentation</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-documentation" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Documentation</span></span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Stephen D. Turner, Ph.D. </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">March 1, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -294,15 +356,189 @@ ul.task-list li input[type="checkbox"] {
 
 
 </header>
-<section id="preface" class="level1 unnumbered"><h1 class="unnumbered">Preface</h1><p><img src="cover.jpg" title="Data Science Team Training" class="quarto-cover-image nolightbox img-fluid"></p>
-<p>Public health has always been a data-driven enterprise, but the tools available to practitioners have changed dramatically. Spreadsheets that once required weeks of manual work can now be analyzed in seconds. Reports that used to mean emailing static PDFs can now execute code, update automatically when data changes, and be produced in multiple formats from a single source file. And workflows that depended on one person’s institutional knowledge can be documented, versioned, and shared across teams. The goal of this book is to help public health professionals take advantage of these tools.</p>
-<p>This book grew out of the <a href="https://www.cste.org/">CSTE</a> <a href="https://www.cste.org/page/dstt-webpage">Data Science Team Training (DSTT)</a> program, I serve as a project coach working with public health agencies across the country to build data science capacity in the public health workforce. The material here includes code, resources, workshop notes, and practical guidance accumulated and refined over several years of coaching teams at local and state health departments.</p>
-<p>The chapters cover the foundational practices that make data science work sustainable and collaborative in a public health setting: organizing data well and validating it at the point of ingestion, using version control to track work and collaborate safely, producing reproducible reports and dashboards that update automatically when data changes, navigating the data governance and IT relationships that shape what public health teams can actually do with their data, and communicating findings clearly to audiences who did not run the analysis. These are not cutting-edge research topics. They are the practical skills that separate ad hoc analyses from reproducible, maintainable work.</p>
-<p>While this material was created with DSTT participants in mind, it is intended to be broadly useful to anyone working at the intersection of data science and public health, whether you are a current or former DSTT participant, a public health practitioner looking to strengthen your analytical skills, or someone new to data science in a public health context.</p>
-<p>No single book can cover everything, and this one does not try to. <a href="resources.html" class="quarto-xref"><span>Appendix A — Additional Resources</span></a> points to additional reading and training for topics that go deeper than what is covered here.</p>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+<p>Code that runs correctly but cannot be understood is a liability. Six months after writing an analysis, even the original author may not remember what a variable represents, why a particular filter was applied, or where a dataset came from. For a new team member inheriting existing work, undocumented code is essentially opaque.</p>
+<p>Documentation is the investment that makes analytical work reusable, reviewable, and transferable. It does not mean writing a manual for every script. It means leaving enough information that the next person (or your future self) can pick up the work without starting over.</p>
+<section id="sec-documentation-readme" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="sec-documentation-readme"><span class="header-section-number">10.1</span> READMEs</h2>
+<p>Every project repository should have a README at the root. This is the first thing anyone sees when they open a project, and it should answer the questions a new reader has immediately:</p>
+<ul>
+<li>What does this project do?</li>
+<li>What data does it use, and where does that data come from?</li>
+<li>How do you run the analysis?</li>
+<li>What are the outputs and where do they go?</li>
+</ul>
+<p>A README does not need to be long. A one-page README that answers these questions is more valuable than a ten-page document that describes the history of the project and the background literature.</p>
+<section id="a-minimal-readme-template" class="level3" data-number="10.1.1">
+<h3 data-number="10.1.1" class="anchored" data-anchor-id="a-minimal-readme-template"><span class="header-section-number">10.1.1</span> A Minimal README Template</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Project Title</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>One or two sentences describing what this analysis does and why it was done.</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>What data is used. Where it comes from (source, date accessed, any access </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>requirements). If data files are not in the repository (e.g., because </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>they contain PII), explain where they should be placed.</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Running the Analysis</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>How to reproduce the results. What to run first, what runs next.</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>Any packages or environment requirements (see environments chapter).</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## Outputs</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>What the analysis produces. Where outputs are written.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Commit the README with the project. Update it when something material changes. A stale README is worse than a brief one, because it creates false confidence that the instructions are current.</p>
+</section>
+<section id="readme-for-shared-utility-code" class="level3" data-number="10.1.2">
+<h3 data-number="10.1.2" class="anchored" data-anchor-id="readme-for-shared-utility-code"><span class="header-section-number">10.1.2</span> README for Shared Utility Code</h3>
+<p>If a repository contains functions or tools that other projects use rather than a single self-contained analysis, the README should also document the interface: what the key functions are, what arguments they take, and a short example showing typical use.</p>
+</section>
+</section>
+<section id="sec-documentation-inline" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="sec-documentation-inline"><span class="header-section-number">10.2</span> Inline Comments</h2>
+<p>Comments in code explain <em>why</em>, not <em>what</em>. The code itself shows what is happening; a comment adds value by explaining the reason behind a decision that might otherwise look arbitrary.</p>
+<p>A comment that adds no information:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter to active cases</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>cases <span class="ot">&lt;-</span> cases <span class="sc">|&gt;</span> <span class="fu">filter</span>(status <span class="sc">==</span> <span class="st">"active"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The code already says this. The comment is noise.</p>
+<p>A comment that adds information:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># exclude cases with status "pending" and "transferred": these are not yet</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># reportable and would inflate counts. see data dictionary for full status codes.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>cases <span class="ot">&lt;-</span> cases <span class="sc">|&gt;</span> <span class="fu">filter</span>(status <span class="sc">==</span> <span class="st">"active"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This explains why only active cases are kept — information that is not in the code itself and that a reviewer or future maintainer genuinely needs.</p>
+<p><strong>Comment when:</strong></p>
+<ul>
+<li>A non-obvious decision was made and the reason matters (a filter that excludes something, a constant that came from an external source)</li>
+<li>A known data quality issue is being worked around</li>
+<li>An approach was chosen over an obvious alternative for a specific reason</li>
+</ul>
+<p><strong>Do not comment:</strong></p>
+<ul>
+<li>Code that reads naturally and does what it says</li>
+<li>Every line as a matter of habit</li>
+<li>To explain what R functions do (that is what documentation is for)</li>
+</ul>
+<section id="sectioning-longer-scripts" class="level3" data-number="10.2.1">
+<h3 data-number="10.2.1" class="anchored" data-anchor-id="sectioning-longer-scripts"><span class="header-section-number">10.2.1</span> Sectioning Longer Scripts</h3>
+<p>For analysis scripts that run longer than a screen, section headers help readers navigate. In R, headers recognized by RStudio and Positron use <code># ----</code> or <code># ====</code> suffixes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data ---------------------------------------------------------------</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean and filter --------------------------------------------------------</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate rates ---------------------------------------------------------</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Produce outputs ---------------------------------------------------------</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>These create an outline in the document navigator (the panel at the bottom of the script editor in Positron) that lets readers jump directly to a section without scrolling.</p>
+</section>
+</section>
+<section id="sec-documentation-roxygen" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="sec-documentation-roxygen"><span class="header-section-number">10.3</span> Documenting Functions with roxygen2</h2>
+<p>When a function will be reused – called from multiple scripts, shared across projects, or used by other team members – it should be documented at the function definition, not in a separate file. The standard tool for this in R is <a href="https://roxygen2.r-lib.org/">roxygen2</a>.</p>
+<p>roxygen2 documentation lives in comments immediately above the function definition, starting with <code>#'</code>. The most important tags:</p>
+<ul>
+<li><code>@param</code> — documents each argument: its name, expected type, and what it does</li>
+<li><code>@return</code> — describes what the function returns</li>
+<li><code>@examples</code> — shows how to call the function, ideally with a runnable example</li>
+</ul>
+<p>A minimal documented function:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Calculate age-adjusted rate per 100,000</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' Applies direct standardization to compute an age-adjusted rate using</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' the 2000 U.S. standard population weights.</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param cases A data frame with columns `age_group`, `events`, and `population`.</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param std_pop A data frame with columns `age_group` and `std_weight`. Defaults</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#'   to the 2000 U.S. standard population.</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return A single numeric value: the age-adjusted rate per 100,000 population.</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#' calculate_age_adjusted_rate(flu_cases_2023)</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>calculate_age_adjusted_rate <span class="ot">&lt;-</span> <span class="cf">function</span>(cases, <span class="at">std_pop =</span> us_std_pop_2000) {</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ... function body</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Even a brief description, one <code>@param</code> per argument, and one <code>@return</code> is substantially better than no documentation at all. A future reader knows what the function expects without having to read and mentally execute the implementation.</p>
+<section id="when-functions-are-more-than-utilities" class="level3" data-number="10.3.1">
+<h3 data-number="10.3.1" class="anchored" data-anchor-id="when-functions-are-more-than-utilities"><span class="header-section-number">10.3.1</span> When Functions Are More Than Utilities</h3>
+<p>A handful of shared utility functions can live in a <code>functions/</code> or <code>R/</code> subdirectory in a project repository and be sourced with <code>source()</code>. This is a reasonable approach for a single project.</p>
+<p>When utility functions are shared across multiple projects, or when the team is maintaining a set of internal tools that need to be installed and versioned like any other package, the right container is an R package. A package brings in a testing framework, proper namespace management, and the formal documentation infrastructure that roxygen2 was designed for.</p>
+<p>Building a complete R package goes beyond the scope of this chapter. The definitive guide is <a href="https://r-pkgs.org/"><strong>R Packages</strong></a> by Wickham and Bryan, available free online. Even teams that do not plan to publish to CRAN benefit from the structure a package imposes, it is a format that R itself understands, which makes distribution, installation, and documentation tooling available for free.</p>
+</section>
+</section>
+<section id="sec-documentation-project" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="sec-documentation-project"><span class="header-section-number">10.4</span> Project-Level Documentation</h2>
+<p>Analysis projects involve more than code: there are data sources, methodological decisions, known data quality issues, and interpretive context that do not belong in code comments or README files but that someone needs to know.</p>
+<section id="data-dictionaries" class="level3" data-number="10.4.1">
+<h3 data-number="10.4.1" class="anchored" data-anchor-id="data-dictionaries"><span class="header-section-number">10.4.1</span> Data Dictionaries</h3>
+<p>If a project uses a dataset with non-obvious columns — abbreviated names, coded values, or columns whose meaning depends on context — maintain a data dictionary alongside the analysis. This can be a simple table in a Markdown or Quarto document:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>case_id</code></td>
+<td>character</td>
+<td>Unique case identifier; not persistent across system updates</td>
+</tr>
+<tr class="even">
+<td><code>epi_class</code></td>
+<td>character</td>
+<td>Epidemiologic classification: <code>confirmed</code>, <code>probable</code>, <code>suspect</code></td>
+</tr>
+<tr class="odd">
+<td><code>rpt_cnty_cd</code></td>
+<td>integer</td>
+<td>FIPS code of the county of report (not necessarily the county of residence)</td>
+</tr>
+<tr class="even">
+<td><code>onset_dt</code></td>
+<td>date</td>
+<td>Symptom onset date as reported; missing if not collected for this condition</td>
+</tr>
+</tbody>
+</table>
+<p>A data dictionary does not need to document every column. Document the columns that are confusing, the ones that carry important caveats, and the ones where the name does not tell the full story.</p>
+</section>
+<section id="decision-logs" class="level3" data-number="10.4.2">
+<h3 data-number="10.4.2" class="anchored" data-anchor-id="decision-logs"><span class="header-section-number">10.4.2</span> Decision Logs</h3>
+<p>Analyses involve choices that are not visible in the code: why a particular date range was chosen, why a jurisdiction was excluded, why one method was preferred over another when both were defensible. These decisions are worth recording, because they will be questioned — by a reviewer, by a stakeholder, or by a future analyst who is maintaining the work.</p>
+<p>A simple decision log entry might look like:</p>
+<blockquote class="blockquote">
+<p><strong>2024-11-14</strong> — Excluded 2020 data from trend analysis. COVID-related disruptions to case reporting caused substantial undercounting across multiple conditions; the 2020 data points would distort trend estimates in ways that are not informative about the underlying epidemiology. Analysis covers 2018–2019 and 2021–2023.</p>
+</blockquote>
+<p>This does not need to be elaborate. A short paragraph with a date and a rationale is enough to reconstruct the reasoning later.</p>
+</section>
+<section id="methods-documentation" class="level3" data-number="10.4.3">
+<h3 data-number="10.4.3" class="anchored" data-anchor-id="methods-documentation"><span class="header-section-number">10.4.3</span> Methods Documentation</h3>
+<p>For analyses with non-trivial statistical methods, a methods document that describes the approach in plain language (separate from the code) is worth maintaining. This is the document a reviewer (see <a href="peerreview.html" class="quarto-xref"><span>Chapter 13</span></a>) or stakeholder can read to understand what was done without reading R code. It should describe the data sources, the analytical approach, known limitations, and any validation steps taken.</p>
+<p>This document can be a section of the final report, a standalone Quarto document in the repository, or a README section, wherever it is most likely to be found and updated.</p>
+</section>
+</section>
+<section id="sec-documentation-team" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="sec-documentation-team"><span class="header-section-number">10.5</span> Documentation as a Team Practice</h2>
+<p>Documentation that exists only on an individual’s laptop, or only in one person’s head, does not help the team. Documentation practices are only effective when they are shared norms.</p>
+<p><strong>Establish a minimum standard.</strong> Teams that define what “documented” means (e.g., a README, a data dictionary for any dataset with coded variables, roxygen comments on shared functions) can build review expectations around that standard. The <a href="peerreview.html" class="quarto-xref"><span>Chapter 13</span></a> chapter describes how code review (see <a href="peerreview.html#sec-peerreview-mechanics" class="quarto-xref"><span>Section 13.2</span></a>) creates a checkpoint for documentation quality.</p>
+<p><strong>Document as you go.</strong> Documentation written after the analysis is finished is usually thinner and less accurate than documentation written alongside it. Writing the README before writing the code helps clarify what the analysis is supposed to do. Noting a methodological decision at the time it is made is more reliable than reconstructing the rationale later.</p>
+<p><strong>Treat stale documentation as a bug.</strong> An incorrect README is worse than no README, because it creates false confidence. When something material changes (a data source is updated, a method is revised, a constant is recalculated), updating the documentation is part of the change, not an optional follow-up.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -701,16 +937,22 @@ ul.task-list li input[type="checkbox"] {
       }
     }
   });
-  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./codestyle.html" class="pagination-link" aria-label="Code Style">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Code Style</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./git.html" class="pagination-link" aria-label="Version Control">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Version Control</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./pm.html" class="pagination-link" aria-label="Project Management">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Project Management</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">
 <p>© 2026 Stephen D. Turner</p>
 </div>   
@@ -719,7 +961,7 @@ ul.task-list li input[type="checkbox"] {
     </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
-<li class="nav-item compact">
+    <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/stephenturner">
       <i class="bi bi-github" role="img">
 </i> 
@@ -750,9 +992,11 @@ ul.task-list li input[type="checkbox"] {
     </a>
   </li>  
 </ul>
-</div>
+    </div>
   </div>
 </footer>
+
+
 
 
 </body></html>
