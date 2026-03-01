@@ -10,6 +10,19 @@ While this material was created with DSTT participants in mind, it is intended t
 
 No single book can cover everything, and this one does not try to. @sec-resources points to additional reading and training for topics that go deeper than what is covered here.
 
+Cite this book:
+
+> Turner, Stephen D. (2026). *Data Science Team Training*. Retrieved from <https://dstt.stephenturner.us/>.
+
+```bibtex
+@book{
+  title = {Data {{Science Team Training}}},
+  author = {Turner, Stephen D.},
+  date = {2026},
+  url = {https://dstt.stephenturner.us/}
+}
+```
+
 This work is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 ```{r cover-image}
