@@ -33,6 +33,7 @@ book:
         - dataorg.qmd
         - validation.qmd
         - reporting.qmd
+        - accessibility.qmd
         - ai.qmd
         - dashboards.qmd
         - packages.qmd

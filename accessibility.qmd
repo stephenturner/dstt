@@ -1,0 +1,321 @@
+# Accessibility {#sec-accessibility}
+
+A report that cannot be read by a screen reader, a chart that disappears for someone with color blindness, a PDF that fails institutional archiving requirements: these are not edge cases. Approximately 8% of men have some form of color vision deficiency. Screen reader users include blind and low-vision users but also people with dyslexia, motor impairments, and situational limitations. For most public health organizations, accessible outputs are a legal requirement, not a nice-to-have.
+
+Quarto handles much of the structural work automatically: semantic HTML headings, document metadata flowing into PDF fields, proper reading order. What it cannot do automatically is supply meaning that only you have: descriptive alt text for figures, color choices that work without color, and table structure a screen reader can navigate. Quarto 1.8 added HTML accessibility checks, and Quarto 1.9 added PDF standards support, so there are now tools to verify your work.
+
+This chapter assumes familiarity with Quarto documents and code chunks. For background on Quarto's output formats and rendering workflow, see [Chapter @sec-reporting].
+
+## The Regulatory Landscape {#sec-accessibility-regs}
+
+Digital accessibility is not optional for most public health organizations. The legal and policy framework has tightened considerably in recent years.
+
+**Section 508 of the Rehabilitation Act** requires all U.S. federal agencies to make their electronic and information technology accessible to people with disabilities. The 2017 refresh (with compliance required from January 2018) aligned federal requirements with the Web Content Accessibility Guidelines (WCAG) 2.0 Level AA, which remains the formal legal floor. WCAG 2.1 and 2.2 are backwards compatible with 2.0, and agencies are encouraged to go beyond the 2.0 floor, but the Access Board's standards formally incorporate WCAG 2.0 by reference. CDC applies Section 508 as the baseline standard for all agency-developed and procured technologies, including reports and dashboards. CSTE updated its Special Emphasis Reports in December 2022 to adhere to federal 508 compliance regulations.
+
+**OMB Memorandum M-24-08** (December 2023) was the first major Section 508 guidance update in a decade. It requires federal agencies to designate a Section 508 program manager accountable for digital accessibility oversight, establish processes for tracking and resolving accessibility issues, and incorporate accessibility into procurement. If your team develops tools or reports for federal partners, M-24-08 shapes what they can accept.
+
+**ADA Title II** extends accessibility requirements to state and local government entities. A 2024 DOJ final rule set WCAG 2.1 Level AA as the compliance standard. Compliance deadlines depend on entity size: April 24, 2026 for entities with a total population of 50,000 or more, and April 26, 2027 for those with populations under 50,000 or any special district government. State and local health agencies are covered directly by this rule. Note that these deadlines are specific to Title II public entities; private institutions receiving federal funding have general accessibility obligations under Section 504, but the specific WCAG conformance deadlines from the 2024 rule do not apply to them.
+
+**WCAG 2.2** organizes accessibility requirements around four principles, often abbreviated **POUR**:
+
+- **Perceivable**: Information must be presentable in ways users can perceive, including text alternatives for non-text content
+- **Operable**: Interface components and navigation must be operable, including keyboard navigation and sufficient time to interact
+- **Understandable**: Information and operation must be understandable, including readable text and predictable behavior
+- **Robust**: Content must work with current and future assistive technologies
+
+WCAG organizes success criteria into three conformance levels: A (minimum), AA (the standard required by Section 508's WCAG 2.0 floor and ADA Title II's WCAG 2.1 rule), and AAA (enhanced). Level AA covers the requirements most organizations face.
+
+::: {.callout-note}
+## WCAG versions and backwards compatibility
+
+WCAG 2.0, 2.1, and 2.2 are backwards compatible: meeting 2.2 automatically satisfies 2.1 and 2.0. The most practically relevant additions in 2.2 include minimum touch target sizes (2.5.8) and constraints on cognitive demands during login (3.3.8). For static reports and dashboards, the changes in 2.1 and 2.2 are mostly felt in interactive applications rather than documents.
+:::
+
+## Alt Text for Figures {#sec-accessibility-alttext}
+
+Every figure in a published report needs a text alternative (alt text) that conveys the same information to someone who cannot see the image. Screen readers announce alt text when they encounter a figure; without it, users hear only "image" or nothing at all.
+
+In Quarto, the `fig-alt` chunk option sets alt text separately from the figure caption (`fig-cap`). They serve different purposes:
+
+- `fig-cap` is the visible caption beneath the figure, typically a brief label like "Weekly influenza case counts, 2024."
+- `fig-alt` is the invisible text alternative. It should describe what the figure shows: the trend, the comparison, the key value, for someone who cannot see it.
+
+```{r}
+#| label: fig-flu-trend
+#| echo: true
+#| eval: false
+#| fig-cap: "Weekly influenza-like illness (ILI) case counts by region, 2024."
+#| fig-alt: "Line chart showing weekly ILI case counts for three regions from January through December 2024. The Northeast peaks at approximately 2,400 cases in week 5 before declining steadily. The South peaks later, around week 8, at 1,800 cases. The Midwest remains below 1,000 cases throughout the year. All three regions converge near zero by week 30."
+
+library(ggplot2)
+
+ggplot(ili_data, aes(x = week, y = cases, color = region)) +
+  geom_line(linewidth = 1) +
+  labs(
+    x = "Surveillance week",
+    y = "ILI cases",
+    color = "Region"
+  ) +
+  theme_minimal()
+```
+
+Good alt text describes the data, not the chart type. "A line chart" tells a screen reader user almost nothing. "Weekly ILI case counts peak in the Northeast in week 5 at 2,400 cases, then decline through summer" tells them what the chart is about.
+
+A few guidelines:
+
+- If the figure caption already conveys the key message, alt text can reinforce or expand on it, but they should not be identical
+- If the underlying data is in a table elsewhere in the document, you can note that in the alt text: "See @tbl-flu-counts for the underlying data"
+- Decorative images (logos, dividers) can use `fig-alt: ""`: an empty string signals to screen readers that the image carries no information
+
+::: {.callout-tip}
+## Generating alt text with Claude Code
+
+Writing good alt text for many figures is tedious. Emil Hvitfeldt developed a Claude Code skill that automates it: given a `.qmd` file, it reads each code chunk, runs the code mentally, and inserts a `fig-alt` option with a descriptive summary. See [this post on adding alt text to Quarto documents with a Claude Code skill](https://blog.stephenturner.us/p/alt-text-quarto-claude-code-skill) for installation instructions and examples.
+
+Once installed, the skill is available as a slash command:
+
+```bash
+/write-alt-text @my-report.qmd
+```
+:::
+
+::: {.callout-tip}
+## Alt text travels to PDF
+
+When you enable PDF accessibility standards (see @sec-accessibility-pdf), alt text set via `fig-alt` carries through to the tagged PDF. Writing it once in your code chunk covers both HTML and PDF output.
+:::
+
+## Color and Contrast {#sec-accessibility-color}
+
+Approximately 8% of men and 0.5% of women have color vision deficiency, most commonly difficulty distinguishing red from green. Using color as the only way to distinguish categories means a meaningful share of your audience may not be able to read the chart.
+
+Color should never be the *sole* differentiator. Combine it with shape, line type, or direct labels. When color is used, choose palettes designed for color vision deficiency.
+
+**The viridis palettes** (available in the `viridis` package and built into `ggplot2` since version 3.0) are perceptually uniform and distinguishable under all common forms of color vision deficiency, including in grayscale. They work for both continuous and discrete data.
+
+```{r}
+#| label: fig-viridis-discrete
+#| echo: true
+#| eval: false
+#| fig-cap: "Overdose deaths by substance type, 2019--2023."
+#| fig-alt: "Grouped bar chart showing overdose deaths by substance type for five years. Synthetic opioids (shown in yellow) increase sharply from 2019 to 2023, reaching over 70,000. Heroin deaths (green) decline over the same period. Stimulant deaths (teal) increase moderately. Prescription opioid and benzodiazepine deaths (blue/purple) remain relatively stable."
+
+library(ggplot2)
+
+ggplot(overdose_data, aes(x = year, y = deaths, fill = substance)) +
+  geom_col(position = "dodge") +
+  scale_fill_viridis_d(option = "D") +
+  labs(
+    x = "Year",
+    y = "Deaths",
+    fill = "Substance"
+  ) +
+  theme_minimal()
+```
+
+**ColorBrewer palettes** (available in the `RColorBrewer` package) were designed with accessibility in mind. The `"Dark2"` and `"Set2"` palettes are colorblind-safe for up to eight categories. For sequential data, `"YlOrRd"` and `"Blues"` are accessible and widely understood in public health contexts.
+
+```{r}
+#| label: fig-brewer-palette
+#| echo: true
+#| eval: false
+#| fig-cap: "Vaccination coverage by county, stratified by age group."
+#| fig-alt: "Small multiples showing vaccination coverage as horizontal bar charts for four age groups (6 months to 4 years, 5 to 17, 18 to 64, 65 and older). Coverage is highest in the 65 and older group across all counties. The 18 to 64 group shows the most variation across counties."
+
+library(ggplot2)
+library(RColorBrewer)
+
+ggplot(vax_data, aes(x = coverage, y = county, fill = age_group)) +
+  geom_col() +
+  scale_fill_brewer(palette = "Dark2") +
+  facet_wrap(~age_group) +
+  labs(
+    x = "Coverage (%)",
+    y = NULL,
+    fill = "Age group"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+Text contrast is also a consideration. WCAG 2.2 Level AA requires a contrast ratio of at least **4.5:1** for normal-weight text and **3:1** for large text (18pt or 14pt bold). Light gray text on a white background, common in default ggplot2 axis labels and annotations, often fails this threshold. The axe-core checks described in @sec-accessibility-html will flag contrast violations in HTML output.
+
+::: {.callout-warning}
+## Test your palette
+
+To check whether a chart is readable without color, print it in grayscale or run it through a color vision simulator. The `colorblindr` package provides `cvd_grid()`, which renders a ggplot in several color-deficiency simulations side by side. If categories are still distinguishable, the palette works.
+:::
+
+## Accessible Tables {#sec-accessibility-tables}
+
+Screen readers navigate HTML tables by announcing row and column headers. A table without proper headers, or with merged cells that break the row/column relationship, can be confusing or unusable. The same structural requirements apply to tagged PDFs.
+
+- Every table should have a caption that identifies what it contains
+- Column headers should be descriptive, not cryptic abbreviations
+- Avoid spanning cells (merged rows or columns): they complicate the header/cell relationship that screen readers rely on
+- Use tables only for tabular data, not for layout
+
+The `gt` package produces well-structured HTML tables with semantic markup. `knitr::kable()` with `kableExtra` is also widely used. Both produce accessible output when used with captions and clear headers.
+
+```{r}
+#| label: tbl-disease-summary
+#| echo: true
+#| eval: false
+#| tbl-cap: "Reported disease cases, deaths, and case-fatality rates by condition, 2023."
+
+library(gt)
+library(dplyr)
+
+disease_summary |>
+  gt() |>
+  tab_header(
+    title = "Reportable Disease Summary, 2023",
+    subtitle = "Selected conditions, all jurisdictions"
+  ) |>
+  cols_label(
+    condition = "Condition",
+    cases = "Cases",
+    deaths = "Deaths",
+    cfr = "Case-fatality rate (%)"
+  ) |>
+  fmt_number(columns = c(cases, deaths), decimals = 0) |>
+  fmt_number(columns = cfr, decimals = 1)
+```
+
+The `tab_header()` and `cols_label()` calls provide the semantic title and full column labels that screen readers announce. A table without these is harder to navigate for users relying on assistive technology.
+
+## HTML Accessibility Checks {#sec-accessibility-html}
+
+Quarto 1.8 introduced integrated support for [axe-core](https://github.com/dequelabs/axe-core), an industry-standard accessibility testing engine. Enabling it causes Quarto to inject the axe-core script into rendered HTML, which runs when the page loads in a browser.
+
+To enable axe checks, add the `axe` option to your document's HTML format:
+
+```yaml
+format:
+  html:
+    axe: true
+```
+
+With this basic configuration, violations are reported as messages in the browser developer console (open with F12 or Cmd+Option+I). To see a visible report embedded on the page itself, use the `document` output mode:
+
+```yaml
+format:
+  html:
+    axe:
+      output: document
+```
+
+This is useful during development, but you would not want to publish it. The recommended pattern is a debug [project profile](https://quarto.org/docs/projects/profiles.html) that enables the document report only locally:
+
+```yaml
+# _quarto-debug.yml (activated with: quarto render --profile debug)
+format:
+  html:
+    axe:
+      output: document
+```
+
+A third mode, `json`, produces machine-readable output compatible with browser automation tools like Puppeteer or Playwright:
+
+```yaml
+format:
+  html:
+    axe:
+      output: json
+```
+
+::: {.callout-note}
+## What axe-core checks
+
+axe-core tests for a broad set of WCAG 2.x violations: missing alt text, insufficient color contrast, missing form labels, improper heading hierarchy, and missing landmark regions. It catches problems that are mechanically detectable. It cannot evaluate whether alt text is *meaningful*, only whether it is present. Human review is still necessary.
+:::
+
+A minimal document that demonstrates a contrast violation:
+
+```markdown
+---
+title: "Accessibility check demo"
+format:
+  html:
+    axe:
+      output: document
+---
+
+The following text fails contrast requirements:
+[This text is nearly invisible.]{style="color: #eee"}
+```
+
+When previewed in a browser, the axe report flags the contrast failure and identifies the affected element. Resolve violations before publishing, then remove the `axe` option (or restrict it to the debug profile).
+
+## PDF Accessibility {#sec-accessibility-pdf}
+
+Quarto 1.9 introduced experimental support for PDF accessibility standards, building on new tagging capabilities in LaTeX and Typst. Accessible PDFs embed semantic structure (document title, heading hierarchy, reading order, image alt text) in a form that screen readers and other assistive technologies can use.
+
+Two standards are supported:
+
+- **PDF/UA-1** (Universal Accessibility, first edition): the widely-used baseline standard, supported via Typst
+- **PDF/UA-2** (second edition): a newer standard built on PDF 2.0, supported via LaTeX
+
+### Enabling PDF Standards
+
+**Typst** (UA-1):
+
+```yaml
+format:
+  typst:
+    pdf-standard: ua-1
+```
+
+**LaTeX** (UA-2):
+
+```yaml
+format:
+  pdf:
+    pdf-standard: ua-2
+```
+
+Two things are always required, regardless of renderer:
+
+1. A `title` in the YAML front matter
+2. `fig-alt` on every figure (see @sec-accessibility-alttext)
+
+Quarto's Markdown-based workflow handles most other requirements automatically: document metadata flows into the correct PDF fields, and heading structure from Markdown satisfies tagging requirements for reading order and document outline.
+
+### Validating with veraPDF
+
+Quarto uses [veraPDF](https://verapdf.org/), an open-source PDF/A and PDF/UA validator, to check that output meets the specified standard. Install it with:
+
+```bash
+quarto install verapdf
+```
+
+Once installed, Quarto runs veraPDF automatically after rendering when `pdf-standard` is set. Validation results appear in the terminal output.
+
+### Known Limitations
+
+**LaTeX**: Content placed in the margin (using `.column-margin` divs, `cap-location: margin`, or margin-positioned references) prevents UA-2 compliance. The underlying LaTeX packages involved in margin placement do not cooperate with PDF tagging. Avoid margin content if UA-2 compliance is required.
+
+**Typst**: Book-format documents are not yet fully compliant due to structural issues in the underlying orange-book template. For standalone documents, Typst validates cleanly and catches UA-1 violations automatically.
+
+::: {.callout-tip}
+## Typst vs. LaTeX for accessibility
+
+Typst currently offers better practical PDF accessibility than LaTeX. It validates UA-1 cleanly on typical documents, requires no TeX installation, and is not affected by the margin-content restriction that blocks LaTeX's UA-2 compliance. If accessible PDF output is a priority and you are starting a new document, Typst is worth considering. See [Chapter @sec-reporting] for guidance on Quarto output formats.
+:::
+
+## Pulling It Together {#sec-accessibility-checklist}
+
+Accessibility is easier to build in during authoring than to retrofit after the fact. A practical workflow for a Quarto report:
+
+1. **Write alt text** for every figure using `fig-alt`. Do this when you write the code chunk, not at the end. Consider using the [Claude Code alt text skill](https://blog.stephenturner.us/p/alt-text-quarto-claude-code-skill) to generate first drafts.
+2. **Use an accessible palette**: viridis or a colorblind-safe ColorBrewer palette. Verify by simulating color vision deficiency or viewing in grayscale.
+3. **Structure tables** with captions and descriptive column labels via `gt` or `kable`.
+4. **Check HTML output** with `axe: true` during local preview; resolve flagged violations before publishing.
+5. **Enable `pdf-standard`** for PDF deliverables (`ua-1` for Typst, `ua-2` for LaTeX) and install veraPDF to validate.
+6. **Avoid margin content in LaTeX** if UA-2 compliance is required.
+
+::: {.callout-note}
+## Accessibility benefits everyone
+
+Accessible outputs are not only for users with disabilities. Alt text improves search engine indexing. Captions help non-native English speakers and people reading in noisy environments. High-contrast text is easier to read on mobile screens in bright light. Well-structured tables are easier for all users to navigate.
+:::
