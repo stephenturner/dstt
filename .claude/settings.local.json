@@ -15,7 +15,8 @@
       "WebFetch(domain:docs.ropensci.org)",
       "Bash(Rscript:*)",
       "WebFetch(domain:posit-dev.github.io)",
-      "WebFetch(domain:style.tidyverse.org)"
+      "WebFetch(domain:style.tidyverse.org)",
+      "WebFetch(domain:conflicted.r-lib.org)"
     ]
   }
 }
