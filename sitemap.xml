@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://dstt.stephenturner.us/index.html</loc>
-    <lastmod>2026-03-01T11:27:16.568Z</lastmod>
+    <lastmod>2026-03-25T09:38:54.294Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/git.html</loc>
@@ -29,8 +29,12 @@
     <lastmod>2026-02-28T12:42:11.831Z</lastmod>
   </url>
   <url>
+    <loc>https://dstt.stephenturner.us/packages.html</loc>
+    <lastmod>2026-03-25T09:52:06.890Z</lastmod>
+  </url>
+  <url>
     <loc>https://dstt.stephenturner.us/environments.html</loc>
-    <lastmod>2026-02-28T12:42:15.370Z</lastmod>
+    <lastmod>2026-03-25T09:52:54.294Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/databases.html</loc>
@@ -70,10 +74,10 @@
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/Data-Science-Team-Training.pdf</loc>
-    <lastmod>2026-03-01T11:28:50.150Z</lastmod>
+    <lastmod>2026-03-25T10:04:15.106Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/Data-Science-Team-Training.epub</loc>
-    <lastmod>2026-03-01T11:28:52.880Z</lastmod>
+    <lastmod>2026-03-25T10:04:18.027Z</lastmod>
   </url>
 </urlset>

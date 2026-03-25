@@ -221,26 +221,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./packages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Package Loading</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./environments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reproducible Environments</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reproducible Environments</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./databases.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Databases from R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Databases from R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./codestyle.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Code Style</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Code Style</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./documentation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Documentation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Documentation</span></span></a>
   </div>
 </li>
       </ul>
@@ -257,25 +263,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./governance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./peerreview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./comms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
   </div>
 </li>
       </ul>
@@ -465,7 +471,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>R code cells inside <code>.qmd</code> files can be formatted with the Air formatter (see <a href="codestyle.html#sec-style-air" class="quarto-xref"><span>Section 9.2</span></a>). Place your cursor in a cell and press <code>Cmd+K Cmd+F</code> (Mac) or <code>Ctrl+K Ctrl+F</code> (Windows/Linux) to format that cell. With format-on-save enabled for both <code>[r]</code> and <code>[quarto]</code> in your workspace settings, the active cell formats automatically when you save the document.</p>
+<p>R code cells inside <code>.qmd</code> files can be formatted with the Air formatter (see <a href="codestyle.html#sec-style-air" class="quarto-xref"><span>Section 10.2</span></a>). Place your cursor in a cell and press <code>Cmd+K Cmd+F</code> (Mac) or <code>Ctrl+K Ctrl+F</code> (Windows/Linux) to format that cell. With format-on-save enabled for both <code>[r]</code> and <code>[quarto]</code> in your workspace settings, the active cell formats automatically when you save the document.</p>
 </div>
 </div>
 </section>
@@ -482,7 +488,7 @@ Tip
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">docx</span><span class="kw">:</span><span class="at"> default</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pdf</span><span class="kw">:</span><span class="at"> default</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Running <code>quarto render report.qmd</code> then produces all three.</p>
-<p>The practical benefit of format independence is durability. A report that exists only as a finished Word document is locked to the moment it was created – any change requires re-opening it and editing manually. The <code>.qmd</code> file is the permanent, authoritative version. The Word document is just one of its outputs, and it can always be regenerated. For guidance on choosing which format best serves a given audience, see <a href="comms.html#sec-comms-format" class="quarto-xref"><span>Section 14.3</span></a>.</p>
+<p>The practical benefit of format independence is durability. A report that exists only as a finished Word document is locked to the moment it was created – any change requires re-opening it and editing manually. The <code>.qmd</code> file is the permanent, authoritative version. The Word document is just one of its outputs, and it can always be regenerated. For guidance on choosing which format best serves a given audience, see <a href="comms.html#sec-comms-format" class="quarto-xref"><span>Section 15.3</span></a>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
