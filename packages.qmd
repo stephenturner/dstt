@@ -1,6 +1,6 @@
 # Package Loading {#sec-packages}
 
-Loading packages in R is easy enough to do carelessly. A script accumulates ten or fifteen `library()` calls, and everything runs until it does not. An analyst's `select()` call starts returning the wrong results, and nothing errors to say so. Scrolling to the top of the script reveals that MASS was loaded after dplyr, giving `MASS::select()` precedence over `dplyr::select()`. No warning. Just the wrong function running.
+Loading packages in R is easy enough to do carelessly. A script accumulates ten or fifteen `library()` calls, and everything runs until it does not. An analyst's `select()` call starts returning the wrong results, and nothing errors to say so. Scrolling to the top of the script reveals that MASS was loaded after dplyr, giving `MASS::select()` precedence over `dplyr::select()`. No warning, just the wrong function running.
 
 ## How R's search path works {#sec-packages-searchpath}
 
