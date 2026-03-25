@@ -1,8 +1,8 @@
-# Package Loading {#sec-packages}
+# Package Loading {#sec-packageloading}
 
 Loading packages in R is easy enough to do carelessly. A script accumulates ten or fifteen `library()` calls, and everything runs until it does not. An analyst's `select()` call starts returning the wrong results, and nothing errors to say so. Scrolling to the top of the script reveals that MASS was loaded after dplyr, giving `MASS::select()` precedence over `dplyr::select()`. No warning, just the wrong function running.
 
-## How R's search path works {#sec-packages-searchpath}
+## How R's search path works {#sec-packageloading-searchpath}
 
 When you call `library()`, R attaches the package to the *search path*, an ordered list of environments R searches when resolving a name. You can inspect it at any time:
 
@@ -30,14 +30,14 @@ In a script that loads fifteen packages, these messages scroll past. The script 
 ::: {.callout-warning}
 ## R's masking message is easy to miss
 
-R prints a note at load time when a package masks a function from an earlier-loaded one, but in a long block of `library()` calls the messages are easily overlooked. R replaces the earlier function without any error. The `conflicted` package, covered in @sec-packages-conflicted, changes this: any ambiguous name throws an error rather than silently resolving to whichever package was loaded last.
+R prints a note at load time when a package masks a function from an earlier-loaded one, but in a long block of `library()` calls the messages are easily overlooked. R replaces the earlier function without any error. The `conflicted` package, covered in @sec-packageloading-conflicted, changes this: any ambiguous name throws an error rather than silently resolving to whichever package was loaded last.
 :::
 
-## Load only what you need {#sec-packages-minimal}
+## Load only what you need {#sec-packageloading-minimal}
 
 Every `library()` call extends the search path. A package block loaded by habit rather than intention is a reliable source of masking bugs in shared scripts.
 
-Load a package with `library()` only if you call its functions throughout the script using bare names. If a package appears once or twice, use `::` instead (see @sec-packages-doublecolon).
+Load a package with `library()` only if you call its functions throughout the script using bare names. If a package appears once or twice, use `::` instead (see @sec-packageloading-doublecolon).
 
 Loaded by habit:
 
@@ -86,7 +86,7 @@ You'll get the following message when you load tidyverse:
 ```
 :::
 
-## Use `::` for one-off functions {#sec-packages-doublecolon}
+## Use `::` for one-off functions {#sec-packageloading-doublecolon}
 
 The `::` operator calls a function directly from a specific package without attaching it to the search path, so no masking occurs.
 
@@ -114,7 +114,7 @@ When to use `::` versus `library()`:
 You do not need to call `library()` before using `::`. As long as a package is installed, `readxl::read_excel()` will find and call it. You get the function without attaching the package or affecting the search path.
 :::
 
-## The `conflicted` package {#sec-packages-conflicted}
+## The `conflicted` package {#sec-packageloading-conflicted}
 
 The `conflicted` package [@conflicted2023] changes the default behavior: any ambiguous name throws an error, forcing an explicit choice rather than silently inheriting load order.
 
@@ -187,7 +187,7 @@ conflicts_prefer(dplyr::lag)
 After these declarations, `filter()`, `select()`, and `lag()` unambiguously refer to dplyr. Any other conflict produces an error rather than a silent wrong answer.
 :::
 
-## Team implications {#sec-packages-team}
+## Team implications {#sec-packageloading-team}
 
 Package load order affects reproducibility across the team. The same script can produce different results on different machines when analysts have different packages installed or load them in a different order. `dplyr::select()` always means `dplyr::select()`, but `select()` depends on who loaded what and when.
 
