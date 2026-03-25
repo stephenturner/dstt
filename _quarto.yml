@@ -63,7 +63,7 @@ format:
       - brand
     code-link: true
     author-meta: "Stephen D. Turner"
-  pdf:
-    documentclass: scrreprt
+  typst:
+    theme: default
   epub:
     theme: default
