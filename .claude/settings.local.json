@@ -16,7 +16,12 @@
       "Bash(Rscript:*)",
       "WebFetch(domain:posit-dev.github.io)",
       "WebFetch(domain:style.tidyverse.org)",
-      "WebFetch(domain:conflicted.r-lib.org)"
+      "WebFetch(domain:conflicted.r-lib.org)",
+      "WebFetch(domain:www.whitehouse.gov)",
+      "WebFetch(domain:www.w3.org)",
+      "WebFetch(domain:www.section508.gov)",
+      "WebFetch(domain:www.cdc.gov)",
+      "WebFetch(domain:blog.stephenturner.us)"
     ]
   }
 }
