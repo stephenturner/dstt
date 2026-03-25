@@ -1,6 +1,6 @@
 # Reproducible Environments {#sec-environments}
 
-Code that runs correctly today may fail six months from now—not because you changed anything, but because a package updated, R released a new version, or a system library changed underneath your analysis. This is sometimes called the "works on my machine" problem, and it is one of the most frustrating failure modes in data science work. Reproducible environments are the solution: explicit records of the exact software versions your code depends on, packaged in a way that others (and future you) can restore exactly.
+Code that runs correctly today may fail six months from now, not because you changed anything, but because a package updated, R released a new version, or a system library changed underneath your analysis. This is sometimes called the "works on my machine" problem, and it is one of the most frustrating failure modes in data science work. Reproducible environments are the solution: explicit records of the exact software versions your code depends on, packaged in a way that others (and future you) can restore exactly.
 
 This chapter covers two levels of environment management:
 
@@ -12,7 +12,7 @@ These tools exist on a spectrum of complexity and completeness. A good rule of t
 
 ## Package Environments with renv {#sec-environments-renv}
 
-The [`renv` package](https://rstudio.github.io/renv/) gives each R project its own private library. Instead of every project sharing a single system-wide package library—where upgrading a package for one project might break another—`renv` isolates dependencies per project and records the exact versions in a lockfile.
+The [`renv` package](https://rstudio.github.io/renv/) gives each R project its own private library. Instead of every project sharing a single system-wide package library (where upgrading a package for one project might break another), `renv` isolates dependencies per project and records the exact versions in a lockfile.
 
 ### How renv Works
 
@@ -107,7 +107,7 @@ When collaborating on a project with `renv`:
 2. Everyone else clones the repo and runs `renv::restore()` to set up their local environment
 3. When anyone installs or updates a package, they run `renv::snapshot()` and commit the updated `renv.lock`
 
-Commit these files; do not commit the `renv/library/` folder itself (add it to `.gitignore`—`renv` does this automatically). The library can be rebuilt from the lockfile; committing it would add thousands of binary files to your repository.
+Commit these files; do not commit the `renv/library/` folder itself (add it to `.gitignore`; `renv` does this automatically). The library can be rebuilt from the lockfile; committing it would add thousands of binary files to your repository.
 
 ::: {.callout-note}
 `renv` uses a global package cache on each machine, so packages are only downloaded and installed once even if you use them in multiple projects. Restoring an environment the second time is nearly instant if the packages are already cached.
@@ -120,13 +120,13 @@ Commit these files; do not commit the `renv/library/` folder itself (add it to `
 - The **R version itself**: if collaborator A runs R 4.3 and collaborator B runs R 4.4, results may differ even with identical packages
 - **System libraries**: packages that depend on compiled system libraries (e.g., `sf` needs GDAL, `xml2` needs libxml2) can still break if system libraries differ
 - **Non-R software**: any external tools called from R (Python, command-line tools, etc.)
-- **Namespace conflicts**: when multiple packages export functions with the same name, `renv` does not determine which one your script uses — that depends on load order. See @sec-packages for how to manage this.
+- **Namespace conflicts**: when multiple packages export functions with the same name, `renv` does not determine which one your script uses; that depends on load order. See @sec-packages for how to manage this.
 
 For version and system-level concerns, Docker provides a more complete solution.
 
 ## Containers with Docker {#sec-environments-docker}
 
-Docker is a tool for packaging an entire computing environment—the operating system, system libraries, R, R packages, and any other software—into a portable, self-contained unit called a **container**. Containers run identically on any machine with Docker installed, regardless of the host operating system.
+Docker is a tool for packaging an entire computing environment (the operating system, system libraries, R, R packages, and any other software) into a portable, self-contained unit called a **container**. Containers run identically on any machine with Docker installed, regardless of the host operating system.
 
 ### Key Concepts
 
