@@ -120,8 +120,9 @@ Commit these files; do not commit the `renv/library/` folder itself (add it to `
 - The **R version itself**: if collaborator A runs R 4.3 and collaborator B runs R 4.4, results may differ even with identical packages
 - **System libraries**: packages that depend on compiled system libraries (e.g., `sf` needs GDAL, `xml2` needs libxml2) can still break if system libraries differ
 - **Non-R software**: any external tools called from R (Python, command-line tools, etc.)
+- **Namespace conflicts**: when multiple packages export functions with the same name, `renv` does not determine which one your script uses — that depends on load order. See @sec-packages for how to manage this.
 
-For these cases, Docker provides a more complete solution.
+For version and system-level concerns, Docker provides a more complete solution.
 
 ## Containers with Docker {#sec-environments-docker}
 

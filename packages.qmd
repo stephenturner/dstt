@@ -1,0 +1,198 @@
+# Package Loading {#sec-packages}
+
+Loading packages in R is easy enough to do carelessly. A script accumulates ten or fifteen `library()` calls, and everything runs until it does not. An analyst's `select()` call starts returning the wrong results, and nothing errors to say so. Scrolling to the top of the script reveals that MASS was loaded after dplyr, giving `MASS::select()` precedence over `dplyr::select()`. No warning. Just the wrong function running.
+
+## How R's search path works {#sec-packages-searchpath}
+
+When you call `library()`, R attaches the package to the *search path*, an ordered list of environments R searches when resolving a name. You can inspect it at any time:
+
+```{r}
+search()
+```
+
+After loading a few packages, the path grows:
+
+```{r}
+library(dplyr)
+library(MASS)
+```
+
+`package:MASS` now sits above `package:dplyr` in the search path. When R encounters the name `select`, it finds `MASS::select` first and stops. R prints a message when this happens:
+
+```r
+# Attaching package: 'MASS'
+# The following object is masked from 'package:dplyr':
+#     select
+```
+
+In a script that loads fifteen packages, these messages scroll past. The script runs, and there is no error to flag that `select()` is now going to the wrong package.
+
+::: {.callout-warning}
+## R's masking message is easy to miss
+
+R prints a note at load time when a package masks a function from an earlier-loaded one, but in a long block of `library()` calls the messages are easily overlooked. R replaces the earlier function without any error. The `conflicted` package, covered in @sec-packages-conflicted, changes this: any ambiguous name throws an error rather than silently resolving to whichever package was loaded last.
+:::
+
+## Load only what you need {#sec-packages-minimal}
+
+Every `library()` call extends the search path. A package block loaded by habit rather than intention is a reliable source of masking bugs in shared scripts.
+
+Load a package with `library()` only if you call its functions throughout the script using bare names. If a package appears once or twice, use `::` instead (see @sec-packages-doublecolon).
+
+Loaded by habit:
+
+```r
+library(tidyverse)
+library(lubridate)
+library(janitor)
+library(readxl)
+library(openxlsx)
+library(scales)
+library(zoo)
+library(forecast)
+library(MASS)
+library(car)
+```
+
+Trimmed to what the script uses:
+
+```r
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(readr)
+```
+
+The shorter list documents dependencies. A reader can see what the script uses and trust the list is intentional.
+
+::: {.callout-tip}
+## Loading tidyverse
+
+`library(tidyverse)` loads ggplot2, dplyr, tidyr, readr, purrr, tibble, stringr, forcats, and lubridate in a single call. That is a reasonable choice when you are genuinely using several of those packages. For a script that only needs dplyr and ggplot2, loading individual packages is more explicit about what you depend on and puts fewer packages on the search path.
+
+You'll get the following message when you load tidyverse:
+
+```
+── Attaching core tidyverse packages ──── tidyverse 2.0.0 ──
+✔ dplyr     1.2.0     ✔ readr     2.1.6
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.1     ✔ tibble    3.3.0
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.2.0     
+── Conflicts ────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package to force all conflicts to become errors
+```
+:::
+
+## Use `::` for one-off functions {#sec-packages-doublecolon}
+
+The `::` operator calls a function directly from a specific package without attaching it to the search path, so no masking occurs.
+
+```r
+# Reading a single Excel file
+data <- readxl::read_excel("surveillance_data.xlsx")
+
+# Reading a large CSV with data.table's fast parser
+raw <- data.table::fread("large_file.csv")
+
+# Fitting a distribution without loading MASS
+fit <- MASS::fitdistr(x, "normal")
+```
+
+`::` also documents function origin at the call site. `readxl::read_excel()` names its source; `read_excel()` does not.
+
+When to use `::` versus `library()`:
+
+- Use `library()` when you call functions from a package throughout the script. Loading `dplyr` makes sense if you are writing a dozen `filter()` and `mutate()` calls.
+- Use `::` when you need one or two functions from a package and do not use it elsewhere.
+
+::: {.callout-note}
+## `::` works even without `library()`
+
+You do not need to call `library()` before using `::`. As long as a package is installed, `readxl::read_excel()` will find and call it. You get the function without attaching the package or affecting the search path.
+:::
+
+## The `conflicted` package {#sec-packages-conflicted}
+
+The `conflicted` package [@conflicted2023] changes the default behavior: any ambiguous name throws an error, forcing an explicit choice rather than silently inheriting load order.
+
+Install from CRAN:
+
+```r
+install.packages("conflicted")
+```
+
+Without `conflicted`, load order silently determines which `select()` runs:
+
+```{r}
+#| error: true
+library(dplyr)
+library(MASS)
+
+# Silently uses MASS::select(), not dplyr::select()
+result <- mtcars |> select(mpg, cyl)
+```
+
+With `conflicted` loaded first, the same call throws an informative error:
+
+```{r}
+#| error: true
+library(conflicted)
+library(dplyr)
+library(MASS)
+
+result <- mtcars |> select(mpg, cyl)
+```
+
+This is the point. Load order was deciding which `select()` to use; `conflicted` makes you decide.
+
+Declare your preferences with `conflicts_prefer()`, once at the top of the script alongside your `library()` calls:
+
+```{r}
+library(conflicted)
+library(dplyr)
+library(MASS)
+
+conflicts_prefer(dplyr::select)
+conflicts_prefer(dplyr::filter)
+
+# Now select() and filter() unambiguously mean dplyr
+result <- mtcars |> select(mpg, cyl)
+```
+
+Use `conflict_scout()` to see every conflict in your session before any function calls:
+
+```{r}
+conflict_scout()
+```
+
+Run it after loading your packages to see what needs a preference declared.
+
+::: {.callout-tip}
+## `conflicted` works well alongside tidyverse
+
+Load `conflicted` before `tidyverse`, then declare preferences for the most common conflicts:
+
+```{r}
+library(conflicted)
+library(tidyverse)
+
+conflicts_prefer(dplyr::filter)
+conflicts_prefer(dplyr::select)
+conflicts_prefer(dplyr::lag)
+```
+
+After these declarations, `filter()`, `select()`, and `lag()` unambiguously refer to dplyr. Any other conflict produces an error rather than a silent wrong answer.
+:::
+
+## Team implications {#sec-packages-team}
+
+Package load order affects reproducibility across the team. The same script can produce different results on different machines when analysts have different packages installed or load them in a different order. `dplyr::select()` always means `dplyr::select()`, but `select()` depends on who loaded what and when.
+
+Code review (see @sec-peerreview) is a natural checkpoint for package hygiene. Reviewers should flag unnecessary `library()` calls and bare function names that commonly conflict. Both are easier to catch in review than when writing.
+
+`renv` (see @sec-environments-renv) ensures everyone is using the same package versions, but it does not determine which `select()` runs when both dplyr and MASS are loaded. `renv` and `conflicted` are complementary: one locks down versions, the other makes conflict resolution explicit.
+
+The package block at the top of a shared script documents what the script depends on. A bloated list loaded by habit, combined with silent masking, means different analysts running the same script may not be running the same code.

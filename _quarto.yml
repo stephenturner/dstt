@@ -38,6 +38,7 @@ book:
         - environments.qmd
         - databases.qmd
         - codestyle.qmd
+        - packages.qmd
         - documentation.qmd
     - part: "Nontechnical"
       chapters:
