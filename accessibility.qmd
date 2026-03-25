@@ -64,7 +64,7 @@ Good alt text describes the data, not the chart type. "A line chart" tells a scr
 A few guidelines:
 
 - If the figure caption already conveys the key message, alt text can reinforce or expand on it, but they should not be identical
-- If the underlying data is in a table elsewhere in the document, you can note that in the alt text: "See @tbl-flu-counts for the underlying data"
+- If the underlying data is in a table elsewhere in the document, you can note that in the alt text: "See `@tbl-flu-counts` for the underlying data"
 - Decorative images (logos, dividers) can use `fig-alt: ""`: an empty string signals to screen readers that the image carries no information
 
 ::: {.callout-tip}
