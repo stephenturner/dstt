@@ -1,5 +1,8 @@
 #import "@preview/orange-book:0.7.1": book, part, chapter, appendices
 
+// https://github.com/quarto-ext/orange-book/blob/main/_extensions/orange-book/typst-show.typ
+// https://github.com/orgs/quarto-dev/discussions/14269#discussioncomment-16312587
+
 #show: book.with(
 $if(title)$
   title: [$title$],
@@ -33,6 +36,11 @@ $endif$
 $if(margin-geometry)$
   padded-heading-number: false,
 $endif$
+// workaround for small outline
+$if(outline-small-depth)$
+  outline-small-depth: $outline-small-depth$,
+$endif$
+// end workaround
 )
 
 $if(margin-geometry)$

@@ -63,7 +63,9 @@ format:
       - brand
     code-link: true
     author-meta: "Stephen D. Turner"
+  epub: default
   typst:
-    theme: default
-  epub:
-    theme: default
+    outline-small-depth: 1
+    template-partials:
+      - typst-show.typ
+
