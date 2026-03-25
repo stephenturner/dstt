@@ -140,7 +140,7 @@ Docker is a tool for packaging an entire computing environment (the operating sy
 
 ### Why Docker for R?
 
-The limitations of `renv` described above—R version, system libraries, non-R software—are exactly what Docker addresses. A Docker image built with a specific R version and specific system libraries will behave identically on a laptop, a server, or a cloud VM, six months or six years from now, as long as the image is preserved.
+The limitations of `renv` described above (R version, system libraries, non-R software) are exactly what Docker addresses. A Docker image built with a specific R version and specific system libraries will behave identically on a laptop, a server, or a cloud VM, six months or six years from now, as long as the image is preserved.
 
 Docker is especially useful for:
 
@@ -226,14 +226,14 @@ docker run --rm -p 8787:8787 -e PASSWORD=pass my-analysis:latest
 ```
 
 ::: {.callout-note}
-**Docker and renv together.** For the most complete reproducibility, use both: a Dockerfile that pins the R version (via a versioned Rocker base) and `renv` inside the container to pin package versions. The `renv.lock` file is copied into the image at build time, and `renv::restore()` installs the exact package versions during the build. This combination captures the full stack—OS, R, and packages.
+**Docker and renv together.** For the most complete reproducibility, use both: a Dockerfile that pins the R version (via a versioned Rocker base) and `renv` inside the container to pin package versions. The `renv.lock` file is copied into the image at build time, and `renv::restore()` installs the exact package versions during the build. This combination captures the full stack: OS, R, and packages.
 :::
 
 ## pracpac: R Packaging with Docker {#sec-environments-pracpac}
 
 [`pracpac`](https://signaturescience.github.io/pracpac/) (Practical R Packaging with Docker) [@pracpac2023] bridges the R package development workflow and Docker. It provides a `usethis`-style interface that automates the generation of Docker configuration for R packages under development, using `renv` to capture dependencies.
 
-While `renv` and basic Rocker Dockerfiles cover many use cases, `pracpac` is aimed at teams that have structured their analysis code as an R package and want to containerize that package—along with all its dependencies—for deployment or sharing.
+While `renv` and basic Rocker Dockerfiles cover many use cases, `pracpac` is aimed at teams that have structured their analysis code as an R package and want to containerize that package, along with all its dependencies, for deployment or sharing.
 
 ### What pracpac Does
 
@@ -244,7 +244,7 @@ While `renv` and basic Rocker Dockerfiles cover many use cases, `pracpac` is aim
 3. **Dockerfile generation**: writes a Dockerfile that installs the captured dependencies and the package from source.
 4. **Image building**: optionally builds the Docker image with version tags drawn from the package `DESCRIPTION` file.
 
-The generated Dockerfile uses a Rocker base image, installs `renv` and `BiocManager`, restores dependencies from the `renv.lock`, and installs the package—mirroring the developer's environment inside the container.
+The generated Dockerfile uses a Rocker base image, installs `renv` and `BiocManager`, restores dependencies from the `renv.lock`, and installs the package, mirroring the developer's environment inside the container.
 
 ### Installation
 
@@ -300,7 +300,7 @@ use_docker()
 build_image()
 ```
 
-The two-step approach is useful when you want to customize the generated Dockerfile before building—for example, to add system library dependencies or additional non-R tools.
+The two-step approach is useful when you want to customize the generated Dockerfile before building, for example to add system library dependencies or additional non-R tools.
 
 #### Step 4: Run and share the image
 
@@ -315,7 +315,7 @@ docker push your-org/your-package:1.0.0
 The image tag is derived from the package version in `DESCRIPTION`, so image versions stay in sync with package versions automatically.
 
 ::: {.callout-tip}
-`pracpac` is particularly useful for deploying R-based pipelines alongside non-R tools. After `use_docker()` generates the initial Dockerfile, you can extend it to install Python, command-line bioinformatics tools, or any other software your pipeline needs. The R dependencies are already handled by `renv`—you just add the additional layers on top.
+`pracpac` is particularly useful for deploying R-based pipelines alongside non-R tools. After `use_docker()` generates the initial Dockerfile, you can extend it to install Python, command-line bioinformatics tools, or any other software your pipeline needs. The R dependencies are already handled by `renv`; you just add the additional layers on top.
 :::
 
 ### Use Cases
@@ -345,11 +345,11 @@ The most common entry point for DSTT teams is `renv`: add it to any collaborativ
 
 ## Further Reading {#sec-environments-further}
 
-The tools covered in this chapter—`renv`, Docker/Rocker, and `pracpac`—are the most practical starting points for most teams. The reproducibility landscape is broader, however, and a few other tools are worth knowing about, specifically **Nix and rix**.
+The tools covered in this chapter (`renv`, Docker/Rocker, and `pracpac`) are the most practical starting points for most teams. The reproducibility landscape is broader, however, and a few other tools are worth knowing about, specifically **Nix and rix**.
 
 [Nix](https://nixos.org/) is a package manager built around the principle of fully reproducible, declarative builds. Unlike `renv` (which captures R package versions) or Docker (which captures a container image), Nix works at the level of the entire software supply chain: every package, system library, compiler, and tool is described by a precise specification and built from source in an isolated environment. The result is a level of reproducibility that is difficult to achieve any other way.
 
-For R users, Nix's power is most accessible through [`rix`](https://docs.ropensci.org/rix/), an rOpenSci package developed by Bruno Rodrigues and Philipp Baumann. `rix` provides an R-native interface for generating Nix environments—you specify the R version, packages, and system dependencies in R code, and `rix` writes the `default.nix` file that Nix uses to build the environment:
+For R users, Nix's power is most accessible through [`rix`](https://docs.ropensci.org/rix/), an rOpenSci package developed by Bruno Rodrigues and Philipp Baumann. `rix` provides an R-native interface for generating Nix environments: you specify the R version, packages, and system dependencies in R code, and `rix` writes the `default.nix` file that Nix uses to build the environment:
 
 ```r
 library(rix)
@@ -364,7 +364,7 @@ rix(
 )
 ```
 
-This generates a `default.nix` file that, when built with Nix, produces an environment with exactly that R version and those packages—down to the system library level, without Docker, and with no mutable state that can drift over time.
+This generates a `default.nix` file that, when built with Nix, produces an environment with exactly that R version and those packages, down to the system library level, without Docker, and with no mutable state that can drift over time.
 
 `rix` is a compelling option if your team is willing to install Nix and invest in learning its model. The payoff is reproducibility that is more rigorous than `renv` alone and less operationally complex than Docker for day-to-day development. Bruno Rodrigues's book [*Building Reproducible Analytical Pipelines with R*](https://raps-with-r.dev/) covers this approach in depth.
 

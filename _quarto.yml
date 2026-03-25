@@ -35,10 +35,10 @@ book:
         - reporting.qmd
         - ai.qmd
         - dashboards.qmd
+        - packages.qmd
         - environments.qmd
         - databases.qmd
         - codestyle.qmd
-        - packages.qmd
         - documentation.qmd
     - part: "Nontechnical"
       chapters:
