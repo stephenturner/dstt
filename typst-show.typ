@@ -19,7 +19,7 @@ $endif$
 $if(lang)$
   lang: "$lang$",
 $endif$
-  main-color: brand-color.at("primary", default: blue),
+  main-color: brand-color.at("primary", default: rgb("#003dc0")),
   logo: {
     let logo-info = brand-logo.at("medium", default: none)
     if logo-info != none { image(logo-info.path, alt: logo-info.at("alt", default: none)) }
