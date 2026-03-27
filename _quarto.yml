@@ -37,6 +37,7 @@ book:
         - ai.qmd
         - dashboards.qmd
         - packageloading.qmd
+        - packagedevelopment.qmd
         - environments.qmd
         - databases.qmd
         - codestyle.qmd
