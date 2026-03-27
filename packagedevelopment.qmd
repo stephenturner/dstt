@@ -1,4 +1,4 @@
-# Building R Packages {#sec-building-packages}
+# Package Development {#sec-package-development}
 
 Most R users start writing functions to avoid repeating themselves. The same data cleaning steps appear in three scripts, so they get pulled into a shared helper. That helper gets sourced into a fourth script. A colleague asks for it and it gets emailed. Then it breaks on their machine because they're missing some dependency. At some point the question becomes: why not just make this a package?
 
@@ -8,7 +8,7 @@ An R package is the right unit of sharing for reusable code. It gives your funct
 
 This chapter is a brief introduction to R package development. It is not a comprehensive guide, but it will give you the basics and point you to resources for learning more.
 
-## Why build a package? {#sec-building-packages-why}
+## Why build a package? {#sec-package-development-why}
 
 The most visible benefit is sharing, but that undersells it. Packaging imposes structure that improves code before anyone else touches it.
 
@@ -22,7 +22,7 @@ Testing has a natural home. Package development pairs with unit testing through 
 
 A public health team that builds a shared package of common utilities (data validation functions, standard plot themes, reporting helpers) gets documented interfaces, declared dependencies, and a single install command that works for anyone on the team.
 
-## The package development workflow {#sec-building-packages-workflow}
+## The package development workflow {#sec-package-development-workflow}
 
 The core loop of package development (edit code, load and run it, run tests, update documentation, check) is well captured by the Posit package development cheat sheet at <https://rstudio.github.io/cheatsheets/html/package-development.html>.
 
@@ -30,7 +30,7 @@ The core loop of package development (edit code, load and run it, run tests, upd
 
 R package development is an entire topic in itself, and this section is just a brief introduction. Below I'll point you to some helpful resources.
 
-## Resources {#sec-building-packages-resources}
+## Resources {#sec-package-development-resources}
 
 The definitive reference is [*R Packages* (2nd ed.)](https://r-pkgs.org/) by Hadley Wickham and Jennifer Bryan [@wickham2023rpkgs], available free online. It covers package structure, function documentation, testing, data, and the publication process. 
 
