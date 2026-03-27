@@ -21,7 +21,8 @@
       "WebFetch(domain:www.w3.org)",
       "WebFetch(domain:www.section508.gov)",
       "WebFetch(domain:www.cdc.gov)",
-      "WebFetch(domain:blog.stephenturner.us)"
+      "WebFetch(domain:blog.stephenturner.us)",
+      "Bash(find /Users/sdt5z/repos/dstt -name *.png -not -path */_book/*)"
     ]
   }
 }
