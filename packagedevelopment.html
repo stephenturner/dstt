@@ -8,7 +8,7 @@
 
 <meta name="author" content="Stephen D. Turner">
 
-<title>9&nbsp; Building R Packages – Data Science Team Training</title>
+<title>9&nbsp; Package Development – Data Science Team Training</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -106,7 +106,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./packagedevelopment.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Building R Packages</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./packagedevelopment.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Package Development</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -217,7 +217,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./packagedevelopment.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Building R Packages</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Package Development</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -314,18 +314,18 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-building-packages-why" id="toc-sec-building-packages-why" class="nav-link active" data-scroll-target="#sec-building-packages-why"><span class="header-section-number">9.1</span> Why build a package?</a></li>
-  <li><a href="#sec-building-packages-workflow" id="toc-sec-building-packages-workflow" class="nav-link" data-scroll-target="#sec-building-packages-workflow"><span class="header-section-number">9.2</span> The package development workflow</a></li>
-  <li><a href="#sec-building-packages-resources" id="toc-sec-building-packages-resources" class="nav-link" data-scroll-target="#sec-building-packages-resources"><span class="header-section-number">9.3</span> Resources</a></li>
+  <li><a href="#sec-package-development-why" id="toc-sec-package-development-why" class="nav-link active" data-scroll-target="#sec-package-development-why"><span class="header-section-number">9.1</span> Why build a package?</a></li>
+  <li><a href="#sec-package-development-workflow" id="toc-sec-package-development-workflow" class="nav-link" data-scroll-target="#sec-package-development-workflow"><span class="header-section-number">9.2</span> The package development workflow</a></li>
+  <li><a href="#sec-package-development-resources" id="toc-sec-package-development-resources" class="nav-link" data-scroll-target="#sec-package-development-resources"><span class="header-section-number">9.3</span> Resources</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./packagedevelopment.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Building R Packages</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./packagedevelopment.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Package Development</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-building-packages" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Building R Packages</span></span></h1>
+<h1 class="title"><span id="sec-package-development" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Package Development</span></span></h1>
 </div>
 
 
@@ -346,8 +346,8 @@ div.csl-indent {
 <p>My general rule is: If you do something more than once, write a function. If you write more than one function, make it a package.</p>
 <p>An R package is the right unit of sharing for reusable code. It gives your functions a home with documentation, a test suite, versioning, and a clear installation path.</p>
 <p>This chapter is a brief introduction to R package development. It is not a comprehensive guide, but it will give you the basics and point you to resources for learning more.</p>
-<section id="sec-building-packages-why" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="sec-building-packages-why"><span class="header-section-number">9.1</span> Why build a package?</h2>
+<section id="sec-package-development-why" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="sec-package-development-why"><span class="header-section-number">9.1</span> Why build a package?</h2>
 <p>The most visible benefit is sharing, but that undersells it. Packaging imposes structure that improves code before anyone else touches it.</p>
 <p>Documentation is required, not optional. Every exported function must have a help page describing what each argument does, what the function returns, and what edge cases exist. A comment in a script is optional; <code>R CMD CHECK</code> will warn if documentation is missing. Writing it forces careful thinking about the function’s interface, and once written, it is available to anyone who types <code>?your_function</code>.</p>
 <p>Dependencies must be declared. A script accumulates <code>library()</code> calls by habit. A package requires you to enumerate exactly what it depends on in a <code>DESCRIPTION</code> file. When someone installs your package, those dependencies install automatically. There is no guessing about which packages need to be present. This is the same problem <code>renv</code> addresses for project-level reproducibility (see <a href="environments.html#sec-environments-renv" class="quarto-xref"><span>Section 10.1</span></a>), but solved at the code level rather than the project level.</p>
@@ -355,8 +355,8 @@ div.csl-indent {
 <p>Testing has a natural home. Package development pairs with unit testing through the testthat framework. A suite of passing tests is a concrete claim that the functions behave as documented. Finding that a change broke something during development is far cheaper than finding it later.</p>
 <p>A public health team that builds a shared package of common utilities (data validation functions, standard plot themes, reporting helpers) gets documented interfaces, declared dependencies, and a single install command that works for anyone on the team.</p>
 </section>
-<section id="sec-building-packages-workflow" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="sec-building-packages-workflow"><span class="header-section-number">9.2</span> The package development workflow</h2>
+<section id="sec-package-development-workflow" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="sec-package-development-workflow"><span class="header-section-number">9.2</span> The package development workflow</h2>
 <p>The core loop of package development (edit code, load and run it, run tests, update documentation, check) is well captured by the Posit package development cheat sheet at <a href="https://rstudio.github.io/cheatsheets/html/package-development.html" class="uri">https://rstudio.github.io/cheatsheets/html/package-development.html</a>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -366,8 +366,8 @@ div.csl-indent {
 </div>
 <p>R package development is an entire topic in itself, and this section is just a brief introduction. Below I’ll point you to some helpful resources.</p>
 </section>
-<section id="sec-building-packages-resources" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="sec-building-packages-resources"><span class="header-section-number">9.3</span> Resources</h2>
+<section id="sec-package-development-resources" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="sec-package-development-resources"><span class="header-section-number">9.3</span> Resources</h2>
 <p>The definitive reference is <a href="https://r-pkgs.org/"><em>R Packages</em> (2nd ed.)</a> by Hadley Wickham and Jennifer Bryan <span class="citation" data-cites="wickham2023rpkgs">(<a href="references.html#ref-wickham2023rpkgs" role="doc-biblioref">Wickham and Bryan 2023</a>)</span>, available free online. It covers package structure, function documentation, testing, data, and the publication process.</p>
 <p>The <a href="https://rstudio.github.io/cheatsheets/html/package-development.html">Posit Package Development cheat sheet</a> is a quick reference for the devtools and usethis commands used throughout development.</p>
 <div class="quarto-figure quarto-figure-center">
