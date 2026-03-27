@@ -84,7 +84,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./environments.html" rel="next">
+<link href="./packagedevelopment.html" rel="next">
 <link href="./dashboards.html" rel="prev">
 <link href="./hex.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
@@ -237,26 +237,32 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./packagedevelopment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Building R Packages</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./environments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Reproducible Environments</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Reproducible Environments</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./databases.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Databases from R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Databases from R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./codestyle.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Code Style</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Code Style</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./documentation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Documentation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Documentation</span></span></a>
   </div>
 </li>
       </ul>
@@ -273,25 +279,25 @@ div.csl-indent {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./governance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./peerreview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./comms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
   </div>
 </li>
       </ul>
@@ -595,8 +601,8 @@ Or declare a preference with `conflicts_prefer()`:
 </section><section id="sec-packageloading-team" class="level2" data-number="8.5"><h2 data-number="8.5" class="anchored" data-anchor-id="sec-packageloading-team">
 <span class="header-section-number">8.5</span> Team implications</h2>
 <p>Package load order affects reproducibility across the team. The same script can produce different results on different machines when analysts have different packages installed or load them in a different order. <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code> always means <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code>, but <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> depends on who loaded what and when.</p>
-<p>Code review (see <a href="peerreview.html" class="quarto-xref"><span>Chapter 15</span></a>) is a natural checkpoint for package hygiene. Reviewers should flag unnecessary <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> calls and bare function names that commonly conflict. Both are easier to catch in review than when writing.</p>
-<p><code>renv</code> (see <a href="environments.html#sec-environments-renv" class="quarto-xref"><span>Section 9.1</span></a>) ensures everyone is using the same package versions, but it does not determine which <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> runs when both dplyr and MASS are loaded. <code>renv</code> and <code>conflicted</code> are complementary: one locks down versions, the other makes conflict resolution explicit.</p>
+<p>Code review (see <a href="peerreview.html" class="quarto-xref"><span>Chapter 16</span></a>) is a natural checkpoint for package hygiene. Reviewers should flag unnecessary <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> calls and bare function names that commonly conflict. Both are easier to catch in review than when writing.</p>
+<p><code>renv</code> (see <a href="environments.html#sec-environments-renv" class="quarto-xref"><span>Section 10.1</span></a>) ensures everyone is using the same package versions, but it does not determine which <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> runs when both dplyr and MASS are loaded. <code>renv</code> and <code>conflicted</code> are complementary: one locks down versions, the other makes conflict resolution explicit.</p>
 <p>The package block at the top of a shared script documents what the script depends on. A bloated list loaded by habit, combined with silent masking, means different analysts running the same script may not be running the same code.</p>
 
 
@@ -1010,8 +1016,8 @@ Wickham, Hadley. 2023. <em>Conflicted: An Alternative Conflict Resolution Strate
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./environments.html" class="pagination-link" aria-label="Reproducible Environments">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Reproducible Environments</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./packagedevelopment.html" class="pagination-link" aria-label="Building R Packages">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Building R Packages</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
