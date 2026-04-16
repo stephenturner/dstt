@@ -351,6 +351,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#what-conflict-markers-look-like" id="toc-what-conflict-markers-look-like" class="nav-link" data-scroll-target="#what-conflict-markers-look-like"><span class="header-section-number">1.4.1</span> What conflict markers look like</a></li>
   <li><a href="#resolving-conflicts" id="toc-resolving-conflicts" class="nav-link" data-scroll-target="#resolving-conflicts"><span class="header-section-number">1.4.2</span> Resolving conflicts</a></li>
   </ul></li>
+  <li><a href="#sec-git-gitignore" id="toc-sec-git-gitignore" class="nav-link" data-scroll-target="#sec-git-gitignore"><span class="header-section-number">1.5</span> .gitignore</a>
+  <ul class="collapse">
+  <li><a href="#why-it-matters-for-data-science" id="toc-why-it-matters-for-data-science" class="nav-link" data-scroll-target="#why-it-matters-for-data-science"><span class="header-section-number">1.5.1</span> Why it matters for data science</a></li>
+  <li><a href="#syntax" id="toc-syntax" class="nav-link" data-scroll-target="#syntax"><span class="header-section-number">1.5.2</span> Syntax</a></li>
+  <li><a href="#a-starting-point-for-r-and-python-projects" id="toc-a-starting-point-for-r-and-python-projects" class="nav-link" data-scroll-target="#a-starting-point-for-r-and-python-projects"><span class="header-section-number">1.5.3</span> A starting point for R and Python projects</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -677,6 +683,98 @@ Tip
 <div class="callout-body-container callout-body">
 <p><code>git status</code> is your best friend during a conflict. It lists which files are in conflict (<code>both modified</code>), which are already resolved and staged, and what step to take next (commit or continue a rebase).</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-git-gitignore" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="sec-git-gitignore"><span class="header-section-number">1.5</span> .gitignore</h2>
+<p>A <code>.gitignore</code> file tells Git which files and directories to leave untracked. Anything listed there will not show up in <code>git status</code>, will not be staged by <code>git add .</code>, and will never be committed. Every project should have one.</p>
+<section id="why-it-matters-for-data-science" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="why-it-matters-for-data-science"><span class="header-section-number">1.5.1</span> Why it matters for data science</h3>
+<p>Data science projects routinely contain files that should never go into version control:</p>
+<ul>
+<li><strong>Raw and processed data.</strong> Large files bloat a repository and slow every operation. Sensitive data files may have legal or compliance restrictions on where they can be stored. The project directory structure in <a href="dataorg.html#sec-dataorg-project" class="quarto-xref"><span>Section 2.3</span></a> places a <code>.gitignore</code> directly inside <code>data/</code> and <code>output/</code> to block these files at the source.</li>
+<li><strong>Credentials and secrets.</strong> <code>.env</code> files, config files with API keys or database passwords, and personal config files with paths to secure shared drives (see <a href="dataorg.html#sec-dataorg-sharedrive" class="quarto-xref"><span>Section 2.3.2</span></a>) should never be committed. Once a secret is in Git history, it is effectively public even if you delete it later.</li>
+<li><strong>Derived outputs.</strong> Figures, rendered reports, and cached results can be regenerated from code. Committing them creates noise in diffs and false impressions that something changed.</li>
+<li><strong>Environment and editor artifacts.</strong> Files like <code>.DS_Store</code> (macOS), <code>.Rhistory</code>, <code>.RData</code>, and IDE-specific folders communicate nothing useful to collaborators.</li>
+</ul>
+</section>
+<section id="syntax" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="syntax"><span class="header-section-number">1.5.2</span> Syntax</h3>
+<p>A <code>.gitignore</code> at the root of the repository applies to the whole project. The syntax is straightforward:</p>
+<pre><code># Lines starting with # are comments
+
+# Ignore a specific file
+.env
+
+# Ignore all files with this extension
+*.csv
+
+# Ignore a directory and everything in it
+data/raw/
+
+# Ignore a pattern anywhere in the tree
+**/.DS_Store
+
+# Exception: track this one file even though *.csv is ignored
+!data/raw/small-example.csv</code></pre>
+<p>Patterns without a <code>/</code> match anywhere in the tree. A leading <code>/</code> anchors to the repository root. A trailing <code>/</code> matches directories only.</p>
+</section>
+<section id="a-starting-point-for-r-and-python-projects" class="level3" data-number="1.5.3">
+<h3 data-number="1.5.3" class="anchored" data-anchor-id="a-starting-point-for-r-and-python-projects"><span class="header-section-number">1.5.3</span> A starting point for R and Python projects</h3>
+<p>GitHub maintains a collection of language-specific templates at <a href="https://github.com/github/gitignore">github.com/github/gitignore</a>. When you create a new repository on GitHub, you can select one of these as a starting point. For most data science work in R and Python, a reasonable <code>.gitignore</code> covers:</p>
+<pre><code># R
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj          # add back if you want to commit the project file
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.env
+
+# Data and outputs -- better handled with a .gitignore inside each folder
+# (see project structure in the data organization chapter)
+data/
+output/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Credentials and personal config
+config.yml       # if it contains paths or secrets
+*.key
+*.pem</code></pre>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <code>.gitignore</code> only affects untracked files. If you accidentally committed a file before adding it to <code>.gitignore</code>, it will continue to be tracked. To stop tracking it without deleting it locally:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rm <span class="at">--cached</span> path/to/file</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then commit the removal and add the file to <code>.gitignore</code>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Per-directory <code>.gitignore</code> files work alongside the root one. The project structure in <a href="dataorg.html#sec-dataorg-project" class="quarto-xref"><span>Section 2.3</span></a> places a <code>.gitignore</code> inside <code>data/</code> and another inside <code>output/</code>. This is a good pattern: the intent is visible right where the data lives, and it protects those folders even if the root <code>.gitignore</code> is later modified.</p>
 </div>
 </div>
 

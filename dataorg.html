@@ -333,10 +333,10 @@ div.csl-indent {
   <li><a href="#three-principles" id="toc-three-principles" class="nav-link" data-scroll-target="#three-principles"><span class="header-section-number">2.2.1</span> Three Principles</a></li>
   <li><a href="#recommended-pattern-yyyy-mm-dd-slug" id="toc-recommended-pattern-yyyy-mm-dd-slug" class="nav-link" data-scroll-target="#recommended-pattern-yyyy-mm-dd-slug"><span class="header-section-number">2.2.2</span> Recommended Pattern: <code>YYYY-MM-DD-slug</code></a></li>
   </ul></li>
-  <li><a href="#project-directory-structure" id="toc-project-directory-structure" class="nav-link" data-scroll-target="#project-directory-structure"><span class="header-section-number">2.3</span> Project Directory Structure</a>
+  <li><a href="#sec-dataorg-project" id="toc-sec-dataorg-project" class="nav-link" data-scroll-target="#sec-dataorg-project"><span class="header-section-number">2.3</span> Project Directory Structure</a>
   <ul class="collapse">
   <li><a href="#simple-project-oriented-workflow" id="toc-simple-project-oriented-workflow" class="nav-link" data-scroll-target="#simple-project-oriented-workflow"><span class="header-section-number">2.3.1</span> Simple project-oriented workflow</a></li>
-  <li><a href="#version-controlling-code-with-data-on-a-shared-drive" id="toc-version-controlling-code-with-data-on-a-shared-drive" class="nav-link" data-scroll-target="#version-controlling-code-with-data-on-a-shared-drive"><span class="header-section-number">2.3.2</span> Version controlling code with data on a shared drive</a></li>
+  <li><a href="#sec-dataorg-sharedrive" id="toc-sec-dataorg-sharedrive" class="nav-link" data-scroll-target="#sec-dataorg-sharedrive"><span class="header-section-number">2.3.2</span> Version controlling code with data on a shared drive</a></li>
   </ul></li>
   <li><a href="#file-formats" id="toc-file-formats" class="nav-link" data-scroll-target="#file-formats"><span class="header-section-number">2.4</span> File Formats</a></li>
   <li><a href="#additional-best-practices" id="toc-additional-best-practices" class="nav-link" data-scroll-target="#additional-best-practices"><span class="header-section-number">2.5</span> Additional Best Practices</a></li>
@@ -530,8 +530,8 @@ Tip
 </div>
 </section>
 </section>
-<section id="project-directory-structure" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="project-directory-structure"><span class="header-section-number">2.3</span> Project Directory Structure</h2>
+<section id="sec-dataorg-project" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="sec-dataorg-project"><span class="header-section-number">2.3</span> Project Directory Structure</h2>
 <section id="simple-project-oriented-workflow" class="level3" data-number="2.3.1">
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="simple-project-oriented-workflow"><span class="header-section-number">2.3.1</span> Simple project-oriented workflow</h3>
 <p>A consistent folder structure makes projects navigable by collaborators (and your future self). One convention is shown below:</p>
@@ -554,8 +554,8 @@ Tip
 </ul>
 <p>The <a href="http://projecttemplate.net/">ProjectTemplate</a> (R) and <a href="https://cookiecutter-data-science.drivendata.org/">Cookiecutter Data Science</a> (Python) tools can scaffold these structures automatically.</p>
 </section>
-<section id="version-controlling-code-with-data-on-a-shared-drive" class="level3" data-number="2.3.2">
-<h3 data-number="2.3.2" class="anchored" data-anchor-id="version-controlling-code-with-data-on-a-shared-drive"><span class="header-section-number">2.3.2</span> Version controlling code with data on a shared drive</h3>
+<section id="sec-dataorg-sharedrive" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="sec-dataorg-sharedrive"><span class="header-section-number">2.3.2</span> Version controlling code with data on a shared drive</h3>
 <p>Finally, it’s not uncommon in public health settings to have a setup where you’re working with collaborators version controlling code as described in <a href="git.html" class="quarto-xref"><span>Chapter 1</span></a>, but the data lives on a secure shared drive that cannot be moved or copied into the repository. This creates a tension between reproducibility and security that can be resolved with careful project organization and path management. The governance and access implications of working with data on secure shared drives, including data use agreements and secure data environments, are covered in <a href="governance.html" class="quarto-xref"><span>Chapter 15</span></a>.</p>
 <p>Imagine that you have a distributed research team working with sensitive data that:</p>
 <ul>
