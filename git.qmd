@@ -303,3 +303,87 @@ Never leave conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) in committed code
 git status
 ```
 :::
+
+## .gitignore {#sec-git-gitignore}
+
+A `.gitignore` file tells Git which files and directories to leave untracked. Anything listed there will not show up in `git status`, will not be staged by `git add .`, and will never be committed. Every project should have one.
+
+### Why it matters for data science
+
+Data science projects routinely contain files that should never go into version control:
+
+- **Raw and processed data.** Large files bloat a repository and slow every operation. Sensitive data files may have legal or compliance restrictions on where they can be stored. The project directory structure in @sec-dataorg-project places a `.gitignore` directly inside `data/` and `output/` to block these files at the source.
+- **Credentials and secrets.** `.env` files, config files with API keys or database passwords, and personal config files with paths to secure shared drives (see @sec-dataorg-sharedrive) should never be committed. Once a secret is in Git history, it is effectively public even if you delete it later.
+- **Derived outputs.** Figures, rendered reports, and cached results can be regenerated from code. Committing them creates noise in diffs and false impressions that something changed.
+- **Environment and editor artifacts.** Files like `.DS_Store` (macOS), `.Rhistory`, `.RData`, and IDE-specific folders communicate nothing useful to collaborators.
+
+### Syntax
+
+A `.gitignore` at the root of the repository applies to the whole project. The syntax is straightforward:
+
+```
+# Lines starting with # are comments
+
+# Ignore a specific file
+.env
+
+# Ignore all files with this extension
+*.csv
+
+# Ignore a directory and everything in it
+data/raw/
+
+# Ignore a pattern anywhere in the tree
+**/.DS_Store
+
+# Exception: track this one file even though *.csv is ignored
+!data/raw/small-example.csv
+```
+
+Patterns without a `/` match anywhere in the tree. A leading `/` anchors to the repository root. A trailing `/` matches directories only.
+
+### A starting point for R and Python projects
+
+GitHub maintains a collection of language-specific templates at [github.com/github/gitignore](https://github.com/github/gitignore). When you create a new repository on GitHub, you can select one of these as a starting point. For most data science work in R and Python, a reasonable `.gitignore` covers:
+
+```
+# R
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj          # add back if you want to commit the project file
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.env
+
+# Data and outputs -- better handled with a .gitignore inside each folder
+# (see project structure in the data organization chapter)
+data/
+output/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Credentials and personal config
+config.yml       # if it contains paths or secrets
+*.key
+*.pem
+```
+
+:::{.callout-warning}
+A `.gitignore` only affects untracked files. If you accidentally committed a file before adding it to `.gitignore`, it will continue to be tracked. To stop tracking it without deleting it locally:
+
+```bash
+git rm --cached path/to/file
+```
+
+Then commit the removal and add the file to `.gitignore`.
+:::
+
+:::{.callout-tip}
+Per-directory `.gitignore` files work alongside the root one. The project structure in @sec-dataorg-project places a `.gitignore` inside `data/` and another inside `output/`. This is a good pattern: the intent is visible right where the data lives, and it protects those folders even if the root `.gitignore` is later modified.
+:::

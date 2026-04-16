@@ -1,5 +1,15 @@
 # Databases from R {#sec-databases}
 
+
+```{r}
+#| label: load
+#| include: false
+#| message: false
+#| warning: false
+suppressWarnings(suppressPackageStartupMessages(library(duckplyr)))
+suppressWarnings(suppressPackageStartupMessages(library(duckdb)))
+```
+
 Spreadsheets and CSV files work well for small datasets, but many public health agencies store their surveillance data in relational databases: SQL Server, Oracle, PostgreSQL, or similar systems. These databases are managed by IT, shared across teams, and updated continuously as new data arrives. The data never leaves the server; analysts connect, run a query, and pull back only the rows and columns they need.
 
 This chapter covers how to work with databases from R. The examples use [DuckDB](https://duckdb.org/), an in-process analytical database that requires no server setup and installs as an R package. DuckDB is practical for local analysis of large files, but the same patterns (DBI, dbplyr) apply to institutional databases like SQL Server and PostgreSQL — only the connection call changes. The chapter ends with connection patterns for those remote systems.
@@ -15,7 +25,6 @@ The [`DBI`](https://dbi.r-dbi.org/) package defines a consistent interface for i
 ```{r}
 #| label: install-packages
 #| eval: false
-
 install.packages(c("DBI", "duckdb", "duckplyr", "dbplyr", "odbc"))
 ```
 
@@ -33,7 +42,6 @@ A connection always needs to be closed when you are done. The safest pattern is 
 ```{r}
 #| label: on-exit-pattern
 #| eval: false
-
 con <- dbConnect(duckdb::duckdb())
 on.exit(dbDisconnect(con), add = TRUE)
 
@@ -51,7 +59,6 @@ Connect with `dbConnect()`. An in-memory database (which disappears when the con
 ```{r}
 #| label: duckdb-connect
 #| message: false
-
 library(DBI)
 library(duckdb)
 
@@ -63,7 +70,6 @@ To persist the database to disk — so it survives between sessions — pass a f
 ```{r}
 #| label: duckdb-persistent
 #| eval: false
-
 con <- dbConnect(duckdb("surveillance.duckdb"))
 ```
 
@@ -73,7 +79,6 @@ Use `dbWriteTable()` to load an R data frame into a DuckDB table. The examples i
 
 ```{r}
 #| label: setup-data
-
 set.seed(42)
 counties <- c(
   "Fairfax",
@@ -118,7 +123,6 @@ To see which tables are in the database:
 
 ```{r}
 #| label: duckdb-list-tables
-
 dbListTables(con)
 ```
 
@@ -128,7 +132,6 @@ dbListTables(con)
 
 ```{r}
 #| label: duckdb-sql
-
 dbGetQuery(
   con,
   "
@@ -145,7 +148,6 @@ DuckDB can also read CSV and Parquet files directly using SQL — without loadin
 ```{r}
 #| label: duckdb-read-csv
 #| eval: false
-
 # Read a CSV directly in a query
 dbGetQuery(con, "SELECT * FROM read_csv('data/flu-2024.csv') LIMIT 5")
 
@@ -164,7 +166,6 @@ Writing SQL by hand is workable for simple queries but awkward for anything that
 ```{r}
 #| label: dbplyr-tbl
 #| message: false
-
 library(dplyr)
 library(dbplyr)
 
@@ -178,7 +179,6 @@ dplyr verbs work on database tables the same way they work on data frames. The k
 
 ```{r}
 #| label: dbplyr-query
-
 q <- flu_tbl |>
   filter(year == 2023) |>
   group_by(county) |>
@@ -198,7 +198,6 @@ Notice the output header says `Source: SQL [?? x 3]` — the query has not run y
 
 ```{r}
 #| label: dbplyr-collect
-
 collect(q)
 ```
 
@@ -208,7 +207,6 @@ collect(q)
 
 ```{r}
 #| label: dbplyr-show-query
-
 show_query(q)
 ```
 
@@ -225,7 +223,6 @@ Pull as little data as possible. Filter, aggregate, and join on the database sid
 ```{r}
 #| label: duckplyr-basic
 #| message: false
-
 library(duckplyr)
 
 flu_duck <- as_duckdb_tibble(flu)
@@ -235,7 +232,6 @@ The result looks and behaves like a tibble, but dplyr verbs execute via DuckDB:
 
 ```{r}
 #| label: duckplyr-query
-
 flu_duck |>
   filter(year == 2023) |>
   group_by(county) |>
@@ -272,7 +268,6 @@ The most common database at state and local health departments. Requires the ODB
 ```{r}
 #| label: sql-server-connect
 #| eval: false
-
 library(odbc)
 
 con <- dbConnect(
@@ -293,7 +288,6 @@ Common in cloud deployments and some state agencies:
 ```{r}
 #| label: postgres-connect
 #| eval: false
-
 con <- dbConnect(
   odbc(),
   driver = "PostgreSQL Unicode",
@@ -327,7 +321,6 @@ After the connection is open, all DBI and dbplyr patterns work identically regar
 ```{r}
 #| label: remote-pattern
 #| eval: false
-
 # Works on SQL Server, PostgreSQL, DuckDB, etc.
 cases_tbl <- tbl(con, "flu_cases")
 
@@ -350,6 +343,5 @@ cases_tbl |>
 ```{r}
 #| label: disconnect
 #| include: false
-
 dbDisconnect(con)
 ```

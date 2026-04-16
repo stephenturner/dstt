@@ -159,7 +159,7 @@ consent-form-v2.pdf
 A good file name is essentially metadata. When you can glob a directory and parse the file names with code—extracting dates, conditions, or sample IDs—you've done it right.
 :::
 
-## Project Directory Structure
+## Project Directory Structure {#sec-dataorg-project}
 
 ### Simple project-oriented workflow
 
@@ -187,7 +187,7 @@ Key rules:
 
 The [ProjectTemplate](http://projecttemplate.net/) (R) and [Cookiecutter Data Science](https://cookiecutter-data-science.drivendata.org/) (Python) tools can scaffold these structures automatically.
 
-### Version controlling code with data on a shared drive
+### Version controlling code with data on a shared drive {#sec-dataorg-sharedrive}
 
 Finally, it's not uncommon in public health settings to have a setup where you're working with collaborators version controlling code as described in @sec-git, but the data lives on a secure shared drive that cannot be moved or copied into the repository. This creates a tension between reproducibility and security that can be resolved with careful project organization and path management. The governance and access implications of working with data on secure shared drives, including data use agreements and secure data environments, are covered in @sec-governance.
 
