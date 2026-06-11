@@ -1,0 +1,77 @@
+# Building and Sustaining a Data Science Team {#sec-team}
+
+Two failure modes bookend public health data science. In the first, a health department has one analyst who understands the surveillance pipeline, who built it, who maintains it, who is the only person who knows why the county denominators are adjusted the way they are. When that person takes another job, the institutional memory leaves with them, and the pipeline becomes a black box that still runs but that nobody can change. In the second, a department receives new funding to stand up a data science function and discovers it has no idea what to hire for, how to classify the positions, or where the new team should sit.
+
+This chapter is about the work between those two failure modes: building a data science capability that does not depend on any single person and that fits the realities of a public health agency. The project management chapter (@sec-pm) covers running a project well. This one covers building and keeping the team that runs the projects.
+
+## Roles on a Public Health Data Science Team {#sec-team-roles}
+
+The titles overlap and the boundaries are fuzzy. An epidemiologist, a data analyst, a data scientist, a data engineer, and an informatician can have job descriptions that read almost identically, and in a small agency the same person may answer to all five. It helps to think less about titles and more about the functions that have to be covered:
+
+- **Subject-matter framing**: turning a program question into an answerable analytic question. This is the epidemiology and domain expertise that keeps the analysis pointed in the right direction.
+- **Data engineering**: getting data out of source systems, moving it, and keeping pipelines running. Often the least visible function and the one whose absence hurts most.
+- **Analysis and modeling**: the statistical and computational work of producing the result.
+- **Communication and delivery**: reports, dashboards, and the translation of findings for people who did not run the analysis (@sec-comms).
+
+Most public health data scientists are what is sometimes called T-shaped: deep in one of these areas and competent across the others. The practices in this book (version control, reproducible reporting, validation) are the working competence that lets one person cover more than their specialty without the quality collapsing.
+
+The reality for most teams is that the "team" is one to three people, and they wear every hat. Framing roles as functions rather than headcount makes this tractable: you are not trying to hire five specialists, you are trying to make sure all four functions are covered by the people you have. A lightweight skills matrix (functions down one axis, people across the other, proficiency in the cells) is a quick way to see which function is dangerously thin before it becomes a crisis.
+
+## Hiring and Position Descriptions {#sec-team-hiring}
+
+Hiring a data scientist into a government agency runs straight into a classification problem. Many civil-service systems have no "data scientist" job classification at all, so the role gets filed under whatever existing title is closest: epidemiologist, IT specialist, statistician, research analyst. Each comes with a salary band and a set of required credentials that may not match the work. A position classified as "epidemiologist III" may require a degree the best candidate lacks, or cap salary below what the labor market commands for the skills you actually need.
+
+You cannot always fix the classification, but you can write the position description to describe the work rather than a credential checklist. State what the person will do: build reproducible analytic pipelines, work in version control, query institutional databases, produce reports and dashboards, communicate findings to program staff. Skills described this way let a wider and better pool see themselves in the role, and they give you concrete things to evaluate.
+
+When evaluating candidates, a portfolio tells you more than a transcript. A GitHub profile, a published dashboard, or a short take-home exercise^[Take-home exercises should be followed up with an oral interview to walk through the exercise, since take-homes can easily be solved perfectly with any of the modern frontier AI models.] that mirrors the actual work reveals whether someone can do the job in a way that a list of degrees cannot. A junior hire should show they can write clean, working code and learn quickly; a senior hire should show judgment about when an analysis is good enough, how to structure a project so others can pick it up, and how to mentor.
+
+Whether to hire a full-time employee or bring in a contractor is a real tradeoff, not a default. A contractor can deliver specialized skills quickly and is the right call for a bounded, well-specified build. A full-time employee accumulates the institutional knowledge (which data sources lie about what, which stakeholders need what) that makes the next project faster. For anything ongoing, especially anything load-bearing for surveillance, continuity usually wins.
+
+## Growing Skills on the Team You Have {#sec-team-upskilling}
+
+Hiring is not the only way, and often not the best way, to build capacity. Most public health analysts arrive fluent in Excel, SAS, or SPSS rather than R, Git, and Quarto, and many of them are strong analysts who simply have not been given the chance to learn modern tooling. Upskilling the people you already have is frequently more practical than competing for scarce outside hires, and it builds on institutional knowledge that a new hire would have to acquire from scratch.
+
+The binding constraint on upskilling is almost never motivation or materials. Both are abundant: the resources in @sec-resources are free and excellent, and people generally want to grow. The constraint is protected time. Learning to work reproducibly while also delivering the weekly reports is nearly impossible if the weekly reports consume every hour. Capacity-building that is not given real, defended time on the calendar does not happen, no matter how good the intentions.
+
+Several pathways work, and they compound:
+
+- **Structured curricula** for foundational skills, working through a book or course as a group (@sec-resources).
+- **Programs built for this purpose**, like the [DSTT program](https://www.cste.org/page/dstt-webpage) this book grew out of, which pair training with coaching on the team's actual projects.
+- **Communities of practice** inside or across agencies, where people doing similar work share patterns and unstick each other.
+- **Pairing and code review** (@sec-peerreview) as a teaching mechanism, not just a quality control: reviewing a colleague's pull request is one of the most effective ways for both people to learn.
+
+It also helps to be explicit that the practices in this book are learned incrementally. Nobody adopts version control, reproducible reporting, validation, and reproducible environments all at once. A team that picks up one practice per quarter is moving at a healthy pace.
+
+## Onboarding and Knowledge Continuity {#sec-team-onboarding}
+
+The blunt version of the question is the [bus factor](https://en.wikipedia.org/wiki/Bus_factor): how many people could leave before the work stops? A bus factor of one, the lone analyst who is the only one who understands the pipeline, is the most common and most dangerous condition in public health data science. The goal of onboarding and continuity practices is to get that number above one and keep it there.
+
+Good onboarding is mostly the payoff of practices covered elsewhere in this book. A new team member should be able to get productive by following a documented path: set up their environment (@sec-environments), get access to the repositories (@sec-git), learn the project structure conventions the team uses (@sec-dataorg), and find where the documentation lives (@sec-documentation). When these exist, onboarding is a checklist. When they do not, onboarding is an apprenticeship that depends on the very person you are worried about losing.
+
+Version control and READMEs are worth singling out, because their real value is continuity and not just developer convenience. A repository with a clear history and a README that explains how the analysis runs is institutional memory that survives staff turnover. It is the direct antidote to the "only one person understands this code" problem already flagged in @sec-pm-collaboration. The discipline is the same whether the team is one person or ten: write it down, commit it, so that the knowledge lives in the repository and not only in someone's head.
+
+## Where the Team Sits {#sec-team-placement}
+
+Where a data science function reports within an agency shapes what it can do. There is no single right answer, but the common options trade off in predictable ways:
+
+- **Inside an epidemiology or surveillance program** keeps the team close to the subject-matter questions and the people who will use the findings, at the cost of distance from the data infrastructure and the IT relationships that provision it.
+- **Inside informatics or IT** puts the team next to the databases, servers, and access controls, at the cost of distance from the program questions and sometimes from the analytic culture.
+- **A standalone analytics unit** serving the whole agency can set its own standards and serve many programs, at the cost of having to build relationships with each program rather than being embedded in one.
+
+A related choice is the service model. A centralized team is a shared resource that programs request work from; it builds deep technical capability and consistent standards but can become a bottleneck and can drift away from any one program's needs. Embedded analysts sit inside programs, close to the work, but can become isolated and reinvent each other's solutions. Many agencies land on a hybrid: a small central team that sets standards and handles cross-cutting infrastructure, with analysts embedded in the largest programs.
+
+Whatever the placement, the relationship with IT and data governance is structural and not incidental. The team's ability to access data, run pipelines, and publish results depends on it, which is why @sec-pm-it and @sec-governance treat those relationships as core to the work rather than as obstacles to route around.
+
+## Retention and Sustainability {#sec-team-retention}
+
+Public sector salaries rarely match what a data scientist can earn in industry, and pretending otherwise helps no one. We must be clear-eyed about the gap and deliberate about the levers that do work. People stay in public health data science for the mission, for autonomy and ownership over meaningful work, for the chance to keep growing, and for the conditions that let them do the work well. Each of those is something an agency can actually offer.
+
+Tooling is one of those conditions, and an underrated one. Skilled people who are forced to work in outdated, click-heavy, irreproducible environments (exporting from one system, pasting into another, hand-checking numbers) will leave for somewhere that lets them work the way they know how. The modern practices in this book are not only about output quality; giving capable people good tools is itself a retention strategy.
+
+Sustainability is the team-level version of the same concern. Succession planning, documentation treated as insurance against turnover, and cross-training so that no pipeline has a single owner all reduce the damage any one departure can do. A team built so that losing one person is a setback rather than a catastrophe is also a team that is more pleasant to work on, because no one is trapped as the irreplaceable holder of a critical system. Building for continuity and building for retention turn out to be the same work.
+
+## Further Reading {#sec-team-reading}
+
+- *Executive Data Science* [@peng2015executive] is a short, practical book on structuring and managing data science teams and working with executive stakeholders. Useful for team leads and for analysts who want to understand the decisions being made above them.
+- *Build a Career in Data Science* [@robinson2020career] covers hiring, job descriptions, interviewing, and career growth from both sides of the table, and is a useful reference for managers writing position descriptions and evaluating candidates.
+- CSTE and the Public Health Informatics Institute publish workforce and competency resources specific to public health data and informatics roles, which are helpful when mapping these general practices onto agency classifications.
