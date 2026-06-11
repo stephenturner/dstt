@@ -1,0 +1,133 @@
+# Automation and Scheduling {#sec-automation}
+
+Every Monday morning the respiratory surveillance report goes out. Someone opens the project, pulls the latest line list, renders the Quarto document, uploads the HTML, and emails the link to the program team. It takes twenty minutes if nothing goes wrong, longer if the data moved or a package updated over the weekend. It happens fifty-two times a year, and it depends entirely on a person remembering to do it.
+
+The reporting chapter (@sec-reporting) showed how to build a report whose numbers update when the data changes, and the dashboards chapter (@sec-dashboards) showed how to publish one to the web. This chapter is about the next step: making those things happen on a schedule, or in response to an event, without a person in the loop. The recurring weekly report becomes a job that runs at 6am whether or not anyone remembers, and the team finds out only if something breaks.
+
+## What to Automate (and What Not To) {#sec-automation-what}
+
+Automation pays off when the same work happens the same way, repeatedly. A weekly surveillance render, a nightly data refresh, a validation check that should run every time a file lands: all of these are worth the up-front effort to set up, because the effort is amortized over dozens or hundreds of runs.
+
+It pays off poorly, or not at all, for one-off analyses, for work that requires a human decision partway through, and for exploratory work where the whole point is that you do not yet know what you are going to do. A useful test: would you run this code, in this same way, more than a handful of times? If yes, automate it. If no, the time spent automating is time not spent on the analysis.
+
+One caution before going further. Automation amplifies whatever you point it at. A correct, validated pipeline run a hundred times produces a hundred correct outputs; a subtly broken one produces a hundred broken outputs, faster than anyone can check them. Automation presumes the underlying work is already validated (@sec-validation) and reproducible (@sec-environments). Automating an unreliable pipeline does not save labor, it industrializes the errors.
+
+## Scheduling on Your Own Machine {#sec-automation-local}
+
+The simplest form of automation is a saved script that the operating system runs on a schedule. The first requirement is that the script run without anyone clicking anything. Instead of opening the project and rendering interactively, put the render in an R script that can be run headlessly:
+
+```r
+# render_report.R
+quarto::quarto_render(
+  input = "respiratory_report.qmd",
+  execute_params = list(week = Sys.Date())
+)
+```
+
+This is the same parameterized render from @sec-reporting-params, just invoked from a script instead of by hand. From a terminal, `Rscript render_report.R` runs it start to finish with no interaction.
+
+Once the work is a single command, the operating system can run it on a schedule. On macOS and Linux that scheduler is `cron`. A crontab entry is a schedule followed by a command; this one runs the render every Monday at 6am:
+
+```
+0 6 * * 1 Rscript /Users/you/projects/surveillance/render_report.R
+```
+
+The five fields before the command are minute, hour, day-of-month, month, and day-of-week. The [`cronR`](https://github.com/bnosac/cronR) package can create and manage these entries from R if you would rather not edit a crontab by hand. On Windows the equivalent is Task Scheduler, which the [`taskscheduleR`](https://github.com/bnosac/taskscheduleR) package wraps in the same way.
+
+Machine scheduling is easy to set up and good enough for plenty of internal work, but it has real limits. The machine has to be powered on and awake at 6am Monday, which rules out a laptop that goes home in a bag on Friday. Paths must be absolute, because a scheduled job does not start in your project directory or with your usual environment. And, most dangerously, if the job fails there is nobody watching: the report simply does not appear, and you find out when the program team asks where it is. The next two sections address each of these in turn.
+
+## Continuous Automation with GitHub Actions {#sec-automation-actions}
+
+For work whose code already lives on GitHub (@sec-git), GitHub Actions runs jobs on GitHub's machines instead of yours. A workflow is a YAML file in the `.github/workflows/` directory of the repository. It describes when to run (a trigger) and what to do (a sequence of steps), and GitHub spins up a fresh virtual machine each time to carry it out. Because the machine is GitHub's, it does not matter whether your laptop is open.
+
+A workflow can be triggered by a push, by a manual button, or by a schedule. This one renders a Quarto report every Monday at 6am UTC, can also be run on demand, and publishes the result to GitHub Pages (@sec-dashboards-hosting):
+
+```yaml
+# .github/workflows/render.yml
+name: Render surveillance report
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"      # every Monday at 06:00 UTC
+  workflow_dispatch:         # also allow manual trigger
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+
+      - uses: r-lib/actions/setup-r@v2
+
+      - uses: r-lib/actions/setup-renv@v2  
+
+      - uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+The steps read top to bottom: check out the repository, install Quarto and R, restore the exact package versions recorded by `renv` (@sec-environments-renv), then render and publish. The maintained building blocks here are [`r-lib/actions`](https://github.com/r-lib/actions) for R setup and [`quarto-actions`](https://github.com/quarto-dev/quarto-actions) for rendering and publishing; the Quarto documentation on GitHub Actions, linked in @sec-resources, is the reference for the publishing options.
+
+::: {.callout-note}
+The `cron` schedule in a GitHub Actions workflow runs on UTC, not your local time zone, and does not adjust for daylight saving. A "6am Monday" job will land at a different local hour depending on the season. For a surveillance report this rarely matters; when it does, schedule against UTC deliberately.
+:::
+
+When a job needs a credential (an API token, a database password), that secret never goes in the workflow file or anywhere else in the repository. GitHub stores it under the repository's **Settings → Secrets and variables**, and the workflow reads it as an environment variable at run time (the `secrets.GITHUB_TOKEN` reference above is the built-in example). This is the same discipline as the `.Renviron` pattern in @sec-databases: credentials live outside version control, and code reads them from the environment.
+
+## Multi-Step Pipelines with targets {#sec-automation-targets}
+
+A single render is one step. Many real projects are a chain: read the raw extract, clean it, validate it, summarize, then render a report from the summary. When any one input changes, you want to rerun the steps that depend on it and skip the ones that do not. Rerunning everything every time wastes compute on a large dataset; rerunning the wrong subset is how stale intermediate files poison a result.
+
+The [`targets`](https://docs.ropensci.org/targets/) package solves this by treating the pipeline as a dependency graph. You declare each step and what it depends on in a `_targets.R` file:
+
+```r
+# _targets.R
+library(targets)
+tar_option_set(packages = c("dplyr", "readr"))
+
+list(
+  tar_target(raw_file, "data/raw/line_list.csv", format = "file"),
+  tar_target(raw,      read_csv(raw_file)),
+  tar_target(clean,    clean_line_list(raw)),
+  tar_target(summary,  summarize_by_week(clean)),
+  tar_target(report,   quarto::quarto_render("report.qmd"))
+)
+```
+
+Running `tar_make()` builds the pipeline. The first run executes every step. On later runs, `targets` reruns only the steps whose inputs changed and reuses the cached results of the rest; if only the report template changed, the data is not re-read or re-cleaned. `tar_visnetwork()` draws the graph and colors each node by whether it is up to date, which is a fast way to see what a change will trigger before you run it.
+
+For automation, this self-correcting behavior is the point. A scheduled job that calls `tar_make()` does the minimum work required to bring every output up to date, and an output is rebuilt exactly when, and only when, something it depends on has actually changed. This is the same reproducibility discipline framed as a project commitment in @sec-pm; `targets` is the tool that enforces it mechanically. The RAPS book linked in @sec-resources goes much deeper on building pipelines this way.
+
+## Running in a Reproducible Environment {#sec-automation-environment}
+
+A scheduled job that relies on whatever packages happen to be installed on the machine is living on borrowed time. Eventually a package updates, a function's default changes, and the Monday report renders differently or fails outright. And because nobody changed the code, the cause is hard to find.
+
+The fix is to pin the environment so that the scheduled run matches the one you tested. Recording dependencies with `renv` (@sec-environments-renv) lets the job restore the exact package versions it was built against; the GitHub Actions example above did this with the `setup-renv` step. For jobs with system-level dependencies, or where you want the operating system itself fixed, running inside a Docker container (@sec-environments-docker) freezes the whole environment, not just the R packages. @sec-environments-choosing covers when each approach is worth the overhead. The principle is the same either way: an automated job should run in a defined environment, not an incidental one.
+
+## Knowing When It Breaks {#sec-automation-monitoring}
+
+A failure mode of automation is often silence instead of a crash. The dashboard still loads, the page still shows numbers, and nobody notices that the data feeding it stopped refreshing three weeks ago. A job that fails with an alert is recoverable; a job that fails silently erodes trust in everything the team publishes.
+
+Build in failure signals from the start. GitHub Actions emails the repository owners when a workflow fails, which covers the basic case at no effort. For higher-stakes pipelines, add a step that posts to a Slack or Teams channel on failure so the alert lands where the team actually looks.
+
+Validation belongs inside the automated job in addition to interactive work. A `pointblank` stop-on-fail check (@sec-validation-stop) placed before the publish step turns a data problem into a hard failure that halts the run and triggers the alert, rather than letting bad numbers sail through to a published report. The validation gate is a circuit breaker: better a missing report and an alert than a confidently wrong one.
+
+## Sensitive Data and Automation {#sec-automation-sensitive}
+
+Most of this chapter's cloud examples assume the data is safe to send to GitHub's machines. Much public health data is not. Protected health information, restricted-use files, and data governed by a use agreement generally must not run on GitHub-hosted runners or any other shared cloud infrastructure, because doing so moves the data outside the boundary where its handling is authorized.
+
+This does not rule out automation; it changes where the automation runs. The options are to use self-hosted runners that sit inside the agency's secure network (so GitHub orchestrates the job but the data never leaves), to schedule the job on an approved on-premises server with cron or Task Scheduler, or to use whatever managed analytics platform the agency already operates. The mechanics from earlier in this chapter still apply; only the location changes.
+
+The decision of where a scheduled job may run is a governance decision before it is a technical one. The terms of the relevant data use agreement, the HIPAA considerations, and the secure-environment requirements in @sec-governance determine what is permissible, and provisioning a scheduled job on a shared server is an IT request that should start early (@sec-pm-it). Work that out before building the pipeline, not after, because a pipeline built for the wrong environment cannot simply be moved into the right one.
+
+## Further Reading {#sec-automation-reading}
+
+- The [`targets` user manual](https://books.ropensci.org/targets/) [@landau2021targets] is the definitive guide to building reproducible pipelines in R, covering branching, cloud storage, and high-performance computing well beyond the minimal example here.
+- The [`r-lib/actions`](https://github.com/r-lib/actions) and [`quarto-actions`](https://github.com/quarto-dev/quarto-actions) repositories document the GitHub Actions building blocks for R and Quarto, including ready-made example workflows.
+- *Building Reproducible Analytical Pipelines with R*, linked in @sec-resources, connects scheduling, pipelines, and reproducible environments into a single framework and goes substantially deeper on each.

@@ -36,6 +36,7 @@ book:
         - accessibility.qmd
         - ai.qmd
         - dashboards.qmd
+        - automation.qmd
         - packageloading.qmd
         - packagedevelopment.qmd
         - environments.qmd
@@ -44,6 +45,7 @@ book:
         - documentation.qmd
     - part: "Nontechnical"
       chapters:
+        - team.qmd
         - pm.qmd
         - governance.qmd
         - peerreview.qmd

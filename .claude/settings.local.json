@@ -22,7 +22,8 @@
       "WebFetch(domain:www.section508.gov)",
       "WebFetch(domain:www.cdc.gov)",
       "WebFetch(domain:blog.stephenturner.us)",
-      "Bash(find /Users/sdt5z/repos/dstt -name *.png -not -path */_book/*)"
+      "Bash(find /Users/sdt5z/repos/dstt -name *.png -not -path */_book/*)",
+      "Bash(echo \"exit: $? \\(1 = none found, good\\)\")"
     ]
   }
 }
