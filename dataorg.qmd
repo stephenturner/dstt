@@ -257,7 +257,7 @@ See [stephenturner/demo-project-path-config](https://github.com/stephenturner/de
 | `.parquet` | Large tabular data, columnar access | Simple small datasets |
 | `.xlsx` | Data entry, sharing with non-coders | Final analysis-ready data |
 
-Plain text formats (CSV, TSV, JSON) are preferred for long-term storage and reproducibility. Proprietary binary formats (`.xlsx`, `.sav`, `.sas7bdat`) may become unreadable as software evolves.
+Plain text formats (CSV, TSV, JSON) are preferred for long-term storage and reproducibility. Proprietary binary formats (`.xlsx`, `.sav`, `.sas7bdat`) may become unreadable as software evolves. If you inherit data in these formats, @sec-legacy-data covers reading them into R and converting them to open formats.
 
 ## Additional Best Practices
 

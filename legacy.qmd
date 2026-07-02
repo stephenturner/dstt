@@ -1,0 +1,181 @@
+# Migrating from Legacy Workflows {#sec-legacy}
+
+Most public health data work predates the tools in this book. State health departments run surveillance on SAS programs written over twenty years by people who have since retired, weekly reports come out of Excel workbooks where the analysis lives in formula chains and pivot tables, and case data sits in Access databases on a shared drive. These workflows produce real, trusted outputs every week. What makes them legacy is that they are hard to maintain and getting harder to staff.
+
+The syntax is the easy part of a migration; any competent R programmer, or these days an AI assistant, can translate a `PROC MEANS` into a `summarize()`. What takes judgment is deciding what to migrate and in what order, proving that the new pipeline produces the same numbers as the old one, and retiring the old system without losing the institutional knowledge embedded in it. This chapter is about that process.
+
+## Why Migrate, and Why Not {#sec-legacy-why}
+
+The case for migrating a workflow is usually some mix of money, staffing, and capability. SAS licensing is a recurring line item that R eliminates; for a small team, the savings alone can fund a training program. The hiring pool tilts the same direction: new analysts arrive knowing R or Python, the people who know SAS are retiring, and every year a workflow stays in SAS it gets harder to find someone who can maintain it. And the legacy stack cannot easily produce what earlier chapters built: parameterized Quarto reports (@sec-reporting), dashboards (@sec-dashboards), scheduled pipelines on GitHub Actions (@sec-automation), or a version-controlled analysis that can be reviewed and handed off (@sec-git).
+
+There are equally good reasons to leave a particular workflow alone, at least for now. A report that is being retired should not be rewritten; migration is a chance to prune the product list, not to reproduce all of it faithfully. A rewrite the team cannot maintain is worse than the status quo: if the only SAS analyst retires in six months and nobody else knows R yet, the first investment is training (@sec-team-upskilling). And a rewrite in the middle of an outbreak response adds risk exactly when the team can least absorb it.
+
+All of this reduces to one underlying risk: migration is rewriting software, and rewriting working software is dangerous. The legacy program's numbers are trusted; the rewrite's are not until you prove they match. That proof is the core of the work.
+
+## Inventory and Triage {#sec-legacy-triage}
+
+Start by listing every recurring product the legacy stack produces: each report, each dataset handed to another program, each dashboard feed. For each one, record what runs it, how often, who consumes the output, and who understands the code. This inventory is usually revealing on its own. Most teams find a handful of products that matter enormously, a long tail that runs out of habit, and at least one program nobody can explain.
+
+Then triage. Good first candidates for migration score high on all of these:
+
+- It runs on a schedule (weekly, monthly), so the payoff recurs and there are regular opportunities to compare old against new.
+- Someone who understands the current logic is still available to answer questions.
+- The output has an engaged consumer who will notice, and care, if numbers change.
+- It is painful today: manual steps, fragile hand-offs, a single person who can run it.
+
+One-off historical analyses generally should not be migrated at all. Archive the code and its outputs, document what they were for, and leave them alone.
+
+Migrate one product end to end before starting a second. A complete pilot, from raw data to delivered report, running in parallel with the legacy version, teaches the team more than partially migrating ten programs, and it produces a visible win that builds support for the rest of the effort.
+
+## Reading Legacy Data Formats {#sec-legacy-data}
+
+Whatever else migrates, the data has to. The [`haven`](https://haven.tidyverse.org/) package reads SAS (`.sas7bdat`, `.xpt`), SPSS (`.sav`), and Stata (`.dta`) files directly:
+
+```{r}
+#| label: haven-read
+#| message: false
+library(haven)
+
+path <- system.file("examples", "iris.sas7bdat", package = "haven")
+read_sas(path)
+```
+
+A few things about what comes across. SAS stores value labels (formats) separately from the data, in a catalog file typically named `formats.sas7bcat`; pass it to `read_sas()` and the labels arrive as labelled columns, which `as_factor()` converts to R factors:
+
+```{r}
+#| label: haven-catalog
+#| eval: false
+cases <- read_sas(
+  "data/raw/cases.sas7bdat",
+  catalog_file = "data/raw/formats.sas7bcat"
+)
+cases <- as_factor(cases)
+```
+
+Missing values need more care. SAS distinguishes up to 27 kinds of missing (`.`, `.A` through `.Z`), often used to encode *why* a value is missing: refused, unknown, not applicable. R has one `NA`. `haven` preserves the distinctions as tagged NAs (see `?haven::tagged_na`), but most downstream R code will treat them all as plain `NA`, so if the distinctions carry meaning, convert them to an explicit column before they are lost.
+
+Dates come through correctly, because `haven` knows that SAS counts days from 1960-01-01 while R counts from 1970-01-01. Hand-rolled imports do not get that conversion: a CSV exported from SAS with raw date numbers will be off by exactly 3,653 days, an error distinctive enough to recognize on sight.
+
+For Excel sources, `readxl` reads `.xlsx` and `.xls` files, and the spreadsheet-hygiene guidance in @sec-dataorg applies doubly to inherited workbooks. For Access, the `odbc` package can connect directly on Windows, where the Access ODBC driver is usually already installed:
+
+```{r}
+#| label: access-connect
+#| eval: false
+library(DBI)
+
+con <- dbConnect(
+  odbc::odbc(),
+  .connection_string = paste0(
+    "Driver={Microsoft Access Driver (*.mdb, *.accdb)};",
+    "Dbq=S:/surveillance/cases.accdb;"
+  )
+)
+dbListTables(con)
+```
+
+Whichever format the data arrives in, convert it once and save an analysis-ready copy in an open format (CSV or Parquet, per @sec-dataorg), keeping the original file as the untouched raw archive. Proprietary formats depend on software that will not always be there to read them.
+
+## Translating SAS Code {#sec-legacy-translate}
+
+SAS and R differ more in mindset than in capability. A SAS program is a sequence of DATA steps (implicit row-by-row loops that read one dataset and write another) punctuated by PROC calls. Idiomatic R is vectorized: operations apply to whole columns at once, chained with pipes. A literal line-by-line translation produces R code that works but reads like SAS; the better approach is to translate what each step accomplishes.
+
+Most of the surface area maps cleanly:
+
+| SAS | R equivalent |
+|---|---|
+| DATA step assignments, `IF`/`THEN` | `mutate()` with `if_else()` or `case_when()` |
+| `PROC SORT` (and `NODUPKEY`) | `arrange()`, `distinct()` |
+| `PROC MEANS`, `PROC SUMMARY` | `group_by()` + `summarize()` |
+| `PROC FREQ` | `count()`, `janitor::tabyl()` |
+| `PROC TRANSPOSE` | `tidyr::pivot_longer()`, `pivot_wider()` |
+| `MERGE` in a DATA step | `left_join()` and friends |
+| `PROC SQL` | dplyr, or SQL directly via DBI (@sec-databases) |
+| `PROC FORMAT` | factor levels and labels |
+| `PROC EXPORT` | `readr::write_csv()` |
+| `%MACRO` | a function |
+
+The last row deserves emphasis. SAS macros are text substitution; R functions are real functions with arguments and return values, and they are easier to test and document. A macro library that grew over years often translates into a small set of R functions, which is the point at which a team package (@sec-package-development) starts to make sense.
+
+### AI-assisted translation
+
+Legacy translation is a task AI coding assistants (@sec-ai) handle well. Claude Code (@sec-ai-claude-code) can take a several-hundred-line SAS program and produce a credible R draft in minutes, and it is equally useful in the other direction: asking it to *explain* an inherited program, step by step, before you translate anything. When the original author is gone, an AI walkthrough of what a gnarly DATA step actually does is often the fastest available substitute.
+
+Treat the output as a draft, though. Translation is now cheap; verification is the actual work, and the failure mode of AI translation is code that looks right and runs clean but handles an edge case (usually missing values) differently than the original. Nothing that comes out of an assistant should reach production without passing the parity checks in the next section. And as always, paste code into these tools, not data: the privacy considerations in @sec-ai-models apply to the data, and the code itself is rarely sensitive.
+
+## Verifying Parity {#sec-legacy-parity}
+
+The legacy program's output is your test oracle. Freeze an input dataset, run it through both pipelines, and compare the outputs with code rather than by eye. The [`waldo`](https://waldo.r-lib.org/) package gives readable, precise diffs:
+
+```{r}
+#| label: waldo-compare
+sas_out <- data.frame(
+  county = c("Fairfax", "Arlington", "Loudoun"),
+  cases = c(23L, 41L, 18L),
+  rate = c(2.0, 17.2, 4.3)
+)
+
+r_out <- data.frame(
+  county = c("Fairfax", "Arlington", "Loudoun"),
+  cases = c(23L, 41L, 18L),
+  rate = c(2.0, 17.2, 4.2)
+)
+
+waldo::compare(sas_out, r_out)
+```
+
+The diff points straight at the discrepancy. Counts should match exactly. Derived numbers like rates should match within a small tolerance (`waldo::compare()` takes a `tolerance` argument), because the two engines can legitimately differ in the last decimal places of floating-point arithmetic.
+
+When outputs differ, the cause is usually a place where SAS and R behave differently by design rather than a translation typo. The differences that bite most often:
+
+| Behavior | SAS | R |
+|---|---|---|
+| Rounding halves | Away from zero: `ROUND(2.5)` is 3 | Half to even: `round(2.5)` is 2 |
+| Missing values | `.` plus special missings `.A`–`.Z` | A single `NA` |
+| Missing values in sorts | Sort first (missing is smallest) | `arrange()` puts `NA` last |
+| Blank strings | `""` is missing | `""` is a value, distinct from `NA` |
+| Date origin | 1960-01-01 | 1970-01-01 |
+
+The rounding difference is worth seeing once, because it looks so much like a bug:
+
+```{r}
+#| label: rounding
+round(c(0.5, 1.5, 2.5))
+```
+
+R follows the IEEE standard and rounds halves to the nearest even digit, so 0.5 rounds to 0 and 2.5 rounds to 2, where SAS would give 1 and 3. If the legacy program rounds before a suppression threshold or publishes rounded rates, the two pipelines will disagree by one in the last digit on exactly the values ending in five, and only those.
+
+Every discrepancy gets one of two resolutions: fix the R code to match, or accept the difference and write down why. Keep the comparison script and a short parity report in the repository alongside the migrated code, listing each accepted difference and its justification. That document is what lets you tell a program manager, with evidence, that the new numbers are trustworthy, and it is exactly the kind of artifact analytical peer review (@sec-peerreview) should examine.
+
+## Running in Parallel and Cutting Over {#sec-legacy-cutover}
+
+Parity on a frozen test dataset is necessary but not sufficient, because live data keeps finding cases the test data did not contain. So run both pipelines in parallel on real data for a fixed number of cycles: four to eight weeks for a weekly report is typical. Each cycle, produce both outputs, run the comparison script, and investigate anything new. These investigations are where the legacy program's undocumented behavior surfaces, the special-casing of one bad data year, the county recode nobody mentioned, and each one either becomes deliberate logic in the new pipeline or a documented, accepted difference.
+
+Agree on the cutover criteria before the parallel period starts (for example: N consecutive cycles with no unexplained discrepancies), so the decision is mechanical rather than a matter of nerve. Then, at cutover:
+
+- Move the legacy code into the repository under a `legacy/` directory, read-only, with a README mapping each old program to its replacement (@sec-documentation-readme).
+- Run the legacy pipeline one final time and archive its outputs as the last reference point.
+- Actually decommission it. Remove it from the schedule, and cancel the license when the last workflow that needs it is gone.
+
+The decommissioning step is the one teams skip, and skipping it is costly. Two live pipelines means two sources of truth, and they will eventually diverge, at which point someone has to figure out which one the program has been using. The license line item disappearing from next year's budget is both the payoff and the forcing function.
+
+## Excel and Access Workflows {#sec-legacy-excel}
+
+Spreadsheet migrations differ from SAS migrations because there is no program to translate. The analysis is smeared across formula chains, pivot caches, and cells someone updates by hand, none of it visible to version control or review, and all of it fragile: one inserted row can silently break a range reference three sheets away.
+
+The pattern that works is to split the workbook's two jobs. If data entry happens in Excel, let it keep happening there, in a workbook restructured to the rectangular, one-thing-per-cell standard of @sec-dataorg. Everything after entry moves to a script: the workbook becomes an *input* that `readxl` reads, and R produces the outputs. The translations are mostly one-to-one. A `VLOOKUP` chain is a `left_join()`, a pivot table is `group_by()` plus `summarize()` (with `pivot_wider()` for the layout), and logic encoded in conditional formatting becomes an explicit column. Add validation at the seam (@sec-validation), because scripted analysis surfaces the entry errors that formulas were silently absorbing, which is uncomfortable for a few weeks and then permanently better.
+
+Access databases play two roles that migrate separately. As storage, the tables can be read directly via `odbc` as shown above, or exported once if the database is being retired. As logic, Access queries are just SQL, and they port to dplyr or to DuckDB (@sec-databases-duckdb) with little friction. If several people still need to enter and look up cases interactively, Access can keep that front-end job for now, with R connecting read-only for analysis; the longer-term home for shared, structured case data is an IT-managed database, which is a conversation to start with the people in @sec-governance-access.
+
+## The People Side {#sec-legacy-people}
+
+A legacy program is institutional memory in executable form. Somewhere in that SAS code is the exclusion rule from a 2015 data quality incident and the county recode that exists because of a boundary change, none of it written down anywhere else. The person who wrote the program holds the other half of that memory.
+
+So migrate *with* the legacy author, not around them. Pair them with the team's strongest R programmer: the veteran explains what each step is for and reviews parity discrepancies, while the R partner writes idiomatic new code, and both learn. This is upskilling (@sec-team-upskilling) with a concrete deliverable attached, and it reframes the migration for the author as career development rather than obsolescence, which matters for retention (@sec-team-retention). When the author is already gone, the code is the only informant left, which makes the careful reading, and the AI-assisted explanation described earlier, that much more important.
+
+Finally, pick the timing like the project decision it is (@sec-pm). A migration has a long middle where both systems run and the team carries double work. Schedule that middle for the quiet season rather than the weeks when respiratory reports are due daily.
+
+## Further Reading {#sec-legacy-reading}
+
+- The [haven documentation](https://haven.tidyverse.org/) covers the details of reading SAS, SPSS, and Stata files, including labelled values and tagged missings.
+- [*R for Excel Users*](https://rstudio-conf-2020.github.io/r-for-excel/) (Lowndes and Horst) is a free, workshop-format introduction to R aimed specifically at people whose current workflow is Excel.
+- [*The Epidemiologist R Handbook*](https://epirhandbook.com/) includes a "Transition to R" chapter with practical advice, and R equivalents for common tasks, aimed at epidemiologists coming from SAS, Stata, and SPSS.

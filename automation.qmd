@@ -6,7 +6,7 @@ The reporting chapter (@sec-reporting) showed how to build a report whose number
 
 ## What to Automate (and What Not To) {#sec-automation-what}
 
-Automation pays off when the same work happens the same way, repeatedly. A weekly surveillance render, a nightly data refresh, a validation check that should run every time a file lands: all of these are worth the up-front effort to set up, because the effort is amortized over dozens or hundreds of runs.
+Automation pays off when the same work happens the same way, repeatedly. A weekly surveillance render, a nightly data refresh from a public API (@sec-apis), a validation check that should run every time a file lands: all of these are worth the up-front effort to set up, because the effort is amortized over dozens or hundreds of runs.
 
 It pays off poorly, or not at all, for one-off analyses, for work that requires a human decision partway through, and for exploratory work where the whole point is that you do not yet know what you are going to do. A useful test: would you run this code, in this same way, more than a handful of times? If yes, automate it. If no, the time spent automating is time not spent on the analysis.
 
@@ -78,7 +78,7 @@ The steps read top to bottom: check out the repository, install Quarto and R, re
 The `cron` schedule in a GitHub Actions workflow runs on UTC, not your local time zone, and does not adjust for daylight saving. A "6am Monday" job will land at a different local hour depending on the season. For a surveillance report this rarely matters; when it does, schedule against UTC deliberately.
 :::
 
-When a job needs a credential (an API token, a database password), that secret never goes in the workflow file or anywhere else in the repository. GitHub stores it under the repository's **Settings → Secrets and variables**, and the workflow reads it as an environment variable at run time (the `secrets.GITHUB_TOKEN` reference above is the built-in example). This is the same discipline as the `.Renviron` pattern in @sec-databases: credentials live outside version control, and code reads them from the environment.
+When a job needs a credential (an API token as in @sec-apis-keys, a database password), that secret never goes in the workflow file or anywhere else in the repository. GitHub stores it under the repository's **Settings → Secrets and variables**, and the workflow reads it as an environment variable at run time (the `secrets.GITHUB_TOKEN` reference above is the built-in example). This is the same discipline as the `.Renviron` pattern in @sec-databases: credentials live outside version control, and code reads them from the environment.
 
 ## Multi-Step Pipelines with targets {#sec-automation-targets}
 

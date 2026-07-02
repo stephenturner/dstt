@@ -41,6 +41,8 @@ book:
         - packagedevelopment.qmd
         - environments.qmd
         - databases.qmd
+        - apis.qmd
+        - legacy.qmd
         - codestyle.qmd
         - documentation.qmd
     - part: "Nontechnical"

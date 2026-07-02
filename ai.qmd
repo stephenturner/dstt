@@ -55,7 +55,7 @@ Then launch it from Positron's integrated terminal (**Terminal → New Terminal*
 claude
 ```
 
-Claude Code is particularly effective for multi-file refactors, complex debugging sessions, and tasks that are tedious to coordinate manually.
+Claude Code is particularly effective for multi-file refactors, complex debugging sessions, and tasks that are tedious to coordinate manually. It is also well suited to translating and explaining legacy SAS programs, a workflow covered in @sec-legacy-translate.
 
 ## Cost, Privacy, and Model Choice {#sec-ai-models}
 

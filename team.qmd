@@ -29,7 +29,7 @@ Whether to hire a full-time employee or bring in a contractor is a real tradeoff
 
 ## Growing Skills on the Team You Have {#sec-team-upskilling}
 
-Hiring is not the only way, and often not the best way, to build capacity. Most public health analysts arrive fluent in Excel, SAS, or SPSS rather than R, Git, and Quarto, and many of them are strong analysts who simply have not been given the chance to learn modern tooling. Upskilling the people you already have is frequently more practical than competing for scarce outside hires, and it builds on institutional knowledge that a new hire would have to acquire from scratch.
+Hiring is not the only way, and often not the best way, to build capacity. Most public health analysts arrive fluent in Excel, SAS, or SPSS rather than R, Git, and Quarto, and many of them are strong analysts who simply have not been given the chance to learn modern tooling. (Migrating the workflows themselves, as opposed to the people who run them, is the subject of @sec-legacy.) Upskilling the people you already have is frequently more practical than competing for scarce outside hires, and it builds on institutional knowledge that a new hire would have to acquire from scratch.
 
 The binding constraint on upskilling is almost never motivation or materials. Both are abundant: the resources in @sec-resources are free and excellent, and people generally want to grow. The constraint is protected time. Learning to work reproducibly while also delivering the weekly reports is nearly impossible if the weekly reports consume every hour. Capacity-building that is not given real, defended time on the calendar does not happen, no matter how good the intentions.
 
