@@ -103,7 +103,7 @@ req <- request("https://data.cdc.gov/resource/x9gk-5huc.json") |>
 req
 ```
 
-Printing the request shows the method and the assembled URL. Nothing has been sent yet; `req_url_query()` also took care of encoding the spaces and quotes in the `$where` clause. The `$where` and `$limit` parameters are part of Socrata's query language ([SoQL](https://dev.socrata.com/docs/queries/)), which supports SQL-like filtering, selecting, and ordering directly in the URL, so the server does the subsetting and you download only what you need. The same idea as filtering before `collect()` in @sec-databases.
+Printing the request shows the method and the assembled URL. Nothing has been sent yet; `req_url_query()` also took care of encoding the spaces and quotes in the `$where` clause. The `$where` and `$limit` parameters are part of Socrata's query language ([SoQL](https://dev.socrata.com/docs/queries/)), which supports SQL-like filtering, selecting, and ordering directly in the URL, so the server does the subsetting and you download only what you need, the same idea as filtering before `collect()` in @sec-databases.
 
 Performing the request and parsing the response:
 
