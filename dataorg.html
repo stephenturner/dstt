@@ -240,14 +240,26 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./apis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./legacy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Migrating from Legacy Workflows</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./codestyle.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Code Style</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Code Style</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./documentation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Documentation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Documentation</span></span></a>
   </div>
 </li>
       </ul>
@@ -264,31 +276,31 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./team.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Building and Sustaining a Data Science Team</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Building and Sustaining a Data Science Team</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./governance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./peerreview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./comms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
   </div>
 </li>
       </ul>
@@ -568,7 +580,7 @@ Tip
 </section>
 <section id="sec-dataorg-sharedrive" class="level3" data-number="2.3.2">
 <h3 data-number="2.3.2" class="anchored" data-anchor-id="sec-dataorg-sharedrive"><span class="header-section-number">2.3.2</span> Version controlling code with data on a shared drive</h3>
-<p>Finally, it’s not uncommon in public health settings to have a setup where you’re working with collaborators version controlling code as described in <a href="git.html" class="quarto-xref"><span>Chapter 1</span></a>, but the data lives on a secure shared drive that cannot be moved or copied into the repository. This creates a tension between reproducibility and security that can be resolved with careful project organization and path management. The governance and access implications of working with data on secure shared drives, including data use agreements and secure data environments, are covered in <a href="governance.html" class="quarto-xref"><span>Chapter 17</span></a>.</p>
+<p>Finally, it’s not uncommon in public health settings to have a setup where you’re working with collaborators version controlling code as described in <a href="git.html" class="quarto-xref"><span>Chapter 1</span></a>, but the data lives on a secure shared drive that cannot be moved or copied into the repository. This creates a tension between reproducibility and security that can be resolved with careful project organization and path management. The governance and access implications of working with data on secure shared drives, including data use agreements and secure data environments, are covered in <a href="governance.html" class="quarto-xref"><span>Chapter 19</span></a>.</p>
 <p>Imagine that you have a distributed research team working with sensitive data that:</p>
 <ul>
 <li>Lives on a secure shared drive that cannot be moved</li>
@@ -675,7 +687,7 @@ Tip
 </tr>
 </tbody>
 </table>
-<p>Plain text formats (CSV, TSV, JSON) are preferred for long-term storage and reproducibility. Proprietary binary formats (<code>.xlsx</code>, <code>.sav</code>, <code>.sas7bdat</code>) may become unreadable as software evolves.</p>
+<p>Plain text formats (CSV, TSV, JSON) are preferred for long-term storage and reproducibility. Proprietary binary formats (<code>.xlsx</code>, <code>.sav</code>, <code>.sas7bdat</code>) may become unreadable as software evolves. If you inherit data in these formats, <a href="legacy.html#sec-legacy-data" class="quarto-xref"><span>Section 14.3</span></a> covers reading them into R and converting them to open formats.</p>
 </section>
 <section id="additional-best-practices" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="additional-best-practices"><span class="header-section-number">2.5</span> Additional Best Practices</h2>

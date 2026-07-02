@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./codestyle.html" rel="next">
+<link href="./apis.html" rel="next">
 <link href="./environments.html" rel="prev">
 <link href="./hex.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
@@ -242,14 +242,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./apis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./legacy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Migrating from Legacy Workflows</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./codestyle.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Code Style</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Code Style</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./documentation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Documentation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Documentation</span></span></a>
   </div>
 </li>
       </ul>
@@ -266,31 +278,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./team.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Building and Sustaining a Data Science Team</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Building and Sustaining a Data Science Team</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./governance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./peerreview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./comms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
   </div>
 </li>
       </ul>
@@ -378,7 +390,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 </header><p>Spreadsheets and CSV files work well for small datasets, but many public health agencies store their surveillance data in relational databases: SQL Server, Oracle, PostgreSQL, or similar systems. These databases are managed by IT, shared across teams, and updated continuously as new data arrives. The data never leaves the server; analysts connect, run a query, and pull back only the rows and columns they need.</p>
-<p>This chapter covers how to work with databases from R. The examples use <a href="https://duckdb.org/">DuckDB</a>, an in-process analytical database that requires no server setup and installs as an R package. DuckDB is practical for local analysis of large files, but the same patterns (DBI, dbplyr) apply to institutional databases like SQL Server and PostgreSQL — only the connection call changes. The chapter ends with connection patterns for those remote systems.</p>
+<p>This chapter covers how to work with databases from R. The examples use <a href="https://duckdb.org/">DuckDB</a>, an in-process analytical database that requires no server setup and installs as an R package. DuckDB is practical for local analysis of large files, but the same patterns (DBI, dbplyr) apply to institutional databases like SQL Server and PostgreSQL — only the connection call changes. The chapter ends with connection patterns for those remote systems. Data that lives behind a web API rather than in a database you can connect to (CDC’s open data portal, the Census Bureau) is covered in <a href="apis.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -389,7 +401,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Getting access to an institutional database involves IT, data stewards, and sometimes a data use agreement. That process is covered in <a href="governance.html" class="quarto-xref"><span>Chapter 17</span></a>. This chapter covers what to do once access is in hand.</p>
+<p>Getting access to an institutional database involves IT, data stewards, and sometimes a data use agreement. That process is covered in <a href="governance.html" class="quarto-xref"><span>Chapter 19</span></a>. This chapter covers what to do once access is in hand.</p>
 </div>
 </div>
 <section id="sec-databases-dbi" class="level2" data-number="12.1"><h2 data-number="12.1" class="anchored" data-anchor-id="sec-databases-dbi">
@@ -1204,8 +1216,8 @@ Warning
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./codestyle.html" class="pagination-link" aria-label="Code Style">
-        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Code Style</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./apis.html" class="pagination-link" aria-label="APIs and Public Data Sources">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

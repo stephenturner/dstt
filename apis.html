@@ -5,8 +5,7 @@
 <meta name="generator" content="quarto-1.9.36">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Stephen D. Turner">
-<meta name="dcterms.date" content="2026-07-02">
-<title>Data Science Team Training</title>
+<title>13&nbsp; APIs and Public Data Sources – Data Science Team Training</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -57,7 +56,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -66,7 +84,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./git.html" rel="next">
+<link href="./legacy.html" rel="next">
+<link href="./databases.html" rel="prev">
 <link href="./hex.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -112,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./apis.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -155,7 +174,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -242,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./apis.html" class="sidebar-item-text sidebar-link">
+  <a href="./apis.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></span></a>
   </div>
 </li>
@@ -338,57 +357,248 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+<li><a href="#sec-apis-anatomy" id="toc-sec-apis-anatomy" class="nav-link active" data-scroll-target="#sec-apis-anatomy"><span class="header-section-number">13.1</span> What an API Request Looks Like</a></li>
+  <li><a href="#sec-apis-sources" id="toc-sec-apis-sources" class="nav-link" data-scroll-target="#sec-apis-sources"><span class="header-section-number">13.2</span> Where Public Health Data Lives</a></li>
+  <li><a href="#sec-apis-packages" id="toc-sec-apis-packages" class="nav-link" data-scroll-target="#sec-apis-packages"><span class="header-section-number">13.3</span> Use a Package When One Exists</a></li>
+  <li>
+<a href="#sec-apis-httr2" id="toc-sec-apis-httr2" class="nav-link" data-scroll-target="#sec-apis-httr2"><span class="header-section-number">13.4</span> Building Requests with httr2</a>
+  <ul class="collapse">
+<li><a href="#pagination" id="toc-pagination" class="nav-link" data-scroll-target="#pagination"><span class="header-section-number">13.4.1</span> Pagination</a></li>
+  <li><a href="#retries-and-politeness" id="toc-retries-and-politeness" class="nav-link" data-scroll-target="#retries-and-politeness"><span class="header-section-number">13.4.2</span> Retries and politeness</a></li>
+  </ul>
+</li>
+  <li><a href="#sec-apis-keys" id="toc-sec-apis-keys" class="nav-link" data-scroll-target="#sec-apis-keys"><span class="header-section-number">13.5</span> API Keys and Tokens</a></li>
+  <li><a href="#sec-apis-pull" id="toc-sec-apis-pull" class="nav-link" data-scroll-target="#sec-apis-pull"><span class="header-section-number">13.6</span> Separate the Pull from the Analysis</a></li>
+  <li><a href="#sec-apis-validate" id="toc-sec-apis-validate" class="nav-link" data-scroll-target="#sec-apis-validate"><span class="header-section-number">13.7</span> Validate What Comes Back</a></li>
+  <li><a href="#sec-apis-practical" id="toc-sec-apis-practical" class="nav-link" data-scroll-target="#sec-apis-practical"><span class="header-section-number">13.8</span> Practical Guidance</a></li>
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">Data Science Team Training</h1>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./apis.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title"><span id="sec-apis" class="quarto-section-identifier"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Stephen D. Turner, Ph.D. </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">July 2, 2026</p>
-    </div>
-  </div>
   
     
   </div>
   
 
 
-</header>
-<section id="preface" class="level1 unnumbered"><h1 class="unnumbered">Preface</h1><p><img src="cover.jpg" title="Data Science Team Training" class="quarto-cover-image nolightbox img-fluid"></p>
-<p>Public health has always been a data-driven enterprise, but the tools available to practitioners have changed dramatically. Spreadsheets that once required weeks of manual work can now be analyzed in seconds. Reports that used to mean emailing static PDFs can now execute code, update automatically when data changes, and be produced in multiple formats from a single source file. And workflows that depended on one person’s institutional knowledge can be documented, versioned, and shared across teams. The goal of this book is to help public health professionals take advantage of these tools.</p>
-<p>This book grew out of the <a href="https://www.cste.org/">CSTE</a> <a href="https://www.cste.org/page/dstt-webpage">Data Science Team Training (DSTT)</a> program, I serve as a project coach working with public health agencies across the country to build data science capacity in the public health workforce. The material here includes code, resources, workshop notes, and practical guidance accumulated and refined over several years of coaching teams at local and state health departments.</p>
-<p>The chapters cover the foundational practices that make data science work sustainable and collaborative in a public health setting. Technical chapters address organizing and validating data, connecting to and querying relational databases, pulling data from public APIs and open data portals, migrating legacy SAS and Excel workflows, writing clean and well-documented code, managing reproducible environments and package dependencies, building R packages to share functions across projects, producing accessible reproducible reports and dashboards, automating and scheduling recurring work, and working effectively with AI coding assistants. Nontechnical chapters cover building and sustaining a data science team, project management, peer review of analytical work, navigating the data governance and IT relationships that shape what public health teams can actually do with their data, and communicating findings clearly to audiences who did not run the analysis. These are the practical skills that separate ad hoc analyses from reproducible, maintainable work.</p>
-<p>While this material was created with DSTT participants in mind, it is intended to be broadly useful to anyone working at the intersection of data science and public health, whether you are a current or former DSTT participant, a public health practitioner looking to strengthen your analytical skills, or someone new to data science in a public health context.</p>
-<p>No single book can cover everything, and this one does not try to. <a href="resources.html" class="quarto-xref"><span>Appendix A — Additional Resources</span></a> points to additional reading and training for topics that go deeper than what is covered here.</p>
-<p>Cite this book:</p>
-<blockquote class="blockquote">
-<p>Turner, Stephen D. (2026). <em>Data Science Team Training</em>. Retrieved from <a href="https://dstt.stephenturner.us/" class="uri">https://dstt.stephenturner.us/</a>.</p>
-</blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bibtex code-with-copy"><code class="sourceCode bibtex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">@book</span>{</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="ot">title</span> = {<span class="ot">Data</span> {{<span class="ot">Science</span> <span class="ot">Team</span> <span class="ot">Training</span>}<span class="co">}},</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">  author = {Turner, Stephen D.},</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  date = {2026},</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">  url = {https://dstt.stephenturner.us/}</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.</p>
+</header><p>Not every analysis starts with data your agency collects. The denominators for your rates come from the Census Bureau, the national counts you compare against come from CDC, and both live on someone else’s server, published for exactly this kind of use.</p>
+<p>The usual way to get that data is to browse to the portal, click through some filters, hit Export, and download a CSV, which works exactly once. Six months later, nobody remembers which filters were applied or whether the provider has revised the numbers since, and the download is the one step of the analysis that cannot be re-run.</p>
+<p>The fix is to script the download, and web APIs make that possible. This chapter covers how to pull data from public APIs in R: using a dedicated package when one exists, building requests with <code>httr2</code> when one does not, handling API keys, and structuring the pull so the rest of the analysis stays reproducible.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This chapter is about <em>public</em> data sources, where the data is intended for download and the main concerns are reproducibility and politeness. Getting access to your agency’s internal databases is covered in <a href="databases.html" class="quarto-xref"><span>Chapter 12</span></a>, and the governance process around restricted data in <a href="governance.html" class="quarto-xref"><span>Chapter 19</span></a>.</p>
+</div>
+</div>
+<section id="sec-apis-anatomy" class="level2" data-number="13.1"><h2 data-number="13.1" class="anchored" data-anchor-id="sec-apis-anatomy">
+<span class="header-section-number">13.1</span> What an API Request Looks Like</h2>
+<p>An API (application programming interface), for our purposes, is a URL that returns data instead of a web page. Here is a real one. CDC publishes NNDSS weekly notifiable disease counts on its open data portal, and this URL asks for the 2024 pertussis records:</p>
+<pre><code>https://data.cdc.gov/resource/x9gk-5huc.json?label=Pertussis&amp;year=2024</code></pre>
+<p>The pieces: <code>data.cdc.gov</code> is the portal, <code>x9gk-5huc</code> identifies the dataset, <code>.json</code> is the response format, and everything after the <code>?</code> is a set of query parameters that filter the result. Paste it into a browser and you get back JSON, a plain-text format for structured data that looks like this:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jeroen.r-universe.dev/jsonlite">jsonlite</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">flu_json</span> <span class="op">&lt;-</span> <span class="st">'[</span></span>
+<span><span class="st">  {"county": "Fairfax",   "week": "2024-01-06", "cases": "23"},</span></span>
+<span><span class="st">  {"county": "Arlington", "week": "2024-01-06", "cases": "41"}</span></span>
+<span><span class="st">]'</span></span>
+<span></span>
+<span><span class="fu"><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html">fromJSON</a></span><span class="op">(</span><span class="va">flu_json</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     county       week cases
+1   Fairfax 2024-01-06    23
+2 Arlington 2024-01-06    41</code></pre>
+</div>
+</div>
+<p>The <code>jsonlite</code> package converts JSON to a data frame, and for a flat, rectangular response like this the conversion is automatic. Notice that <code>cases</code> came back as a character column, quotes and all. Many APIs, including CDC’s, return every field as a string regardless of what it contains. More on that in <a href="#sec-apis-validate" class="quarto-xref"><span>Section 13.7</span></a>.</p>
+</section><section id="sec-apis-sources" class="level2" data-number="13.2"><h2 data-number="13.2" class="anchored" data-anchor-id="sec-apis-sources">
+<span class="header-section-number">13.2</span> Where Public Health Data Lives</h2>
+<p>A few sources cover most of what public health teams pull from outside their agency:</p>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Source</th>
+<th>What’s there</th>
+<th>How to access it</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://data.cdc.gov/">data.cdc.gov</a></td>
+<td>CDC’s open data portal: NNDSS, provisional deaths, vaccination coverage, BRFSS, and hundreds more</td>
+<td>Socrata API; <code>RSocrata</code> or <code>httr2</code>
+</td>
+</tr>
+<tr class="even">
+<td><a href="https://www.census.gov/data/developers.html">US Census Bureau</a></td>
+<td>ACS, decennial census, population estimates (your rate denominators)</td>
+<td>
+<code>tidycensus</code> (free API key required)</td>
+</tr>
+<tr class="odd">
+<td><a href="https://wonder.cdc.gov/">CDC WONDER</a></td>
+<td>Mortality, natality, and other query systems</td>
+<td>Web query tool; an API that accepts XML-formatted requests</td>
+</tr>
+<tr class="even">
+<td><a href="https://healthdata.gov/">HealthData.gov</a></td>
+<td>Cross-agency HHS datasets</td>
+<td>Varies by dataset</td>
+</tr>
+<tr class="odd">
+<td>State and local open data portals</td>
+<td>Many jurisdictions run their own Socrata or CKAN portals</td>
+<td>Same Socrata patterns as data.cdc.gov</td>
+</tr>
+</tbody>
+</table></section><section id="sec-apis-packages" class="level2" data-number="13.3"><h2 data-number="13.3" class="anchored" data-anchor-id="sec-apis-packages">
+<span class="header-section-number">13.3</span> Use a Package When One Exists</h2>
+<p>Before writing any request code, check whether someone has already wrapped the API in an R package. A good wrapper handles authentication, pagination, and type conversion for you, and it encodes knowledge about the API’s quirks that you would otherwise learn the hard way.</p>
+<p>The clearest example is <a href="https://walker-data.com/tidycensus/"><code>tidycensus</code></a>, which wraps the Census Bureau APIs. Getting county population denominators for Virginia is a few lines:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://walker-data.com/tidycensus/">tidycensus</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># One-time setup: request a free key at</span></span>
+<span><span class="co"># https://api.census.gov/data/key_signup.html</span></span>
+<span><span class="fu">census_api_key</span><span class="op">(</span><span class="st">"YOUR_KEY_HERE"</span>, install <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">va_pop</span> <span class="op">&lt;-</span> <span class="fu">get_acs</span><span class="op">(</span></span>
+<span>  geography <span class="op">=</span> <span class="st">"county"</span>,</span>
+<span>  state <span class="op">=</span> <span class="st">"VA"</span>,</span>
+<span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>population <span class="op">=</span> <span class="st">"B01003_001"</span><span class="op">)</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2023</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The result arrives as a tidy data frame with proper types, margins of error included. Kyle Walker’s book <em>Analyzing US Census Data</em> <span class="citation" data-cites="walker2023census">(<a href="references.html#ref-walker2023census" role="doc-biblioref">Walker 2023</a>)</span>, freely available online, covers the census APIs and <code>tidycensus</code> in depth.</p>
+<p>For Socrata portals like data.cdc.gov, the <a href="https://github.com/Chicago/RSocrata"><code>RSocrata</code></a> package (maintained by the City of Chicago) does the same job. Point it at the dataset URL, filters and all:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">RSocrata</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pertussis</span> <span class="op">&lt;-</span> <span class="fu">read.socrata</span><span class="op">(</span></span>
+<span>  <span class="st">"https://data.cdc.gov/resource/x9gk-5huc.json?label=Pertussis&amp;year=2024"</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><code>read.socrata()</code> pages through the full result automatically and converts date fields, two things you would otherwise handle yourself.</p>
+</section><section id="sec-apis-httr2" class="level2" data-number="13.4"><h2 data-number="13.4" class="anchored" data-anchor-id="sec-apis-httr2">
+<span class="header-section-number">13.4</span> Building Requests with httr2</h2>
+<p>When no package exists, the <a href="https://httr2.r-lib.org/"><code>httr2</code></a> package is the general-purpose tool for talking to APIs from R. You build a request object piece by piece, then perform it.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://httr2.r-lib.org">httr2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">req</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://httr2.r-lib.org/reference/request.html">request</a></span><span class="op">(</span><span class="st">"https://data.cdc.gov/resource/x9gk-5huc.json"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://httr2.r-lib.org/reference/req_url.html">req_url_query</a></span><span class="op">(</span></span>
+<span>    `$where` <span class="op">=</span> <span class="st">"label='Pertussis' AND year='2024'"</span>,</span>
+<span>    `$limit` <span class="op">=</span> <span class="fl">5000</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">req</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;httr2_request&gt;
+GET https://data.cdc.gov/resource/x9gk-5huc.json?%24where=label%3D%27Pertussis%27%20AND%20year%3D%272024%27&amp;%24limit=5000
+Body: empty</code></pre>
+</div>
+</div>
+<p>Printing the request shows the method and the assembled URL. Nothing has been sent yet; <code><a href="https://httr2.r-lib.org/reference/req_url.html">req_url_query()</a></code> also took care of encoding the spaces and quotes in the <code>$where</code> clause. The <code>$where</code> and <code>$limit</code> parameters are part of Socrata’s query language (<a href="https://dev.socrata.com/docs/queries/">SoQL</a>), which supports SQL-like filtering, selecting, and ordering directly in the URL, so the server does the subsetting and you download only what you need. The same idea as filtering before <code><a href="https://dplyr.tidyverse.org/reference/compute.html">collect()</a></code> in <a href="databases.html" class="quarto-xref"><span>Chapter 12</span></a>.</p>
+<p>Performing the request and parsing the response:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">resp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://httr2.r-lib.org/reference/req_perform.html">req_perform</a></span><span class="op">(</span><span class="va">req</span><span class="op">)</span></span>
+<span><span class="va">pertussis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://httr2.r-lib.org/reference/resp_body_raw.html">resp_body_json</a></span><span class="op">(</span><span class="va">resp</span>, simplifyVector <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><code>simplifyVector = TRUE</code> hands the JSON to <code>jsonlite</code> for the same automatic data-frame conversion shown earlier.</p>
+<section id="pagination" class="level3" data-number="13.4.1"><h3 data-number="13.4.1" class="anchored" data-anchor-id="pagination">
+<span class="header-section-number">13.4.1</span> Pagination</h3>
+<p>APIs cap how many rows one request returns, and the cap is easy to miss. Socrata’s default is 1,000 rows: ask for a dataset with 50,000 rows and you get the first 1,000, with no error and no warning. The <code>$limit</code> parameter raises the cap, and <code>$offset</code> requests subsequent pages. <code>httr2</code> can iterate the pages for you:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">resps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://httr2.r-lib.org/reference/req_perform_iterative.html">req_perform_iterative</a></span><span class="op">(</span></span>
+<span>  <span class="va">req</span>,</span>
+<span>  next_req <span class="op">=</span> <span class="fu"><a href="https://httr2.r-lib.org/reference/iterate_with_offset.html">iterate_with_offset</a></span><span class="op">(</span></span>
+<span>    <span class="st">"$offset"</span>,</span>
+<span>    start <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    offset <span class="op">=</span> <span class="fl">5000</span>,</span>
+<span>    resp_complete <span class="op">=</span> \<span class="op">(</span><span class="va">resp</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://httr2.r-lib.org/reference/resp_body_raw.html">resp_body_json</a></span><span class="op">(</span><span class="va">resp</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  max_reqs <span class="op">=</span> <span class="cn">Inf</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Whatever tool you use, check the row count of what came back against what you expected. A suspiciously round number like exactly 1,000 or exactly 50,000 usually means you hit a cap.</p>
+</section><section id="retries-and-politeness" class="level3" data-number="13.4.2"><h3 data-number="13.4.2" class="anchored" data-anchor-id="retries-and-politeness">
+<span class="header-section-number">13.4.2</span> Retries and politeness</h3>
+<p>Public APIs fail transiently and rate-limit heavy users. Two <code>httr2</code> functions handle both concerns declaratively:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">req</span> <span class="op">&lt;-</span> <span class="va">req</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://httr2.r-lib.org/reference/req_retry.html">req_retry</a></span><span class="op">(</span>max_tries <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://httr2.r-lib.org/reference/req_throttle.html">req_throttle</a></span><span class="op">(</span>capacity <span class="op">=</span> <span class="fl">30</span>, fill_time_s <span class="op">=</span> <span class="fl">60</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><code><a href="https://httr2.r-lib.org/reference/req_retry.html">req_retry()</a></code> retries automatically on transient failures with increasing wait times. <code><a href="https://httr2.r-lib.org/reference/req_throttle.html">req_throttle()</a></code> caps your request rate (here, 30 requests per minute) so a loop over many queries does not hammer the server. Both matter more in automated pipelines (<a href="automation.html" class="quarto-xref"><span>Chapter 8</span></a>), where nobody is watching the requests go out.</p>
+</section></section><section id="sec-apis-keys" class="level2" data-number="13.5"><h2 data-number="13.5" class="anchored" data-anchor-id="sec-apis-keys">
+<span class="header-section-number">13.5</span> API Keys and Tokens</h2>
+<p>Many APIs require a key, and others work better with one. The Census API requires a free key. Socrata portals work anonymously but throttle anonymous traffic aggressively; a free app token moves you to a much more generous rate limit. Keys are credentials, and the discipline is the same as for database passwords in <a href="databases.html#sec-databases-remote" class="quarto-xref"><span>Section 12.5</span></a>: keep them in <code>.Renviron</code>, read them with <code><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv()</a></code>, and never commit them.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># .Renviron (git-ignored):  SOCRATA_APP_TOKEN=xxxxxxxxxx</span></span>
+<span></span>
+<span><span class="va">req</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://httr2.r-lib.org/reference/request.html">request</a></span><span class="op">(</span><span class="st">"https://data.cdc.gov/resource/x9gk-5huc.json"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://httr2.r-lib.org/reference/req_headers.html">req_headers</a></span><span class="op">(</span>`X-App-Token` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv</a></span><span class="op">(</span><span class="st">"SOCRATA_APP_TOKEN"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://httr2.r-lib.org/reference/req_url.html">req_url_query</a></span><span class="op">(</span>`$where` <span class="op">=</span> <span class="st">"label='Pertussis' AND year='2024'"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In a GitHub Actions pipeline, the token goes in the repository’s secrets and reaches the job as an environment variable, exactly as described in <a href="automation.html#sec-automation-actions" class="quarto-xref"><span>Section 8.3</span></a>.</p>
+</section><section id="sec-apis-pull" class="level2" data-number="13.6"><h2 data-number="13.6" class="anchored" data-anchor-id="sec-apis-pull">
+<span class="header-section-number">13.6</span> Separate the Pull from the Analysis</h2>
+<p>Do not put an API call at the top of an analysis script. Put it in its own script, write the raw response to <code>data/raw/</code> with a dated filename (<a href="dataorg.html#sec-dataorg-project" class="quarto-xref"><span>Section 2.3</span></a>), and have the analysis read the file.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 01-pull-nndss.R</span></span>
+<span><span class="va">resp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://httr2.r-lib.org/reference/req_perform.html">req_perform</a></span><span class="op">(</span><span class="va">req</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html">writeLines</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://httr2.r-lib.org/reference/resp_body_raw.html">resp_body_string</a></span><span class="op">(</span><span class="va">resp</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"raw"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"-nndss-pertussis.json"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The main thing this buys is reproducibility. An API reflects the data as of right now, and many public health sources revise: CDC’s provisional death counts, for example, are updated for recent weeks as certificates arrive, so the same query run a month apart returns different numbers. The dated raw file records exactly what you pulled and when, and that file, not the live API, is the input your analysis can be reproduced from. Separating the pull also means the analysis renders offline and keeps working when the API is down or the dataset moves, and iterating on a report no longer re-downloads the same data on every render.</p>
+<p>In an automated pipeline, the pull becomes its own step, scheduled with the tools in <a href="automation.html" class="quarto-xref"><span>Chapter 8</span></a> or declared as a <code>targets</code> node (<a href="automation.html#sec-automation-targets" class="quarto-xref"><span>Section 8.4</span></a>) so downstream steps rerun only when a new file lands.</p>
+</section><section id="sec-apis-validate" class="level2" data-number="13.7"><h2 data-number="13.7" class="anchored" data-anchor-id="sec-apis-validate">
+<span class="header-section-number">13.7</span> Validate What Comes Back</h2>
+<p>Data from an API deserves the same skepticism as any other input, and it fails in two ways of its own.</p>
+<p>The first is types. As the JSON example at the start of the chapter showed, numeric fields often arrive as character. Coerce them explicitly, immediately after reading:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span><span class="va">pertussis</span> <span class="op">&lt;-</span> <span class="va">pertussis</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span>,</span>
+<span>    week <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>,</span>
+<span>    m1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span> <span class="co"># current-week case count</span></span>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Explicit coercion beats automatic guessing because it fails loudly: if a count column suddenly contains <code>"suppressed"</code>, <code><a href="https://rdrr.io/r/base/integer.html">as.integer()</a></code> warns and produces <code>NA</code>, which your validation will catch. Silent guessing just gives you a character column and a broken sum three steps later.</p>
+<p>The second is the schema, which can change under you. API responses often omit empty fields entirely. In the NNDSS data, a record with no current-week count simply has no <code>m1</code> element, so a pull where every record is empty for some field has no such column at all. Providers also add, rename, and retire columns without ceremony. A pull script that ran cleanly for a year can start returning something structurally different.</p>
+<p>Both problems have the same answer as in <a href="validation.html" class="quarto-xref"><span>Chapter 3</span></a>: validate right after the pull, checking that expected columns exist, types are correct, and values are in range, and fail loudly before anything downstream runs. A <code>pointblank</code> agent pointed at the freshly-read file is a few lines and turns a silent upstream change into an immediate, diagnosable error.</p>
+</section><section id="sec-apis-practical" class="level2" data-number="13.8"><h2 data-number="13.8" class="anchored" data-anchor-id="sec-apis-practical">
+<span class="header-section-number">13.8</span> Practical Guidance</h2>
+<p><strong>Check for a package before writing request code.</strong> A maintained wrapper like <code>tidycensus</code> or <code>RSocrata</code> already handles pagination, types, and authentication.</p>
+<p><strong>Filter on the server.</strong> Use query parameters to request only the rows and columns you need, for the same reason you filter before <code><a href="https://dplyr.tidyverse.org/reference/compute.html">collect()</a></code> with a database.</p>
+<p><strong>Watch for silent row caps.</strong> If the row count of a pull is a suspiciously round number, you probably got page one of many.</p>
+<p><strong>Archive what you pull.</strong> A dated raw file in <code>data/raw/</code> is the reproducible input; the API is not, because the data behind it changes.</p>
+<p><strong>Treat keys like passwords.</strong> <code>.Renviron</code> locally, repository secrets in CI, never in code.</p>
+<p><strong>Validate every pull.</strong> Coerce types explicitly and check the schema, because the provider can change either one without telling you.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-walker2023census" class="csl-entry" role="listitem">
+Walker, Kyle. 2023. <em>Analyzing US Census Data: Methods, Maps, and Models in r</em>. CRC Press. <a href="https://walker-data.com/census-r/">https://walker-data.com/census-r/</a>.
+</div>
+</div>
 </section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -789,10 +999,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./databases.html" class="pagination-link" aria-label="Databases from R">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Databases from R</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./git.html" class="pagination-link" aria-label="Version Control">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Version Control</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./legacy.html" class="pagination-link" aria-label="Migrating from Legacy Workflows">
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Migrating from Legacy Workflows</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

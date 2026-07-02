@@ -5,8 +5,7 @@
 <meta name="generator" content="quarto-1.9.36">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Stephen D. Turner">
-<meta name="dcterms.date" content="2026-07-02">
-<title>Data Science Team Training</title>
+<title>14&nbsp; Migrating from Legacy Workflows – Data Science Team Training</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -66,7 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./git.html" rel="next">
+<link href="./codestyle.html" rel="next">
+<link href="./apis.html" rel="prev">
 <link href="./hex.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -112,7 +112,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./legacy.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Migrating from Legacy Workflows</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -155,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -248,7 +248,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./legacy.html" class="sidebar-item-text sidebar-link">
+  <a href="./legacy.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Migrating from Legacy Workflows</span></span></a>
   </div>
 </li>
@@ -338,55 +338,298 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+<li><a href="#sec-legacy-why" id="toc-sec-legacy-why" class="nav-link active" data-scroll-target="#sec-legacy-why"><span class="header-section-number">14.1</span> Why Migrate, and Why Not</a></li>
+  <li><a href="#sec-legacy-triage" id="toc-sec-legacy-triage" class="nav-link" data-scroll-target="#sec-legacy-triage"><span class="header-section-number">14.2</span> Inventory and Triage</a></li>
+  <li><a href="#sec-legacy-data" id="toc-sec-legacy-data" class="nav-link" data-scroll-target="#sec-legacy-data"><span class="header-section-number">14.3</span> Reading Legacy Data Formats</a></li>
+  <li>
+<a href="#sec-legacy-translate" id="toc-sec-legacy-translate" class="nav-link" data-scroll-target="#sec-legacy-translate"><span class="header-section-number">14.4</span> Translating SAS Code</a>
+  <ul class="collapse">
+<li><a href="#ai-assisted-translation" id="toc-ai-assisted-translation" class="nav-link" data-scroll-target="#ai-assisted-translation"><span class="header-section-number">14.4.1</span> AI-assisted translation</a></li>
+  </ul>
+</li>
+  <li><a href="#sec-legacy-parity" id="toc-sec-legacy-parity" class="nav-link" data-scroll-target="#sec-legacy-parity"><span class="header-section-number">14.5</span> Verifying Parity</a></li>
+  <li><a href="#sec-legacy-cutover" id="toc-sec-legacy-cutover" class="nav-link" data-scroll-target="#sec-legacy-cutover"><span class="header-section-number">14.6</span> Running in Parallel and Cutting Over</a></li>
+  <li><a href="#sec-legacy-excel" id="toc-sec-legacy-excel" class="nav-link" data-scroll-target="#sec-legacy-excel"><span class="header-section-number">14.7</span> Excel and Access Workflows</a></li>
+  <li><a href="#sec-legacy-people" id="toc-sec-legacy-people" class="nav-link" data-scroll-target="#sec-legacy-people"><span class="header-section-number">14.8</span> The People Side</a></li>
+  <li><a href="#sec-legacy-reading" id="toc-sec-legacy-reading" class="nav-link" data-scroll-target="#sec-legacy-reading"><span class="header-section-number">14.9</span> Further Reading</a></li>
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">Data Science Team Training</h1>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./legacy.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Migrating from Legacy Workflows</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title"><span id="sec-legacy" class="quarto-section-identifier"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Migrating from Legacy Workflows</span></span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Stephen D. Turner, Ph.D. </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">July 2, 2026</p>
-    </div>
-  </div>
   
     
   </div>
   
 
 
-</header>
-<section id="preface" class="level1 unnumbered"><h1 class="unnumbered">Preface</h1><p><img src="cover.jpg" title="Data Science Team Training" class="quarto-cover-image nolightbox img-fluid"></p>
-<p>Public health has always been a data-driven enterprise, but the tools available to practitioners have changed dramatically. Spreadsheets that once required weeks of manual work can now be analyzed in seconds. Reports that used to mean emailing static PDFs can now execute code, update automatically when data changes, and be produced in multiple formats from a single source file. And workflows that depended on one person’s institutional knowledge can be documented, versioned, and shared across teams. The goal of this book is to help public health professionals take advantage of these tools.</p>
-<p>This book grew out of the <a href="https://www.cste.org/">CSTE</a> <a href="https://www.cste.org/page/dstt-webpage">Data Science Team Training (DSTT)</a> program, I serve as a project coach working with public health agencies across the country to build data science capacity in the public health workforce. The material here includes code, resources, workshop notes, and practical guidance accumulated and refined over several years of coaching teams at local and state health departments.</p>
-<p>The chapters cover the foundational practices that make data science work sustainable and collaborative in a public health setting. Technical chapters address organizing and validating data, connecting to and querying relational databases, pulling data from public APIs and open data portals, migrating legacy SAS and Excel workflows, writing clean and well-documented code, managing reproducible environments and package dependencies, building R packages to share functions across projects, producing accessible reproducible reports and dashboards, automating and scheduling recurring work, and working effectively with AI coding assistants. Nontechnical chapters cover building and sustaining a data science team, project management, peer review of analytical work, navigating the data governance and IT relationships that shape what public health teams can actually do with their data, and communicating findings clearly to audiences who did not run the analysis. These are the practical skills that separate ad hoc analyses from reproducible, maintainable work.</p>
-<p>While this material was created with DSTT participants in mind, it is intended to be broadly useful to anyone working at the intersection of data science and public health, whether you are a current or former DSTT participant, a public health practitioner looking to strengthen your analytical skills, or someone new to data science in a public health context.</p>
-<p>No single book can cover everything, and this one does not try to. <a href="resources.html" class="quarto-xref"><span>Appendix A — Additional Resources</span></a> points to additional reading and training for topics that go deeper than what is covered here.</p>
-<p>Cite this book:</p>
-<blockquote class="blockquote">
-<p>Turner, Stephen D. (2026). <em>Data Science Team Training</em>. Retrieved from <a href="https://dstt.stephenturner.us/" class="uri">https://dstt.stephenturner.us/</a>.</p>
-</blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bibtex code-with-copy"><code class="sourceCode bibtex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">@book</span>{</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="ot">title</span> = {<span class="ot">Data</span> {{<span class="ot">Science</span> <span class="ot">Team</span> <span class="ot">Training</span>}<span class="co">}},</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">  author = {Turner, Stephen D.},</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  date = {2026},</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">  url = {https://dstt.stephenturner.us/}</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.</p>
+</header><p>Most public health data work predates the tools in this book. State health departments run surveillance on SAS programs written over twenty years by people who have since retired, weekly reports come out of Excel workbooks where the analysis lives in formula chains and pivot tables, and case data sits in Access databases on a shared drive. These workflows produce real, trusted outputs every week. What makes them legacy is that they are hard to maintain and getting harder to staff.</p>
+<p>The syntax is the easy part of a migration; any competent R programmer, or these days an AI assistant, can translate a <code>PROC MEANS</code> into a <code>summarize()</code>. What takes judgment is deciding what to migrate and in what order, proving that the new pipeline produces the same numbers as the old one, and retiring the old system without losing the institutional knowledge embedded in it. This chapter is about that process.</p>
+<section id="sec-legacy-why" class="level2" data-number="14.1"><h2 data-number="14.1" class="anchored" data-anchor-id="sec-legacy-why">
+<span class="header-section-number">14.1</span> Why Migrate, and Why Not</h2>
+<p>The case for migrating a workflow is usually some mix of money, staffing, and capability. SAS licensing is a recurring line item that R eliminates; for a small team, the savings alone can fund a training program. The hiring pool tilts the same direction: new analysts arrive knowing R or Python, the people who know SAS are retiring, and every year a workflow stays in SAS it gets harder to find someone who can maintain it. And the legacy stack cannot easily produce what earlier chapters built: parameterized Quarto reports (<a href="reporting.html" class="quarto-xref"><span>Chapter 4</span></a>), dashboards (<a href="dashboards.html" class="quarto-xref"><span>Chapter 7</span></a>), scheduled pipelines on GitHub Actions (<a href="automation.html" class="quarto-xref"><span>Chapter 8</span></a>), or a version-controlled analysis that can be reviewed and handed off (<a href="git.html" class="quarto-xref"><span>Chapter 1</span></a>).</p>
+<p>There are equally good reasons to leave a particular workflow alone, at least for now. A report that is being retired should not be rewritten; migration is a chance to prune the product list, not to reproduce all of it faithfully. A rewrite the team cannot maintain is worse than the status quo: if the only SAS analyst retires in six months and nobody else knows R yet, the first investment is training (<a href="team.html#sec-team-upskilling" class="quarto-xref"><span>Section 17.3</span></a>). And a rewrite in the middle of an outbreak response adds risk exactly when the team can least absorb it.</p>
+<p>All of this reduces to one underlying risk: migration is rewriting software, and rewriting working software is dangerous. The legacy program’s numbers are trusted; the rewrite’s are not until you prove they match. That proof is the core of the work.</p>
+</section><section id="sec-legacy-triage" class="level2" data-number="14.2"><h2 data-number="14.2" class="anchored" data-anchor-id="sec-legacy-triage">
+<span class="header-section-number">14.2</span> Inventory and Triage</h2>
+<p>Start by listing every recurring product the legacy stack produces: each report, each dataset handed to another program, each dashboard feed. For each one, record what runs it, how often, who consumes the output, and who understands the code. This inventory is usually revealing on its own. Most teams find a handful of products that matter enormously, a long tail that runs out of habit, and at least one program nobody can explain.</p>
+<p>Then triage. Good first candidates for migration score high on all of these:</p>
+<ul>
+<li>It runs on a schedule (weekly, monthly), so the payoff recurs and there are regular opportunities to compare old against new.</li>
+<li>Someone who understands the current logic is still available to answer questions.</li>
+<li>The output has an engaged consumer who will notice, and care, if numbers change.</li>
+<li>It is painful today: manual steps, fragile hand-offs, a single person who can run it.</li>
+</ul>
+<p>One-off historical analyses generally should not be migrated at all. Archive the code and its outputs, document what they were for, and leave them alone.</p>
+<p>Migrate one product end to end before starting a second. A complete pilot, from raw data to delivered report, running in parallel with the legacy version, teaches the team more than partially migrating ten programs, and it produces a visible win that builds support for the rest of the effort.</p>
+</section><section id="sec-legacy-data" class="level2" data-number="14.3"><h2 data-number="14.3" class="anchored" data-anchor-id="sec-legacy-data">
+<span class="header-section-number">14.3</span> Reading Legacy Data Formats</h2>
+<p>Whatever else migrates, the data has to. The <a href="https://haven.tidyverse.org/"><code>haven</code></a> package reads SAS (<code>.sas7bdat</code>, <code>.xpt</code>), SPSS (<code>.sav</code>), and Stata (<code>.dta</code>) files directly:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://haven.tidyverse.org">haven</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"iris.sas7bdat"</span>, package <span class="op">=</span> <span class="st">"haven"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_sas.html">read_sas</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 150 × 5
+   Sepal_Length Sepal_Width Petal_Length Petal_Width Species
+          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;  
+ 1          5.1         3.5          1.4         0.2 setosa 
+ 2          4.9         3            1.4         0.2 setosa 
+ 3          4.7         3.2          1.3         0.2 setosa 
+ 4          4.6         3.1          1.5         0.2 setosa 
+ 5          5           3.6          1.4         0.2 setosa 
+ 6          5.4         3.9          1.7         0.4 setosa 
+ 7          4.6         3.4          1.4         0.3 setosa 
+ 8          5           3.4          1.5         0.2 setosa 
+ 9          4.4         2.9          1.4         0.2 setosa 
+10          4.9         3.1          1.5         0.1 setosa 
+# ℹ 140 more rows</code></pre>
+</div>
+</div>
+<p>A few things about what comes across. SAS stores value labels (formats) separately from the data, in a catalog file typically named <code>formats.sas7bcat</code>; pass it to <code><a href="https://haven.tidyverse.org/reference/read_sas.html">read_sas()</a></code> and the labels arrive as labelled columns, which <code><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor()</a></code> converts to R factors:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cases</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://haven.tidyverse.org/reference/read_sas.html">read_sas</a></span><span class="op">(</span></span>
+<span>  <span class="st">"data/raw/cases.sas7bdat"</span>,</span>
+<span>  catalog_file <span class="op">=</span> <span class="st">"data/raw/formats.sas7bcat"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">cases</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">cases</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Missing values need more care. SAS distinguishes up to 27 kinds of missing (<code>.</code>, <code>.A</code> through <code>.Z</code>), often used to encode <em>why</em> a value is missing: refused, unknown, not applicable. R has one <code>NA</code>. <code>haven</code> preserves the distinctions as tagged NAs (see <code><a href="https://haven.tidyverse.org/reference/tagged_na.html">?haven::tagged_na</a></code>), but most downstream R code will treat them all as plain <code>NA</code>, so if the distinctions carry meaning, convert them to an explicit column before they are lost.</p>
+<p>Dates come through correctly, because <code>haven</code> knows that SAS counts days from 1960-01-01 while R counts from 1970-01-01. Hand-rolled imports do not get that conversion: a CSV exported from SAS with raw date numbers will be off by exactly 3,653 days, an error distinctive enough to recognize on sight.</p>
+<p>For Excel sources, <code>readxl</code> reads <code>.xlsx</code> and <code>.xls</code> files, and the spreadsheet-hygiene guidance in <a href="dataorg.html" class="quarto-xref"><span>Chapter 2</span></a> applies doubly to inherited workbooks. For Access, the <code>odbc</code> package can connect directly on Windows, where the Access ODBC driver is usually already installed:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dbi.r-dbi.org">DBI</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html">dbConnect</a></span><span class="op">(</span></span>
+<span>  <span class="fu">odbc</span><span class="fu">::</span><span class="fu"><a href="https://odbc.r-dbi.org/reference/dbConnect-OdbcDriver-method.html">odbc</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  .connection_string <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Driver={Microsoft Access Driver (*.mdb, *.accdb)};"</span>,</span>
+<span>    <span class="st">"Dbq=S:/surveillance/cases.accdb;"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbListTables.html">dbListTables</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Whichever format the data arrives in, convert it once and save an analysis-ready copy in an open format (CSV or Parquet, per <a href="dataorg.html" class="quarto-xref"><span>Chapter 2</span></a>), keeping the original file as the untouched raw archive. Proprietary formats depend on software that will not always be there to read them.</p>
+</section><section id="sec-legacy-translate" class="level2" data-number="14.4"><h2 data-number="14.4" class="anchored" data-anchor-id="sec-legacy-translate">
+<span class="header-section-number">14.4</span> Translating SAS Code</h2>
+<p>SAS and R differ more in mindset than in capability. A SAS program is a sequence of DATA steps (implicit row-by-row loops that read one dataset and write another) punctuated by PROC calls. Idiomatic R is vectorized: operations apply to whole columns at once, chained with pipes. A literal line-by-line translation produces R code that works but reads like SAS; the better approach is to translate what each step accomplishes.</p>
+<p>Most of the surface area maps cleanly:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead><tr class="header">
+<th>SAS</th>
+<th>R equivalent</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>DATA step assignments, <code>IF</code>/<code>THEN</code>
+</td>
+<td>
+<code>mutate()</code> with <code>if_else()</code> or <code>case_when()</code>
+</td>
+</tr>
+<tr class="even">
+<td>
+<code>PROC SORT</code> (and <code>NODUPKEY</code>)</td>
+<td>
+<code>arrange()</code>, <code>distinct()</code>
+</td>
+</tr>
+<tr class="odd">
+<td>
+<code>PROC MEANS</code>, <code>PROC SUMMARY</code>
+</td>
+<td>
+<code>group_by()</code> + <code>summarize()</code>
+</td>
+</tr>
+<tr class="even">
+<td><code>PROC FREQ</code></td>
+<td>
+<code>count()</code>, <code><a href="https://sfirke.github.io/janitor/reference/tabyl.html">janitor::tabyl()</a></code>
+</td>
+</tr>
+<tr class="odd">
+<td><code>PROC TRANSPOSE</code></td>
+<td>
+<code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">tidyr::pivot_longer()</a></code>, <code>pivot_wider()</code>
+</td>
+</tr>
+<tr class="even">
+<td>
+<code>MERGE</code> in a DATA step</td>
+<td>
+<code>left_join()</code> and friends</td>
+</tr>
+<tr class="odd">
+<td><code>PROC SQL</code></td>
+<td>dplyr, or SQL directly via DBI (<a href="databases.html" class="quarto-xref"><span>Chapter 12</span></a>)</td>
+</tr>
+<tr class="even">
+<td><code>PROC FORMAT</code></td>
+<td>factor levels and labels</td>
+</tr>
+<tr class="odd">
+<td><code>PROC EXPORT</code></td>
+<td><code><a href="https://readr.tidyverse.org/reference/write_delim.html">readr::write_csv()</a></code></td>
+</tr>
+<tr class="even">
+<td><code>%MACRO</code></td>
+<td>a function</td>
+</tr>
+</tbody>
+</table>
+<p>The last row deserves emphasis. SAS macros are text substitution; R functions are real functions with arguments and return values, and they are easier to test and document. A macro library that grew over years often translates into a small set of R functions, which is the point at which a team package (<a href="packagedevelopment.html" class="quarto-xref"><span>Chapter 10</span></a>) starts to make sense.</p>
+<section id="ai-assisted-translation" class="level3" data-number="14.4.1"><h3 data-number="14.4.1" class="anchored" data-anchor-id="ai-assisted-translation">
+<span class="header-section-number">14.4.1</span> AI-assisted translation</h3>
+<p>Legacy translation is a task AI coding assistants (<a href="ai.html" class="quarto-xref"><span>Chapter 6</span></a>) handle well. Claude Code (<a href="ai.html#sec-ai-claude-code" class="quarto-xref"><span>Section 6.4</span></a>) can take a several-hundred-line SAS program and produce a credible R draft in minutes, and it is equally useful in the other direction: asking it to <em>explain</em> an inherited program, step by step, before you translate anything. When the original author is gone, an AI walkthrough of what a gnarly DATA step actually does is often the fastest available substitute.</p>
+<p>Treat the output as a draft, though. Translation is now cheap; verification is the actual work, and the failure mode of AI translation is code that looks right and runs clean but handles an edge case (usually missing values) differently than the original. Nothing that comes out of an assistant should reach production without passing the parity checks in the next section. And as always, paste code into these tools, not data: the privacy considerations in <a href="ai.html#sec-ai-models" class="quarto-xref"><span>Section 6.5</span></a> apply to the data, and the code itself is rarely sensitive.</p>
+</section></section><section id="sec-legacy-parity" class="level2" data-number="14.5"><h2 data-number="14.5" class="anchored" data-anchor-id="sec-legacy-parity">
+<span class="header-section-number">14.5</span> Verifying Parity</h2>
+<p>The legacy program’s output is your test oracle. Freeze an input dataset, run it through both pipelines, and compare the outputs with code rather than by eye. The <a href="https://waldo.r-lib.org/"><code>waldo</code></a> package gives readable, precise diffs:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sas_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>  county <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Fairfax"</span>, <span class="st">"Arlington"</span>, <span class="st">"Loudoun"</span><span class="op">)</span>,</span>
+<span>  cases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">23L</span>, <span class="fl">41L</span>, <span class="fl">18L</span><span class="op">)</span>,</span>
+<span>  rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.0</span>, <span class="fl">17.2</span>, <span class="fl">4.3</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">r_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>  county <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Fairfax"</span>, <span class="st">"Arlington"</span>, <span class="st">"Loudoun"</span><span class="op">)</span>,</span>
+<span>  cases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">23L</span>, <span class="fl">41L</span>, <span class="fl">18L</span><span class="op">)</span>,</span>
+<span>  rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.0</span>, <span class="fl">17.2</span>, <span class="fl">4.2</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">waldo</span><span class="fu">::</span><span class="fu"><a href="https://waldo.r-lib.org/reference/compare.html">compare</a></span><span class="op">(</span><span class="va">sas_out</span>, <span class="va">r_out</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>old vs new
+           rate
+  old[1, ]  2.0
+  old[2, ] 17.2
+- old[3, ]  4.3
++ new[3, ]  4.2
+
+`old$rate`: 2.00 17.20 4.30
+`new$rate`: 2.00 17.20 4.20</code></pre>
+</div>
+</div>
+<p>The diff points straight at the discrepancy. Counts should match exactly. Derived numbers like rates should match within a small tolerance (<code><a href="https://waldo.r-lib.org/reference/compare.html">waldo::compare()</a></code> takes a <code>tolerance</code> argument), because the two engines can legitimately differ in the last decimal places of floating-point arithmetic.</p>
+<p>When outputs differ, the cause is usually a place where SAS and R behave differently by design rather than a translation typo. The differences that bite most often:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead><tr class="header">
+<th>Behavior</th>
+<th>SAS</th>
+<th>R</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Rounding halves</td>
+<td>Away from zero: <code>ROUND(2.5)</code> is 3</td>
+<td>Half to even: <code>round(2.5)</code> is 2</td>
+</tr>
+<tr class="even">
+<td>Missing values</td>
+<td>
+<code>.</code> plus special missings <code>.A</code>–<code>.Z</code>
+</td>
+<td>A single <code>NA</code>
+</td>
+</tr>
+<tr class="odd">
+<td>Missing values in sorts</td>
+<td>Sort first (missing is smallest)</td>
+<td>
+<code>arrange()</code> puts <code>NA</code> last</td>
+</tr>
+<tr class="even">
+<td>Blank strings</td>
+<td>
+<code>""</code> is missing</td>
+<td>
+<code>""</code> is a value, distinct from <code>NA</code>
+</td>
+</tr>
+<tr class="odd">
+<td>Date origin</td>
+<td>1960-01-01</td>
+<td>1970-01-01</td>
+</tr>
+</tbody>
+</table>
+<p>The rounding difference is worth seeing once, because it looks so much like a bug:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="fl">2.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0 2 2</code></pre>
+</div>
+</div>
+<p>R follows the IEEE standard and rounds halves to the nearest even digit, so 0.5 rounds to 0 and 2.5 rounds to 2, where SAS would give 1 and 3. If the legacy program rounds before a suppression threshold or publishes rounded rates, the two pipelines will disagree by one in the last digit on exactly the values ending in five, and only those.</p>
+<p>Every discrepancy gets one of two resolutions: fix the R code to match, or accept the difference and write down why. Keep the comparison script and a short parity report in the repository alongside the migrated code, listing each accepted difference and its justification. That document is what lets you tell a program manager, with evidence, that the new numbers are trustworthy, and it is exactly the kind of artifact analytical peer review (<a href="peerreview.html" class="quarto-xref"><span>Chapter 20</span></a>) should examine.</p>
+</section><section id="sec-legacy-cutover" class="level2" data-number="14.6"><h2 data-number="14.6" class="anchored" data-anchor-id="sec-legacy-cutover">
+<span class="header-section-number">14.6</span> Running in Parallel and Cutting Over</h2>
+<p>Parity on a frozen test dataset is necessary but not sufficient, because live data keeps finding cases the test data did not contain. So run both pipelines in parallel on real data for a fixed number of cycles: four to eight weeks for a weekly report is typical. Each cycle, produce both outputs, run the comparison script, and investigate anything new. These investigations are where the legacy program’s undocumented behavior surfaces, the special-casing of one bad data year, the county recode nobody mentioned, and each one either becomes deliberate logic in the new pipeline or a documented, accepted difference.</p>
+<p>Agree on the cutover criteria before the parallel period starts (for example: N consecutive cycles with no unexplained discrepancies), so the decision is mechanical rather than a matter of nerve. Then, at cutover:</p>
+<ul>
+<li>Move the legacy code into the repository under a <code>legacy/</code> directory, read-only, with a README mapping each old program to its replacement (<a href="documentation.html#sec-documentation-readme" class="quarto-xref"><span>Section 16.1</span></a>).</li>
+<li>Run the legacy pipeline one final time and archive its outputs as the last reference point.</li>
+<li>Actually decommission it. Remove it from the schedule, and cancel the license when the last workflow that needs it is gone.</li>
+</ul>
+<p>The decommissioning step is the one teams skip, and skipping it is costly. Two live pipelines means two sources of truth, and they will eventually diverge, at which point someone has to figure out which one the program has been using. The license line item disappearing from next year’s budget is both the payoff and the forcing function.</p>
+</section><section id="sec-legacy-excel" class="level2" data-number="14.7"><h2 data-number="14.7" class="anchored" data-anchor-id="sec-legacy-excel">
+<span class="header-section-number">14.7</span> Excel and Access Workflows</h2>
+<p>Spreadsheet migrations differ from SAS migrations because there is no program to translate. The analysis is smeared across formula chains, pivot caches, and cells someone updates by hand, none of it visible to version control or review, and all of it fragile: one inserted row can silently break a range reference three sheets away.</p>
+<p>The pattern that works is to split the workbook’s two jobs. If data entry happens in Excel, let it keep happening there, in a workbook restructured to the rectangular, one-thing-per-cell standard of <a href="dataorg.html" class="quarto-xref"><span>Chapter 2</span></a>. Everything after entry moves to a script: the workbook becomes an <em>input</em> that <code>readxl</code> reads, and R produces the outputs. The translations are mostly one-to-one. A <code>VLOOKUP</code> chain is a <code>left_join()</code>, a pivot table is <code>group_by()</code> plus <code>summarize()</code> (with <code>pivot_wider()</code> for the layout), and logic encoded in conditional formatting becomes an explicit column. Add validation at the seam (<a href="validation.html" class="quarto-xref"><span>Chapter 3</span></a>), because scripted analysis surfaces the entry errors that formulas were silently absorbing, which is uncomfortable for a few weeks and then permanently better.</p>
+<p>Access databases play two roles that migrate separately. As storage, the tables can be read directly via <code>odbc</code> as shown above, or exported once if the database is being retired. As logic, Access queries are just SQL, and they port to dplyr or to DuckDB (<a href="databases.html#sec-databases-duckdb" class="quarto-xref"><span>Section 12.2</span></a>) with little friction. If several people still need to enter and look up cases interactively, Access can keep that front-end job for now, with R connecting read-only for analysis; the longer-term home for shared, structured case data is an IT-managed database, which is a conversation to start with the people in <a href="governance.html#sec-governance-access" class="quarto-xref"><span>Section 19.4</span></a>.</p>
+</section><section id="sec-legacy-people" class="level2" data-number="14.8"><h2 data-number="14.8" class="anchored" data-anchor-id="sec-legacy-people">
+<span class="header-section-number">14.8</span> The People Side</h2>
+<p>A legacy program is institutional memory in executable form. Somewhere in that SAS code is the exclusion rule from a 2015 data quality incident and the county recode that exists because of a boundary change, none of it written down anywhere else. The person who wrote the program holds the other half of that memory.</p>
+<p>So migrate <em>with</em> the legacy author, not around them. Pair them with the team’s strongest R programmer: the veteran explains what each step is for and reviews parity discrepancies, while the R partner writes idiomatic new code, and both learn. This is upskilling (<a href="team.html#sec-team-upskilling" class="quarto-xref"><span>Section 17.3</span></a>) with a concrete deliverable attached, and it reframes the migration for the author as career development rather than obsolescence, which matters for retention (<a href="team.html#sec-team-retention" class="quarto-xref"><span>Section 17.6</span></a>). When the author is already gone, the code is the only informant left, which makes the careful reading, and the AI-assisted explanation described earlier, that much more important.</p>
+<p>Finally, pick the timing like the project decision it is (<a href="pm.html" class="quarto-xref"><span>Chapter 18</span></a>). A migration has a long middle where both systems run and the team carries double work. Schedule that middle for the quiet season rather than the weeks when respiratory reports are due daily.</p>
+</section><section id="sec-legacy-reading" class="level2" data-number="14.9"><h2 data-number="14.9" class="anchored" data-anchor-id="sec-legacy-reading">
+<span class="header-section-number">14.9</span> Further Reading</h2>
+<ul>
+<li>The <a href="https://haven.tidyverse.org/">haven documentation</a> covers the details of reading SAS, SPSS, and Stata files, including labelled values and tagged missings.</li>
+<li>
+<a href="https://rstudio-conf-2020.github.io/r-for-excel/"><em>R for Excel Users</em></a> (Lowndes and Horst) is a free, workshop-format introduction to R aimed specifically at people whose current workflow is Excel.</li>
+<li>
+<a href="https://epirhandbook.com/"><em>The Epidemiologist R Handbook</em></a> includes a “Transition to R” chapter with practical advice, and R equivalents for common tasks, aimed at epidemiologists coming from SAS, Stata, and SPSS.</li>
+</ul>
 
 
 </section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
@@ -789,10 +1032,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./apis.html" class="pagination-link" aria-label="APIs and Public Data Sources">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./git.html" class="pagination-link" aria-label="Version Control">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Version Control</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./codestyle.html" class="pagination-link" aria-label="Code Style">
+        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Code Style</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

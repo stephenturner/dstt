@@ -275,14 +275,26 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./apis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./legacy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Migrating from Legacy Workflows</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./codestyle.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Code Style</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Code Style</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./documentation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Documentation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Documentation</span></span></a>
   </div>
 </li>
       </ul>
@@ -299,31 +311,31 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./team.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Building and Sustaining a Data Science Team</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Building and Sustaining a Data Science Team</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./governance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./peerreview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./comms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
   </div>
 </li>
       </ul>
@@ -398,7 +410,7 @@ div.csl-indent {
 <p>The reporting chapter (<a href="reporting.html" class="quarto-xref"><span>Chapter 4</span></a>) showed how to build a report whose numbers update when the data changes, and the dashboards chapter (<a href="dashboards.html" class="quarto-xref"><span>Chapter 7</span></a>) showed how to publish one to the web. This chapter is about the next step: making those things happen on a schedule, or in response to an event, without a person in the loop. The recurring weekly report becomes a job that runs at 6am whether or not anyone remembers, and the team finds out only if something breaks.</p>
 <section id="sec-automation-what" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="sec-automation-what"><span class="header-section-number">8.1</span> What to Automate (and What Not To)</h2>
-<p>Automation pays off when the same work happens the same way, repeatedly. A weekly surveillance render, a nightly data refresh, a validation check that should run every time a file lands: all of these are worth the up-front effort to set up, because the effort is amortized over dozens or hundreds of runs.</p>
+<p>Automation pays off when the same work happens the same way, repeatedly. A weekly surveillance render, a nightly data refresh from a public API (<a href="apis.html" class="quarto-xref"><span>Chapter 13</span></a>), a validation check that should run every time a file lands: all of these are worth the up-front effort to set up, because the effort is amortized over dozens or hundreds of runs.</p>
 <p>It pays off poorly, or not at all, for one-off analyses, for work that requires a human decision partway through, and for exploratory work where the whole point is that you do not yet know what you are going to do. A useful test: would you run this code, in this same way, more than a handful of times? If yes, automate it. If no, the time spent automating is time not spent on the analysis.</p>
 <p>One caution before going further. Automation amplifies whatever you point it at. A correct, validated pipeline run a hundred times produces a hundred correct outputs; a subtly broken one produces a hundred broken outputs, faster than anyone can check them. Automation presumes the underlying work is already validated (<a href="validation.html" class="quarto-xref"><span>Chapter 3</span></a>) and reproducible (<a href="environments.html" class="quarto-xref"><span>Chapter 11</span></a>). Automating an unreliable pipeline does not save labor, it industrializes the errors.</p>
 </section>
@@ -461,7 +473,7 @@ Note
 <p>The <code>cron</code> schedule in a GitHub Actions workflow runs on UTC, not your local time zone, and does not adjust for daylight saving. A “6am Monday” job will land at a different local hour depending on the season. For a surveillance report this rarely matters; when it does, schedule against UTC deliberately.</p>
 </div>
 </div>
-<p>When a job needs a credential (an API token, a database password), that secret never goes in the workflow file or anywhere else in the repository. GitHub stores it under the repository’s <strong>Settings → Secrets and variables</strong>, and the workflow reads it as an environment variable at run time (the <code>secrets.GITHUB_TOKEN</code> reference above is the built-in example). This is the same discipline as the <code>.Renviron</code> pattern in <a href="databases.html" class="quarto-xref"><span>Chapter 12</span></a>: credentials live outside version control, and code reads them from the environment.</p>
+<p>When a job needs a credential (an API token as in <a href="apis.html#sec-apis-keys" class="quarto-xref"><span>Section 13.5</span></a>, a database password), that secret never goes in the workflow file or anywhere else in the repository. GitHub stores it under the repository’s <strong>Settings → Secrets and variables</strong>, and the workflow reads it as an environment variable at run time (the <code>secrets.GITHUB_TOKEN</code> reference above is the built-in example). This is the same discipline as the <code>.Renviron</code> pattern in <a href="databases.html" class="quarto-xref"><span>Chapter 12</span></a>: credentials live outside version control, and code reads them from the environment.</p>
 </section>
 <section id="sec-automation-targets" class="level2" data-number="8.4">
 <h2 data-number="8.4" class="anchored" data-anchor-id="sec-automation-targets"><span class="header-section-number">8.4</span> Multi-Step Pipelines with targets</h2>
@@ -479,7 +491,7 @@ Note
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tar_target</span>(report,   quarto<span class="sc">::</span><span class="fu">quarto_render</span>(<span class="st">"report.qmd"</span>))</span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Running <code>tar_make()</code> builds the pipeline. The first run executes every step. On later runs, <code>targets</code> reruns only the steps whose inputs changed and reuses the cached results of the rest; if only the report template changed, the data is not re-read or re-cleaned. <code>tar_visnetwork()</code> draws the graph and colors each node by whether it is up to date, which is a fast way to see what a change will trigger before you run it.</p>
-<p>For automation, this self-correcting behavior is the point. A scheduled job that calls <code>tar_make()</code> does the minimum work required to bring every output up to date, and an output is rebuilt exactly when, and only when, something it depends on has actually changed. This is the same reproducibility discipline framed as a project commitment in <a href="pm.html" class="quarto-xref"><span>Chapter 16</span></a>; <code>targets</code> is the tool that enforces it mechanically. The RAPS book linked in <a href="resources.html" class="quarto-xref"><span>Appendix A</span></a> goes much deeper on building pipelines this way.</p>
+<p>For automation, this self-correcting behavior is the point. A scheduled job that calls <code>tar_make()</code> does the minimum work required to bring every output up to date, and an output is rebuilt exactly when, and only when, something it depends on has actually changed. This is the same reproducibility discipline framed as a project commitment in <a href="pm.html" class="quarto-xref"><span>Chapter 18</span></a>; <code>targets</code> is the tool that enforces it mechanically. The RAPS book linked in <a href="resources.html" class="quarto-xref"><span>Appendix A</span></a> goes much deeper on building pipelines this way.</p>
 </section>
 <section id="sec-automation-environment" class="level2" data-number="8.5">
 <h2 data-number="8.5" class="anchored" data-anchor-id="sec-automation-environment"><span class="header-section-number">8.5</span> Running in a Reproducible Environment</h2>
@@ -496,7 +508,7 @@ Note
 <h2 data-number="8.7" class="anchored" data-anchor-id="sec-automation-sensitive"><span class="header-section-number">8.7</span> Sensitive Data and Automation</h2>
 <p>Most of this chapter’s cloud examples assume the data is safe to send to GitHub’s machines. Much public health data is not. Protected health information, restricted-use files, and data governed by a use agreement generally must not run on GitHub-hosted runners or any other shared cloud infrastructure, because doing so moves the data outside the boundary where its handling is authorized.</p>
 <p>This does not rule out automation; it changes where the automation runs. The options are to use self-hosted runners that sit inside the agency’s secure network (so GitHub orchestrates the job but the data never leaves), to schedule the job on an approved on-premises server with cron or Task Scheduler, or to use whatever managed analytics platform the agency already operates. The mechanics from earlier in this chapter still apply; only the location changes.</p>
-<p>The decision of where a scheduled job may run is a governance decision before it is a technical one. The terms of the relevant data use agreement, the HIPAA considerations, and the secure-environment requirements in <a href="governance.html" class="quarto-xref"><span>Chapter 17</span></a> determine what is permissible, and provisioning a scheduled job on a shared server is an IT request that should start early (<a href="pm.html#sec-pm-it" class="quarto-xref"><span>Section 16.4</span></a>). Work that out before building the pipeline, not after, because a pipeline built for the wrong environment cannot simply be moved into the right one.</p>
+<p>The decision of where a scheduled job may run is a governance decision before it is a technical one. The terms of the relevant data use agreement, the HIPAA considerations, and the secure-environment requirements in <a href="governance.html" class="quarto-xref"><span>Chapter 19</span></a> determine what is permissible, and provisioning a scheduled job on a shared server is an IT request that should start early (<a href="pm.html#sec-pm-it" class="quarto-xref"><span>Section 18.4</span></a>). Work that out before building the pipeline, not after, because a pipeline built for the wrong environment cannot simply be moved into the right one.</p>
 </section>
 <section id="sec-automation-reading" class="level2" data-number="8.8">
 <h2 data-number="8.8" class="anchored" data-anchor-id="sec-automation-reading"><span class="header-section-number">8.8</span> Further Reading</h2>
