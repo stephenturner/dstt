@@ -44,6 +44,20 @@ Most public health data lives in relational databases -- SQL Server, PostgreSQL,
 
 **[dbplyr](https://dbplyr.tidyverse.org/)** extends dplyr to work against database tables. Instead of writing SQL, you write normal dplyr code — `filter()`, `mutate()`, `summarize()` — and dbplyr translates it to SQL and runs it on the database. This is useful when the team knows dplyr well and the database queries are not highly complex. `collect()` pulls the results into R as a local data frame.
 
+## APIs and Public Data
+
+**[httr2](https://httr2.r-lib.org/)** is the package for talking to web APIs from R, introduced in @sec-apis. Beyond the basics covered there, its documentation includes a "Wrapping APIs" vignette that walks through building a reusable interface to an API, useful if your team pulls from the same source in many projects.
+
+**[Analyzing US Census Data](https://walker-data.com/census-r/)** (Walker) [@walker2023census] is the definitive guide to working with census data in R via the `tidycensus` package: ACS and decennial data, geography and mapping, and the margins-of-error handling that census estimates require. Freely available online. For public health teams, this is where rate denominators come from.
+
+**[The Socrata developer documentation](https://dev.socrata.com/)** covers the API behind data.cdc.gov and many state open data portals, including the SoQL query language for filtering and aggregating on the server.
+
+## Migrating from Legacy Tools
+
+**[R for Excel Users](https://rstudio-conf-2020.github.io/r-for-excel/)** (Lowndes and Horst) is a free, workshop-format course aimed at analysts whose current workflow is Excel, covering the transition to R, RStudio/Positron, and reproducible project habits. A good group-study resource for teams working through the migration described in @sec-legacy.
+
+**[haven](https://haven.tidyverse.org/)** reads SAS, SPSS, and Stata files into R, preserving value labels and special missing values. Its documentation covers the details of labelled data that matter when converting legacy datasets to open formats.
+
 ## Online Courses
 
 The [**Johns Hopkins Data Science Specialization**](https://www.coursera.org/specializations/jhu-data-science) on Coursera is a 10-course sequence by Roger Peng, Jeff Leek, and Brian Caffo covering the complete applied data science workflow in R: tooling, data acquisition, exploratory analysis, reproducible research, statistical inference, regression, machine learning, and building data products. Individual courses can be audited free. The most standalone-useful courses for public health practitioners are:

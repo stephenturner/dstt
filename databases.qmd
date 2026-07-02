@@ -12,7 +12,7 @@ suppressWarnings(suppressPackageStartupMessages(library(duckdb)))
 
 Spreadsheets and CSV files work well for small datasets, but many public health agencies store their surveillance data in relational databases: SQL Server, Oracle, PostgreSQL, or similar systems. These databases are managed by IT, shared across teams, and updated continuously as new data arrives. The data never leaves the server; analysts connect, run a query, and pull back only the rows and columns they need.
 
-This chapter covers how to work with databases from R. The examples use [DuckDB](https://duckdb.org/), an in-process analytical database that requires no server setup and installs as an R package. DuckDB is practical for local analysis of large files, but the same patterns (DBI, dbplyr) apply to institutional databases like SQL Server and PostgreSQL — only the connection call changes. The chapter ends with connection patterns for those remote systems.
+This chapter covers how to work with databases from R. The examples use [DuckDB](https://duckdb.org/), an in-process analytical database that requires no server setup and installs as an R package. DuckDB is practical for local analysis of large files, but the same patterns (DBI, dbplyr) apply to institutional databases like SQL Server and PostgreSQL — only the connection call changes. The chapter ends with connection patterns for those remote systems. Data that lives behind a web API rather than in a database you can connect to (CDC's open data portal, the Census Bureau) is covered in @sec-apis.
 
 ::: {.callout-note}
 Getting access to an institutional database involves IT, data stewards, and sometimes a data use agreement. That process is covered in @sec-governance. This chapter covers what to do once access is in hand.

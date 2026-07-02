@@ -1,0 +1,226 @@
+# APIs and Public Data Sources {#sec-apis}
+
+Not every analysis starts with data your agency collects. The denominators for your rates come from the Census Bureau, the national counts you compare against come from CDC, and both live on someone else's server, published for exactly this kind of use.
+
+The usual way to get that data is to browse to the portal, click through some filters, hit Export, and download a CSV, which works exactly once. Six months later, nobody remembers which filters were applied or whether the provider has revised the numbers since, and the download is the one step of the analysis that cannot be re-run.
+
+The fix is to script the download, and web APIs make that possible. This chapter covers how to pull data from public APIs in R: using a dedicated package when one exists, building requests with `httr2` when one does not, handling API keys, and structuring the pull so the rest of the analysis stays reproducible.
+
+::: {.callout-note}
+This chapter is about *public* data sources, where the data is intended for download and the main concerns are reproducibility and politeness. Getting access to your agency's internal databases is covered in @sec-databases, and the governance process around restricted data in @sec-governance.
+:::
+
+## What an API Request Looks Like {#sec-apis-anatomy}
+
+An API (application programming interface), for our purposes, is a URL that returns data instead of a web page. Here is a real one. CDC publishes NNDSS weekly notifiable disease counts on its open data portal, and this URL asks for the 2024 pertussis records:
+
+```
+https://data.cdc.gov/resource/x9gk-5huc.json?label=Pertussis&year=2024
+```
+
+The pieces: `data.cdc.gov` is the portal, `x9gk-5huc` identifies the dataset, `.json` is the response format, and everything after the `?` is a set of query parameters that filter the result. Paste it into a browser and you get back JSON, a plain-text format for structured data that looks like this:
+
+```{r}
+#| label: apis-json
+library(jsonlite)
+
+flu_json <- '[
+  {"county": "Fairfax",   "week": "2024-01-06", "cases": "23"},
+  {"county": "Arlington", "week": "2024-01-06", "cases": "41"}
+]'
+
+fromJSON(flu_json)
+```
+
+The `jsonlite` package converts JSON to a data frame, and for a flat, rectangular response like this the conversion is automatic. Notice that `cases` came back as a character column, quotes and all. Many APIs, including CDC's, return every field as a string regardless of what it contains. More on that in @sec-apis-validate.
+
+## Where Public Health Data Lives {#sec-apis-sources}
+
+A few sources cover most of what public health teams pull from outside their agency:
+
+| Source | What's there | How to access it |
+|---|---|---|
+| [data.cdc.gov](https://data.cdc.gov/) | CDC's open data portal: NNDSS, provisional deaths, vaccination coverage, BRFSS, and hundreds more | Socrata API; `RSocrata` or `httr2` |
+| [US Census Bureau](https://www.census.gov/data/developers.html) | ACS, decennial census, population estimates (your rate denominators) | `tidycensus` (free API key required) |
+| [CDC WONDER](https://wonder.cdc.gov/) | Mortality, natality, and other query systems | Web query tool; an API that accepts XML-formatted requests |
+| [HealthData.gov](https://healthdata.gov/) | Cross-agency HHS datasets | Varies by dataset |
+| State and local open data portals | Many jurisdictions run their own Socrata or CKAN portals | Same Socrata patterns as data.cdc.gov |
+
+## Use a Package When One Exists {#sec-apis-packages}
+
+Before writing any request code, check whether someone has already wrapped the API in an R package. A good wrapper handles authentication, pagination, and type conversion for you, and it encodes knowledge about the API's quirks that you would otherwise learn the hard way.
+
+The clearest example is [`tidycensus`](https://walker-data.com/tidycensus/), which wraps the Census Bureau APIs. Getting county population denominators for Virginia is a few lines:
+
+```{r}
+#| label: tidycensus-example
+#| eval: false
+library(tidycensus)
+
+# One-time setup: request a free key at
+# https://api.census.gov/data/key_signup.html
+census_api_key("YOUR_KEY_HERE", install = TRUE)
+
+va_pop <- get_acs(
+  geography = "county",
+  state = "VA",
+  variables = c(population = "B01003_001"),
+  year = 2023
+)
+```
+
+The result arrives as a tidy data frame with proper types, margins of error included. Kyle Walker's book *Analyzing US Census Data* [@walker2023census], freely available online, covers the census APIs and `tidycensus` in depth.
+
+For Socrata portals like data.cdc.gov, the [`RSocrata`](https://github.com/Chicago/RSocrata) package (maintained by the City of Chicago) does the same job. Point it at the dataset URL, filters and all:
+
+```{r}
+#| label: rsocrata-example
+#| eval: false
+library(RSocrata)
+
+pertussis <- read.socrata(
+  "https://data.cdc.gov/resource/x9gk-5huc.json?label=Pertussis&year=2024"
+)
+```
+
+`read.socrata()` pages through the full result automatically and converts date fields, two things you would otherwise handle yourself.
+
+## Building Requests with httr2 {#sec-apis-httr2}
+
+When no package exists, the [`httr2`](https://httr2.r-lib.org/) package is the general-purpose tool for talking to APIs from R. You build a request object piece by piece, then perform it.
+
+```{r}
+#| label: httr2-build
+#| message: false
+library(httr2)
+
+req <- request("https://data.cdc.gov/resource/x9gk-5huc.json") |>
+  req_url_query(
+    `$where` = "label='Pertussis' AND year='2024'",
+    `$limit` = 5000
+  )
+
+req
+```
+
+Printing the request shows the method and the assembled URL. Nothing has been sent yet; `req_url_query()` also took care of encoding the spaces and quotes in the `$where` clause. The `$where` and `$limit` parameters are part of Socrata's query language ([SoQL](https://dev.socrata.com/docs/queries/)), which supports SQL-like filtering, selecting, and ordering directly in the URL, so the server does the subsetting and you download only what you need, the same idea as filtering before `collect()` in @sec-databases.
+
+Performing the request and parsing the response:
+
+```{r}
+#| label: httr2-perform
+#| eval: false
+resp <- req_perform(req)
+pertussis <- resp_body_json(resp, simplifyVector = TRUE)
+```
+
+`simplifyVector = TRUE` hands the JSON to `jsonlite` for the same automatic data-frame conversion shown earlier.
+
+### Pagination
+
+APIs cap how many rows one request returns, and the cap is easy to miss. Socrata's default is 1,000 rows: ask for a dataset with 50,000 rows and you get the first 1,000, with no error and no warning. The `$limit` parameter raises the cap, and `$offset` requests subsequent pages. `httr2` can iterate the pages for you:
+
+```{r}
+#| label: httr2-pagination
+#| eval: false
+resps <- req_perform_iterative(
+  req,
+  next_req = iterate_with_offset(
+    "$offset",
+    start = 0,
+    offset = 5000,
+    resp_complete = \(resp) length(resp_body_json(resp)) == 0
+  ),
+  max_reqs = Inf
+)
+```
+
+Whatever tool you use, check the row count of what came back against what you expected. A suspiciously round number like exactly 1,000 or exactly 50,000 usually means you hit a cap.
+
+### Retries and politeness
+
+Public APIs fail transiently and rate-limit heavy users. Two `httr2` functions handle both concerns declaratively:
+
+```{r}
+#| label: httr2-retry
+#| eval: false
+req <- req |>
+  req_retry(max_tries = 3) |>
+  req_throttle(capacity = 30, fill_time_s = 60)
+```
+
+`req_retry()` retries automatically on transient failures with increasing wait times. `req_throttle()` caps your request rate (here, 30 requests per minute) so a loop over many queries does not hammer the server. Both matter more in automated pipelines (@sec-automation), where nobody is watching the requests go out.
+
+## API Keys and Tokens {#sec-apis-keys}
+
+Many APIs require a key, and others work better with one. The Census API requires a free key. Socrata portals work anonymously but throttle anonymous traffic aggressively; a free app token moves you to a much more generous rate limit. Keys are credentials, and the discipline is the same as for database passwords in @sec-databases-remote: keep them in `.Renviron`, read them with `Sys.getenv()`, and never commit them.
+
+```{r}
+#| label: app-token
+#| eval: false
+# .Renviron (git-ignored):  SOCRATA_APP_TOKEN=xxxxxxxxxx
+
+req <- request("https://data.cdc.gov/resource/x9gk-5huc.json") |>
+  req_headers(`X-App-Token` = Sys.getenv("SOCRATA_APP_TOKEN")) |>
+  req_url_query(`$where` = "label='Pertussis' AND year='2024'")
+```
+
+In a GitHub Actions pipeline, the token goes in the repository's secrets and reaches the job as an environment variable, exactly as described in @sec-automation-actions.
+
+## Separate the Pull from the Analysis {#sec-apis-pull}
+
+Do not put an API call at the top of an analysis script. Put it in its own script, write the raw response to `data/raw/` with a dated filename (@sec-dataorg-project), and have the analysis read the file.
+
+```{r}
+#| label: pull-script
+#| eval: false
+# 01-pull-nndss.R
+resp <- req_perform(req)
+
+writeLines(
+  resp_body_string(resp),
+  file.path("data", "raw", paste0(Sys.Date(), "-nndss-pertussis.json"))
+)
+```
+
+The main thing this buys is reproducibility. An API reflects the data as of right now, and many public health sources revise: CDC's provisional death counts, for example, are updated for recent weeks as certificates arrive, so the same query run a month apart returns different numbers. The dated raw file records exactly what you pulled and when, and that file, not the live API, is the input your analysis can be reproduced from. Separating the pull also means the analysis renders offline and keeps working when the API is down or the dataset moves, and iterating on a report no longer re-downloads the same data on every render.
+
+In an automated pipeline, the pull becomes its own step, scheduled with the tools in @sec-automation or declared as a `targets` node (@sec-automation-targets) so downstream steps rerun only when a new file lands.
+
+## Validate What Comes Back {#sec-apis-validate}
+
+Data from an API deserves the same skepticism as any other input, and it fails in two ways of its own.
+
+The first is types. As the JSON example at the start of the chapter showed, numeric fields often arrive as character. Coerce them explicitly, immediately after reading:
+
+```{r}
+#| label: coerce-types
+#| eval: false
+library(dplyr)
+pertussis <- pertussis |>
+  mutate(
+    year = as.integer(year),
+    week = as.integer(week),
+    m1 = as.integer(m1) # current-week case count
+  )
+```
+
+Explicit coercion beats automatic guessing because it fails loudly: if a count column suddenly contains `"suppressed"`, `as.integer()` warns and produces `NA`, which your validation will catch. Silent guessing just gives you a character column and a broken sum three steps later.
+
+The second is the schema, which can change under you. API responses often omit empty fields entirely. In the NNDSS data, a record with no current-week count simply has no `m1` element, so a pull where every record is empty for some field has no such column at all. Providers also add, rename, and retire columns without ceremony. A pull script that ran cleanly for a year can start returning something structurally different.
+
+Both problems have the same answer as in @sec-validation: validate right after the pull, checking that expected columns exist, types are correct, and values are in range, and fail loudly before anything downstream runs. A `pointblank` agent pointed at the freshly-read file is a few lines and turns a silent upstream change into an immediate, diagnosable error.
+
+## Practical Guidance {#sec-apis-practical}
+
+**Check for a package before writing request code.** A maintained wrapper like `tidycensus` or `RSocrata` already handles pagination, types, and authentication.
+
+**Filter on the server.** Use query parameters to request only the rows and columns you need, for the same reason you filter before `collect()` with a database.
+
+**Watch for silent row caps.** If the row count of a pull is a suspiciously round number, you probably got page one of many.
+
+**Archive what you pull.** A dated raw file in `data/raw/` is the reproducible input; the API is not, because the data behind it changes.
+
+**Treat keys like passwords.** `.Renviron` locally, repository secrets in CI, never in code.
+
+**Validate every pull.** Coerce types explicitly and check the schema, because the provider can change either one without telling you.
