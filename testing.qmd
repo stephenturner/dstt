@@ -1,0 +1,372 @@
+# Testing Analysis Code {#sec-testing}
+
+@sec-validation covers checking your data. This chapter covers checking your code. The two fail differently: data problems arrive from outside on any given week, while code problems are introduced by people, usually while editing something that used to work.
+
+Analysis code encodes decisions. Which counts get suppressed before a table goes public. What belongs in a rate denominator. Whether a week starts on Sunday or Monday. These decisions live in code that gets copied between projects, patched under deadline, and revisited months later by someone who was not in the room when the rule was written. A test records what the code is supposed to do and re-checks it every time you run the test suite. When someone edits the suppression rule next season, a broken test surfaces in seconds. Without the test, the break surfaces in a published table.
+
+You do not need to build an R package to write tests. Packages give tests a standard home (see @sec-package-development), but the [`testthat`](https://testthat.r-lib.org/) package works fine in an ordinary analysis project, and everything you write transfers directly if the code later graduates into a package.
+
+```{r}
+#| label: install-testthat
+#| eval: false
+
+install.packages("testthat")
+```
+
+## Start with Functions {#sec-testing-functions}
+
+You can only test code you can call. A rule buried in the middle of a 300-line script cannot be exercised on its own, so the first step toward testable code is pulling decisions out into functions.
+
+Consider a small-cell suppression rule: counts from 1 to 4 must be masked before data is released, per your agency's disclosure policy (@sec-governance-disclosure). Written inline, the rule looks like this, and probably appears in slightly different forms across several reports:
+
+```{r}
+#| label: inline-rule
+#| eval: false
+
+flu$cases_public <- ifelse(
+  !is.na(flu$cases) & flu$cases > 0 & flu$cases < 5,
+  NA,
+  flu$cases
+)
+```
+
+As a function, the rule has a name, one definition, and a place to attach tests:
+
+```{r}
+#| label: suppress-naive
+
+suppress_small <- function(x, threshold = 5) {
+  ifelse(!is.na(x) & x > 0 & x < threshold, NA, x)
+}
+```
+
+Extraction pays off even before any tests exist. When the threshold changes from 5 to 10, there is one place to edit instead of a scattering of near-duplicate `ifelse()` calls. Testing is what makes the function safe to change. (Keep this version of `suppress_small()` in mind. It has a bug, and a test will find it in @sec-testing-edges.)
+
+## First Tests with testthat {#sec-testing-testthat}
+
+A test wraps one behavior in `test_that()` with a plain-language description, and states expectations about what the function returns. Here is a rate calculation and its first test:
+
+```{r}
+#| label: first-test
+#| message: false
+
+library(testthat)
+
+calc_rate <- function(cases, population, per = 100000) {
+  cases / population * per
+}
+
+test_that("calc_rate computes per-100,000 rates", {
+  expect_equal(calc_rate(10, 100000), 10)
+  expect_equal(calc_rate(5, 50000), 10)
+})
+```
+
+The inputs are made up, and that is the point. You choose inputs where you can work out the correct answer by hand, then let the test confirm the code agrees. Ten cases in a population of 100,000 is a rate of 10 per 100,000 by definition, so if `calc_rate()` ever returns something else, the function is wrong.
+
+A failure looks like this. Suppose a well-meaning colleague edits the function to report per 1,000 instead, without telling anyone:
+
+```{r}
+#| label: first-test-fail
+#| error: true
+
+calc_rate <- function(cases, population, per = 1000) {
+  cases / population * per
+}
+
+test_that("calc_rate computes per-100,000 rates", {
+  expect_equal(calc_rate(10, 100000), 10)
+})
+```
+
+The failure names the test, shows the expected and actual values, and stops. Compare that with the alternative: every rate in next week's report is off by a factor of 100, and the first person to notice is a reader.
+
+```{r}
+#| label: restore-calc-rate
+#| include: false
+
+calc_rate <- function(cases, population, per = 100000) {
+  cases / population * per
+}
+```
+
+The description string matters more than it looks. `test_that("calc_rate computes per-100,000 rates", ...)` reads as documentation, and when the test fails six months from now, the description is the first thing you see. Write it as a claim about behavior, not a restatement of the function name.
+
+## Choosing Expectations {#sec-testing-expectations}
+
+`testthat` provides a family of `expect_*()` functions. A handful cover most analysis work:
+
+| Expectation | Checks that |
+|---|---|
+| `expect_equal(x, y)` | `x` equals `y`, within a small numeric tolerance |
+| `expect_identical(x, y)` | `x` and `y` are exactly the same, including type |
+| `expect_true(x)`, `expect_false(x)` | a condition holds |
+| `expect_error(code)` | the code throws an error |
+| `expect_warning(code)` | the code produces a warning |
+| `expect_length(x, n)` | `x` has length `n` |
+
+The distinction between `expect_equal()` and `expect_identical()` trips people up. Floating point arithmetic is not exact:
+
+```{r}
+#| label: float
+
+0.1 + 0.2 == 0.3
+```
+
+`expect_equal()` compares within a tolerance, so it treats `0.1 + 0.2` and `0.3` as equal. `expect_identical()` does not:
+
+```{r}
+#| label: float-test
+#| error: true
+
+test_that("floating point comparisons", {
+  expect_equal(0.1 + 0.2, 0.3)      # passes: equal within tolerance
+  expect_identical(0.1 + 0.2, 0.3)  # fails: not bit-for-bit identical
+})
+```
+
+Use `expect_equal()` for computed numbers. Reach for `expect_identical()` when exactness is the requirement: types, integer codes, character values, and the structure of returned objects.
+
+`expect_error()` turns defensive programming into a tested behavior. If `calc_rate()` should refuse character input rather than produce something misleading, write that down:
+
+```{r}
+#| label: expect-error
+
+test_that("calc_rate rejects non-numeric input", {
+  expect_error(calc_rate("10", 100000))
+})
+```
+
+This test passes because R refuses to divide a character string. If a future edit made the function silently coerce `"10"` to a number instead of failing, this test would catch the change in behavior.
+
+## Testing Edge Cases {#sec-testing-edges}
+
+Typical inputs are the easy part. Functions earn their keep at the edges: zeros, missing values, and values that sit exactly on a boundary. For the suppression rule, the edges are exactly where a disclosure policy is either honored or violated, so each one deserves an expectation. A count of 0 is not suppressed. A count of 4 is. A count of 5 is not, because the rule is strictly less than the threshold. Missing stays missing.
+
+There is one more requirement that is easy to miss: suppressed values must remain *numeric* missing values, so the column keeps its type when the data is written to a database (@sec-databases) or stacked with other tables. Test that with `expect_identical()`, against the `suppress_small()` from earlier:
+
+```{r}
+#| label: suppress-type-fail
+#| error: true
+
+test_that("suppressed values stay numeric", {
+  expect_identical(suppress_small(3), NA_real_)
+})
+```
+
+The test fails, and the message tells you why: the function returned a logical value where a number was expected. This is a real bug, and it comes from a quirk of `ifelse()`. The bare constant `NA` is logical, and when every element of the input gets suppressed, `ifelse()` returns a logical vector rather than a numeric one. A column that changes type depending on the values it happens to contain will eventually break a database write or a `bind_rows()` somewhere downstream, on the one week when every county's count is small.
+
+The fix is to use the typed constant `NA_real_`:
+
+```{r}
+#| label: suppress-fixed
+
+suppress_small <- function(x, threshold = 5) {
+  ifelse(!is.na(x) & x > 0 & x < threshold, NA_real_, x)
+}
+
+test_that("suppress_small handles boundaries, zeros, and missing values", {
+  expect_identical(suppress_small(3), NA_real_)
+  expect_identical(
+    suppress_small(c(0, 1, 4, 5, 12, NA)),
+    c(0, NA, NA, 5, 12, NA)
+  )
+})
+```
+
+That second expectation packs the whole policy into one line: zero passes through, 1 and 4 are masked, 5 survives because the boundary is exclusive, larger counts pass, and missing stays missing. Anyone reading the test file learns the suppression rule without opening the function.
+
+A short checklist of edges worth testing for surveillance-style functions:
+
+- Zero counts, and counts exactly at any threshold
+- `NA` in every argument that could plausibly contain one
+- Empty inputs (`numeric(0)`, a zero-row data frame)
+- A vector where *every* value triggers the special case
+- Denominators of zero
+
+## Regression Tests {#sec-testing-regression}
+
+That last item has a story behind it, and the story illustrates the most valuable habit in testing. Suppose the population lookup table gains a placeholder row with `population = 0`, and the next rendered report shows a rate of `Inf` for that county:
+
+```{r}
+#| label: inf-bug
+
+calc_rate(3, 0)
+```
+
+When you find a bug like this, resist the urge to fix it immediately. First, write a test that reproduces it:
+
+```{r}
+#| label: regression-fail
+#| error: true
+
+test_that("zero or missing population yields NA, not Inf", {
+  expect_identical(calc_rate(3, 0), NA_real_)
+  expect_identical(calc_rate(3, NA), NA_real_)
+})
+```
+
+The failing test does two jobs. It proves you understand the bug well enough to trigger it on demand, and it becomes a permanent guard: this exact mistake can never return unnoticed. Now fix the function and re-run everything, including the original tests, to confirm the fix did not break normal cases:
+
+```{r}
+#| label: regression-fixed
+
+calc_rate <- function(cases, population, per = 100000) {
+  ifelse(
+    is.na(population) | population <= 0,
+    NA_real_,
+    cases / population * per
+  )
+}
+
+test_that("zero or missing population yields NA, not Inf", {
+  expect_identical(calc_rate(3, 0), NA_real_)
+  expect_identical(calc_rate(3, NA), NA_real_)
+})
+
+test_that("calc_rate still computes per-100,000 rates", {
+  expect_equal(calc_rate(10, 100000), 10)
+  expect_equal(calc_rate(5, 50000), 10)
+})
+```
+
+Tests written this way accumulate into a history of every way the code has ever failed. That history is what makes refactoring safe: you can restructure the function completely, and if all the tests still pass, every bug you have ever fixed is still fixed.
+
+## Organizing Tests in a Project {#sec-testing-organize}
+
+So far the tests have run inline, which works for a book chapter but not for a project. The convention that scales is to keep functions and tests in parallel files:
+
+```
+flu-report/
+├── R/
+│   └── rates.R          # calc_rate(), suppress_small()
+├── tests/
+│   └── test-rates.R     # tests for rates.R
+├── report.qmd
+└── flu-report.Rproj
+```
+
+The functions live in `R/rates.R`:
+
+```{r}
+#| label: rates-file
+#| eval: false
+
+# R/rates.R
+
+calc_rate <- function(cases, population, per = 100000) {
+  ifelse(
+    is.na(population) | population <= 0,
+    NA_real_,
+    cases / population * per
+  )
+}
+
+suppress_small <- function(x, threshold = 5) {
+  ifelse(!is.na(x) & x > 0 & x < threshold, NA_real_, x)
+}
+```
+
+The test file sources the functions it tests, then states the expectations. Test filenames must start with `test` for testthat to find them:
+
+```{r}
+#| label: test-file
+#| eval: false
+
+# tests/test-rates.R
+
+source(file.path("..", "R", "rates.R"))
+
+test_that("calc_rate computes per-100,000 rates", {
+  expect_equal(calc_rate(10, 100000), 10)
+  expect_equal(calc_rate(5, 50000), 10)
+})
+
+test_that("zero or missing population yields NA, not Inf", {
+  expect_identical(calc_rate(3, 0), NA_real_)
+})
+
+test_that("suppress_small handles boundaries, zeros, and missing values", {
+  expect_identical(suppress_small(3), NA_real_)
+  expect_identical(
+    suppress_small(c(0, 1, 4, 5, 12, NA)),
+    c(0, NA, NA, 5, 12, NA)
+  )
+})
+```
+
+Run the whole suite from the project root with one call:
+
+```{r}
+#| label: test-dir-shown
+#| eval: false
+
+testthat::test_dir("tests")
+```
+
+```{r}
+#| label: test-dir-run
+#| echo: false
+#| message: false
+
+demo <- file.path(tempdir(), "flu-report")
+dir.create(file.path(demo, "R"), recursive = TRUE, showWarnings = FALSE)
+dir.create(file.path(demo, "tests"), recursive = TRUE, showWarnings = FALSE)
+
+writeLines(c(
+  'calc_rate <- function(cases, population, per = 100000) {',
+  '  ifelse(',
+  '    is.na(population) | population <= 0,',
+  '    NA_real_,',
+  '    cases / population * per',
+  '  )',
+  '}',
+  '',
+  'suppress_small <- function(x, threshold = 5) {',
+  '  ifelse(!is.na(x) & x > 0 & x < threshold, NA_real_, x)',
+  '}'
+), file.path(demo, "R", "rates.R"))
+
+writeLines(c(
+  'source(file.path("..", "R", "rates.R"))',
+  '',
+  'test_that("calc_rate computes per-100,000 rates", {',
+  '  expect_equal(calc_rate(10, 100000), 10)',
+  '  expect_equal(calc_rate(5, 50000), 10)',
+  '})',
+  '',
+  'test_that("zero or missing population yields NA, not Inf", {',
+  '  expect_identical(calc_rate(3, 0), NA_real_)',
+  '})',
+  '',
+  'test_that("suppress_small handles boundaries, zeros, and missing values", {',
+  '  expect_identical(suppress_small(3), NA_real_)',
+  '  expect_identical(',
+  '    suppress_small(c(0, 1, 4, 5, 12, NA)),',
+  '    c(0, NA, NA, 5, 12, NA)',
+  '  )',
+  '})'
+), file.path(demo, "tests", "test-rates.R"))
+
+withr::with_dir(demo, testthat::test_dir("tests"))
+```
+
+Run the suite before every commit (@sec-git), and any time you touch a function in `R/`. For recurring reports that render on a schedule, add the same call as a step in the GitHub Actions workflow (@sec-automation-actions) so the tests run on every push, on a machine that is not yours.
+
+::: {.callout-tip}
+## When the functions outgrow the project
+
+Once two or three projects source the same `rates.R`, the code is telling you it wants to be a package (@sec-package-development). The transition is mechanical: functions move to the package's `R/` directory, tests move to `tests/testthat/` via `usethis::use_test()`, and the `source()` line disappears because the package handles loading. Every `test_that()` block moves over unchanged, and `devtools::test()` replaces `test_dir()`.
+:::
+
+## Tests and Validation Are Different Checks {#sec-testing-vs-validation}
+
+This chapter and @sec-validation both preach writing checks, so it is easy to blur them together. They protect against different failures.
+
+Tests run on inputs you invented, at the moment you or a collaborator changes code. They answer: does the function still implement the rule we agreed on? Validation runs on real data, every time the pipeline executes. It answers: does this week's file meet our expectations? A passing test suite says nothing about Tuesday's data feed, and a pointblank agent says nothing about whether `calc_rate()` handles a zero denominator.
+
+The two meet in the middle. When validation catches a bad value that your code then mishandles, the incident produces one new validation rule and one new regression test. When a stakeholder reports a wrong number that both layers missed, same thing. A pipeline that has been running for a year under this habit is guarded by dozens of checks, each one earned from a specific failure, and peer review (@sec-peerreview) gets easier because the reviewer can read the tests to learn what the code promises.
+
+## Further Reading {#sec-testing-reading}
+
+The [testthat documentation](https://testthat.r-lib.org/) covers the full catalog of expectations, plus features not covered here such as snapshot tests and setup/teardown helpers. The [testing chapters of *R Packages*](https://r-pkgs.org/testing-basics.html) (Wickham and Bryan) are the deepest treatment of test design in R; nearly all of the advice applies to analysis projects even though the book's context is packages.

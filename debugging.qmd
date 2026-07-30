@@ -1,0 +1,233 @@
+# Debugging and Getting Help {#sec-debugging}
+
+Code fails in two ways. Sometimes it stops with an error, which is annoying but honest. Sometimes it runs to completion and produces a wrong answer, which is worse, and which @sec-validation and @sec-testing exist to defend against. This chapter is about what to do in the moment: an error you do not understand, a filter that returns zero rows, a number that cannot possibly be right, and a deadline.
+
+More than any tool, debugging is the discipline of treating a bug as a question with an answer: read what R actually said, find the exact line where reality diverged from your expectation, and inspect the state of the world at that line. Most of the time spent debugging is spent locating the problem. Once found, the fix is usually a few characters. The tools in this chapter (`traceback()`, `browser()`, pipeline bisection, `reprex`) are all just ways of locating faster, and the final section covers what to do when you are genuinely stuck: how to ask a question that gets answered, whether you are asking a colleague, a stranger on a forum, or an AI assistant.
+
+## Reading the Error Message {#sec-debugging-errors}
+
+The first debugging tool is the error message itself, read in full. This sounds too obvious to state, but the reflex to glaze over a red block of text and start changing code at random is nearly universal. R error messages range from excellent to baffling, and knowing the anatomy helps with both.
+
+Modern tidyverse errors are structured. Here is one from a `summarise()` call that references a column that does not exist (the column is `cases`, plural):
+
+```{r}
+#| label: setup-flu
+#| message: false
+
+library(dplyr)
+
+flu <- data.frame(
+  week = c(1, 1, 2, 2),
+  county = c("Fairfax", "Arlington", "Fairfax ", "Arlington"),
+  cases = c(23, 41, 30, 38)
+)
+```
+
+```{r}
+#| label: tidyverse-error
+#| error: true
+
+flu |>
+  group_by(county) |>
+  summarise(total = sum(case))
+```
+
+Read it from the bottom up. The line after `Caused by error:` is the actual problem: `object 'case' not found`. The lines above it are context telling you where the problem happened: inside the `total = sum(case)` argument, while processing the first group. The top line, `Error in summarise()`, is the least specific part, and it is the part people usually stop at. Whenever you see `Caused by error:`, skip straight to it.
+
+Base R errors are terser, and a few of them are famous for saying something true but unhelpful. These are worth recognizing on sight, because each cryptic message maps to a small set of likely causes:
+
+| Message | What it usually means |
+|---|---|
+| `object of type 'closure' is not subsettable` | You subsetted a function. Usually your data frame was never created, and its name collides with a function (`df`, `data`) |
+| `could not find function "%>%"` | The package providing the function is not loaded; add the `library()` call |
+| `object 'x' not found` | A typo, or code run out of order so the object does not exist yet |
+| `non-numeric argument to binary operator` | Arithmetic on a character column, often one that was silently imported as text |
+| `undefined columns selected` | A column name in `df[, "name"]` does not exist, often a typo or a renamed column |
+| `replacement has 4 rows, data has 5` | Assigning a vector of the wrong length into a data frame column |
+
+The first one deserves a demonstration because it terrifies newcomers and has a mundane cause. `df` happens to be a base R function (the F distribution density). If your script was supposed to create a data frame named `df` but that line never ran, the name still resolves, to the function:
+
+```{r}
+#| label: closure-error
+#| error: true
+
+df$cases
+```
+
+R is telling the exact truth: you asked for `$cases` from something that turned out to be a function. The fix is rarely at the error site. The real question is why your data frame does not exist, usually because code ran out of order or a prior line failed unnoticed. This message is common enough that Jenny Bryan's rstudio::conf(2020) talk on debugging is named after it (see @sec-debugging-reading).
+
+When a message means nothing to you, search for it. Strip out the parts specific to your code (your variable names, your file paths) and search the generic remainder in quotes. An error that has existed for years has been asked about publicly many times, and the same stripped message pasted to an AI assistant with a bit of surrounding code usually gets a correct diagnosis on the first try (@sec-ai).
+
+## Locating the Failure with traceback() {#sec-debugging-traceback}
+
+An error message tells you what went wrong. When your code is organized into functions that call other functions (as @sec-testing recommends), you also need to know where. Consider a small chain: a top-level function prepares report data by calling a helper, which calls another helper. The innermost function checks its inputs and refuses bad ones, a pattern from @sec-validation:
+
+```{r}
+#| label: traceback-setup
+
+calc_rate <- function(cases, population, per = 100000) {
+  if (!is.numeric(population)) stop("population must be numeric")
+  cases / population * per
+}
+
+add_rates <- function(df) {
+  df$rate <- calc_rate(df$cases, df$popn)
+  df
+}
+
+prep_report_data <- function(df) {
+  add_rates(df)
+}
+```
+
+```{r}
+#| label: traceback-error
+#| error: true
+
+flu2 <- data.frame(
+  county = c("Fairfax", "Arlington"),
+  cases = c(23, 41),
+  population = c(1147532, 238643)
+)
+
+prep_report_data(flu2)
+```
+
+The error surfaced in `calc_rate()`, but you called `prep_report_data()`. Immediately after an error, run `traceback()` in the console to see the chain of calls that led there:
+
+```
+> traceback()
+4: stop("population must be numeric")
+3: calc_rate(df$cases, df$popn)
+2: add_rates(df)
+1: prep_report_data(flu2)
+```
+
+Read from the bottom: your call at 1, down through each function, to the `stop()` at the top. The frame to stare at is the deepest one containing code you wrote, here frame 3, and it exposes the bug directly: `add_rates()` asks for `df$popn`, but the column is named `population`. In R, `df$popn` on a missing column is not an error; it returns `NULL`, which is why the failure appeared one call deeper, at the `is.numeric()` guard. Without that guard, this would have been much worse: `cases / NULL` produces a zero-length result rather than an error, and the bug would have sailed on.
+
+For errors raised inside tidyverse functions, `rlang::last_trace()` gives a cleaner, tree-shaped version of the same information, and the error message itself usually suggests running it.
+
+## Pausing Inside a Function with browser() {#sec-debugging-interactive}
+
+`traceback()` is an autopsy: it examines the call stack after death. Sometimes you need to inspect a function while it is alive, to see what the arguments actually contain at the moment things go wrong. `browser()` pauses execution wherever you place it and drops you into an interactive prompt inside the function's environment:
+
+```{r}
+#| label: browser-example
+#| eval: false
+
+add_rates <- function(df) {
+  browser()
+  df$rate <- calc_rate(df$cases, df$popn)
+  df
+}
+
+prep_report_data(flu2)
+```
+
+When execution reaches `browser()`, the console prompt changes to `Browse[1]>`, and you are standing inside `add_rates()` with access to everything the function can see:
+
+```
+Browse[1]> names(df)
+[1] "county"     "cases"      "population"
+Browse[1]> df$popn
+NULL
+```
+
+Two commands and the bug is in plain view. At the browser prompt, a few one-letter commands control execution:
+
+| Command | Effect |
+|---|---|
+| `n` | Run the next line, staying in this function |
+| `s` | Step into the function call on the next line |
+| `c` | Continue running normally |
+| `Q` | Quit the debugger and abandon the call |
+| `where` | Print the current call stack |
+
+Anything else you type is evaluated as ordinary R inside the paused function, which is where the real value is: `names(df)`, `nrow(df)`, `summary(df$cases)`, whatever the situation calls for.
+
+Editing a function to insert `browser()` (and remembering to remove it before committing) is often unnecessary. `debugonce(add_rates)` flags a function so that its next call, and only its next call, starts in the debugger, with no changes to the source. This is the better habit for functions inside packages, where you cannot casually edit the source at all.
+
+::: {.callout-tip}
+Both RStudio and Positron integrate with the debugger: when execution pauses, the editor highlights the current line, and a panel shows the objects in the function's environment. The one-letter commands work the same way. Positron's debugging support is documented at <https://positron.posit.co/guide-r-debugging.html>.
+:::
+
+## When the Code Runs but the Answer Is Wrong {#sec-debugging-wrong}
+
+Errors at least tell you where to look. The harder class of bug produces no message at all: the pipeline runs and the output is wrong. A case count is lower than last week's report for the same week. A county is missing from a table. A filter you know should match returns nothing:
+
+```{r}
+#| label: silent-zero-rows
+
+flu |>
+  filter(county == "Fairfax", week == 2)
+```
+
+Zero rows, no error, and week 2 for Fairfax exists in the data. The technique for this class of bug is bisection: run the pipeline one step at a time and inspect the result after each step, checking row counts and the actual values against what you expect. The first step where the output surprises you is where the bug lives. Here the pipeline has only one step, so inspect the inputs to the comparison itself:
+
+```{r}
+#| label: silent-diagnose
+
+flu |> count(county)
+```
+
+There it is. The week 2 record is `"Fairfax "` with a trailing space, a different string from `"Fairfax"`, and invisible in most printed output. Whitespace, inconsistent capitalization, and lookalike characters are endemic in data that has passed through human hands or Excel (@sec-legacy-excel). The immediate fix is to normalize the text before comparing:
+
+```{r}
+#| label: silent-fix
+
+flu |>
+  mutate(county = trimws(county)) |>
+  filter(county == "Fairfax", week == 2)
+```
+
+A few habits make this whole class of bug surface quickly:
+
+- After any `filter()` or join, check `nrow()` against a rough expectation. A merge that should be one-to-one and returns more rows than it started with has duplicate keys; one that returns rows full of `NA` has mismatched keys. `anti_join()` shows exactly which keys failed to match.
+- `count()` on any grouping column before grouping by it. Near-duplicate categories like the one above announce themselves immediately.
+- Print `summary()` of a numeric column before and after a transformation. Impossible values (negative counts, rates above the population) are visible in the min and max.
+
+Notice that each of these diagnostic checks is a validation rule waiting to be written down. The trailing-space incident should end with a `col_vals_in_set()` check on `county` in your pointblank agent (@sec-validation-pointblank), so the next stray character fails loudly at import instead of erasing a county from a report. If the wrong answer traced to a function you wrote, it should also end with a regression test (@sec-testing-regression). Debugging finds problems once; validation and tests keep them found.
+
+## Shrinking the Problem: Minimal Reproducible Examples {#sec-debugging-reprex}
+
+When the techniques above have not cracked it, the next step is to shrink the problem: the smallest data and the shortest code that still misbehave. This is called a minimal reproducible example, or reprex, and it is simultaneously a debugging technique and the price of admission for asking anyone else for help.
+
+Shrinking is diagnostic in its own right. Start deleting things: pipeline steps, columns, rows, packages. If the bug disappears when you remove a step, that step is implicated. If it persists with a 4-row toy data frame, your real data is exonerated and the logic is at fault. Experienced R users will tell you that some large fraction of the time, they never finish writing the reprex, because the act of isolating the failure reveals it.
+
+A reprex must be self-contained: someone who runs only what you provide sees the failure you see. That means constructing the data in code, either a small `data.frame()` typed by hand, a built-in dataset like `mtcars`, or a snippet of your real data serialized with `dput()`:
+
+```{r}
+#| label: dput-example
+
+dput(head(flu, 4))
+```
+
+The output is R code that recreates the object exactly, trailing space and all, ready to paste at the top of the example. (Never `dput()` real surveillance records into a public forum; recreate the problem with fake values, per @sec-governance-disclosure.)
+
+The [`reprex`](https://reprex.tidyverse.org/) package handles the mechanics. Copy your candidate code to the clipboard and run:
+
+```{r}
+#| label: reprex-run
+#| eval: false
+
+reprex::reprex()
+```
+
+It executes the code in a fresh, empty R session and puts nicely formatted output, including the error, on the clipboard, ready to paste into a GitHub issue, forum post, or chat message. The fresh session is the point. If the failure depends on anything in your workspace, the reprex will not reproduce it, and that itself is a diagnosis: your script depends on objects or loaded packages it does not create, usually from running chunks out of order. Restart R and run the script top to bottom.
+
+## Asking for Help {#sec-debugging-help}
+
+You have read the message, traced the failure, and built a reprex that still misbehaves. Asking for help is now cheap for you and easy for the person answering, because the reprex does most of the talking. A good request has three parts: what you expected, what happened instead (the complete error, not a paraphrase), and the reprex that demonstrates it.
+
+Where to take it depends on the problem:
+
+- A colleague, first. Explaining a bug out loud finds the flaw in your own reasoning often enough that programmers keep rubber ducks on their desks for the purpose. Teams work better when asking early is normal; a common team norm is to timebox solo struggling to something like 30 minutes, then ask, leading with what you already tried (@sec-team).
+- An AI assistant. Paste the complete error message and the reprex, and ask for a diagnosis before a fix, so you can judge whether the model actually understood the problem. The assistants covered in @sec-ai are strong at exactly the errors in this chapter's table, and agentic tools like Claude Code can run your reprex and iterate on it (@sec-ai-claude-code). Treat the answer as a hypothesis to verify, not a verdict.
+- The package's documentation and issue tracker, when the problem is package-specific. Read the relevant vignette, then search the GitHub issues, including closed ones. If you have found a genuine bug, that reprex becomes the heart of a good bug report.
+- [Posit Community](https://forum.posit.co/) or [Stack Overflow](https://stackoverflow.com/questions/tagged/r), for questions with no obvious owner. Both communities respond well to a clear reprex and poorly to screenshots of code and "it doesn't work."
+
+One caution on the last two: public forums are public. Between the reprex discipline (fake data, no internal paths or credentials) and your agency's disclosure rules, nothing about a real person or a real record should appear in a posted question.
+
+## Further Reading {#sec-debugging-reading}
+
+Jenny Bryan's rstudio::conf(2020) talk [*Object of type 'closure' is not subsettable*](https://posit.co/resources/videos/object-of-type-closure-is-not-subsettable/) is the best hour available on practical debugging in R, covering restart-and-rerun hygiene, `traceback()`, `browser()`, and the reprex mindset. The [debugging chapter of *Advanced R*](https://adv-r.hadley.nz/debugging.html) (Wickham) goes deeper on the tools, including `options(error = recover)` and debugging inside RMarkdown/Quarto documents. The [reprex package documentation](https://reprex.tidyverse.org/) includes a "reprex do's and don'ts" article worth reading once before your first public question.

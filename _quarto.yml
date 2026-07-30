@@ -32,6 +32,8 @@ book:
         - git.qmd
         - dataorg.qmd
         - validation.qmd
+        - testing.qmd
+        - debugging.qmd
         - reporting.qmd
         - accessibility.qmd
         - ai.qmd
