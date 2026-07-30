@@ -66,6 +66,8 @@ Branches let multiple people work on different features or fixes simultaneously 
 
 In most team workflows, the `main` branch is protected — direct pushes are disabled and changes must go through a pull request (PR) with at least one reviewer. Developers create short-lived branches for each piece of work, then open a PR when ready.
 
+Whatever branch naming convention a team adopts (tying the branch name to an issue number, as in `142-fix-denominator`, works well), record it where a new analyst will find it (@sec-onboarding-conventions). A practice repository, where someone can branch, break something, and open a PR without touching a production pipeline, is an effective way to teach this workflow (@sec-onboarding-practice).
+
 ```{mermaid}
 ---
 config:

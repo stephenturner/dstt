@@ -1,0 +1,139 @@
+# Onboarding and the Team Handbook {#sec-onboarding}
+
+Staff leave with two weeks' notice. Fellows rotate on an annual cycle. Someone goes on parental leave in the middle of a surveillance season, and the person covering has never opened the script. In each case a recurring product has to change hands in a window too short to write documentation from scratch.
+
+@sec-team-onboarding frames this as the bus factor problem and identifies the practices that mitigate it. This chapter concerns the artifact those practices produce: a written handbook a new analyst can follow on the first day, which continues to function after its author departs.
+
+## The Handbook as an Artifact {#sec-onboarding-why}
+
+Most teams know they should document their work. What they produce is scattered: a README in one repository, a data dictionary in a shared drive folder, setup instructions in an old email thread, and a substantial body of knowledge existing only as habit in one person's hands.
+
+A handbook differs in having a single entry point. A new staff member is directed to one document, and everything required is either in it or linked from it. That property is what converts onboarding from an apprenticeship into a checklist, and an apprenticeship is precisely what cannot be run when the expert is the person who has just resigned.
+
+The handbook is also the mechanism by which a team becomes self-sufficient. A team whose senior analyst can hand a new hire a document rather than a week of their own time has capacity that a team relying on personal instruction does not.
+
+::: {.callout-note}
+A handbook is distinct from project documentation. @sec-documentation covers READMEs, inline comments, and data dictionaries, which document specific code and specific datasets. The handbook documents how the team operates: where things are, who approves what, and what to do when an extract fails.
+:::
+
+## Contents of the Handbook {#sec-onboarding-contents}
+
+A workable table of contents for a small public health analytic team:
+
+1. Orientation: what the team does, which products it delivers and on what cadence, and who the stakeholders are.
+2. Environment setup: installing and configuring R, Positron, Git, and any database drivers on an agency-managed machine. @sec-environments covers the reproducible-environment side of this.
+3. Access requests: every system the team touches, who owns it, who approves access, which form to file, and typical approval time. This section saves the most calendar time, because a new analyst who files all access requests on the first day becomes productive weeks earlier than one who discovers each requirement upon encountering it.
+4. Repository layout and naming conventions: where code lives, where data lives, and how projects are named (@sec-dataorg, @sec-git).
+5. Update protocols, one document per recurring product, covered below.
+6. Data source inventory: every source the team uses, its origin, its update frequency, its upstream owner, and its known defects.
+7. Glossary and metric definitions: what the team means by a case, a rate, a denominator, and a reporting week. Disagreements here produce figures that do not reconcile across products.
+8. Contacts: names and roles for upstream data owners, IT contacts, the disclosure reviewer, and whoever understands why the county denominators are adjusted.
+
+Keep the handbook in version control alongside the code, written in markdown and rendered if desired. A handbook stored on a shared drive as a word processor document drifts out of date without the drift being visible.
+
+## Testing Setup Documentation {#sec-onboarding-setup}
+
+The highest-value technique in this chapter requires an afternoon.
+
+Write the setup instructions, then hand them to someone who has never performed the setup, sit beside them, and observe. Provide no assistance. Record every point at which they stop, guess, or ask a question. Those points are the gaps in the documentation, and there is no other reliable way to locate them, because the author of a set of instructions cannot perceive their own assumptions.
+
+Choosing a senior colleague as the test subject works better than choosing a new hire, because an experienced person will report that an instruction is unclear rather than concluding that they are the problem.
+
+The failures fall into predictable categories. Steps assuming software is already installed. Steps assuming a permission the author holds and the reader does not. Screenshots taken from a different version of the interface. A command copied from a Unix terminal handed to someone on a locked-down Windows machine. An instruction to clone the repository given to someone who has never used Git.
+
+::: {.callout-tip}
+Date screenshots, or record the software version they depict. Screenshots are the fastest way to make setup instructions usable and the fastest element to become obsolete. A line reading "screenshots current as of GitLab 17.2, October 2025" tells the reader whether to trust what they are looking at.
+:::
+
+## Conventions {#sec-onboarding-conventions}
+
+Conventions are invisible until someone violates one. Record the conventions that cause real friction.
+
+Branch naming tied to issue tickets, so that a branch named `142-fix-denominator` connects the work to the ticket explaining why it exists, keeps merge request history legible months later (@sec-git-branching).
+
+Commit granularity, stated as one logical change per commit, is more useful accompanied by an example of a good commit and a poor one drawn from your own repository.
+
+File naming conventions follow the principles in @sec-dataorg. The handbook records the specific choice the team made, including the date format, since much of the value lies in everyone having chosen the same thing.
+
+The separation between where data lives and where code lives, and what is never committed, prevents a predictable failure. A new analyst who commits a 400 MB extract has not behaved unreasonably if nobody stated the rule.
+
+## Update Protocols {#sec-onboarding-protocols}
+
+For each recurring product the team delivers, write one document covering the steps required to produce it, the inputs and their sources, the expected outputs and their appearance, the known failure modes and the response to each, and whom to contact for anything not listed.
+
+These documents serve two purposes. They are the coverage plan when the owner is unavailable, and they are the training material when someone new assumes the product.
+
+They also locate a team's silos. Where a team has specialized, with one person in biosurveillance, one writing R, and one maintaining the dashboard, the incomplete section of the protocol document is reliably the handoff between two people's territories. Gaps in protocol documentation indicate where knowledge is not shared.
+
+::: {.callout-warning}
+The failure modes section is the part most often omitted and the part that matters most. A line reading "if the query returns zero rows, check whether the facility list changed; this occurs roughly twice a year" is worth more than three pages describing the successful path. Add an entry each time something breaks.
+:::
+
+## Practice Repositories and Training Data {#sec-onboarding-practice}
+
+New analysts require somewhere to make mistakes. A practice repository seeded with a small realistic project allows someone to learn the team's Git workflow by branching, breaking something, and opening a merge request without touching a production pipeline. Teaching branching this way is consistently more effective than explaining it.
+
+The data equivalent is a set of standardized training datasets mirroring the structure of real data without the protected information: the same column names, the same types, the same awkward date formats, the same known quirks, with fabricated values. Their utility extends well beyond onboarding. They are what you develop against before entering a secure environment (@sec-governance-secure), what you use to demonstrate a problem to a colleague, and what you provide to a support request or an AI assistant in place of real records (@sec-aigovernance).
+
+Building them is not free, and the task never becomes urgent on its own. The argument that funds it is that the same datasets serve onboarding, development, and debugging. A team establishing shared enterprise datasets (@sec-infrastructure-enterprise) is already performing most of the specification work, so the training versions should be built in the same effort.
+
+## Cross-Training {#sec-onboarding-crosstraining}
+
+Specialization occurs without anyone deciding on it. One person becomes the dashboard person, another the R person, another the one who understands the syndromic surveillance feed. The arrangement is efficient until one of them is unavailable.
+
+Rotating ownership of recurring products is the practical countermeasure, and it must be scheduled deliberately, because the convenient moment never arrives. Select one product per quarter. The current owner does not run it; they sit with a colleague while that colleague runs it from the protocol document, and every inaccuracy in the document is corrected as it is found. The result is a tested protocol and a second person who has performed the work, which differs from a second person who has read about it.
+
+The rotation is worth completing before a known absence rather than after a surprise one. Teams that handle parental leave, overlapping PTO, and the question of who covers a script have generally answered that question in advance.
+
+::: {.callout-note}
+Pair rotation with code review (@sec-peerreview). Reviewing a colleague's work on a product you have never run produces a weak review. Reviewing it after having run the product yourself produces a substantive one, so cross-training improves review in both directions.
+:::
+
+## Handoff and Offboarding {#sec-onboarding-offboarding}
+
+Two weeks is the customary notice period and is insufficient for writing documentation from scratch. It is sufficient for executing a checklist that already exists.
+
+Inventory what the departing person owns: every recurring product, repository, scheduled job, credential, and relationship with an upstream data owner. Compile this before it is needed and keep it in the handbook.
+
+Name the receiving owner for each item by name rather than assigning it to the team.
+
+Run each recurring product once, with the departing person observing and the new owner operating from the protocol document, correcting the document wherever it fails.
+
+Transfer or reissue credentials. Scheduled jobs running under a departing employee's account are a common cause of a pipeline dying several weeks after their last day, and the failure is particularly damaging because nothing errors visibly until an expected report does not arrive (@sec-automation-monitoring).
+
+Record the undocumented reasoning. Half an hour spent asking why a county is excluded and why the March file is used rather than the April one recovers knowledge that is otherwise lost.
+
+Update the handbook, including the contacts section, before the last day.
+
+## Adapting an Existing Handbook {#sec-onboarding-borrowing}
+
+Beginning from a blank page is the slowest available approach. Other agencies have written most of what you need, and many publish it.
+
+Adapting a borrowed handbook is faster than drafting one, and the translation is where much of the value lies. Converting instructions written for a hosted Git service into instructions for a self-hosted instance requires stating how your instance differs. Converting instructions written for a team with a managed analytics server requires stating where your team actually executes code. Each substitution surfaces an assumption that had not been written down, by the same mechanism as observing a new person fail at your setup instructions, at lower cost.
+
+Ask through whatever professional network or community platform your team participates in. Agencies are generally willing to share, and they are solving the same problems in parallel without any means of discovering one another.
+
+## Maintaining the Handbook {#sec-onboarding-maintenance}
+
+An unowned handbook becomes inaccurate within a year, and an inaccurate handbook is worse than none, because a new staff member will follow it into a dead end and lose a day.
+
+Assign an owner by name. Review on a schedule, quarterly being reasonable for a small team, and attach the review to something that already occurs so that it requires no independent motivation. The natural triggers are onboarding a new person, which constitutes a free audit, and any occasion when a protocol document proves wrong during an incident.
+
+Keep edits inexpensive. A handbook requiring a merge request, three reviewers, and a rendering step will not be updated during the ten minutes when someone notices a broken instruction. Markdown files in the team repository with a low review threshold strike an appropriate balance.
+
+::: {.callout-tip}
+The best occasion to write a handbook section is the first time you explain something to a colleague. The explanation is already being composed; recording it is cheaper than delivering it twice.
+:::
+
+## The IT Liaison {#sec-onboarding-it}
+
+Teams with an IT representative embedded as an actual member clear infrastructure and access barriers considerably faster than teams filing tickets into a queue.
+
+The difference is not technical skill. An embedded representative attends the meeting where a problem surfaces, understands why the request matters, and can say that something will take four months and propose an alternative in the moment rather than three weeks later in a ticket comment. @sec-pm-it covers working with IT as an external partner, which is the arrangement most teams have. Where team composition is within your control, name an IT representative as a member and record them in the handbook's contacts section with a substantive role rather than as an escalation path.
+
+## Further Reading {#sec-onboarding-reading}
+
+- @sec-documentation covers the code-level and project-level documentation the handbook links to rather than duplicates.
+- @sec-team covers roles, hiring, and retention, of which onboarding is one component.
+- @sec-trainingbudget covers funding the training that a new analyst's onboarding plan identifies as a gap.
+- GitLab publishes its complete company handbook at [handbook.gitlab.com](https://handbook.gitlab.com/). It is far larger than a small analytic team requires and is the best available example of a handbook-first organization. The sections describing how the handbook itself is maintained are the relevant ones.

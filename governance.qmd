@@ -128,7 +128,7 @@ When data cannot leave a controlled environment, the analysis has to come to the
 
 **Resolve package dependencies before entering the environment.** Use `renv` (see @sec-environments) to capture your project's exact package list. Submit the lockfile to IT for review; they can pre-install those packages in the secure environment, or arrange an approved intake path. Discovering mid-analysis that a package is unavailable is a significant delay.
 
-**Plan the analysis before entering.** Write and test your code on a representative mock dataset (public-use data with similar structure, or synthetic data generated from the real data's structure) before bringing the code into the secure environment. The enclave is not the place to iterate on exploratory analysis.
+**Plan the analysis before entering.** Write and test your code on a representative mock dataset (public-use data with similar structure, or synthetic data generated from the real data's structure) before bringing the code into the secure environment. The enclave is not the place to iterate on exploratory analysis. The same mock datasets are what make it safe to use an AI coding assistant while you develop (@sec-aigovernance-phi).
 
 **Keep code in version control accessible from within the environment.** Some enclaves have access to an internal Git server, or allow code to be transferred via an approved intake process. Maintain your code in a repository (see @sec-git) so it can be moved in as a single unit.
 
@@ -171,3 +171,5 @@ A reviewer will typically check:
 - Percentages, rates, and proportions are checked: a rate computed from a suppressed count is itself suppressed
 
 When reporting suppressed data to a lay audience, explain why: "Data suppressed to protect individual privacy" is preferable to an unexplained asterisk or blank cell.
+
+Suppression rules also constrain design decisions upstream of the output. A dashboard permitting users to filter to a single county, a single month, and a single age group will eventually produce a cell below the threshold, whatever the default view displays. Publishing at quarterly rather than monthly granularity is a common remedy. Choosing the aggregation grain with these thresholds in mind, and applying suppression in code on the way out, is covered in @sec-bi-aggregate.

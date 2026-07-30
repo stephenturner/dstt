@@ -2,6 +2,8 @@
 
 Loading packages in R is easy enough to do carelessly. A script accumulates ten or fifteen `library()` calls, and everything runs until it does not. An analyst's `select()` call starts returning the wrong results, and nothing errors to say so. Scrolling to the top of the script reveals that MASS was loaded after dplyr, giving `MASS::select()` precedence over `dplyr::select()`. No warning, just the wrong function running.
 
+This chapter is about the packages you have already decided to use: how they interact once loaded, and how to keep that interaction predictable. @sec-dependencies covers the prior question of whether to take on a package at all, and how to tell a healthy one from a liability.
+
 ## How R's search path works {#sec-packageloading-searchpath}
 
 When you call `library()`, R attaches the package to the *search path*, an ordered list of environments R searches when resolving a name. You can inspect it at any time:

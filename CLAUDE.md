@@ -37,6 +37,8 @@ Chapters and appendices are declared in `_quarto.yml`. To add content:
 
 ## Exercises
 
+**Current status: no chapter uses exercises.** The machinery below is documented and available, but the book is written as reference material rather than a workbook. Do not add exercises to individual chapters piecemeal; adding them is a book-wide pass, not a per-chapter decision. If that pass never happens, delete this section.
+
 Each chapter that contains exercises must reset the counter at the top:
 
 ```r

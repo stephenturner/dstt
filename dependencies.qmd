@@ -1,0 +1,170 @@
+# Managing Package Dependencies {#sec-dependencies}
+
+@sec-packageloading covers what happens when you call `library()`: the search path, masking, and how to keep a script's package block honest. @sec-environments covers pinning versions with `renv` and freezing an entire environment into a container. Neither addresses a prior question, which is whether to take on a package at all.
+
+Every dependency is a commitment to code maintained by someone else, on their schedule and according to their priorities. Most of those commitments are worth making; R's package system is the reason nobody writes their own CSV parser. The ones that go badly tend to fail at inconvenient times, in an automated job, on a Linux server, months after the person who introduced the dependency has moved on.
+
+## The Cost of a Dependency {#sec-dependencies-cost}
+
+The cost is not disk space. It appears in five places.
+
+**Install time.** Packages install from binaries in seconds on macOS and Windows. On Linux servers and inside Docker builds they usually compile from source. A dependency tree that installs in ten seconds on a laptop can take fifteen minutes in a container, and that cost is paid on every rebuild.
+
+**System libraries.** Some R packages wrap C or C++ libraries that must be present on the machine. Installing them requires installing those libraries, which requires a system administrator and a package manager command. This is the most common source of code that works on one machine and not another.
+
+**Breakage surface.** Any package in the recursive dependency tree can alter your results by changing its behavior, and you selected almost none of them. You chose one package; it brought forty.
+
+**Container size.** Images grow with the dependency tree. A 400 MB image pulls faster and costs less to store than a 4 GB image, and in a scheduled pipeline that pull recurs (@sec-automation-environment).
+
+**Maintenance attention.** Each dependency is something to update, something whose release notes may matter, and something to explain to the next analyst.
+
+## Measuring Dependency Weight {#sec-dependencies-weight}
+
+The recursive tree can be counted before committing to anything. `tools::package_dependencies()` ships with base R:
+
+```{r}
+#| label: deps-count
+#| eval: false
+db <- available.packages()
+
+deps <- tools::package_dependencies(
+  "dplyr",
+  db = db,
+  recursive = TRUE,
+  which = c("Depends", "Imports", "LinkingTo")
+)
+
+length(unlist(deps))
+```
+
+`pak::pkg_deps_tree()` presents the same information as a tree, which identifies *which* package contributes the weight:
+
+```{r}
+#| label: deps-tree
+#| eval: false
+pak::pkg_deps_tree("httr2")
+```
+
+Applied to packages a public health team is likely to consider, counting recursive hard dependencies and excluding base and recommended packages:
+
+| Package | Recursive dependencies | Notes |
+|---|---:|---|
+| `data.table` | 1 | Near-zero by design |
+| `httr2` | 16 | |
+| `dplyr` | 18 | |
+| `sf` | 18 | Plus GDAL, GEOS, and PROJ system libraries |
+| `targets` | 39 | |
+| `tidyverse` | 106 | Meta-package |
+| `tidymodels` | 119 | Meta-package |
+
+The `sf` row demonstrates why a raw count is only half the measurement. By R package count, `sf` and `dplyr` are equivalent. In a Docker build they are not comparable, because `sf` requires three substantial C++ geospatial libraries with their own versions, their own compatibility constraints, and their own history of breaking when a base image is updated. Adding mapping to a containerized pipeline commonly extends the build from two minutes to twenty-five.
+
+::: {.callout-tip}
+Check the `SystemRequirements` field on a package's CRAN page before adding anything geospatial, anything that renders images, anything that connects to a database, or anything built on Rcpp. That field is where long container builds originate.
+:::
+
+Dependency weight matters most where builds are automated and least where a person installs once. For interactive exploration, take the heavy package. For a nightly job running in a container, count first.
+
+## Meta-Packages {#sec-dependencies-meta}
+
+`library(tidyverse)` attaches nine packages and installs more than a hundred. @sec-packageloading-minimal presents the search-path argument for naming packages individually; the dependency argument points the same direction.
+
+Meta-packages are appropriate for interactive work, teaching, exploratory analysis, and any script that genuinely uses most of what they load. The convenience is real and the cost is not noticeable in those settings.
+
+Naming individual packages is appropriate for production pipelines, containers, packages under development, and anything another team must install. A header reading `library(dplyr)`, `library(readr)`, `library(ggplot2)` states its requirements precisely. `library(tidyverse)` states that some subset of nine packages is required. The same reasoning applies to `tidymodels`: if a modeling script uses `parsnip` and `recipes`, name them.
+
+## Vetting a Package {#sec-dependencies-vetting}
+
+Ten minutes of review before adopting a package covers most of the risk.
+
+**Date of last release.** A package with no release in three years is either finished or abandoned, and the two are indistinguishable from the outside. The open issues usually indicate which.
+
+**Issue response.** Sort the issue tracker by most recent. Maintainer replies on the last several issues indicate an active package. Issues open for eighteen months without comment indicate otherwise.
+
+**Reverse dependencies.** A package that a hundred other CRAN packages depend on will not disappear without many people noticing. CRAN lists these on each package page.
+
+**CRAN check status.** The package page reports check results across platforms. Persistent failures on a platform you use are a warning.
+
+**Pinned dependency versions.** A `DESCRIPTION` requiring an older version of something you also use directly creates a conflict, and it generally indicates the package has not been updated to track what it depends on.
+
+**Maintainer.** Single-maintainer packages are the backbone of R and also the highest continuity risk. This is information rather than a disqualification. A single-maintainer utility package is unremarkable; a single-maintainer package at the center of a surveillance pipeline warrants a contingency plan.
+
+**Independent upstream changes.** A package wrapping a vendor's REST API depends on both the maintainer's attention and the vendor's release schedule, and the vendor has no obligation to the package.
+
+::: {.callout-warning}
+The last two criteria compound. A wrapper package that is on CRAN, currently functional, singly maintained, not recently updated, and pinned to an older dependency has no present defect. Its failure mode is that the vendor ships an API change and no one updates the wrapper, at which point a pipeline that ran reliably for a year stops. Writing the equivalent twenty lines of `httr2` directly (@sec-bi-publishing) means the fix is yours to make.
+:::
+
+None of these findings is automatically disqualifying. The purpose of the review is to make the decision knowingly rather than to discover the package's condition when it fails.
+
+## Auditing an Existing Project {#sec-dependencies-audit}
+
+Most teams inherit a dependency list rather than choosing one. Before deciding what to add, establish what is already present.
+
+`renv::dependencies()` scans a project directory for every `library()`, `require()`, and `::` call and reports which packages the project uses and which file each reference came from:
+
+```{r}
+#| label: deps-audit
+#| eval: false
+renv::dependencies()
+```
+
+Three findings are worth acting on. Packages appearing exactly once are candidates for `::` in place of `library()`, or for removal. Packages nobody on the team recognizes are usually residue from an abandoned approach. Packages appearing in a script but not in the environment documentation are how a pipeline that runs today fails on a new machine.
+
+A first pass over an inherited pipeline commonly removes a substantial fraction of the `library()` calls without changing any result. Doing this before containerizing is worthwhile, since every removed package is install time no longer paid on every build.
+
+## Lifecycle Stages {#sec-dependencies-lifecycle}
+
+Tidyverse packages label functions with lifecycle stages: stable, experimental, superseded, and deprecated. The badges appear in the documentation and carry specific meanings.
+
+Stable functions are safe to build on. Superseded functions continue to work indefinitely and receive no new features, so migration is a matter of convenience rather than urgency. Experimental functions may still change their interface; they are reasonable in analysis code you control and worth avoiding in a package other people install. Deprecated functions will eventually error, so migration should happen on your schedule rather than on the maintainer's.
+
+The stages interact in a way that affects teams. `tidyr::separate()` is deprecated, and its replacements, `separate_wider_delim()` and its siblings, are marked experimental. Adopting the replacements is reasonable, and it requires that everyone on the team run a compatible version of `tidyr` at the same time, or a script that works on one machine will error on another. Because the deprecated function continues to work, there is no reason to make the change hurriedly.
+
+```{r}
+#| label: deps-version-check
+packageVersion("dplyr")
+```
+
+A version check in the setup chunk of a shared script surfaces version skew early, and is worth including whenever a script depends on a function whose behavior has recently changed.
+
+## Version Consistency Across a Team {#sec-dependencies-versions}
+
+The failure is subtle. An analyst updates a package, a function's default changes, the results shift, and nothing errors. Or the reverse, where new code fails on a colleague's older installation and the code is presumed broken.
+
+`renv` addresses this, and @sec-environments-renv covers it in detail. The relevant point here is the handoff: `renv` records the exact versions a project uses in a lockfile committed to the repository, and `renv::restore()` reproduces them. This chapter is about deciding what belongs in that lockfile; `renv` makes the decision persist.
+
+`renv` does not evaluate whether a dependency was a good choice, and it does not determine which `select()` runs when two packages export one, which is `conflicted`'s role (@sec-packageloading-conflicted). The three practices are complementary: choose deliberately, pin what was chosen, and make conflicts explicit.
+
+::: {.callout-note}
+Adopt `renv` when a project involves more than one person or runs anywhere other than the machine where it was written. Before that it is overhead. After that it is the difference between a pipeline that reproduces and one that used to.
+:::
+
+## Writing Your Own Instead {#sec-dependencies-vendor}
+
+Occasionally the appropriate choice is no dependency.
+
+A twenty-line function you control, understand, and test (@sec-testing), living in your own repository, is preferable to a package with forty dependencies that provides the same capability plus ninety others. This applies most clearly to small utilities: a parser for an agency's file naming convention, a function implementing local suppression rules, a wrapper around a single API endpoint.
+
+The reasoning inverts for anything where correctness is difficult and has already been solved. Date and time zone arithmetic, statistical methods, character encoding, and HTTP all reward using an established implementation, because writing your own is a reliable route to subtly wrong answers.
+
+A rough test: code you could write correctly in an afternoon and explain to a colleague in five minutes is often better written than depended upon. Code requiring you to consult a specification first is better taken as a dependency.
+
+Vendoring is the intermediate option, meaning copying a specific function into your own codebase with attribution and a comment recording its origin and date. This suits the case where a package offers one needed function and forty unneeded dependencies, and where the license permits it. Check the license, retain the attribution, and recognize that you have assumed maintenance of the copy.
+
+## Organizing Your Own Packages {#sec-dependencies-ownpackage}
+
+Once a team accumulates shared helper functions, the appropriate container is a package (@sec-package-development), which provides namespacing, documentation, tests, and a single versioned artifact rather than a `helpers.R` copied between projects until the copies diverge.
+
+The question that follows is how many packages, and the organizing principle matters more than the count. Structure packages by functionality rather than by data source. Separate packages for plotting conventions and for standardization routines will each be used across many projects and maintained coherently. Packages split by originating data source will each accumulate a little plotting, a little cleaning, and a little reporting, duplicated across all of them. The tidyverse is organized on this principle: `dplyr` transforms, `ggplot2` plots, `readr` reads.
+
+Getting this right means two developers can work in different packages without conflicting, a change to plotting conventions occurs in one location, and each package has a scope describable in one sentence. Getting it wrong produces a set of packages that depend on one another and must be updated together, which is a single package with additional overhead.
+
+A new data source should mean a new function in an existing package, or at most a thin ingest package depending on the shared ones, rather than another copy of the full stack.
+
+## Further Reading {#sec-dependencies-reading}
+
+- The [tidyverse dependency principles](https://principles.tidyverse.org/dependencies.html) document how the tidyverse team evaluates taking on a dependency. Short, opinionated, and directly applicable.
+- The [`lifecycle` documentation](https://lifecycle.r-lib.org/articles/stages.html) explains each stage badge and what it commits the maintainer to.
+- *R Packages* [@wickham2023rpkgs] covers the `DESCRIPTION` file, the distinction between `Imports` and `Suggests`, and keeping a package's own dependency footprint small.
+- Teams migrating from SAS face this question without prior analogue, since SAS has no package system. The habit that transfers poorly is loading everything by default; the habit to build is naming what you use and qualifying with `pkg::fn` where conflicts exist (@sec-packageloading-doublecolon, @sec-legacy-people).

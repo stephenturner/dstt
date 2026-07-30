@@ -1,0 +1,91 @@
+# Spending a Training Budget {#sec-trainingbudget}
+
+Professional development funds typically arrive with a deadline attached and no guidance. The common outcome is that a team identifies what it wants in the final weeks, discovers a procurement constraint it did not know about, and either buys whatever can be approved quickly or returns the money.
+
+This appendix covers spending it well. @sec-team-upskilling explains why developing the staff you have usually outperforms hiring, and @sec-resources catalogs the free material worth working through. Neither addresses the constraint that actually blocks teams, which is procurement.
+
+## Principles {#sec-trainingbudget-principles}
+
+Three rules resolve most decisions.
+
+Buy skills that transfer. SQL, R fundamentals, and version control will remain useful in five years, and will remain useful if the agency replaces its BI platform, its warehouse, or its surveillance system. A course covering the current version of a specific vendor's interface will not.
+
+The same reasoning applies to AI training. A general course covering how these models work, what they do well, and where they fail will age better than instruction in the prompt syntax of whichever assistant the agency licensed this year. @sec-aigovernance explains why understanding the method matters more than knowing the interface.
+
+Buy practice rather than lecture hours. A subscription providing an in-browser sandbox where code is written and executed outperforms a video series. This holds most strongly for SQL, which is rarely learned by reading about it.
+
+## Skills Worth Buying {#sec-trainingbudget-skills}
+
+SQL comes first. It is chronically underrated and becomes unavoidable as agencies move surveillance data into warehouses (@sec-infrastructure). An analyst who can only receive extracts depends on whoever writes them, which adds days to every ad hoc question. Hands-on practice is the only effective route.
+
+R fundamentals follow, specifically functions. Most public health analysts learn R as a sequence of scripts executing top to bottom. The transition from scripts to functions is what makes testing (@sec-testing), packaging (@sec-package-development), and substantive code review (@sec-peerreview) possible, and it is the largest capability step most analysts have remaining.
+
+Version control comes next. It is inexpensive to learn relative to how much it changes a team's working practice (@sec-git).
+
+Data visualization and communication follow, meaning how to select an encoding and structure a message rather than further instruction in plotting syntax (@sec-comms). Reproducible reporting is sufficiently well documented at no cost that it is generally the one skill not worth purchasing. General AI literacy completes the list.
+
+## Courses and Subscriptions {#sec-trainingbudget-courses}
+
+**Public-health-specific providers.** [Applied Epi](https://appliedepi.org/) offers Intro to R for Applied Epidemiology and related courses taught by epidemiologists using epidemiological data, which matters because the examples are line lists and case counts rather than retail transactions. CSTE offers training tied to its own programs. These catalogs are narrow. Where an agency restricts purchases to public-health-approved content, the GIS or Shiny course a team actually wants may be unavailable, which is the most common way training money is spent on the wrong thing.
+
+**General platforms.** [DataCamp](https://www.datacamp.com/) is strong for hands-on SQL and R practice in a browser sandbox requiring no local installation, which circumvents restrictions on installing software. Annual premium access runs around \$300 and is frequently discounted to roughly half. [Coursera](https://www.coursera.org/) hosts the Johns Hopkins Data Science Specialization and the Executive Data Science sequence, both described in @sec-resources. Udemy and Codecademy are inexpensive and uneven; purchase a specific well-reviewed course rather than a subscription.
+
+**R-focused training companies.** [Jumping Rivers](https://www.jumpingrivers.com/) and comparable firms sell instructor-led private training. The per-seat cost is high, and a single-day workshop delivered to an entire team can represent better value than five individual subscriptions, with content built around the team's own data.
+
+**Free and community options.** [The Carpentries](https://carpentries.org/) publish workshop curricula on R, Git, and the shell that a team can work through independently. [Workshops for Ukraine](https://sites.google.com/view/dariia-mykhailyshyna/main/r-workshops-for-ukraine) sells individual sessions on specific topics for a small donation and maintains a deep back catalog. [The Epidemiologist R Handbook](https://epirhandbook.com/) is free and is the most directly applicable R reference for this audience.
+
+**Conferences.** [posit::conf](https://posit.co/conference/) is the strongest R conference for practitioners, CSTE's annual conference is the best venue for meeting people solving the same problems, and vendor summits are useful primarily to organizations already committed to that vendor. Conferences are also the most expensive hours available. Where the choice is one conference trip for one person against a year of hands-on training for the team, the training is the better purchase.
+
+::: {.callout-tip}
+Before purchasing a subscription, determine whether the state health department, a university partner, or the library system already holds an enterprise license. Several agencies pay for these platforms at the department level without informing program staff.
+:::
+
+## Books {#sec-trainingbudget-books}
+
+@sec-resources covers the technical R books worth owning, most of which are free online. Books remain worth purchasing for a team shelf, and they are the easiest item to buy quickly against a closing deadline.
+
+Beyond the R canon, the titles that recur in this work concern communication rather than code: *Storytelling with Data* and its companion exercise book, *Talking Health*, and Edward Tufte's visualization books. For R specifically, *R for Data Science* [@wickham2023r4ds], the functions and control flow chapters of *Advanced R*, and *Hands-On Programming with R* cover the fundamentals identified above. Where anyone on the team works in Python, *Python for Data Analysis* is the standard reference.
+
+## Procurement Constraints {#sec-trainingbudget-procurement}
+
+This section determines whether the money is spent at all.
+
+**Establish what "spent" means to your finance office.** Committed and spent are different states. Some offices count a purchase order issued before the deadline; others require the invoice paid and reconciled. Ask in writing and ask early, because the answer changes what can be purchased.
+
+**Establish whether a purchasing blackout applies.** Many local governments freeze non-essential purchasing near the end of a fiscal year, which frequently coincides with training deadlines. The workaround is a personal purchase reimbursed afterward, which places several hundred dollars on a staff member's credit card and creates a reconciliation problem later. It should not be sprung on someone.
+
+**Map travel restrictions before planning travel.** Out-of-state travel bans are common and sometimes absolute, including for conferences, which can require an entire stipend to be spent in state. Virtual conference registration and subscription training are the usual substitutes and are not poor ones.
+
+**Determine whether registering now for a later event counts.** Registering and paying for a conference before a spending deadline for an event occurring months afterward is often possible, and whether a finance office accepts it varies. Ask, and hold a backup plan, since travel approval and scheduling can still prevent attendance after the money is committed.
+
+**Plan reconciliation where multiple payers are involved.** A program sponsor, a county finance office, a grant, and a personal reimbursement within one purchase produce four sets of documentation, and reconciliation across several payers can consume more staff time than the training itself. Retain every receipt and record which fund each purchase draws on as it occurs.
+
+**Begin earlier than appears necessary.** Approval lead times exceed expectations consistently. Sole-source justifications, vendor onboarding, and tax documentation for a small training company can require weeks. Six weeks before a deadline is late.
+
+::: {.callout-warning}
+Training money is most often wasted not by overspending but by a team that identifies the right course immediately, spends six weeks failing to obtain approval, and purchases something from the approved catalog in the final week because the alternative is returning the funds. Verify the approval path before reviewing the catalog.
+:::
+
+## A Worked Plan {#sec-trainingbudget-worked}
+
+Consider \$3,000, six weeks, and a three-person team.
+
+In week one, confirm the rules: what constitutes spending, whether a blackout applies, whether travel is permitted, and what catalog restrictions exist. In parallel, ask each staff member which of the skills above most limits their current work.
+
+In week two, purchase what requires no approval chain. Books, ordered immediately, at roughly \$300.
+
+In weeks two and three, submit the subscription request. Three annual seats on a hands-on platform at a discounted rate is roughly \$500 and covers the SQL practice that free resources do not provide as effectively. Submit early, because vendor onboarding is the slow component.
+
+In weeks three through five, commit the remaining \$2,200 to one substantial purchase rather than five small ones: a private instructor-led R or SQL workshop for the full team, a course seat for each analyst, or virtual conference registration for each. Instructor-led training built around the team's own data is generally the highest-value option available and carries the longest lead time.
+
+In week six, reconcile. Do not plan to purchase anything in week six.
+
+::: {.callout-note}
+This plan excludes individual conference travel deliberately. It is the most common way a training budget is consumed and the least likely to change how anyone works the following Monday. Purchase travel when the objective is the professional relationships, and state that as the objective.
+:::
+
+## Requesting Next Year's Funding {#sec-trainingbudget-next}
+
+An effective request is specific and attached to a deliverable. "Professional development for the epidemiology team" is cut. "Three SQL seats so analysts can query the warehouse directly rather than waiting on the informatics team for extracts, which currently adds four days to every ad hoc request" survives, because it names a bottleneck management already recognizes.
+
+Record what was purchased and what changed as a result. Where last year's version control training is the reason a weekly report survived an analyst's departure, that is the sentence that funds this year's request. The continuity argument in @sec-onboarding and @sec-team-retention is the strongest case available for training funds, because turnover is a risk leadership is already concerned about.

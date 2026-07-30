@@ -2,6 +2,8 @@
 
 This appendix points to external resources for topics that go deeper than what this book covers. The selections here are oriented toward public health practitioners building data science skills in R, with emphasis on free and openly available material.
 
+Nearly everything listed here is free. @sec-trainingbudget covers the separate question of what to buy when you have a professional development budget and a deadline.
+
 ## Learning R
 
 **[R for Data Science](https://r4ds.hadley.nz/)** (Wickham, Çetinkaya-Rundel, and Grolemund) is the standard starting point for learning the tidyverse. It covers data import, transformation with dplyr, visualization with ggplot2, and the broader workflow of doing data analysis in R. The second edition is freely available online. Most DSTT participants will benefit from working through at least the first half.
@@ -23,6 +25,8 @@ This appendix points to external resources for topics that go deeper than what t
 **[ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/)** (Wickham, Navarro, and Pedersen) goes beyond the basics of `geom_*` functions to cover the grammar of graphics underlying ggplot2, how to extend it, and how to build custom themes and scales. Useful for teams that produce a lot of publication-quality figures and want consistent, polished output.
 
 **[R Graphics Cookbook](https://r-graphics.org/)** (Chang) is organized as a collection of recipes: a problem followed by a solution. Less conceptual than the ggplot2 book, more useful as a quick reference when you know what you want a plot to look like but not how to produce it.
+
+**[Storytelling with Data](https://www.storytellingwithdata.com/)** (Knaflic) is about the decisions upstream of the plotting code: what to show, what to leave out, and how to structure a chart so the audience reaches the point you intended. Tool-agnostic, and the closest thing to a standard reference for the design side of @sec-comms-viz. The companion exercise book provides the practice.
 
 ## Modeling and Statistics
 
@@ -51,6 +55,64 @@ Most public health data lives in relational databases -- SQL Server, PostgreSQL,
 **[Analyzing US Census Data](https://walker-data.com/census-r/)** (Walker) [@walker2023census] is the definitive guide to working with census data in R via the `tidycensus` package: ACS and decennial data, geography and mapping, and the margins-of-error handling that census estimates require. Freely available online. For public health teams, this is where rate denominators come from.
 
 **[The Socrata developer documentation](https://dev.socrata.com/)** covers the API behind data.cdc.gov and many state open data portals, including the SoQL query language for filtering and aggregating on the server.
+
+## Data Infrastructure
+
+**[The DuckDB documentation](https://duckdb.org/docs/)** is unusually good, and the sections on reading Parquet, the CSV sniffer, and performance tuning cover most of what a public health team needs. [@raasveldt2019duckdb] is the original paper if you want the design rationale for columnar analytical engines, which is the background to @sec-infrastructure-olap.
+
+**[MotherDuck](https://motherduck.com/docs/)** documents the hosted, shared version of DuckDB, which is the smallest step up from a local file when several people need to query the same data.
+
+**[The FinOps Foundation](https://www.finops.org/introduction/what-is-finops/)** publishes vendor-neutral material on managing consumption-based cloud spend. Most of it is written for organizations far larger than a health department, and the core practices (attributing cost to a team, setting budgets with alerts, right-sizing compute) apply directly to the pricing problem described in @sec-infrastructure-pricing.
+
+## BI Platforms
+
+**[The Tableau REST API reference](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api.htm)** documents authentication, publishing, and extract refresh, which are the endpoints worth automating from R (@sec-bi-publishing). The vendor documentation is the only reliable source here, because these APIs version independently of any R wrapper.
+
+**[The Microsoft Fabric and Power BI REST API reference](https://learn.microsoft.com/en-us/rest/api/fabric/)** is the equivalent for Power BI, covering dataset refresh and workspace management.
+
+## Package Dependencies
+
+**[Tidyverse design principles: dependencies](https://principles.tidyverse.org/dependencies.html)** documents how the tidyverse team weighs taking on a dependency in a package they maintain. Short, opinionated, and the clearest available statement of the tradeoffs in @sec-dependencies-cost.
+
+**[The lifecycle package documentation](https://lifecycle.r-lib.org/articles/stages.html)** explains what each stage badge (stable, experimental, superseded, deprecated) commits a maintainer to, which is what you need to interpret a function's badge before building on it.
+
+**[pak](https://pak.r-lib.org/)** installs packages and, more usefully here, shows dependency trees with `pkg_deps_tree()` before you commit to anything.
+
+## Testing and Validation
+
+**[The testthat documentation](https://testthat.r-lib.org/)** and the [testing chapters of *R Packages*](https://r-pkgs.org/testing-basics.html) [@wickham2023rpkgs] cover the framework introduced in @sec-testing, including test organization, fixtures, and snapshot testing.
+
+**[pointblank](https://rstudio.github.io/pointblank/)** is the validation package used in @sec-validation. Its documentation covers agents, action levels, and the multi-agent reporting that makes validation results reviewable by non-programmers.
+
+## Automation and Reproducible Environments
+
+**[The targets user manual](https://books.ropensci.org/targets/)** [@landau2021targets] is the reference for the pipeline tool introduced in @sec-automation-targets. The chapters on debugging pipelines and on branching over many inputs are where it pays off for surveillance work.
+
+**[The Rocker Project](https://rocker-project.org/)** documents the Docker images used in @sec-environments-rocker, including which image to start from and how the versioned tags work.
+
+**[renv documentation](https://rstudio.github.io/renv/)** covers lockfiles, restoring environments, and the cache, in more detail than @sec-environments-renv.
+
+## Accessibility
+
+**[The WCAG 2.2 quick reference](https://www.w3.org/WAI/WCAG22/quickref/)** is the practical, filterable version of the standard behind the requirements in @sec-accessibility-regs. Filter to Level AA and to the guidelines relevant to your output type.
+
+**[The Section508.gov training materials](https://www.section508.gov/training/)** are written for federal staff and are the most concrete guidance available on documents, spreadsheets, and presentations rather than web pages.
+
+## AI Tools and Governance
+
+**[The NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework)** [@nist2023airmf] and its companion playbook give an agency AI policy a structure that compliance reviewers recognize. The starting point for @sec-aigovernance-contents.
+
+**[The OMB memoranda index](https://www.whitehouse.gov/omb/information-for-agencies/memoranda/)** is where current federal guidance on agency AI use lives. These are revised by administration, so consult the index rather than a specific memo number.
+
+**[The Positron Assistant documentation](https://positron.posit.co/assistant.html)** and the [Claude Code documentation](https://code.claude.com/docs/) cover the tools in @sec-ai in more depth than that chapter does, including configuration, permissions, and what context each tool sends.
+
+## Team Practice and Onboarding
+
+**[The GitLab Handbook](https://handbook.gitlab.com/)** is the largest publicly available example of a handbook-first organization. Far more than a small epidemiology team needs, and the best available model for how a handbook is structured and maintained (@sec-onboarding-maintenance).
+
+**[The Turing Way](https://book.the-turing-way.org/)** is a community-built guide to reproducible, ethical, collaborative data science. Its guides on project design, collaboration, and communication overlap substantially with the nontechnical part of this book and go deeper on several topics.
+
+**[The Carpentries](https://carpentries.org/lessons/)** publish workshop curricula on R, the shell, Git, and SQL that a team can work through together. The lessons are openly licensed, so they can be adapted into your own onboarding material rather than merely linked.
 
 ## Migrating from Legacy Tools
 

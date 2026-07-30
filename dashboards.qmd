@@ -2,6 +2,8 @@
 
 Quarto dashboards use `format: dashboard` to create multi-panel HTML data displays — no server required. They're a middle ground between a static report (a single linear document) and a Shiny app (interactive but requires a running R process). Dashboards are ideal for sharing summaries, KPIs, and plots that need to look polished without the overhead of maintaining a server. @sec-comms covers how to decide whether a dashboard is the right output format for a given audience and finding.
 
+This chapter covers the Quarto-native approach, where the whole dashboard is a text file under version control. Many public health teams publish through Tableau or Power BI instead, because the license is already paid and the stakeholders already know the interface. @sec-bi covers that case: how to keep the analysis reproducible in R when the presentation layer is a proprietary binary file.
+
 The examples in this chapter are drawn from a real dashboard tracking U.S. drug overdose mortality data from the National Vital Statistics System (2015–2023).
 
 :::{.callout-note}

@@ -10,6 +10,8 @@ This chapter covers two levels of environment management:
 
 These tools exist on a spectrum of complexity and completeness. A good rule of thumb: start with `renv` for any analysis project involving collaborators, and reach for Docker when you need to share a full deployment or guarantee identical results across different operating systems.
 
+Both tools pin whatever your project already depends on. Neither one asks whether a dependency was a good idea, and the answer matters most here, because a heavy dependency tree that installs in seconds on a laptop can add fifteen minutes to every container build. @sec-dependencies covers choosing and vetting packages before they reach the lockfile.
+
 ## Package Environments with renv {#sec-environments-renv}
 
 The [`renv` package](https://rstudio.github.io/renv/) gives each R project its own private library. Instead of every project sharing a single system-wide package library (where upgrading a package for one project might break another), `renv` isolates dependencies per project and records the exact versions in a lockfile.

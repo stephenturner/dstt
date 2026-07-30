@@ -153,6 +153,8 @@ If a project uses a dataset with non-obvious columns — abbreviated names, code
 
 A data dictionary does not need to document every column. Document the columns that are confusing, the ones that carry important caveats, and the ones where the name does not tell the full story.
 
+A dictionary is more useful when the pipeline reads it rather than merely describing what the pipeline produces. Keeping metric definitions in a machine-readable file that both the R code and the dashboard consume is covered in @sec-bi-metrics.
+
 ### Decision Logs
 
 Analyses involve choices that are not visible in the code: why a particular date range was chosen, why a jurisdiction was excluded, why one method was preferred over another when both were defensible. These decisions are worth recording, because they will be questioned — by a reviewer, by a stakeholder, or by a future analyst who is maintaining the work.
@@ -178,3 +180,5 @@ Documentation that exists only on an individual's laptop, or only in one person'
 **Document as you go.** Documentation written after the analysis is finished is usually thinner and less accurate than documentation written alongside it. Writing the README before writing the code helps clarify what the analysis is supposed to do. Noting a methodological decision at the time it is made is more reliable than reconstructing the rationale later.
 
 **Treat stale documentation as a bug.** An incorrect README is worse than no README, because it creates false confidence. When something material changes (a data source is updated, a method is revised, a constant is recalculated), updating the documentation is part of the change, not an optional follow-up.
+
+Everything in this chapter documents specific code and specific datasets. The layer above it, documenting how the team itself works (setup, access requests, conventions, and the step-by-step protocol for each recurring product), is the team handbook covered in @sec-onboarding.

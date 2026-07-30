@@ -2,6 +2,8 @@
 
 AI tools for coding have matured rapidly, covering a spectrum from simple inline completions to fully autonomous agents that can read, write, and execute code across an entire project. This chapter provides a brief orientation to the tools most relevant to data scientists working in Positron.
 
+It covers the tools only. What your agency permits, which data may go where, who reviews an AI-assisted analysis before it informs a decision, and what you have to record so the result can be defended later are all covered in @sec-aigovernance. Read that chapter before pointing any of these tools at agency data.
+
 ## Code Completion with GitHub Copilot {#sec-ai-copilot}
 
 [GitHub Copilot](https://github.com/features/copilot) is a code completion service that suggests code as you type. Install the **GitHub Copilot** extension in Positron, and suggestions will appear inline in the editor and in notebooks — press Tab to accept a suggestion or Escape to dismiss it.

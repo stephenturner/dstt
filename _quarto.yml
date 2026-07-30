@@ -38,11 +38,14 @@ book:
         - accessibility.qmd
         - ai.qmd
         - dashboards.qmd
+        - bi.qmd
         - automation.qmd
         - packageloading.qmd
+        - dependencies.qmd
         - packagedevelopment.qmd
         - environments.qmd
         - databases.qmd
+        - infrastructure.qmd
         - apis.qmd
         - legacy.qmd
         - codestyle.qmd
@@ -50,13 +53,16 @@ book:
     - part: "Nontechnical"
       chapters:
         - team.qmd
+        - onboarding.qmd
         - pm.qmd
         - governance.qmd
+        - aigovernance.qmd
         - peerreview.qmd
         - comms.qmd
   appendices:
   - references.qmd
   - resources.qmd
+  - trainingbudget.qmd
 
 callout-appearance: default
 callout-icon: true

@@ -8,6 +8,8 @@ The reporting chapter (@sec-reporting) showed how to build a report whose number
 
 Automation pays off when the same work happens the same way, repeatedly. A weekly surveillance render, a nightly data refresh from a public API (@sec-apis), a validation check that should run every time a file lands: all of these are worth the up-front effort to set up, because the effort is amortized over dozens or hundreds of runs.
 
+The same logic applies to publishing steps that sit downstream of the analysis. A dashboard extract that gets refreshed by hand every Monday is a scheduled job waiting to be written, and both Tableau and Power BI expose APIs for exactly this (@sec-bi-publishing).
+
 It pays off poorly, or not at all, for one-off analyses, for work that requires a human decision partway through, and for exploratory work where the whole point is that you do not yet know what you are going to do. A useful test: would you run this code, in this same way, more than a handful of times? If yes, automate it. If no, the time spent automating is time not spent on the analysis.
 
 One caution before going further. Automation amplifies whatever you point it at. A correct, validated pipeline run a hundred times produces a hundred correct outputs; a subtly broken one produces a hundred broken outputs, faster than anyone can check them. Automation presumes the underlying work is already validated (@sec-validation) and reproducible (@sec-environments). Automating an unreliable pipeline does not save labor, it industrializes the errors.

@@ -22,6 +22,8 @@ Testing has a natural home. Package development pairs with unit testing through 
 
 A public health team that builds a shared package of common utilities (data validation functions, standard plot themes, reporting helpers) gets documented interfaces, declared dependencies, and a single install command that works for anyone on the team.
 
+The question that follows immediately is how many packages, and how to split them. Several small ones beat one large one, organized by functionality rather than by data source, for reasons covered in @sec-dependencies-ownpackage.
+
 ## The package development workflow {#sec-package-development-workflow}
 
 The core loop of package development (edit code, load and run it, run tests, update documentation, check) is well captured by the Posit package development cheat sheet at <https://rstudio.github.io/cheatsheets/html/package-development.html>.

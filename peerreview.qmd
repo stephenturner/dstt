@@ -72,32 +72,34 @@ A basic checklist for most analytical peer reviews:
 
 **Data**
 
-- [ ] The data source is correctly identified and loaded
-- [ ] The date range and population scope match the stated analysis parameters
-- [ ] Filters are correctly specified and applied in the right order
-- [ ] Missing values are accounted for
-- [ ] Join keys are unique (or duplicates are intentional and handled)
-- [ ] Row counts at key steps are plausible
+1. The data source is correctly identified and loaded
+1. The date range and population scope match the stated analysis parameters
+1. Filters are correctly specified and applied in the right order
+1. Missing values are accounted for
+1. Join keys are unique (or duplicates are intentional and handled)
+1. Row counts at key steps are plausible
 
 **Analysis**
 
-- [ ] Numerators and denominators are correctly specified for any rates
-- [ ] Grouping variables match the level of the desired analysis
-- [ ] Any statistical tests or models use methods appropriate for the data and question
-- [ ] Results match expectations from prior knowledge of the data
+1. Numerators and denominators are correctly specified for any rates
+1. Grouping variables match the level of the desired analysis
+1. Any statistical tests or models use methods appropriate for the data and question
+1. Results match expectations from prior knowledge of the data
 
 **Outputs**
 
-- [ ] Chart labels, titles, and units are correct
-- [ ] Summary tables match what the code computes
-- [ ] Stated conclusions follow from the results
-- [ ] Uncertainty and limitations are acknowledged appropriately
+1. Chart labels, titles, and units are correct
+1. Summary tables match what the code computes
+1. Stated conclusions follow from the results
+1. Uncertainty and limitations are acknowledged appropriately
 
 Not every item applies to every analysis. For a simple descriptive summary, several of the statistical items are irrelevant. For a complex linked dataset with multiple joins and rates, the data section deserves more attention. Use judgment.
 
 ## AI as a Review Aid {#sec-peerreview-ai}
 
 AI coding tools (see @sec-ai) can supplement but not replace human peer review. They are useful for certain review tasks and unreliable for others.
+
+The reciprocal case matters too: code produced by these tools should go through the same review as code written by hand, and reviewers benefit from knowing which is which. @sec-aigovernance-code covers that side, along with the categories where generated code tends to be confidently wrong.
 
 **Where AI tools add value in review:**
 

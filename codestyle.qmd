@@ -6,6 +6,8 @@ Style conventions close that gap. They are agreements, sometimes explicit and so
 
 This chapter covers the [Tidyverse Style Guide](https://style.tidyverse.org/) as the standard for R, the [Air formatter](https://posit-dev.github.io/air/) for automatically applying that standard, and the [`lintr`](https://lintr.r-lib.org/) package for catching issues that a formatter cannot.
 
+Style is one of the conventions a team has to agree on once and then stop arguing about. Recording the choice in the team handbook (@sec-onboarding-conventions), and enforcing it automatically rather than in review comments (@sec-peerreview-mechanics), is what keeps it from becoming a recurring discussion.
+
 ## The Tidyverse Style Guide {#sec-style-guide}
 
 The [Tidyverse Style Guide](https://style.tidyverse.org/) is the de facto standard for R code in data science. It is opinionated but well-reasoned, and following it means your code will look immediately familiar to anyone else working in R.

@@ -187,6 +187,8 @@ Key rules:
 
 The [ProjectTemplate](http://projecttemplate.net/) (R) and [Cookiecutter Data Science](https://cookiecutter-data-science.drivendata.org/) (Python) tools can scaffold these structures automatically.
 
+This structure scales to a project. It does not scale to a team where six analysts each keep their own `data/raw/` extract of the same source, pulled on six different dates. That is the point at which shared, curated datasets start to beat per-project copies, and @sec-infrastructure covers what to move to and what it costs.
+
 ### Version controlling code with data on a shared drive {#sec-dataorg-sharedrive}
 
 Finally, it's not uncommon in public health settings to have a setup where you're working with collaborators version controlling code as described in @sec-git, but the data lives on a secure shared drive that cannot be moved or copied into the repository. This creates a tension between reproducibility and security that can be resolved with careful project organization and path management. The governance and access implications of working with data on secure shared drives, including data use agreements and secure data environments, are covered in @sec-governance.
