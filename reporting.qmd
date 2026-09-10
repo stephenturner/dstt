@@ -119,6 +119,8 @@ The practical benefit of format independence is durability. A report that exists
 
 The same principle extends past Quarto's own formats. A single prepared dataset can feed a Quarto narrative report and a Tableau or Power BI dashboard at the same time, with one definition of what each metric means (@sec-bi-metrics).
 
+Format choice also determines what accessibility work is required. HTML is the most accommodating target and the easiest to check; PDF is the most demanding. @sec-accessibility covers both, along with the alt text and color choices that apply regardless of format.
+
 ::: {.callout-note}
 Some content behaves differently across formats. Interactive elements like `plotly` charts and `DT` tables work in HTML but fall back to static output in PDF and Word. If Word or PDF is a primary deliverable, test your render early -- not after a report is due -- so you aren't surprised by what doesn't translate.
 :::

@@ -141,7 +141,7 @@ A communication chart has one job: make the finding clear. Every element that do
 
 **Label directly.** Annotations on the chart (for example, "34% increase" at the relevant data point, or a text label at the end of each line) are clearer than legends the reader has to match to the chart. If the chart requires a legend to interpret, consider whether direct labeling is possible.
 
-**Use accessible colors.** Approximately 8% of men have color vision deficiency. Red/green combinations are the most common problem. Colorblind-friendly palettes (such as the Okabe-Ito palette used by default in many ggplot2 themes) are safe choices. Check any palette at a tool like [Coblis](https://www.color-blindness.com/coblis-color-blindness-simulator/) before finalizing.
+**Use accessible colors.** Approximately 8% of men have color vision deficiency. Red/green combinations are the most common problem. Colorblind-friendly palettes (such as the Okabe-Ito palette used in some ggplot2 themes) are safe choices. Check any palette at a tool like [Coblis](https://www.color-blindness.com/coblis-color-blindness-simulator/) before finalizing. @sec-accessibility-color covers contrast ratios and the requirement that color never be the only channel carrying information.
 
 **Remove decoration that carries no information.** Heavy gridlines, background colors, borders, and 3D effects subtract from clarity. The data should be the most visually prominent element on the chart.
 

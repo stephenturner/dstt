@@ -12,7 +12,7 @@ This is the predictable consequence of a capability arriving faster than a polic
 
 A written policy converts individual judgment into an agency position. It protects staff, who otherwise have no way to determine whether their practice is permitted. It gives supervisors something to reference other than instinct. And it means the first difficult question is not answered under pressure during an incident.
 
-Agencies without an AI policy do not have no AI use. They have unlogged AI use.
+Generated code is not necessarily worse, but author confidence is calibrated differently.
 
 ## Contents of an Agency AI Policy {#sec-aigovernance-contents}
 
@@ -104,7 +104,7 @@ Code generation fails by producing plausible wrong answers rather than by produc
 
 **Verify against a known result.** Execute generated code against data where the answer is already known: a count computed by hand, a previously published figure, a small test case. @sec-testing covers building this verification into the project so it is automatic rather than remembered.
 
-**Review it as ordinary code.** @sec-peerreview-ai covers using AI as a review aid. The reciprocal case matters more: generated code belongs in the same peer review as hand-written code, and reviewers benefit from knowing which is which. Not because generated code is worse, but because author confidence is calibrated differently. Someone who wrote a function line by line has already considered its edge cases; someone who accepted a suggestion has not necessarily.
+**Review it as ordinary code.** @sec-peerreview-ai covers using AI as a review aid. The reciprocal case matters more: generated code belongs in the same peer review as hand-written code, and reviewers benefit from knowing which is which. The reason is that author confidence is calibrated differently rather than that generated code is worse. Someone who wrote a function line by line has already considered its edge cases; someone who accepted a suggestion has not necessarily.
 
 Certain categories warrant particular attention because generated code is confidently wrong in them: date and time zone handling, joins that silently drop or duplicate rows, aggregations that disregard missing values, and any statistical method where a consequential assumption is embedded in a default argument. @sec-validation exists for these failures.
 

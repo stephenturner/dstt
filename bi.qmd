@@ -12,7 +12,7 @@ suppressWarnings(suppressPackageStartupMessages(library(dplyr)))
 
 This chapter covers how to keep an analysis reproducible when the presentation layer is a proprietary application. The organizing principle is that everything reproducible belongs upstream of the extract, in R and in version control, and the BI tool reads a prepared file and draws from it. The more work that sits on the R side of that boundary, the less of the analysis is locked inside a binary artifact.
 
-There is a longer-term argument for the same arrangement. Skills in an open, code-based stack transfer between employers and between platforms; skills in a specific version of a vendor's interface do not. An R pipeline survives an agency replacing Tableau with Power BI. A workbook does not. This is a reason to be deliberate about where the work lives, not a reason to avoid the platform.
+There is a longer-term argument for the same arrangement. Skills in an open, code-based stack transfer between employers and between platforms, while skills in a specific version of a vendor's interface do not. The same holds for the work itself: an R pipeline survives an agency replacing Tableau with Power BI. This is a reason to be deliberate about where the work lives rather than a reason to avoid the platform.
 
 ## Dividing the Work {#sec-bi-seam}
 

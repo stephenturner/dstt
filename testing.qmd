@@ -194,7 +194,7 @@ That last item has a story behind it, and the story illustrates the most valuabl
 calc_rate(3, 0)
 ```
 
-When you find a bug like this, resist the urge to fix it immediately. First, write a test that reproduces it:
+Tracking a bug like this down is its own skill: @sec-debugging covers reading the error, locating the failing call, and reducing the problem to something small enough to reason about. Once you have found it, resist the urge to fix it immediately. First, write a test that reproduces it:
 
 ```{r}
 #| label: regression-fail

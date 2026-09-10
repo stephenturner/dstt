@@ -1,12 +1,12 @@
 # Spending a Training Budget {#sec-trainingbudget}
 
-Professional development funds typically arrive with a deadline attached and no guidance. The common outcome is that a team identifies what it wants in the final weeks, discovers a procurement constraint it did not know about, and either buys whatever can be approved quickly or returns the money.
+Professional development funds (both from DSTT and possibly from your employer) typically have a deadline attached and sometimes little guidance. The common outcome is that a team identifies what it wants in the final weeks, discovers a procurement constraint it did not know about, and either buys whatever can be approved quickly or returns the money.
 
 This appendix covers spending it well. @sec-team-upskilling explains why developing the staff you have usually outperforms hiring, and @sec-resources catalogs the free material worth working through. Neither addresses the constraint that actually blocks teams, which is procurement.
 
 ## Principles {#sec-trainingbudget-principles}
 
-Three rules resolve most decisions.
+A few rules resolve most decisions.
 
 Buy skills that transfer. SQL, R fundamentals, and version control will remain useful in five years, and will remain useful if the agency replaces its BI platform, its warehouse, or its surveillance system. A course covering the current version of a specific vendor's interface will not.
 
@@ -45,6 +45,12 @@ Before purchasing a subscription, determine whether the state health department,
 @sec-resources covers the technical R books worth owning, most of which are free online. Books remain worth purchasing for a team shelf, and they are the easiest item to buy quickly against a closing deadline.
 
 Beyond the R canon, the titles that recur in this work concern communication rather than code: *Storytelling with Data* and its companion exercise book, *Talking Health*, and Edward Tufte's visualization books. For R specifically, *R for Data Science* [@wickham2023r4ds], the functions and control flow chapters of *Advanced R*, and *Hands-On Programming with R* cover the fundamentals identified above. Where anyone on the team works in Python, *Python for Data Analysis* is the standard reference.
+
+## Consulting {#sec-trainingbudget-consulting}
+
+Some of what a team needs is not sold as a course. Where the gap is one specific workflow, a pipeline that needs to be made reproducible, a dashboard nobody has time to finish, or training built around your own data rather than a generic curriculum, a short consulting engagement can be a better use of the money than another subscription.
+
+I am available for that kind of work, including after a team's DSTT program year ends. I have worked with DSTT teams for years as a project coach, and I consult on data science and bioinformatics across a range of fields. I am a professor in the University of Virginia School of Data Science, and I was previously a professor of public health sciences in the UVA School of Medicine. The fastest way to reach me is [stephenturner.us/email](https://stephenturner.us/email).
 
 ## Procurement Constraints {#sec-trainingbudget-procurement}
 
