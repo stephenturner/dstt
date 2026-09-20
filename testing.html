@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Stephen D. Turner">
+<title>4&nbsp; Testing Analysis Code – Data Science Team Training</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./debugging.html" rel="next">
+<link href="./validation.html" rel="prev">
+<link href="./hex.jpg" rel="icon" type="image/jpeg">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./testing.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Testing Analysis Code</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Data Science Team Training</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/stephenturner/dstt" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+<li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Data-Science-Team-Training.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./Data-Science-Team-Training.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+</div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Technical</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Version Control</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dataorg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Organization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Validation and QA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./testing.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Testing Analysis Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./debugging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Debugging and Getting Help</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reporting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducible Reporting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./accessibility.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Accessibility</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Coding with AI</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dashboards.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Dashboards</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">BI Platforms</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./automation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Automation and Scheduling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./packageloading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Package Loading</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dependencies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Managing Package Dependencies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./packagedevelopment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Package Development</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./environments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Reproducible Environments</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./databases.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Databases from R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./infrastructure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Choosing and Paying for Data Infrastructure</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./legacy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Migrating from Legacy Workflows</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./codestyle.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Code Style</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./documentation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Documentation</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Nontechnical</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./team.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Building and Sustaining a Data Science Team</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./onboarding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Onboarding and the Team Handbook</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./governance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aigovernance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">AI Governance in a Health Agency</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./peerreview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./comms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Additional Resources</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./trainingbudget.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Spending a Training Budget</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#sec-testing-functions" id="toc-sec-testing-functions" class="nav-link active" data-scroll-target="#sec-testing-functions"><span class="header-section-number">4.1</span> Start with Functions</a></li>
+  <li><a href="#sec-testing-testthat" id="toc-sec-testing-testthat" class="nav-link" data-scroll-target="#sec-testing-testthat"><span class="header-section-number">4.2</span> First Tests with testthat</a></li>
+  <li><a href="#sec-testing-expectations" id="toc-sec-testing-expectations" class="nav-link" data-scroll-target="#sec-testing-expectations"><span class="header-section-number">4.3</span> Choosing Expectations</a></li>
+  <li><a href="#sec-testing-edges" id="toc-sec-testing-edges" class="nav-link" data-scroll-target="#sec-testing-edges"><span class="header-section-number">4.4</span> Edge Cases</a></li>
+  <li><a href="#sec-testing-regression" id="toc-sec-testing-regression" class="nav-link" data-scroll-target="#sec-testing-regression"><span class="header-section-number">4.5</span> Regression Tests</a></li>
+  <li><a href="#sec-testing-organize" id="toc-sec-testing-organize" class="nav-link" data-scroll-target="#sec-testing-organize"><span class="header-section-number">4.6</span> Organizing Tests in a Project</a></li>
+  <li><a href="#sec-testing-vs-validation" id="toc-sec-testing-vs-validation" class="nav-link" data-scroll-target="#sec-testing-vs-validation"><span class="header-section-number">4.7</span> Tests and Validation Are Different Checks</a></li>
+  <li><a href="#sec-testing-reading" id="toc-sec-testing-reading" class="nav-link" data-scroll-target="#sec-testing-reading"><span class="header-section-number">4.8</span> Further Reading</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./testing.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Testing Analysis Code</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title"><span id="sec-testing" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Testing Analysis Code</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><p>A test records what a piece of code should do and checks that behavior after changes. For a recurring analysis, prioritize decisions that affect published results: denominator selection, reporting periods, suppression, and joins. <a href="validation.html" class="quarto-xref"><span>Chapter 3</span></a> covers checks on the incoming data.</p>
+<p>These rules often appear in several reports and outlast the person who first wrote them. A colleague editing a suppression function needs to know whether zero should be retained, what happens to missing values, and whether the threshold itself is suppressed. Tests record those decisions as examples the team can run. They help reviewers assess a change and can detect a broken rule before it affects a report.</p>
+<p>You can use the <a href="https://testthat.r-lib.org/"><code>testthat</code></a> package in an ordinary analysis project. Creating an R package is optional; if the functions later become a package, their tests can move with them (<a href="packagedevelopment.html" class="quarto-xref"><span>Chapter 14</span></a>). Install testthat once, then load it in the session where you run the examples:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"testthat"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://testthat.r-lib.org">testthat</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="sec-testing-functions" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="sec-testing-functions">
+<span class="header-section-number">4.1</span> Start with Functions</h2>
+<p>A calculation embedded in a long reporting script can be difficult to test on its own. Extracting it into a function lets you supply small inputs and inspect the result without importing the full dataset or rendering the report. It also gives the team one definition to maintain when several parts of an analysis use the same rule.</p>
+<p>Start with a rate calculation:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">calc_rate</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">cases</span>, <span class="va">population</span>, <span class="va">per</span> <span class="op">=</span> <span class="fl">100000</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">cases</span> <span class="op">/</span> <span class="va">population</span> <span class="op">*</span> <span class="va">per</span></span>
+<span><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This version handles ordinary numeric inputs. It does not yet check input types or define what should happen with a zero denominator. We will add those requirements and tests below.</p>
+<p>Write down what callers can expect before choosing tests. For this function, rates use per-100,000 units by default. A shared population should work with several case counts, and vectors of equal length should be calculated element by element. Missing counts and zero or missing populations should return numeric missing values. Negative values and incompatible vector lengths should fail. These are choices about the function’s behavior; a different analysis may need different rules.</p>
+</section><section id="sec-testing-testthat" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="sec-testing-testthat">
+<span class="header-section-number">4.2</span> First Tests with testthat</h2>
+<p>A <code><a href="https://testthat.r-lib.org/reference/test_that.html">test_that()</a></code> block names a behavior and checks it with one or more expectations. Use invented inputs whose answers you can calculate independently:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://testthat.r-lib.org/reference/test_that.html">test_that</a></span><span class="op">(</span><span class="st">"rates use per-100,000 units and accept a shared population"</span>, <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_equal</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">50000</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_equal</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fl">100000</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test passed with 2 successes 😸.</code></pre>
+</div>
+</div>
+<p>Five cases in a population of 50,000 gives a rate of 10 per 100,000. That expected answer stays fixed even if someone rewrites the calculation. Repeating the function’s own formula inside the expectation could repeat the same error.</p>
+<p>Suppose someone changes the default units to per 1,000. This deliberately incorrect version shows how the test reports the change:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">calc_rate_changed</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">cases</span>, <span class="va">population</span>, <span class="va">per</span> <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">cases</span> <span class="op">/</span> <span class="va">population</span> <span class="op">*</span> <span class="va">per</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://testthat.r-lib.org/reference/test_that.html">test_that</a></span><span class="op">(</span><span class="st">"rates use per-100,000 units"</span>, <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_equal</a></span><span class="op">(</span><span class="fu">calc_rate_changed</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">50000</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Failure: rates use per-100,000 units ────────────────────────────────────────
+Expected `calc_rate_changed(5, 50000)` to equal 10.
+Differences:
+1/1 mismatches
+[1] 0.1 - 10 == -9.9</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! Test failed with 1 failure and 0 successes.</code></pre>
+</div>
+</div>
+<p>The failure identifies the test and compares the actual value, 0.1, with the expected value, 10. That tells the maintainer which requirement no longer holds. A description such as “test calc_rate” would give much less information. Name the behavior so someone unfamiliar with the implementation can understand the failure.</p>
+</section><section id="sec-testing-expectations" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="sec-testing-expectations">
+<span class="header-section-number">4.3</span> Choosing Expectations</h2>
+<p>Choose the expectation to match the requirement:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead><tr class="header">
+<th>What matters</th>
+<th>Expectation</th>
+<th>Example</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Numeric values, allowing floating-point tolerance</td>
+<td><code><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_equal()</a></code></td>
+<td>A calculated rate</td>
+</tr>
+<tr class="even">
+<td>Exact value and type</td>
+<td><code><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical()</a></code></td>
+<td>Numeric missing values or an empty numeric vector</td>
+</tr>
+<tr class="odd">
+<td>Rejection of invalid input</td>
+<td><code><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error()</a></code></td>
+<td>Negative counts or incompatible vector lengths</td>
+</tr>
+<tr class="even">
+<td>A logical condition</td>
+<td><code><a href="https://testthat.r-lib.org/reference/logical-expectations.html">expect_true()</a></code></td>
+<td>An invariant required by a transformation</td>
+</tr>
+<tr class="odd">
+<td>Size of a result</td>
+<td><code><a href="https://testthat.r-lib.org/reference/expect_length.html">expect_length()</a></code></td>
+<td>One result for each input count</td>
+</tr>
+</tbody>
+</table>
+<p>The difference between numeric equality and exact identity matters because floating-point calculations can introduce small rounding differences:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">0.1</span> <span class="op">+</span> <span class="fl">0.2</span> <span class="op">==</span> <span class="fl">0.3</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_equal</a></span><span class="op">(</span><span class="fl">0.1</span> <span class="op">+</span> <span class="fl">0.2</span>, <span class="fl">0.3</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The direct comparison returns <code>FALSE</code>, but <code><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_equal()</a></code> passes within its numeric tolerance. Use it for calculated quantities. Use <code><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical()</a></code> when the type is part of the requirement, such as a helper that must return a double vector even when every value is missing.</p>
+<p><code><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error()</a></code> checks that an invalid call fails. It passes when the expected error occurs:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://testthat.r-lib.org/reference/test_that.html">test_that</a></span><span class="op">(</span><span class="st">"rates reject character case counts"</span>, <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="st">"3"</span>, <span class="fl">100000</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test passed with 1 success 🎊.</code></pre>
+</div>
+</div>
+<p>This simple version passes because R rejects arithmetic on character input. The complete implementation below supplies a more specific message. Matching part of that message in a test helps distinguish the intended input check from an unrelated error.</p>
+</section><section id="sec-testing-edges" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="sec-testing-edges">
+<span class="header-section-number">4.4</span> Edge Cases</h2>
+<p>For an illustrative suppression rule, keep zero and mask positive counts below 5. The important boundaries are 0, 1, 4, and 5; missing values should stay missing. Confirm your agency’s actual rule before adapting this example (<a href="governance.html#sec-governance-disclosure" class="quarto-xref"><span>Section 25.6</span></a>). This helper does not implement complementary suppression or establish that a release is safe.</p>
+<p>A short implementation looks plausible:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">suppress_small_naive</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">threshold</span> <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">x</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">x</span> <span class="op">&lt;</span> <span class="va">threshold</span>, <span class="cn">NA</span>, <span class="va">x</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>But suppose callers require a double vector. Test an input where every count is suppressed:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://testthat.r-lib.org/reference/test_that.html">test_that</a></span><span class="op">(</span><span class="st">"suppressed counts remain numeric"</span>, <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span><span class="fu">suppress_small_naive</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, <span class="cn">NA_real_</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Failure: suppressed counts remain numeric ───────────────────────────────────
+Expected `suppress_small_naive(3)` to be identical to NA_real_.
+Differences:
+Modes: logical, numeric
+target is logical, current is numeric</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! Test failed with 1 failure and 0 successes.</code></pre>
+</div>
+</div>
+<p>The bare <code>NA</code> is logical. For this input, <code><a href="https://rdrr.io/r/base/ifelse.html">ifelse()</a></code> returns a logical missing value, so the test fails. This can violate a caller’s type requirements even though the printed result looks right. Replacing <code>NA</code> with <code>NA_real_</code> handles this case, but an empty input to <code><a href="https://rdrr.io/r/base/ifelse.html">ifelse()</a></code> still returns <code>logical(0)</code>. To guarantee a double result, convert the input first and then replace the selected values.</p>
+<p>The following implementation also rejects invalid counts. Both helpers in this chapter use <code>check_numeric()</code> to require plain numeric vectors with finite, nonnegative values or missing values. Counts must be whole numbers:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">check_numeric</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">name</span>, <span class="va">whole</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">||</span> <span class="fu"><a href="https://rdrr.io/r/base/is.object.html">is.object</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">||</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="va">name</span>, <span class="st">" must be a plain numeric vector"</span>, call. <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">present</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">]</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html">is.finite</a></span><span class="op">(</span><span class="va">present</span><span class="op">)</span><span class="op">)</span> <span class="op">||</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="va">present</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="va">name</span>, <span class="st">" must contain finite, nonnegative values or NA"</span>, call. <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">whole</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="va">present</span> <span class="op">!=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">floor</a></span><span class="op">(</span><span class="va">present</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="va">name</span>, <span class="st">" must contain whole counts or NA"</span>, call. <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">suppress_small</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">threshold</span> <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">check_numeric</span><span class="op">(</span><span class="va">x</span>, <span class="st">"x"</span>, whole <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="fu">check_numeric</span><span class="op">(</span><span class="va">threshold</span>, <span class="st">"threshold"</span>, whole <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">threshold</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">1L</span> <span class="op">||</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">threshold</span><span class="op">)</span> <span class="op">||</span> <span class="va">threshold</span> <span class="op">&lt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"threshold must be one positive whole number"</span>, call. <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html">as.double</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="va">out</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span> <span class="op">|</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">out</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">out</span> <span class="op">&lt;</span> <span class="va">threshold</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA_real_</span></span>
+<span>  <span class="va">out</span></span>
+<span><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Check the policy boundaries and the type requirements together:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://testthat.r-lib.org/reference/test_that.html">test_that</a></span><span class="op">(</span><span class="st">"suppression preserves boundaries and the output type"</span>, <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span></span>
+<span>    <span class="fu">suppress_small</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="cn">NA_real_</span>, <span class="cn">NA_real_</span>, <span class="fl">5</span>, <span class="cn">NA_real_</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span><span class="fu">suppress_small</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, <span class="cn">NA_real_</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span><span class="fu">suppress_small</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test passed with 3 successes 🥳.</code></pre>
+</div>
+</div>
+<p>Each input checks a separate decision. Zero is retained, counts 1 and 4 are masked, and 5 is retained because the threshold is exclusive. The last expectation checks an empty result, which may occur after filtering. Test cases like these explain the rule to a future maintainer without requiring them to infer it from the function.</p>
+</section><section id="sec-testing-regression" class="level2" data-number="4.5"><h2 data-number="4.5" class="anchored" data-anchor-id="sec-testing-regression">
+<span class="header-section-number">4.5</span> Regression Tests</h2>
+<p>When debugging identifies an error (<a href="debugging.html" class="quarto-xref"><span>Chapter 5</span></a>), first reproduce it in a test. For example, a new row in a population lookup table might contain zero. The initial rate function returns infinity:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">0</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] Inf</code></pre>
+</div>
+</div>
+<p>Record the intended behavior before changing the function:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://testthat.r-lib.org/reference/test_that.html">test_that</a></span><span class="op">(</span><span class="st">"zero or missing populations yield numeric missing rates"</span>, <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">0</span><span class="op">)</span>, <span class="cn">NA_real_</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">3</span>, <span class="cn">NA_real_</span><span class="op">)</span>, <span class="cn">NA_real_</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Failure: zero or missing populations yield numeric missing rates ────────────
+Expected `calc_rate(3, 0)` to be identical to NA_real_.
+Differences:
+1/1 mismatches
+[1] Inf - NA == NA</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! Test failed with 1 failure and 1 success.</code></pre>
+</div>
+</div>
+<p>Seeing the test fail confirms that it detects the reported problem. After the fix, keep it in the suite so later changes are checked against the same case.</p>
+<p>A tempting fix uses <code><a href="https://rdrr.io/r/base/ifelse.html">ifelse()</a></code> with a condition based only on population. That creates another problem when the population is a single value and case counts form a vector:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">calc_rate_ifelse</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">cases</span>, <span class="va">population</span>, <span class="va">per</span> <span class="op">=</span> <span class="fl">100000</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">population</span><span class="op">)</span> <span class="op">|</span> <span class="va">population</span> <span class="op">&lt;=</span> <span class="fl">0</span>,</span>
+<span>         <span class="cn">NA_real_</span>, <span class="va">cases</span> <span class="op">/</span> <span class="va">population</span> <span class="op">*</span> <span class="va">per</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://testthat.r-lib.org/reference/test_that.html">test_that</a></span><span class="op">(</span><span class="st">"one population can be used with several case counts"</span>, <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_equal</a></span><span class="op">(</span><span class="fu">calc_rate_ifelse</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fl">100000</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Failure: one population can be used with several case counts ────────────────
+Expected `calc_rate_ifelse(c(3, 4), 1e+05)` to equal `c(3, 4)`.
+Differences:
+Lengths differ: 1 is not 2</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! Test failed with 1 failure and 0 successes.</code></pre>
+</div>
+</div>
+<p>The condition has length one, so <code><a href="https://rdrr.io/r/base/ifelse.html">ifelse()</a></code> returns only the first rate. A test of <code>calc_rate_ifelse(3, 0)</code> alone would miss this. Run earlier tests after a fix as well as the test for the newly reported bug.</p>
+<p>Here is the complete corrected rate function. It uses <code>check_numeric()</code> from the previous section, checks input lengths, and expands a scalar to match the other vector before calculating. Two empty inputs, or an empty input paired with a scalar, return <code>numeric(0)</code>. Other unequal lengths fail:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">calc_rate</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">cases</span>, <span class="va">population</span>, <span class="va">per</span> <span class="op">=</span> <span class="fl">100000</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">check_numeric</span><span class="op">(</span><span class="va">cases</span>, <span class="st">"cases"</span>, whole <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="fu">check_numeric</span><span class="op">(</span><span class="va">population</span>, <span class="st">"population"</span><span class="op">)</span></span>
+<span>  <span class="fu">check_numeric</span><span class="op">(</span><span class="va">per</span>, <span class="st">"per"</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">per</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">1L</span> <span class="op">||</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">per</span><span class="op">)</span> <span class="op">||</span> <span class="va">per</span> <span class="op">&lt;=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"per must be one finite positive number"</span>, call. <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">nc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">cases</span><span class="op">)</span></span>
+<span>  <span class="va">np</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">population</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">nc</span> <span class="op">!=</span> <span class="va">np</span> <span class="op">&amp;&amp;</span> <span class="va">nc</span> <span class="op">!=</span> <span class="fl">1L</span> <span class="op">&amp;&amp;</span> <span class="va">np</span> <span class="op">!=</span> <span class="fl">1L</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"cases and population must have equal lengths or one must be scalar"</span>,</span>
+<span>         call. <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">nc</span> <span class="op">==</span> <span class="fl">0L</span> <span class="op">||</span> <span class="va">np</span> <span class="op">==</span> <span class="fl">0L</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">nc</span>, <span class="va">np</span><span class="op">)</span></span>
+<span>  <span class="va">cases</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/double.html">as.double</a></span><span class="op">(</span><span class="va">cases</span><span class="op">)</span>, <span class="va">n</span><span class="op">)</span></span>
+<span>  <span class="va">population</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/double.html">as.double</a></span><span class="op">(</span><span class="va">population</span><span class="op">)</span>, <span class="va">n</span><span class="op">)</span></span>
+<span>  <span class="va">rate</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA_real_</span>, <span class="va">n</span><span class="op">)</span></span>
+<span>  <span class="va">usable</span> <span class="op">&lt;-</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">cases</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">population</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">population</span> <span class="op">&gt;</span> <span class="fl">0</span></span>
+<span>  <span class="va">rate</span><span class="op">[</span><span class="va">usable</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">cases</span><span class="op">[</span><span class="va">usable</span><span class="op">]</span> <span class="op">/</span> <span class="va">population</span><span class="op">[</span><span class="va">usable</span><span class="op">]</span> <span class="op">*</span> <span class="va">per</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">rate</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html">is.finite</a></span><span class="op">(</span><span class="va">rate</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"rate exceeds the finite numeric range"</span>, call. <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">rate</span></span>
+<span><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now check the repaired behavior and the ordinary calculations:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://testthat.r-lib.org/reference/test_that.html">test_that</a></span><span class="op">(</span><span class="st">"zero and missing inputs have explicit results"</span>, <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">3</span>, <span class="fl">0</span><span class="op">)</span>, <span class="cn">NA_real_</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">3</span>, <span class="cn">NA_real_</span><span class="op">)</span>, <span class="cn">NA_real_</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="cn">NA_real_</span>, <span class="fl">100</span><span class="op">)</span>, <span class="cn">NA_real_</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span></span>
+<span>    <span class="fu">calc_rate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="cn">NA_real_</span>, <span class="fl">0</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span>, <span class="fl">100</span>, <span class="cn">NA_real_</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA_real_</span>, <span class="cn">NA_real_</span>, <span class="fl">0</span>, <span class="cn">NA_real_</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test passed with 4 successes 🎉.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://testthat.r-lib.org/reference/test_that.html">test_that</a></span><span class="op">(</span><span class="st">"rates retain the stated units and vector behavior"</span>, <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_equal</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">50000</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_equal</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fl">100000</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_equal</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100000</span>, <span class="fl">50000</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_equal</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100000</span>, <span class="fl">50000</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_equal</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">50000</span>, per <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span>, <span class="fl">0.1</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test passed with 5 successes 🥳.</code></pre>
+</div>
+</div>
+<p>The remaining tests cover empty inputs, invalid values, and changes to the suppression threshold. These cases follow from the stated requirements:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://testthat.r-lib.org/reference/test_that.html">test_that</a></span><span class="op">(</span><span class="st">"empty vectors keep a numeric type"</span>, <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>, <span class="fl">100</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span><span class="fu">suppress_small</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test passed with 4 successes 🎊.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://testthat.r-lib.org/reference/test_that.html">test_that</a></span><span class="op">(</span><span class="st">"invalid inputs fail instead of being silently recycled or coerced"</span>, <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">200</span>, <span class="fl">300</span><span class="op">)</span><span class="op">)</span>, <span class="st">"equal lengths"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span>, <span class="st">"equal lengths"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="st">"3"</span>, <span class="fl">100</span><span class="op">)</span>, <span class="st">"numeric vector"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, <span class="fl">100</span><span class="op">)</span>, <span class="st">"numeric vector"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">100</span><span class="op">)</span>, <span class="st">"nonnegative"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">100</span><span class="op">)</span>, <span class="st">"whole counts"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">100</span><span class="op">)</span>, <span class="st">"nonnegative"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">1</span>, <span class="cn">Inf</span><span class="op">)</span>, <span class="st">"finite"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span>, per <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, <span class="st">"positive"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span>, per <span class="op">=</span> <span class="cn">NA_real_</span><span class="op">)</span>, <span class="st">"positive"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span>, per <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1000</span><span class="op">)</span><span class="op">)</span>, <span class="st">"one finite"</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test passed with 11 successes 🎉.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://testthat.r-lib.org/reference/test_that.html">test_that</a></span><span class="op">(</span><span class="st">"suppression implements the illustrative policy without changing type"</span>, <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span><span class="fu">suppress_small</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">12</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                   <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="cn">NA_real_</span>, <span class="cn">NA_real_</span>, <span class="fl">5</span>, <span class="fl">12</span>, <span class="cn">NA_real_</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span><span class="fu">suppress_small</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA_real_</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span><span class="fu">suppress_small</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0L</span>, <span class="fl">5L</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span><span class="fu">suppress_small</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">9</span>, <span class="fl">10</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA_real_</span>, <span class="cn">NA_real_</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">suppress_small</span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>, <span class="st">"nonnegative"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">suppress_small</span><span class="op">(</span><span class="fl">1.5</span><span class="op">)</span>, <span class="st">"whole counts"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">suppress_small</span><span class="op">(</span><span class="fl">3</span>, threshold <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, <span class="st">"positive whole"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">suppress_small</span><span class="op">(</span><span class="fl">3</span>, threshold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>, <span class="st">"one positive"</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test passed with 8 successes 😸.</code></pre>
+</div>
+</div>
+<p>A passing suite establishes that these cases work. It does not prove correctness for every input. Add tests when requirements change or a new failure exposes a case the suite missed.</p>
+</section><section id="sec-testing-organize" class="level2" data-number="4.6"><h2 data-number="4.6" class="anchored" data-anchor-id="sec-testing-organize">
+<span class="header-section-number">4.6</span> Organizing Tests in a Project</h2>
+<p>The examples above run inline so you can see each failure and fix. In an analysis project, keep the final functions and their tests in separate files:</p>
+<pre class="text"><code>flu-report/
+  R/
+    rates.R
+  tests/
+    test-rates.R
+  report.qmd</code></pre>
+<p>Put the final <code>check_numeric()</code>, <code>suppress_small()</code>, and <code>calc_rate()</code> definitions in <code>R/rates.R</code>. Start <code>tests/test-rates.R</code> with this line:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">".."</span>, <span class="st">"R"</span>, <span class="st">"rates.R"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then copy the passing <code><a href="https://testthat.r-lib.org/reference/test_that.html">test_that()</a></code> blocks into that test file. Omit the deliberately failing demonstrations and the functions named <code>calc_rate_changed</code>, <code>suppress_small_naive</code>, and <code>calc_rate_ifelse</code>. Test filenames must begin with <code>test</code> for testthat to find them. <code><a href="https://testthat.r-lib.org/reference/test_dir.html">test_dir()</a></code> runs these tests from the test directory, which is why the source path starts with <code>..</code>.</p>
+<p>Run the suite from the project root:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/test_dir.html">test_dir</a></span><span class="op">(</span><span class="st">"tests"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Run relevant tests while changing a rule and the full suite before committing (<a href="git.html" class="quarto-xref"><span>Chapter 1</span></a>). For shared projects, also run them in continuous integration (<a href="automation.html#sec-automation-actions" class="quarto-xref"><span>Section 11.3</span></a>), where a clean session can reveal dependencies on your local workspace. Assign responsibility for investigating failures; ignored failures do not protect the analysis.</p>
+<p>Shared functions used across projects may belong in a package (<a href="packagedevelopment.html" class="quarto-xref"><span>Chapter 14</span></a>). Package tests have a standard location, <code>tests/testthat/</code>, and can be run with <code><a href="https://devtools.r-lib.org/reference/test.html">devtools::test()</a></code>. The expectations carry over; the package handles loading its functions, so remove the <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> line.</p>
+</section><section id="sec-testing-vs-validation" class="level2" data-number="4.7"><h2 data-number="4.7" class="anchored" data-anchor-id="sec-testing-vs-validation">
+<span class="header-section-number">4.7</span> Tests and Validation Are Different Checks</h2>
+<p>Tests use controlled inputs to check code behavior. Validation checks the actual input and intermediate data for each run. A passing rate-function test cannot establish that this week’s extract includes every county. A validation check for complete county coverage cannot establish that the rate function uses the correct units.</p>
+<p>When a data problem exposes a code bug, add both the relevant validation rule and a regression test. If a zero population caused an infinite rate, the input validation should flag the unexpected denominator, and the function test should check how the calculation handles it. Include both checks in code review so reviewers can see how the incident was addressed (<a href="peerreview.html" class="quarto-xref"><span>Chapter 27</span></a>).</p>
+</section><section id="sec-testing-reading" class="level2" data-number="4.8"><h2 data-number="4.8" class="anchored" data-anchor-id="sec-testing-reading">
+<span class="header-section-number">4.8</span> Further Reading</h2>
+<p>The <a href="https://r-pkgs.org/testing-basics.html">testing chapters of <em>R Packages</em></a> explain test design, fixtures, and organization. The <a href="https://testthat.r-lib.org/">testthat documentation</a> describes individual expectations and snapshot testing.</p>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/dstt\.stephenturner\.us\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./validation.html" class="pagination-link" aria-label="Data Validation and QA">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Validation and QA</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./debugging.html" class="pagination-link" aria-label="Debugging and Getting Help">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Debugging and Getting Help</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Stephen D. Turner</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/stephenturner">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/turnersd/">
+      <i class="bi bi-linkedin" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://stephenturner.us/">
+      <i class="bi bi-house-fill" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://blog.stephenturner.us/">
+      <i class="bi bi-rss" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://bsky.app/profile/stephenturner.us">
+      <i class="bi bi-bluesky" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

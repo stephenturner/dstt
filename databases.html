@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.9.36">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Stephen D. Turner">
-<title>12&nbsp; Databases from R – Data Science Team Training</title>
+<title>16&nbsp; Databases from R – Data Science Team Training</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./apis.html" rel="next">
+<link href="./infrastructure.html" rel="next">
 <link href="./environments.html" rel="prev">
 <link href="./hex.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
@@ -112,7 +112,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./databases.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Databases from R</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./databases.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Databases from R</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -188,80 +188,110 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Testing Analysis Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./debugging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Debugging and Getting Help</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./reporting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Reproducible Reporting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducible Reporting</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./accessibility.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Accessibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Accessibility</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ai.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Coding with AI</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Coding with AI</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dashboards.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dashboards</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Dashboards</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">BI Platforms</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./automation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Automation and Scheduling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Automation and Scheduling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./packageloading.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Package Loading</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Package Loading</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dependencies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Managing Package Dependencies</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./packagedevelopment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Package Development</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Package Development</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./environments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Reproducible Environments</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Reproducible Environments</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./databases.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Databases from R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Databases from R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./infrastructure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Choosing and Paying for Data Infrastructure</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./apis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./legacy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Migrating from Legacy Workflows</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Migrating from Legacy Workflows</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./codestyle.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Code Style</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Code Style</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./documentation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Documentation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Documentation</span></span></a>
   </div>
 </li>
       </ul>
@@ -278,31 +308,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./team.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Building and Sustaining a Data Science Team</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Building and Sustaining a Data Science Team</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./onboarding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Onboarding and the Team Handbook</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./governance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aigovernance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">AI Governance in a Health Agency</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./peerreview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./comms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
   </div>
 </li>
       </ul>
@@ -328,6 +370,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Additional Resources</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./trainingbudget.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Spending a Training Budget</span></span></a>
+  </div>
+</li>
       </ul>
 </li>
     </ul>
@@ -338,44 +386,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#sec-databases-dbi" id="toc-sec-databases-dbi" class="nav-link active" data-scroll-target="#sec-databases-dbi"><span class="header-section-number">12.1</span> DBI: The Common Interface</a></li>
+<li><a href="#sec-databases-dbi" id="toc-sec-databases-dbi" class="nav-link active" data-scroll-target="#sec-databases-dbi"><span class="header-section-number">16.1</span> DBI: The Common Interface</a></li>
   <li>
-<a href="#sec-databases-duckdb" id="toc-sec-databases-duckdb" class="nav-link" data-scroll-target="#sec-databases-duckdb"><span class="header-section-number">12.2</span> DuckDB</a>
+<a href="#sec-databases-duckdb" id="toc-sec-databases-duckdb" class="nav-link" data-scroll-target="#sec-databases-duckdb"><span class="header-section-number">16.2</span> DuckDB</a>
   <ul class="collapse">
-<li><a href="#setting-up" id="toc-setting-up" class="nav-link" data-scroll-target="#setting-up"><span class="header-section-number">12.2.1</span> Setting up</a></li>
-  <li><a href="#loading-data" id="toc-loading-data" class="nav-link" data-scroll-target="#loading-data"><span class="header-section-number">12.2.2</span> Loading data</a></li>
-  <li><a href="#querying-with-sql" id="toc-querying-with-sql" class="nav-link" data-scroll-target="#querying-with-sql"><span class="header-section-number">12.2.3</span> Querying with SQL</a></li>
+<li><a href="#setting-up" id="toc-setting-up" class="nav-link" data-scroll-target="#setting-up"><span class="header-section-number">16.2.1</span> Setting up</a></li>
+  <li><a href="#loading-data" id="toc-loading-data" class="nav-link" data-scroll-target="#loading-data"><span class="header-section-number">16.2.2</span> Loading data</a></li>
+  <li><a href="#querying-with-sql" id="toc-querying-with-sql" class="nav-link" data-scroll-target="#querying-with-sql"><span class="header-section-number">16.2.3</span> Querying with SQL</a></li>
   </ul>
 </li>
   <li>
-<a href="#sec-databases-dbplyr" id="toc-sec-databases-dbplyr" class="nav-link" data-scroll-target="#sec-databases-dbplyr"><span class="header-section-number">12.3</span> dbplyr: dplyr Syntax on Any Database</a>
+<a href="#sec-databases-dbplyr" id="toc-sec-databases-dbplyr" class="nav-link" data-scroll-target="#sec-databases-dbplyr"><span class="header-section-number">16.3</span> dbplyr: dplyr Syntax on Any Database</a>
   <ul class="collapse">
-<li><a href="#lazy-tables" id="toc-lazy-tables" class="nav-link" data-scroll-target="#lazy-tables"><span class="header-section-number">12.3.1</span> Lazy tables</a></li>
-  <li><a href="#writing-queries-with-dplyr" id="toc-writing-queries-with-dplyr" class="nav-link" data-scroll-target="#writing-queries-with-dplyr"><span class="header-section-number">12.3.2</span> Writing queries with dplyr</a></li>
-  <li><a href="#inspecting-generated-sql" id="toc-inspecting-generated-sql" class="nav-link" data-scroll-target="#inspecting-generated-sql"><span class="header-section-number">12.3.3</span> Inspecting generated SQL</a></li>
+<li><a href="#lazy-tables" id="toc-lazy-tables" class="nav-link" data-scroll-target="#lazy-tables"><span class="header-section-number">16.3.1</span> Lazy tables</a></li>
+  <li><a href="#writing-queries-with-dplyr" id="toc-writing-queries-with-dplyr" class="nav-link" data-scroll-target="#writing-queries-with-dplyr"><span class="header-section-number">16.3.2</span> Writing queries with dplyr</a></li>
+  <li><a href="#inspecting-generated-sql" id="toc-inspecting-generated-sql" class="nav-link" data-scroll-target="#inspecting-generated-sql"><span class="header-section-number">16.3.3</span> Inspecting generated SQL</a></li>
   </ul>
 </li>
   <li>
-<a href="#sec-databases-duckplyr" id="toc-sec-databases-duckplyr" class="nav-link" data-scroll-target="#sec-databases-duckplyr"><span class="header-section-number">12.4</span> duckplyr: DuckDB as a dplyr Backend</a>
+<a href="#sec-databases-duckplyr" id="toc-sec-databases-duckplyr" class="nav-link" data-scroll-target="#sec-databases-duckplyr"><span class="header-section-number">16.4</span> duckplyr: DuckDB as a dplyr Backend</a>
   <ul class="collapse">
-<li><a href="#how-duckplyr-differs-from-dbplyr" id="toc-how-duckplyr-differs-from-dbplyr" class="nav-link" data-scroll-target="#how-duckplyr-differs-from-dbplyr"><span class="header-section-number">12.4.1</span> How duckplyr differs from dbplyr</a></li>
+<li><a href="#how-duckplyr-differs-from-dbplyr" id="toc-how-duckplyr-differs-from-dbplyr" class="nav-link" data-scroll-target="#how-duckplyr-differs-from-dbplyr"><span class="header-section-number">16.4.1</span> How duckplyr differs from dbplyr</a></li>
   </ul>
 </li>
   <li>
-<a href="#sec-databases-remote" id="toc-sec-databases-remote" class="nav-link" data-scroll-target="#sec-databases-remote"><span class="header-section-number">12.5</span> Connecting to Institutional Databases</a>
+<a href="#sec-databases-remote" id="toc-sec-databases-remote" class="nav-link" data-scroll-target="#sec-databases-remote"><span class="header-section-number">16.5</span> Connecting to Institutional Databases</a>
   <ul class="collapse">
-<li><a href="#sql-server" id="toc-sql-server" class="nav-link" data-scroll-target="#sql-server"><span class="header-section-number">12.5.1</span> SQL Server</a></li>
-  <li><a href="#postgresql" id="toc-postgresql" class="nav-link" data-scroll-target="#postgresql"><span class="header-section-number">12.5.2</span> PostgreSQL</a></li>
-  <li><a href="#storing-credentials-safely" id="toc-storing-credentials-safely" class="nav-link" data-scroll-target="#storing-credentials-safely"><span class="header-section-number">12.5.3</span> Storing credentials safely</a></li>
-  <li><a href="#once-connected-everything-is-the-same" id="toc-once-connected-everything-is-the-same" class="nav-link" data-scroll-target="#once-connected-everything-is-the-same"><span class="header-section-number">12.5.4</span> Once connected, everything is the same</a></li>
+<li><a href="#sql-server" id="toc-sql-server" class="nav-link" data-scroll-target="#sql-server"><span class="header-section-number">16.5.1</span> SQL Server</a></li>
+  <li><a href="#postgresql" id="toc-postgresql" class="nav-link" data-scroll-target="#postgresql"><span class="header-section-number">16.5.2</span> PostgreSQL</a></li>
+  <li><a href="#storing-credentials-safely" id="toc-storing-credentials-safely" class="nav-link" data-scroll-target="#storing-credentials-safely"><span class="header-section-number">16.5.3</span> Storing credentials safely</a></li>
+  <li><a href="#reusing-query-patterns" id="toc-reusing-query-patterns" class="nav-link" data-scroll-target="#reusing-query-patterns"><span class="header-section-number">16.5.4</span> Reusing Query Patterns</a></li>
   </ul>
 </li>
-  <li><a href="#sec-databases-practical" id="toc-sec-databases-practical" class="nav-link" data-scroll-target="#sec-databases-practical"><span class="header-section-number">12.6</span> Practical Guidance</a></li>
+  <li><a href="#sec-databases-practical" id="toc-sec-databases-practical" class="nav-link" data-scroll-target="#sec-databases-practical"><span class="header-section-number">16.6</span> Practical Guidance</a></li>
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./databases.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Databases from R</span></a></li></ol></nav><div class="quarto-title">
-<h1 class="title"><span id="sec-databases" class="quarto-section-identifier"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Databases from R</span></span></h1>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./databases.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Databases from R</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title"><span id="sec-databases" class="quarto-section-identifier"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Databases from R</span></span></h1>
 </div>
 
 
@@ -389,8 +437,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><p>Spreadsheets and CSV files work well for small datasets, but many public health agencies store their surveillance data in relational databases: SQL Server, Oracle, PostgreSQL, or similar systems. These databases are managed by IT, shared across teams, and updated continuously as new data arrives. The data never leaves the server; analysts connect, run a query, and pull back only the rows and columns they need.</p>
-<p>This chapter covers how to work with databases from R. The examples use <a href="https://duckdb.org/">DuckDB</a>, an in-process analytical database that requires no server setup and installs as an R package. DuckDB is practical for local analysis of large files, but the same patterns (DBI, dbplyr) apply to institutional databases like SQL Server and PostgreSQL — only the connection call changes. The chapter ends with connection patterns for those remote systems. Data that lives behind a web API rather than in a database you can connect to (CDC’s open data portal, the Census Bureau) is covered in <a href="apis.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
+</header><p>Spreadsheets and CSV files work well for small datasets, but many public health agencies store their surveillance data in relational databases: SQL Server, Oracle, PostgreSQL, or similar systems. These databases are managed by IT, shared across teams, and updated continuously as new data arrives. Analysts query the data on the server and retrieve the rows and columns they need.</p>
+<p>This chapter covers how to work with databases from R. The examples use <a href="https://duckdb.org/">DuckDB</a>, an in-process analytical database that requires no server setup and installs as an R package. DuckDB is practical for local analysis of large files, but the same patterns (DBI, dbplyr) apply to institutional databases like SQL Server and PostgreSQL, though SQL support and type handling vary by backend. The chapter ends with connection patterns for those remote systems. <a href="apis.html" class="quarto-xref"><span>Chapter 18</span></a> covers public web APIs, including CDC’s open data portal and the Census Bureau.</p>
+<p>This chapter assumes the database already exists and that someone else chose it. If your team is deciding what to stand up, what it will cost, and which budget line pays for it, <a href="infrastructure.html" class="quarto-xref"><span>Chapter 17</span></a> covers that decision.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -401,11 +450,11 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Getting access to an institutional database involves IT, data stewards, and sometimes a data use agreement. That process is covered in <a href="governance.html" class="quarto-xref"><span>Chapter 19</span></a>. This chapter covers what to do once access is in hand.</p>
+<p>Getting access to an institutional database involves IT, data stewards, and sometimes a data use agreement. That process is covered in <a href="governance.html" class="quarto-xref"><span>Chapter 25</span></a>. This chapter covers what to do once access is in hand.</p>
 </div>
 </div>
-<section id="sec-databases-dbi" class="level2" data-number="12.1"><h2 data-number="12.1" class="anchored" data-anchor-id="sec-databases-dbi">
-<span class="header-section-number">12.1</span> DBI: The Common Interface</h2>
+<section id="sec-databases-dbi" class="level2" data-number="16.1"><h2 data-number="16.1" class="anchored" data-anchor-id="sec-databases-dbi">
+<span class="header-section-number">16.1</span> DBI: The Common Interface</h2>
 <p>The <a href="https://dbi.r-dbi.org/"><code>DBI</code></a> package defines a consistent interface for interacting with databases from R. Every database backend (DuckDB, SQL Server, PostgreSQL, SQLite) provides its own driver package, but the functions you call are the same regardless of which system you are connected to.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"DBI"</span>, <span class="st">"duckdb"</span>, <span class="st">"duckplyr"</span>, <span class="st">"dbplyr"</span>, <span class="st">"odbc"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -431,7 +480,7 @@ Note
 </tr>
 <tr class="odd">
 <td><code><a href="https://dbi.r-dbi.org/reference/dbExecute.html">dbExecute()</a></code></td>
-<td>Run SQL that modifies data (no results returned)</td>
+<td>Run a statement and return the number of affected rows</td>
 </tr>
 <tr class="even">
 <td><code><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html">dbDisconnect()</a></code></td>
@@ -439,18 +488,19 @@ Note
 </tr>
 </tbody>
 </table>
-<p>A connection always needs to be closed when you are done. The safest pattern is <code><a href="https://rdrr.io/r/base/on.exit.html">on.exit()</a></code>, which runs the disconnect even if an error occurs before the end of the block:</p>
+<p>A connection always needs to be closed when you are done. Inside a function, use <code><a href="https://rdrr.io/r/base/on.exit.html">on.exit()</a></code> to close the connection even if the function errors:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu">dbConnect</span><span class="op">(</span><span class="fu">duckdb</span><span class="fu">::</span><span class="fu"><a href="https://r.duckdb.org/reference/duckdb.html">duckdb</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/on.exit.html">on.exit</a></span><span class="op">(</span><span class="fu">dbDisconnect</span><span class="op">(</span><span class="va">con</span><span class="op">)</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># ... work with the database ...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">query_example</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">con</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html">dbConnect</a></span><span class="op">(</span><span class="fu">duckdb</span><span class="fu">::</span><span class="fu"><a href="https://r.duckdb.org/reference/duckdb.html">duckdb</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/on.exit.html">on.exit</a></span><span class="op">(</span><span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html">dbDisconnect</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbGetQuery.html">dbGetQuery</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"SELECT 1 AS example"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section><section id="sec-databases-duckdb" class="level2" data-number="12.2"><h2 data-number="12.2" class="anchored" data-anchor-id="sec-databases-duckdb">
-<span class="header-section-number">12.2</span> DuckDB</h2>
-<p><a href="https://duckdb.org/">DuckDB</a> is an in-process analytical database designed for fast queries over large datasets. It runs inside your R session with no separate server, installs as a single package, and can read CSV and Parquet files directly without loading them into R first. It is a good fit for local analysis of data that is too large to work with comfortably as an R data frame, and its DBI interface is identical to remote databases, so code written against DuckDB transfers to SQL Server or PostgreSQL with only the connection call changed.</p>
-<section id="setting-up" class="level3" data-number="12.2.1"><h3 data-number="12.2.1" class="anchored" data-anchor-id="setting-up">
-<span class="header-section-number">12.2.1</span> Setting up</h3>
+</section><section id="sec-databases-duckdb" class="level2" data-number="16.2"><h2 data-number="16.2" class="anchored" data-anchor-id="sec-databases-duckdb">
+<span class="header-section-number">16.2</span> DuckDB</h2>
+<p><a href="https://duckdb.org/">DuckDB</a> is an in-process analytical database designed for fast queries over large datasets. It runs inside your R session with no separate server, installs as a single package, and can read CSV and Parquet files directly without loading them into R first. It is a good fit for local analysis of data that is too large to work with comfortably as an R data frame, and its DBI interface is identical to remote databases, so many connection and query patterns transfer to SQL Server or PostgreSQL. Test SQL expressions and data types on the target backend.</p>
+<section id="setting-up" class="level3" data-number="16.2.1"><h3 data-number="16.2.1" class="anchored" data-anchor-id="setting-up">
+<span class="header-section-number">16.2.1</span> Setting up</h3>
 <p>Connect with <code><a href="https://dbi.r-dbi.org/reference/dbConnect.html">dbConnect()</a></code>. An in-memory database (which disappears when the connection closes) is the default:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dbi.r-dbi.org">DBI</a></span><span class="op">)</span></span>
@@ -458,12 +508,12 @@ Note
 <span></span>
 <span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html">dbConnect</a></span><span class="op">(</span><span class="fu"><a href="https://r.duckdb.org/reference/duckdb.html">duckdb</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>To persist the database to disk — so it survives between sessions — pass a file path:</p>
+<p>To keep the database between sessions, pass a file path:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html">dbConnect</a></span><span class="op">(</span><span class="fu"><a href="https://r.duckdb.org/reference/duckdb.html">duckdb</a></span><span class="op">(</span><span class="st">"surveillance.duckdb"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section><section id="loading-data" class="level3" data-number="12.2.2"><h3 data-number="12.2.2" class="anchored" data-anchor-id="loading-data">
-<span class="header-section-number">12.2.2</span> Loading data</h3>
+</section><section id="loading-data" class="level3" data-number="16.2.2"><h3 data-number="16.2.2" class="anchored" data-anchor-id="loading-data">
+<span class="header-section-number">16.2.2</span> Loading data</h3>
 <p>Use <code><a href="https://dbi.r-dbi.org/reference/dbWriteTable.html">dbWriteTable()</a></code> to load an R data frame into a DuckDB table. The examples in this chapter use a simulated weekly influenza surveillance dataset for Virginia counties, 2021–2023.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
@@ -514,8 +564,8 @@ Note
 <pre><code>[1] "flu"</code></pre>
 </div>
 </div>
-</section><section id="querying-with-sql" class="level3" data-number="12.2.3"><h3 data-number="12.2.3" class="anchored" data-anchor-id="querying-with-sql">
-<span class="header-section-number">12.2.3</span> Querying with SQL</h3>
+</section><section id="querying-with-sql" class="level3" data-number="16.2.3"><h3 data-number="16.2.3" class="anchored" data-anchor-id="querying-with-sql">
+<span class="header-section-number">16.2.3</span> Querying with SQL</h3>
 <p><code><a href="https://dbi.r-dbi.org/reference/dbGetQuery.html">dbGetQuery()</a></code> runs a SQL <code>SELECT</code> and returns the result as a data frame:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbGetQuery.html">dbGetQuery</a></span><span class="op">(</span></span>
@@ -534,7 +584,7 @@ Note
 3 2023        7732</code></pre>
 </div>
 </div>
-<p>DuckDB can also read CSV and Parquet files directly using SQL — without loading them into R first:</p>
+<p>DuckDB can also read CSV and Parquet files directly using SQL, without loading them into R first:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Read a CSV directly in a query</span></span>
 <span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbGetQuery.html">dbGetQuery</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"SELECT * FROM read_csv('data/flu-2024.csv') LIMIT 5"</span><span class="op">)</span></span>
@@ -542,11 +592,11 @@ Note
 <span><span class="co"># Read a folder of Parquet files</span></span>
 <span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbGetQuery.html">dbGetQuery</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"SELECT COUNT(*) FROM read_parquet('data/flu-*.parquet')"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section></section><section id="sec-databases-dbplyr" class="level2" data-number="12.3"><h2 data-number="12.3" class="anchored" data-anchor-id="sec-databases-dbplyr">
-<span class="header-section-number">12.3</span> dbplyr: dplyr Syntax on Any Database</h2>
-<p>Writing SQL by hand is workable for simple queries but awkward for anything that requires multiple joins, filters, and aggregations. The <a href="https://dbplyr.tidyverse.org/"><code>dbplyr</code></a> package lets you write standard dplyr code against a database connection — it translates your code to SQL automatically.</p>
-<section id="lazy-tables" class="level3" data-number="12.3.1"><h3 data-number="12.3.1" class="anchored" data-anchor-id="lazy-tables">
-<span class="header-section-number">12.3.1</span> Lazy tables</h3>
+</section></section><section id="sec-databases-dbplyr" class="level2" data-number="16.3"><h2 data-number="16.3" class="anchored" data-anchor-id="sec-databases-dbplyr">
+<span class="header-section-number">16.3</span> dbplyr: dplyr Syntax on Any Database</h2>
+<p>Writing SQL by hand is workable for simple queries but awkward for anything that requires multiple joins, filters, and aggregations. The <a href="https://dbplyr.tidyverse.org/"><code>dbplyr</code></a> package lets you write standard dplyr code against a database connection. It translates your code to SQL automatically.</p>
+<section id="lazy-tables" class="level3" data-number="16.3.1"><h3 data-number="16.3.1" class="anchored" data-anchor-id="lazy-tables">
+<span class="header-section-number">16.3.1</span> Lazy tables</h3>
 <p><code><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl()</a></code> creates a reference to a database table. The result looks like a data frame but nothing has been pulled into R yet:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
@@ -555,8 +605,8 @@ Note
 <span><span class="va">flu_tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"flu"</span><span class="op">)</span></span>
 <span><span class="va">flu_tbl</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># Source:   table&lt;flu&gt; [?? x 5]
-# Database: DuckDB 1.4.4 [root@Darwin 25.5.0:R 4.5.2/:memory:]
+<pre><code># A query:  ?? x 5
+# Database: DuckDB 1.5.5 [root@Darwin 25.6.0:R 4.5.2/:memory:]
     week  year county  cases population
    &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt;      &lt;dbl&gt;
  1     1  2021 Fairfax    29    1150000
@@ -572,8 +622,8 @@ Note
 # ℹ more rows</code></pre>
 </div>
 </div>
-</section><section id="writing-queries-with-dplyr" class="level3" data-number="12.3.2"><h3 data-number="12.3.2" class="anchored" data-anchor-id="writing-queries-with-dplyr">
-<span class="header-section-number">12.3.2</span> Writing queries with dplyr</h3>
+</section><section id="writing-queries-with-dplyr" class="level3" data-number="16.3.2"><h3 data-number="16.3.2" class="anchored" data-anchor-id="writing-queries-with-dplyr">
+<span class="header-section-number">16.3.2</span> Writing queries with dplyr</h3>
 <p>dplyr verbs work on database tables the same way they work on data frames. The key difference is that operations are lazy: they accumulate until you ask for the results with <code><a href="https://dplyr.tidyverse.org/reference/compute.html">collect()</a></code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q</span> <span class="op">&lt;-</span> <span class="va">flu_tbl</span> <span class="op">|&gt;</span></span>
@@ -590,8 +640,8 @@ Note
 <span></span>
 <span><span class="va">q</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># Source:     SQL [?? x 3]
-# Database:   DuckDB 1.4.4 [root@Darwin 25.5.0:R 4.5.2/:memory:]
+<pre><code># A query:    ?? x 3
+# Database:   DuckDB 1.5.5 [root@Darwin 25.6.0:R 4.5.2/:memory:]
 # Ordered by: desc(rate_per_100k)
    county         total_cases rate_per_100k
    &lt;chr&gt;                &lt;dbl&gt;         &lt;dbl&gt;
@@ -607,7 +657,7 @@ Note
 10 Fairfax                656           57 </code></pre>
 </div>
 </div>
-<p>Notice the output header says <code>Source: SQL [?? x 3]</code> — the query has not run yet. Call <code><a href="https://dplyr.tidyverse.org/reference/compute.html">collect()</a></code> to execute and bring results into R:</p>
+<p>The <code># A query:</code> header identifies a lazy query; <code>??</code> means dbplyr has not determined the total row count. Printing it fetches a preview; <code><a href="https://dplyr.tidyverse.org/reference/compute.html">collect()</a></code> retrieves the full result:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html">collect</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -626,8 +676,8 @@ Note
 10 Fairfax                656           57 </code></pre>
 </div>
 </div>
-</section><section id="inspecting-generated-sql" class="level3" data-number="12.3.3"><h3 data-number="12.3.3" class="anchored" data-anchor-id="inspecting-generated-sql">
-<span class="header-section-number">12.3.3</span> Inspecting generated SQL</h3>
+</section><section id="inspecting-generated-sql" class="level3" data-number="16.3.3"><h3 data-number="16.3.3" class="anchored" data-anchor-id="inspecting-generated-sql">
+<span class="header-section-number">16.3.3</span> Inspecting generated SQL</h3>
 <p><code><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query()</a></code> reveals the SQL that dbplyr would send to the database. This is useful for debugging, learning SQL, or handing a query off to a colleague who prefers SQL:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="va">q</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -637,16 +687,13 @@ SELECT
   county,
   SUM(cases) AS total_cases,
   ROUND_EVEN((SUM(cases) / FIRST(population)) * 100000.0, CAST(ROUND(1.0, 0) AS INTEGER)) AS rate_per_100k
-FROM (
-  SELECT flu.*
-  FROM flu
-  WHERE ("year" = 2023.0)
-) q01
+FROM flu
+WHERE ("year" = 2023.0)
 GROUP BY county
 ORDER BY rate_per_100k DESC</code></pre>
 </div>
 </div>
-<p>The generated SQL is valid and efficient. For most queries, you never need to write SQL directly — but the ability to inspect it means you always know what is happening.</p>
+<p>Inspect generated SQL when debugging or checking performance. Translation support and query efficiency depend on the database backend.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -660,9 +707,9 @@ Tip
 <p>Pull as little data as possible. Filter, aggregate, and join on the database side before calling <code><a href="https://dplyr.tidyverse.org/reference/compute.html">collect()</a></code>. Pulling a million rows to R and then filtering in R is far slower than filtering in SQL and pulling only the rows you need.</p>
 </div>
 </div>
-</section></section><section id="sec-databases-duckplyr" class="level2" data-number="12.4"><h2 data-number="12.4" class="anchored" data-anchor-id="sec-databases-duckplyr">
-<span class="header-section-number">12.4</span> duckplyr: DuckDB as a dplyr Backend</h2>
-<p><a href="https://duckplyr.tidyverse.org/"><code>duckplyr</code></a> takes a different approach. Instead of requiring an explicit connection, it makes DuckDB the execution engine for ordinary dplyr operations on data frames. You convert a data frame once with <code><a href="https://duckplyr.tidyverse.org/reference/duckdb_tibble.html">as_duckdb_tibble()</a></code>, and subsequent dplyr operations run through DuckDB rather than R’s default in-memory engine.</p>
+</section></section><section id="sec-databases-duckplyr" class="level2" data-number="16.4"><h2 data-number="16.4" class="anchored" data-anchor-id="sec-databases-duckplyr">
+<span class="header-section-number">16.4</span> duckplyr: DuckDB as a dplyr Backend</h2>
+<p><a href="https://duckplyr.tidyverse.org/"><code>duckplyr</code></a> takes a different approach. Instead of requiring an explicit connection, it makes DuckDB the execution engine for ordinary dplyr operations on data frames. You convert a data frame once with <code><a href="https://duckplyr.tidyverse.org/reference/duckdb_tibble.html">as_duckdb_tibble()</a></code>, and subsequent dplyr operations run through DuckDB when supported.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://duckplyr.tidyverse.org">duckplyr</a></span><span class="op">)</span></span>
 <span></span>
@@ -681,7 +728,7 @@ Tip
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 3
    county         total_cases rate_per_100k
-   &lt;chr&gt;                &lt;dbl&gt;         &lt;dbl&gt;
+ * &lt;chr&gt;                &lt;dbl&gt;         &lt;dbl&gt;
  1 Roanoke                709          709 
  2 Alexandria             690          445.
  3 Richmond               851          370 
@@ -694,8 +741,8 @@ Tip
 10 Fairfax                656           57 </code></pre>
 </div>
 </div>
-<section id="how-duckplyr-differs-from-dbplyr" class="level3" data-number="12.4.1"><h3 data-number="12.4.1" class="anchored" data-anchor-id="how-duckplyr-differs-from-dbplyr">
-<span class="header-section-number">12.4.1</span> How duckplyr differs from dbplyr</h3>
+<section id="how-duckplyr-differs-from-dbplyr" class="level3" data-number="16.4.1"><h3 data-number="16.4.1" class="anchored" data-anchor-id="how-duckplyr-differs-from-dbplyr">
+<span class="header-section-number">16.4.1</span> How duckplyr differs from dbplyr</h3>
 <table class="caption-top table">
 <thead><tr class="header">
 <th></th>
@@ -736,14 +783,14 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>duckplyr falls back to standard dplyr automatically when it encounters a verb or expression it cannot execute through DuckDB. The output is always correct — the question is only whether the fast path was used. You can see fallback events with <code><a href="https://duckplyr.tidyverse.org/reference/fallback.html">duckplyr::fallback_review()</a></code>.</p>
+<p>duckplyr falls back to standard dplyr automatically when it encounters a verb or expression it cannot execute through DuckDB. Fallback preserves support for operations DuckDB cannot handle; you should still validate results. You can see fallback events with <code><a href="https://duckplyr.tidyverse.org/reference/fallback.html">duckplyr::fallback_review()</a></code>.</p>
 </div>
 </div>
-</section></section><section id="sec-databases-remote" class="level2" data-number="12.5"><h2 data-number="12.5" class="anchored" data-anchor-id="sec-databases-remote">
-<span class="header-section-number">12.5</span> Connecting to Institutional Databases</h2>
-<p>In practice, surveillance data often lives on a managed SQL Server, Oracle, or PostgreSQL server that IT administers. The <code>odbc</code> package provides R drivers for these systems. The connection syntax differs from DuckDB, but everything else — DBI functions, dbplyr queries — works identically.</p>
-<section id="sql-server" class="level3" data-number="12.5.1"><h3 data-number="12.5.1" class="anchored" data-anchor-id="sql-server">
-<span class="header-section-number">12.5.1</span> SQL Server</h3>
+</section></section><section id="sec-databases-remote" class="level2" data-number="16.5"><h2 data-number="16.5" class="anchored" data-anchor-id="sec-databases-remote">
+<span class="header-section-number">16.5</span> Connecting to Institutional Databases</h2>
+<p>In practice, surveillance data often lives on a managed SQL Server, Oracle, or PostgreSQL server that IT administers. The <code>odbc</code> package provides R drivers for these systems. The connection syntax differs from DuckDB, while the same DBI and dbplyr interfaces remain available.</p>
+<section id="sql-server" class="level3" data-number="16.5.1"><h3 data-number="16.5.1" class="anchored" data-anchor-id="sql-server">
+<span class="header-section-number">16.5.1</span> SQL Server</h3>
 <p>The most common database at state and local health departments. Requires the ODBC Driver for SQL Server, which IT typically installs on managed machines:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://odbc.r-dbi.org">odbc</a></span><span class="op">)</span></span>
@@ -758,8 +805,8 @@ Note
 <span>  encrypt <span class="op">=</span> <span class="st">"yes"</span></span>
 <span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section><section id="postgresql" class="level3" data-number="12.5.2"><h3 data-number="12.5.2" class="anchored" data-anchor-id="postgresql">
-<span class="header-section-number">12.5.2</span> PostgreSQL</h3>
+</section><section id="postgresql" class="level3" data-number="16.5.2"><h3 data-number="16.5.2" class="anchored" data-anchor-id="postgresql">
+<span class="header-section-number">16.5.2</span> PostgreSQL</h3>
 <p>Common in cloud deployments and some state agencies:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html">dbConnect</a></span><span class="op">(</span></span>
@@ -771,10 +818,10 @@ Note
 <span>  pwd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv</a></span><span class="op">(</span><span class="st">"DB_PASSWORD"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section><section id="storing-credentials-safely" class="level3" data-number="12.5.3"><h3 data-number="12.5.3" class="anchored" data-anchor-id="storing-credentials-safely">
-<span class="header-section-number">12.5.3</span> Storing credentials safely</h3>
+</section><section id="storing-credentials-safely" class="level3" data-number="16.5.3"><h3 data-number="16.5.3" class="anchored" data-anchor-id="storing-credentials-safely">
+<span class="header-section-number">16.5.3</span> Storing credentials safely</h3>
 <p>Never put database credentials in code or commit them to version control. Use environment variables instead. Store them in a project-level <code>.Renviron</code> file (which your <code>.gitignore</code> should exclude):</p>
-<pre><code># .Renviron  — do not commit this file
+<pre><code># .Renviron: do not commit this file
 DB_USER=yourname
 DB_PASSWORD=yourpassword</code></pre>
 <p>Retrieve them in code with <code><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv()</a></code>, as shown in the connection examples above. An <code>.Renviron</code> file in the project root is loaded automatically when R starts in that directory. This keeps credentials out of scripts and repositories while making them available to anyone with appropriate access to the file.</p>
@@ -791,9 +838,9 @@ Warning
 <p>Add <code>.Renviron</code> to your <code>.gitignore</code> before adding credentials to it. A credential committed to a repository is a credential that may be exposed.</p>
 </div>
 </div>
-</section><section id="once-connected-everything-is-the-same" class="level3" data-number="12.5.4"><h3 data-number="12.5.4" class="anchored" data-anchor-id="once-connected-everything-is-the-same">
-<span class="header-section-number">12.5.4</span> Once connected, everything is the same</h3>
-<p>After the connection is open, all DBI and dbplyr patterns work identically regardless of which database system you are connected to:</p>
+</section><section id="reusing-query-patterns" class="level3" data-number="16.5.4"><h3 data-number="16.5.4" class="anchored" data-anchor-id="reusing-query-patterns">
+<span class="header-section-number">16.5.4</span> Reusing Query Patterns</h3>
+<p>After the connection is open, you can reuse common DBI and dbplyr patterns, checking backend support for the functions you use:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Works on SQL Server, PostgreSQL, DuckDB, etc.</span></span>
 <span><span class="va">cases_tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"flu_cases"</span><span class="op">)</span></span>
@@ -803,9 +850,9 @@ Warning
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html">collect</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section></section><section id="sec-databases-practical" class="level2" data-number="12.6"><h2 data-number="12.6" class="anchored" data-anchor-id="sec-databases-practical">
-<span class="header-section-number">12.6</span> Practical Guidance</h2>
-<p><strong>Always close connections.</strong> Use <code>on.exit(dbDisconnect(con), add = TRUE)</code> immediately after opening a connection so it closes even if an error interrupts the script.</p>
+</section></section><section id="sec-databases-practical" class="level2" data-number="16.6"><h2 data-number="16.6" class="anchored" data-anchor-id="sec-databases-practical">
+<span class="header-section-number">16.6</span> Practical Guidance</h2>
+<p><strong>Always close connections.</strong> Inside a function, use <code>on.exit(dbDisconnect(con), add = TRUE)</code>. At script level, close the connection explicitly or use <code>tryCatch(..., finally = dbDisconnect(con))</code>.</p>
 <p><strong>Use dbplyr instead of writing SQL.</strong> Unless you need a SQL feature that dbplyr does not support, dplyr verbs are easier to read, easier to debug, and work across database backends without modification.</p>
 <p><strong>Filter on the database side.</strong> Every row you pull into R costs time and memory. Apply <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>, and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> before <code><a href="https://dplyr.tidyverse.org/reference/compute.html">collect()</a></code> so you bring back only the result, not the raw data.</p>
 <p><strong>Check the data types after <code><a href="https://dplyr.tidyverse.org/reference/compute.html">collect()</a></code>.</strong> Databases and R sometimes disagree on types (dates, integers, NULLs vs.&nbsp;<code>NA</code>). Validate with <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> or <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code> after the first <code><a href="https://dplyr.tidyverse.org/reference/compute.html">collect()</a></code> and add type coercions to your setup block if needed.</p>
@@ -1212,12 +1259,12 @@ Warning
   });
   </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./environments.html" class="pagination-link" aria-label="Reproducible Environments">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Reproducible Environments</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Reproducible Environments</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./apis.html" class="pagination-link" aria-label="APIs and Public Data Sources">
-        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./infrastructure.html" class="pagination-link" aria-label="Choosing and Paying for Data Infrastructure">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Choosing and Paying for Data Infrastructure</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

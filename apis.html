@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.9.36">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Stephen D. Turner">
-<title>13&nbsp; APIs and Public Data Sources – Data Science Team Training</title>
+<title>18&nbsp; APIs and Public Data Sources – Data Science Team Training</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -85,7 +85,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./legacy.html" rel="next">
-<link href="./databases.html" rel="prev">
+<link href="./infrastructure.html" rel="prev">
 <link href="./hex.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -131,7 +131,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./apis.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./apis.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -207,80 +207,110 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Testing Analysis Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./debugging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Debugging and Getting Help</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./reporting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Reproducible Reporting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducible Reporting</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./accessibility.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Accessibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Accessibility</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ai.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Coding with AI</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Coding with AI</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dashboards.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dashboards</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Dashboards</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">BI Platforms</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./automation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Automation and Scheduling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Automation and Scheduling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./packageloading.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Package Loading</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Package Loading</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dependencies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Managing Package Dependencies</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./packagedevelopment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Package Development</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Package Development</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./environments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Reproducible Environments</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Reproducible Environments</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./databases.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Databases from R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Databases from R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./infrastructure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Choosing and Paying for Data Infrastructure</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./apis.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./legacy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Migrating from Legacy Workflows</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Migrating from Legacy Workflows</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./codestyle.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Code Style</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Code Style</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./documentation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Documentation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Documentation</span></span></a>
   </div>
 </li>
       </ul>
@@ -297,31 +327,43 @@ div.csl-indent {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./team.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Building and Sustaining a Data Science Team</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Building and Sustaining a Data Science Team</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./onboarding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Onboarding and the Team Handbook</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./governance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aigovernance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">AI Governance in a Health Agency</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./peerreview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./comms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
   </div>
 </li>
       </ul>
@@ -347,6 +389,12 @@ div.csl-indent {
  <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Additional Resources</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./trainingbudget.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Spending a Training Budget</span></span></a>
+  </div>
+</li>
       </ul>
 </li>
     </ul>
@@ -357,25 +405,25 @@ div.csl-indent {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#sec-apis-anatomy" id="toc-sec-apis-anatomy" class="nav-link active" data-scroll-target="#sec-apis-anatomy"><span class="header-section-number">13.1</span> What an API Request Looks Like</a></li>
-  <li><a href="#sec-apis-sources" id="toc-sec-apis-sources" class="nav-link" data-scroll-target="#sec-apis-sources"><span class="header-section-number">13.2</span> Where Public Health Data Lives</a></li>
-  <li><a href="#sec-apis-packages" id="toc-sec-apis-packages" class="nav-link" data-scroll-target="#sec-apis-packages"><span class="header-section-number">13.3</span> Use a Package When One Exists</a></li>
+<li><a href="#sec-apis-anatomy" id="toc-sec-apis-anatomy" class="nav-link active" data-scroll-target="#sec-apis-anatomy"><span class="header-section-number">18.1</span> What an API Request Looks Like</a></li>
+  <li><a href="#sec-apis-sources" id="toc-sec-apis-sources" class="nav-link" data-scroll-target="#sec-apis-sources"><span class="header-section-number">18.2</span> Where Public Health Data Lives</a></li>
+  <li><a href="#sec-apis-packages" id="toc-sec-apis-packages" class="nav-link" data-scroll-target="#sec-apis-packages"><span class="header-section-number">18.3</span> Use a Package When One Exists</a></li>
   <li>
-<a href="#sec-apis-httr2" id="toc-sec-apis-httr2" class="nav-link" data-scroll-target="#sec-apis-httr2"><span class="header-section-number">13.4</span> Building Requests with httr2</a>
+<a href="#sec-apis-httr2" id="toc-sec-apis-httr2" class="nav-link" data-scroll-target="#sec-apis-httr2"><span class="header-section-number">18.4</span> Building Requests with httr2</a>
   <ul class="collapse">
-<li><a href="#pagination" id="toc-pagination" class="nav-link" data-scroll-target="#pagination"><span class="header-section-number">13.4.1</span> Pagination</a></li>
-  <li><a href="#retries-and-politeness" id="toc-retries-and-politeness" class="nav-link" data-scroll-target="#retries-and-politeness"><span class="header-section-number">13.4.2</span> Retries and politeness</a></li>
+<li><a href="#pagination" id="toc-pagination" class="nav-link" data-scroll-target="#pagination"><span class="header-section-number">18.4.1</span> Pagination</a></li>
+  <li><a href="#retries-and-rate-limits" id="toc-retries-and-rate-limits" class="nav-link" data-scroll-target="#retries-and-rate-limits"><span class="header-section-number">18.4.2</span> Retries and rate limits</a></li>
   </ul>
 </li>
-  <li><a href="#sec-apis-keys" id="toc-sec-apis-keys" class="nav-link" data-scroll-target="#sec-apis-keys"><span class="header-section-number">13.5</span> API Keys and Tokens</a></li>
-  <li><a href="#sec-apis-pull" id="toc-sec-apis-pull" class="nav-link" data-scroll-target="#sec-apis-pull"><span class="header-section-number">13.6</span> Separate the Pull from the Analysis</a></li>
-  <li><a href="#sec-apis-validate" id="toc-sec-apis-validate" class="nav-link" data-scroll-target="#sec-apis-validate"><span class="header-section-number">13.7</span> Validate What Comes Back</a></li>
-  <li><a href="#sec-apis-practical" id="toc-sec-apis-practical" class="nav-link" data-scroll-target="#sec-apis-practical"><span class="header-section-number">13.8</span> Practical Guidance</a></li>
+  <li><a href="#sec-apis-keys" id="toc-sec-apis-keys" class="nav-link" data-scroll-target="#sec-apis-keys"><span class="header-section-number">18.5</span> API Keys and Tokens</a></li>
+  <li><a href="#sec-apis-pull" id="toc-sec-apis-pull" class="nav-link" data-scroll-target="#sec-apis-pull"><span class="header-section-number">18.6</span> Separate the Pull from the Analysis</a></li>
+  <li><a href="#sec-apis-validate" id="toc-sec-apis-validate" class="nav-link" data-scroll-target="#sec-apis-validate"><span class="header-section-number">18.7</span> Validate What Comes Back</a></li>
+  <li><a href="#sec-apis-practical" id="toc-sec-apis-practical" class="nav-link" data-scroll-target="#sec-apis-practical"><span class="header-section-number">18.8</span> Download and Reuse</a></li>
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./apis.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></a></li></ol></nav><div class="quarto-title">
-<h1 class="title"><span id="sec-apis" class="quarto-section-identifier"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></span></h1>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./apis.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title"><span id="sec-apis" class="quarto-section-identifier"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></span></h1>
 </div>
 
 
@@ -390,8 +438,8 @@ div.csl-indent {
 
 
 </header><p>Not every analysis starts with data your agency collects. The denominators for your rates come from the Census Bureau, the national counts you compare against come from CDC, and both live on someone else’s server, published for exactly this kind of use.</p>
-<p>The usual way to get that data is to browse to the portal, click through some filters, hit Export, and download a CSV, which works exactly once. Six months later, nobody remembers which filters were applied or whether the provider has revised the numbers since, and the download is the one step of the analysis that cannot be re-run.</p>
-<p>The fix is to script the download, and web APIs make that possible. This chapter covers how to pull data from public APIs in R: using a dedicated package when one exists, building requests with <code>httr2</code> when one does not, handling API keys, and structuring the pull so the rest of the analysis stays reproducible.</p>
+<p>The usual way to get that data is to browse to the portal, click through some filters, hit Export, and download a CSV, which can leave the download settings unrecorded. Six months later, nobody remembers which filters were applied or whether the provider has revised the numbers since, and the download is the one step of the analysis that cannot be re-run.</p>
+<p>Scripted downloads record the request and make it repeatable. In R, this means using a dedicated package when one exists, building requests with <code>httr2</code> when one does not, handling API keys, and structuring the pull so the rest of the analysis stays reproducible.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -402,32 +450,17 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This chapter is about <em>public</em> data sources, where the data is intended for download and the main concerns are reproducibility and politeness. Getting access to your agency’s internal databases is covered in <a href="databases.html" class="quarto-xref"><span>Chapter 12</span></a>, and the governance process around restricted data in <a href="governance.html" class="quarto-xref"><span>Chapter 19</span></a>.</p>
+<p>This chapter is about <em>public</em> data sources, where the data is intended for download and the main concerns are reproducibility and politeness. Getting access to your agency’s internal databases is covered in <a href="databases.html" class="quarto-xref"><span>Chapter 16</span></a>, and the governance process around restricted data in <a href="governance.html" class="quarto-xref"><span>Chapter 25</span></a>.</p>
 </div>
 </div>
-<section id="sec-apis-anatomy" class="level2" data-number="13.1"><h2 data-number="13.1" class="anchored" data-anchor-id="sec-apis-anatomy">
-<span class="header-section-number">13.1</span> What an API Request Looks Like</h2>
-<p>An API (application programming interface), for our purposes, is a URL that returns data instead of a web page. Here is a real one. CDC publishes NNDSS weekly notifiable disease counts on its open data portal, and this URL asks for the 2024 pertussis records:</p>
+<section id="sec-apis-anatomy" class="level2" data-number="18.1"><h2 data-number="18.1" class="anchored" data-anchor-id="sec-apis-anatomy">
+<span class="header-section-number">18.1</span> What an API Request Looks Like</h2>
+<p>A web API (application programming interface) lets code request data or operations from a service. Its endpoints are URLs; the example here returns data. CDC publishes NNDSS weekly notifiable disease counts on its open data portal, and this URL asks for the 2024 pertussis records:</p>
 <pre><code>https://data.cdc.gov/resource/x9gk-5huc.json?label=Pertussis&amp;year=2024</code></pre>
-<p>The pieces: <code>data.cdc.gov</code> is the portal, <code>x9gk-5huc</code> identifies the dataset, <code>.json</code> is the response format, and everything after the <code>?</code> is a set of query parameters that filter the result. Paste it into a browser and you get back JSON, a plain-text format for structured data that looks like this:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jeroen.r-universe.dev/jsonlite">jsonlite</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">flu_json</span> <span class="op">&lt;-</span> <span class="st">'[</span></span>
-<span><span class="st">  {"county": "Fairfax",   "week": "2024-01-06", "cases": "23"},</span></span>
-<span><span class="st">  {"county": "Arlington", "week": "2024-01-06", "cases": "41"}</span></span>
-<span><span class="st">]'</span></span>
-<span></span>
-<span><span class="fu"><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html">fromJSON</a></span><span class="op">(</span><span class="va">flu_json</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     county       week cases
-1   Fairfax 2024-01-06    23
-2 Arlington 2024-01-06    41</code></pre>
-</div>
-</div>
-<p>The <code>jsonlite</code> package converts JSON to a data frame, and for a flat, rectangular response like this the conversion is automatic. Notice that <code>cases</code> came back as a character column, quotes and all. Many APIs, including CDC’s, return every field as a string regardless of what it contains. More on that in <a href="#sec-apis-validate" class="quarto-xref"><span>Section 13.7</span></a>.</p>
-</section><section id="sec-apis-sources" class="level2" data-number="13.2"><h2 data-number="13.2" class="anchored" data-anchor-id="sec-apis-sources">
-<span class="header-section-number">13.2</span> Where Public Health Data Lives</h2>
+<p>The pieces: <code>data.cdc.gov</code> is the portal, <code>x9gk-5huc</code> identifies the dataset, <code>.json</code> is the response format, and everything after the <code>?</code> is a set of query parameters that filter the result. Paste it into a browser to see JSON, a plain-text format for structured data. The response contains records and named fields.</p>
+<p>JSON values can be text even when they represent numbers. Inspect the provider’s field definitions before converting types (<a href="#sec-apis-validate" class="quarto-xref"><span>Section 18.7</span></a>).</p>
+</section><section id="sec-apis-sources" class="level2" data-number="18.2"><h2 data-number="18.2" class="anchored" data-anchor-id="sec-apis-sources">
+<span class="header-section-number">18.2</span> Where Public Health Data Lives</h2>
 <p>A few sources cover most of what public health teams pull from outside their agency:</p>
 <table class="caption-top table">
 <thead><tr class="header">
@@ -464,134 +497,206 @@ Note
 <td>Same Socrata patterns as data.cdc.gov</td>
 </tr>
 </tbody>
-</table></section><section id="sec-apis-packages" class="level2" data-number="13.3"><h2 data-number="13.3" class="anchored" data-anchor-id="sec-apis-packages">
-<span class="header-section-number">13.3</span> Use a Package When One Exists</h2>
-<p>Before writing any request code, check whether someone has already wrapped the API in an R package. A good wrapper handles authentication, pagination, and type conversion for you, and it encodes knowledge about the API’s quirks that you would otherwise learn the hard way.</p>
-<p>The clearest example is <a href="https://walker-data.com/tidycensus/"><code>tidycensus</code></a>, which wraps the Census Bureau APIs. Getting county population denominators for Virginia is a few lines:</p>
+</table></section><section id="sec-apis-packages" class="level2" data-number="18.3"><h2 data-number="18.3" class="anchored" data-anchor-id="sec-apis-packages">
+<span class="header-section-number">18.3</span> Use a Package When One Exists</h2>
+<p>Check for a maintained package before implementing requests yourself. <a href="https://walker-data.com/tidycensus/"><code>tidycensus</code></a> handles Census queries and returns estimates with margins of error. <a href="https://github.com/Chicago/RSocrata"><code>RSocrata</code></a> handles pagination and date conversion for Socrata portals. Confirm the package supports the dataset and fields you need; a wrapper does not remove the need to validate the result.</p>
+<p>For example, this <code>tidycensus</code> call requests county population estimates for Virginia from the 2023 five-year ACS. Request a free key at <a href="https://api.census.gov/data/key_signup.html" class="uri">https://api.census.gov/data/key_signup.html</a> and store it with <code>tidycensus::census_api_key("YOUR_KEY", install = TRUE)</code>. This writes the key to <code>.Renviron</code> for future sessions (<a href="#sec-apis-keys" class="quarto-xref"><span>Section 18.5</span></a>). Restart R, or run <code>readRenviron("~/.Renviron")</code>, before making a request in the current session. Then run:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://walker-data.com/tidycensus/">tidycensus</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># One-time setup: request a free key at</span></span>
-<span><span class="co"># https://api.census.gov/data/key_signup.html</span></span>
-<span><span class="fu">census_api_key</span><span class="op">(</span><span class="st">"YOUR_KEY_HERE"</span>, install <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">va_pop</span> <span class="op">&lt;-</span> <span class="fu">get_acs</span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">va_pop</span> <span class="op">&lt;-</span> <span class="fu">tidycensus</span><span class="fu">::</span><span class="fu">get_acs</span><span class="op">(</span></span>
 <span>  geography <span class="op">=</span> <span class="st">"county"</span>,</span>
 <span>  state <span class="op">=</span> <span class="st">"VA"</span>,</span>
 <span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>population <span class="op">=</span> <span class="st">"B01003_001"</span><span class="op">)</span>,</span>
-<span>  year <span class="op">=</span> <span class="fl">2023</span></span>
+<span>  year <span class="op">=</span> <span class="fl">2023</span>,</span>
+<span>  survey <span class="op">=</span> <span class="st">"acs5"</span></span>
 <span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The result arrives as a tidy data frame with proper types, margins of error included. Kyle Walker’s book <em>Analyzing US Census Data</em> <span class="citation" data-cites="walker2023census">(<a href="references.html#ref-walker2023census" role="doc-biblioref">Walker 2023</a>)</span>, freely available online, covers the census APIs and <code>tidycensus</code> in depth.</p>
-<p>For Socrata portals like data.cdc.gov, the <a href="https://github.com/Chicago/RSocrata"><code>RSocrata</code></a> package (maintained by the City of Chicago) does the same job. Point it at the dataset URL, filters and all:</p>
+<p>For a Socrata dataset, <code>RSocrata</code> can handle the page requests:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">RSocrata</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">pertussis</span> <span class="op">&lt;-</span> <span class="fu">read.socrata</span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pertussis</span> <span class="op">&lt;-</span> <span class="fu">RSocrata</span><span class="fu">::</span><span class="fu">read.socrata</span><span class="op">(</span></span>
 <span>  <span class="st">"https://data.cdc.gov/resource/x9gk-5huc.json?label=Pertussis&amp;year=2024"</span></span>
 <span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><code>read.socrata()</code> pages through the full result automatically and converts date fields, two things you would otherwise handle yourself.</p>
-</section><section id="sec-apis-httr2" class="level2" data-number="13.4"><h2 data-number="13.4" class="anchored" data-anchor-id="sec-apis-httr2">
-<span class="header-section-number">13.4</span> Building Requests with httr2</h2>
-<p>When no package exists, the <a href="https://httr2.r-lib.org/"><code>httr2</code></a> package is the general-purpose tool for talking to APIs from R. You build a request object piece by piece, then perform it.</p>
+<p>Kyle Walker’s <em>Analyzing US Census Data</em> <span class="citation" data-cites="walker2023census">(<a href="references.html#ref-walker2023census" role="doc-biblioref">Walker 2023</a>)</span> covers Census data and <code>tidycensus</code> in detail. The <code>httr2</code> example below gives you control over the request and archiving steps when a package does not provide the options you need.</p>
+</section><section id="sec-apis-httr2" class="level2" data-number="18.4"><h2 data-number="18.4" class="anchored" data-anchor-id="sec-apis-httr2">
+<span class="header-section-number">18.4</span> Building Requests with httr2</h2>
+<p>When no suitable wrapper exists, <a href="https://httr2.r-lib.org/"><code>httr2</code></a> lets you construct and inspect a request before sending it. Record the endpoint, filters, selected fields, and any version parameter. Keep requests in a separate acquisition script so changing a report does not repeatedly contact the service.</p>
+<p>The complete example below uses <code>httr2</code>, <code>jsonlite</code>, and <code>dplyr</code>. Install those packages before running it. The function definitions can be run without contacting the API; the download happens only when you call <code>fetch_nndss()</code> in <a href="#sec-apis-practical" class="quarto-xref"><span>Section 18.8</span></a>.</p>
+<p>First, define the request for the 2024 pertussis records:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://httr2.r-lib.org">httr2</a></span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nndss_request</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">req</span> <span class="op">&lt;-</span> <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/request.html">request</a></span><span class="op">(</span><span class="st">"https://data.cdc.gov/resource/x9gk-5huc.json"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/req_url.html">req_url_query</a></span><span class="op">(</span></span>
+<span>      `$where` <span class="op">=</span> <span class="st">"label='Pertussis' AND year='2024'"</span>,</span>
+<span>      `$limit` <span class="op">=</span> <span class="fl">5000</span>,</span>
+<span>      `$order` <span class="op">=</span> <span class="st">":id"</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/req_retry.html">req_retry</a></span><span class="op">(</span>max_tries <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/req_throttle.html">req_throttle</a></span><span class="op">(</span>capacity <span class="op">=</span> <span class="fl">30</span>, fill_time_s <span class="op">=</span> <span class="fl">60</span><span class="op">)</span></span>
+<span>  <span class="va">token</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv</a></span><span class="op">(</span><span class="st">"SOCRATA_APP_TOKEN"</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html">nzchar</a></span><span class="op">(</span><span class="va">token</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">req</span> <span class="op">&lt;-</span> <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/req_headers.html">req_headers</a></span><span class="op">(</span><span class="va">req</span>, `X-App-Token` <span class="op">=</span> <span class="va">token</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">req</span></span>
+<span><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><code>req_url_query()</code> encodes the filter and other query parameters. The page size and ordering will stay fixed while the download function changes the offset. The optional token comes from your environment (<a href="#sec-apis-keys" class="quarto-xref"><span>Section 18.5</span></a>); it is not part of the URL or the saved metadata.</p>
+<section id="pagination" class="level3" data-number="18.4.1"><h3 data-number="18.4.1" class="anchored" data-anchor-id="pagination">
+<span class="header-section-number">18.4.1</span> Pagination</h3>
+<p>Check the API’s row limit and completion rule. A successful HTTP response can contain only the first page. For offset-based pagination, use a stable ordering and continue until the documented completion condition is met. Socrata recommends an explicit <a href="https://dev.socrata.com/docs/queries/order.html">order such as <code>:id</code></a>. Changes to the dataset during pagination can still affect results; use a provider snapshot when available.</p>
+<p>Set a maximum number of requests to catch accidental loops, and treat reaching it as an incomplete pull. Compare the final row count and coverage with expectations. A round count is a reason to investigate, but neither a round nor an irregular count proves completeness.</p>
+</section><section id="retries-and-rate-limits" class="level3" data-number="18.4.2"><h3 data-number="18.4.2" class="anchored" data-anchor-id="retries-and-rate-limits">
+<span class="header-section-number">18.4.2</span> Retries and rate limits</h3>
+<p>Use bounded retries for transient errors and obey the provider’s request limits. An authentication failure or invalid query requires correction, not repeated requests. The request above allows at most three attempts per page. By default, <a href="https://httr2.r-lib.org/reference/req_retry.html"><code>req_retry()</code></a> retries HTTP 429 and 503 responses and respects a <code>Retry-After</code> header when the server supplies one. <code>req_throttle()</code> limits the request rate to 30 requests per minute here; choose a rate appropriate to the provider. <a href="#sec-apis-practical" class="quarto-xref"><span>Section 18.8</span></a> shows how to archive each page and record whether the pull completed.</p>
+</section></section><section id="sec-apis-keys" class="level2" data-number="18.5"><h2 data-number="18.5" class="anchored" data-anchor-id="sec-apis-keys">
+<span class="header-section-number">18.5</span> API Keys and Tokens</h2>
+<p>Many APIs require a key, and others work better with one. The Census API requires a free key. Socrata portals work anonymously but throttle anonymous traffic aggressively; a free app token moves you to a much more generous rate limit. Keys are credentials, and the discipline is the same as for database passwords in <a href="databases.html#sec-databases-remote" class="quarto-xref"><span>Section 16.5</span></a>: keep them in <code>.Renviron</code>, read them with <code><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv()</a></code>, and never commit them.</p>
+<p>In a scheduled pipeline, supply the credential through the job’s approved secret store (<a href="automation.html#sec-automation-actions" class="quarto-xref"><span>Section 11.3</span></a>). Avoid writing credentials into request logs, filenames, or archived metadata.</p>
+</section><section id="sec-apis-pull" class="level2" data-number="18.6"><h2 data-number="18.6" class="anchored" data-anchor-id="sec-apis-pull">
+<span class="header-section-number">18.6</span> Separate the Pull from the Analysis</h2>
+<p>Do not put an API call at the top of an analysis script. Put it in its own script, write the raw response to <code>data/raw/</code> under a dated filename or directory (<a href="dataorg.html#sec-dataorg-project" class="quarto-xref"><span>Section 2.3</span></a>), and have the analysis read the file.</p>
+<p>Saving the response preserves the data used by the analysis. An API reflects the data as of right now, and many public health sources revise: CDC’s provisional death counts, for example, are updated for recent weeks as certificates arrive, so the same query run a month apart returns different numbers. The archived pages record what you retrieved in that run. Read and combine those files when reproducing the analysis. Separating the pull also means the analysis renders offline and keeps working when the API is down or the dataset moves, and iterating on a report no longer re-downloads the same data on every render.</p>
+<p>In an automated pipeline, the pull becomes its own step, scheduled with the tools in <a href="automation.html" class="quarto-xref"><span>Chapter 11</span></a> or declared as a <code>targets</code> node (<a href="automation.html#sec-automation-targets" class="quarto-xref"><span>Section 11.4</span></a>) so downstream steps rerun only when a new file arrives.</p>
+</section><section id="sec-apis-validate" class="level2" data-number="18.7"><h2 data-number="18.7" class="anchored" data-anchor-id="sec-apis-validate">
+<span class="header-section-number">18.7</span> Validate What Comes Back</h2>
+<p>Check the response schema, types, and values before using the data. Required columns may be renamed or removed; a field may disappear from every record when all its values are missing. Distinguish an allowed all-missing field from a missing required identifier.</p>
+<p>Define how to interpret missing values and suppression flags from the provider’s documentation. Do not turn a suppressed count into zero. Reject unexpected text during numeric conversion; a warning that becomes <code>NA</code> can otherwise disappear into later calculations.</p>
+<p>Also check the requested year, geography, disease, row count, and reporting-period coverage. These checks catch a syntactically valid response to the wrong query. <a href="validation.html" class="quarto-xref"><span>Chapter 3</span></a> covers implementing checks and stopping the pipeline when required checks fail.</p>
+<p>For this example, require the disease label, year, and reporting week. Convert the count field <code>m1</code> only after checking that its nonmissing values contain integer text. The validator allows an entirely missing count field but rejects missing identifiers:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">validate_nndss</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">required</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"label"</span>, <span class="st">"year"</span>, <span class="st">"week"</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">is.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">||</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="va">required</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">||</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0L</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Expected a nonempty table with label, year, and week"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">anyNA</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">required</span><span class="op">]</span><span class="op">)</span> <span class="op">||</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">label</span> <span class="op">!=</span> <span class="st">"Pertussis"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Unexpected or missing label, year, or week"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="co"># Socrata can omit a field from every row when all values are missing.</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="st">"m1"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">x</span><span class="op">$</span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="cn">NA_character_</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">field</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"year"</span>, <span class="st">"week"</span>, <span class="st">"m1"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">x</span><span class="op">[[</span><span class="va">field</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">present</span> <span class="op">&lt;-</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">raw</span><span class="op">)</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"^[0-9]+$"</span>, <span class="va">raw</span><span class="op">[</span><span class="va">present</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Unexpected non-integer text in "</span>, <span class="va">field</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="va">value</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">raw</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="va">present</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Integer conversion failed in "</span>, <span class="va">field</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="va">x</span><span class="op">[[</span><span class="va">field</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">year</span> <span class="op">!=</span> <span class="fl">2024L</span><span class="op">)</span> <span class="op">||</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">week</span> <span class="op">&lt;</span> <span class="fl">1L</span> <span class="op">|</span> <span class="va">x</span><span class="op">$</span><span class="va">week</span> <span class="op">&gt;</span> <span class="fl">53L</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Unexpected year or reporting week"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="co"># Missing m1 values remain missing; retain provider flag fields for interpretation.</span></span>
+<span>  <span class="va">x</span></span>
+<span><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The original response files will retain the provider’s fields and values. This validator leaves missing counts missing and keeps any flag fields in the table. Check those flags and the dataset’s field definitions before interpreting a missing value. The checks here establish the expected schema and basic values; they do not establish geographic coverage or completeness of reporting.</p>
+<p>You can check the missing-count behavior without making a request:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">example_records</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>  label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Pertussis"</span>, <span class="st">"Pertussis"</span><span class="op">)</span>,</span>
+<span>  year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2024"</span>, <span class="st">"2024"</span><span class="op">)</span>,</span>
+<span>  week <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="st">"2"</span><span class="op">)</span>,</span>
+<span>  m1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"3"</span>, <span class="cn">NA_character_</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">req</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://httr2.r-lib.org/reference/request.html">request</a></span><span class="op">(</span><span class="st">"https://data.cdc.gov/resource/x9gk-5huc.json"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://httr2.r-lib.org/reference/req_url.html">req_url_query</a></span><span class="op">(</span></span>
-<span>    `$where` <span class="op">=</span> <span class="st">"label='Pertussis' AND year='2024'"</span>,</span>
-<span>    `$limit` <span class="op">=</span> <span class="fl">5000</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span><span class="va">req</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="fu">validate_nndss</span><span class="op">(</span><span class="va">example_records</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;httr2_request&gt;
-GET https://data.cdc.gov/resource/x9gk-5huc.json?%24where=label%3D%27Pertussis%27%20AND%20year%3D%272024%27&amp;%24limit=5000
-Body: empty</code></pre>
+<pre><code>      label year week m1
+1 Pertussis 2024    1  3
+2 Pertussis 2024    2 NA</code></pre>
 </div>
 </div>
-<p>Printing the request shows the method and the assembled URL. Nothing has been sent yet; <code><a href="https://httr2.r-lib.org/reference/req_url.html">req_url_query()</a></code> also took care of encoding the spaces and quotes in the <code>$where</code> clause. The <code>$where</code> and <code>$limit</code> parameters are part of Socrata’s query language (<a href="https://dev.socrata.com/docs/queries/">SoQL</a>), which supports SQL-like filtering, selecting, and ordering directly in the URL, so the server does the subsetting and you download only what you need, the same idea as filtering before <code><a href="https://dplyr.tidyverse.org/reference/compute.html">collect()</a></code> in <a href="databases.html" class="quarto-xref"><span>Chapter 12</span></a>.</p>
-<p>Performing the request and parsing the response:</p>
+<p>The count becomes numeric, and the missing count stays missing. Replacing <code>"3"</code> with an unexpected value such as <code>"suppressed"</code> would stop validation. Decide how to interpret such a flag from the provider’s documentation before adding a conversion rule.</p>
+</section><section id="sec-apis-practical" class="level2" data-number="18.8"><h2 data-number="18.8" class="anchored" data-anchor-id="sec-apis-practical">
+<span class="header-section-number">18.8</span> Download and Reuse</h2>
+<p>Use one reader for both a new download and later reuse. It combines the saved JSON pages and applies the validator:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">resp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://httr2.r-lib.org/reference/req_perform.html">req_perform</a></span><span class="op">(</span><span class="va">req</span><span class="op">)</span></span>
-<span><span class="va">pertussis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://httr2.r-lib.org/reference/resp_body_raw.html">resp_body_json</a></span><span class="op">(</span><span class="va">resp</span>, simplifyVector <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">read_nndss_pages</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">paths</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">pages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">paths</span>, <span class="kw">function</span><span class="op">(</span><span class="va">path</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html">fromJSON</a></span><span class="op">(</span><span class="va">path</span>, simplifyVector <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span>  <span class="fu">validate_nndss</span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows</a></span><span class="op">(</span><span class="va">pages</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><code>simplifyVector = TRUE</code> hands the JSON to <code>jsonlite</code> for the same automatic data-frame conversion shown earlier.</p>
-<section id="pagination" class="level3" data-number="13.4.1"><h3 data-number="13.4.1" class="anchored" data-anchor-id="pagination">
-<span class="header-section-number">13.4.1</span> Pagination</h3>
-<p>APIs cap how many rows one request returns, and the cap is easy to miss. Socrata’s default is 1,000 rows: ask for a dataset with 50,000 rows and you get the first 1,000, with no error and no warning. The <code>$limit</code> parameter raises the cap, and <code>$offset</code> requests subsequent pages. <code>httr2</code> can iterate the pages for you:</p>
+<p>The download function creates a new archive directory and saves each response before moving to the next page. It continues until the API returns an empty page. Reaching <code>max_pages</code> stops the pull with an error, so a loop limit cannot be mistaken for successful completion:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">resps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://httr2.r-lib.org/reference/req_perform_iterative.html">req_perform_iterative</a></span><span class="op">(</span></span>
-<span>  <span class="va">req</span>,</span>
-<span>  next_req <span class="op">=</span> <span class="fu"><a href="https://httr2.r-lib.org/reference/iterate_with_offset.html">iterate_with_offset</a></span><span class="op">(</span></span>
-<span>    <span class="st">"$offset"</span>,</span>
-<span>    start <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>    offset <span class="op">=</span> <span class="fl">5000</span>,</span>
-<span>    resp_complete <span class="op">=</span> \<span class="op">(</span><span class="va">resp</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://httr2.r-lib.org/reference/resp_body_raw.html">resp_body_json</a></span><span class="op">(</span><span class="va">resp</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  max_reqs <span class="op">=</span> <span class="cn">Inf</span></span>
-<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fetch_nndss</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">out_dir</span>, <span class="va">max_pages</span> <span class="op">=</span> <span class="fl">100L</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">max_pages</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1L</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/is.finite.html">is.finite</a></span><span class="op">(</span><span class="va">max_pages</span><span class="op">)</span>,</span>
+<span>    <span class="va">max_pages</span> <span class="op">&gt;=</span> <span class="fl">1</span>,</span>
+<span>    <span class="va">max_pages</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">floor</a></span><span class="op">(</span><span class="va">max_pages</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span><span class="op">(</span><span class="va">out_dir</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span>, showWarnings <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Choose a new output directory"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">req</span> <span class="op">&lt;-</span> <span class="fu">nndss_request</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="va">paths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">character</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="va">complete</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">max_pages</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">resp</span> <span class="op">&lt;-</span> <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/req_perform.html">req_perform</a></span><span class="op">(</span><span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/req_url.html">req_url_query</a></span><span class="op">(</span></span>
+<span>      <span class="va">req</span>,</span>
+<span>      `$offset` <span class="op">=</span> <span class="op">(</span><span class="va">i</span> <span class="op">-</span> <span class="fl">1L</span><span class="op">)</span> <span class="op">*</span> <span class="fl">5000L</span></span>
+<span>    <span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">out_dir</span>, <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"page-%04d.json"</span>, <span class="va">i</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/readBin.html">writeBin</a></span><span class="op">(</span><span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/resp_body_raw.html">resp_body_raw</a></span><span class="op">(</span><span class="va">resp</span><span class="op">)</span>, <span class="va">path</span><span class="op">)</span></span>
+<span>    <span class="va">paths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">paths</span>, <span class="va">path</span><span class="op">)</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/resp_body_raw.html">resp_body_json</a></span><span class="op">(</span><span class="va">resp</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0L</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">complete</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span></span>
+<span>      <span class="kw">break</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="va">complete</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"Page limit reached; incomplete archive, do not analyze"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">read_nndss_pages</span><span class="op">(</span><span class="va">paths</span><span class="op">)</span></span>
+<span>  <span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>    retrieved_utc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, tz <span class="op">=</span> <span class="st">"UTC"</span>, usetz <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    endpoint <span class="op">=</span> <span class="st">"https://data.cdc.gov/resource/x9gk-5huc.json"</span>,</span>
+<span>    filter <span class="op">=</span> <span class="st">"label='Pertussis' AND year='2024'"</span>,</span>
+<span>    order <span class="op">=</span> <span class="st">":id"</span>,</span>
+<span>    page_size <span class="op">=</span> <span class="fl">5000L</span>,</span>
+<span>    rows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>,</span>
+<span>    complete <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="co"># No credential is written to the archive.</span></span>
+<span>  <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://jeroen.r-universe.dev/jsonlite/reference/read_json.html">write_json</a></span><span class="op">(</span></span>
+<span>    <span class="va">metadata</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">out_dir</span>, <span class="st">"manifest.json"</span><span class="op">)</span>,</span>
+<span>    auto_unbox <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    pretty <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="va">result</span></span>
+<span><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Whatever tool you use, check the row count of what came back against what you expected. A suspiciously round number like exactly 1,000 or exactly 50,000 usually means you hit a cap.</p>
-</section><section id="retries-and-politeness" class="level3" data-number="13.4.2"><h3 data-number="13.4.2" class="anchored" data-anchor-id="retries-and-politeness">
-<span class="header-section-number">13.4.2</span> Retries and politeness</h3>
-<p>Public APIs fail transiently and rate-limit heavy users. Two <code>httr2</code> functions handle both concerns declaratively:</p>
+<p>The completion manifest records the endpoint, filter, ordering, page size, retrieval time, and row count. It is written only after pagination and validation succeed. If a request fails partway through, the pages already downloaded remain available for inspection, but there is no completion manifest. Start a fresh archive when retrying so files from different pulls are not mixed.</p>
+<p>To download, run the four function definitions above, then call <code>fetch_nndss()</code> from an acquisition script or the console. This example puts the archive in a directory named with its UTC retrieval time:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">req</span> <span class="op">&lt;-</span> <span class="va">req</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://httr2.r-lib.org/reference/req_retry.html">req_retry</a></span><span class="op">(</span>max_tries <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://httr2.r-lib.org/reference/req_throttle.html">req_throttle</a></span><span class="op">(</span>capacity <span class="op">=</span> <span class="fl">30</span>, fill_time_s <span class="op">=</span> <span class="fl">60</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">archive_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span></span>
+<span>  <span class="st">"data"</span>,</span>
+<span>  <span class="st">"raw"</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%Y%m%dT%H%M%S"</span>, tz <span class="op">=</span> <span class="st">"UTC"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">pertussis</span> <span class="op">&lt;-</span> <span class="fu">fetch_nndss</span><span class="op">(</span><span class="va">archive_dir</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><code><a href="https://httr2.r-lib.org/reference/req_retry.html">req_retry()</a></code> retries automatically on transient failures with increasing wait times. <code><a href="https://httr2.r-lib.org/reference/req_throttle.html">req_throttle()</a></code> caps your request rate (here, 30 requests per minute) so a loop over many queries does not hammer the server. Both matter more in automated pipelines (<a href="automation.html" class="quarto-xref"><span>Chapter 8</span></a>), where nobody is watching the requests go out.</p>
-</section></section><section id="sec-apis-keys" class="level2" data-number="13.5"><h2 data-number="13.5" class="anchored" data-anchor-id="sec-apis-keys">
-<span class="header-section-number">13.5</span> API Keys and Tokens</h2>
-<p>Many APIs require a key, and others work better with one. The Census API requires a free key. Socrata portals work anonymously but throttle anonymous traffic aggressively; a free app token moves you to a much more generous rate limit. Keys are credentials, and the discipline is the same as for database passwords in <a href="databases.html#sec-databases-remote" class="quarto-xref"><span>Section 12.5</span></a>: keep them in <code>.Renviron</code>, read them with <code><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv()</a></code>, and never commit them.</p>
+<p>Record the chosen archive path with the analysis. For a later offline run, set <code>archive_dir</code> to that existing directory and use the saved pages:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># .Renviron (git-ignored):  SOCRATA_APP_TOKEN=xxxxxxxxxx</span></span>
-<span></span>
-<span><span class="va">req</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://httr2.r-lib.org/reference/request.html">request</a></span><span class="op">(</span><span class="st">"https://data.cdc.gov/resource/x9gk-5huc.json"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://httr2.r-lib.org/reference/req_headers.html">req_headers</a></span><span class="op">(</span>`X-App-Token` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv</a></span><span class="op">(</span><span class="st">"SOCRATA_APP_TOKEN"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://httr2.r-lib.org/reference/req_url.html">req_url_query</a></span><span class="op">(</span>`$where` <span class="op">=</span> <span class="st">"label='Pertussis' AND year='2024'"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://jeroen.r-universe.dev/jsonlite/reference/read_json.html">read_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">archive_dir</span>, <span class="st">"manifest.json"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Logic.html">isTRUE</a></span><span class="op">(</span><span class="va">metadata</span><span class="op">$</span><span class="va">complete</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">page_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span></span>
+<span>  <span class="va">archive_dir</span>,</span>
+<span>  pattern <span class="op">=</span> <span class="st">"^page-[0-9]+[.]json$"</span>,</span>
+<span>  full.names <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">pertussis</span> <span class="op">&lt;-</span> <span class="fu">read_nndss_pages</span><span class="op">(</span><span class="va">page_files</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">pertussis</span><span class="op">)</span> <span class="op">==</span> <span class="va">metadata</span><span class="op">$</span><span class="va">rows</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>In a GitHub Actions pipeline, the token goes in the repository’s secrets and reaches the job as an environment variable, exactly as described in <a href="automation.html#sec-automation-actions" class="quarto-xref"><span>Section 8.3</span></a>.</p>
-</section><section id="sec-apis-pull" class="level2" data-number="13.6"><h2 data-number="13.6" class="anchored" data-anchor-id="sec-apis-pull">
-<span class="header-section-number">13.6</span> Separate the Pull from the Analysis</h2>
-<p>Do not put an API call at the top of an analysis script. Put it in its own script, write the raw response to <code>data/raw/</code> with a dated filename (<a href="dataorg.html#sec-dataorg-project" class="quarto-xref"><span>Section 2.3</span></a>), and have the analysis read the file.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 01-pull-nndss.R</span></span>
-<span><span class="va">resp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://httr2.r-lib.org/reference/req_perform.html">req_perform</a></span><span class="op">(</span><span class="va">req</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html">writeLines</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://httr2.r-lib.org/reference/resp_body_raw.html">resp_body_string</a></span><span class="op">(</span><span class="va">resp</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"raw"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"-nndss-pertussis.json"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>The main thing this buys is reproducibility. An API reflects the data as of right now, and many public health sources revise: CDC’s provisional death counts, for example, are updated for recent weeks as certificates arrive, so the same query run a month apart returns different numbers. The dated raw file records exactly what you pulled and when, and that file, not the live API, is the input your analysis can be reproduced from. Separating the pull also means the analysis renders offline and keeps working when the API is down or the dataset moves, and iterating on a report no longer re-downloads the same data on every render.</p>
-<p>In an automated pipeline, the pull becomes its own step, scheduled with the tools in <a href="automation.html" class="quarto-xref"><span>Chapter 8</span></a> or declared as a <code>targets</code> node (<a href="automation.html#sec-automation-targets" class="quarto-xref"><span>Section 8.4</span></a>) so downstream steps rerun only when a new file lands.</p>
-</section><section id="sec-apis-validate" class="level2" data-number="13.7"><h2 data-number="13.7" class="anchored" data-anchor-id="sec-apis-validate">
-<span class="header-section-number">13.7</span> Validate What Comes Back</h2>
-<p>Data from an API deserves the same skepticism as any other input, and it fails in two ways of its own.</p>
-<p>The first is types. As the JSON example at the start of the chapter showed, numeric fields often arrive as character. Coerce them explicitly, immediately after reading:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
-<span><span class="va">pertussis</span> <span class="op">&lt;-</span> <span class="va">pertussis</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
-<span>    year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span>,</span>
-<span>    week <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>,</span>
-<span>    m1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span> <span class="co"># current-week case count</span></span>
-<span>  <span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Explicit coercion beats automatic guessing because it fails loudly: if a count column suddenly contains <code>"suppressed"</code>, <code><a href="https://rdrr.io/r/base/integer.html">as.integer()</a></code> warns and produces <code>NA</code>, which your validation will catch. Silent guessing just gives you a character column and a broken sum three steps later.</p>
-<p>The second is the schema, which can change under you. API responses often omit empty fields entirely. In the NNDSS data, a record with no current-week count simply has no <code>m1</code> element, so a pull where every record is empty for some field has no such column at all. Providers also add, rename, and retire columns without ceremony. A pull script that ran cleanly for a year can start returning something structurally different.</p>
-<p>Both problems have the same answer as in <a href="validation.html" class="quarto-xref"><span>Chapter 3</span></a>: validate right after the pull, checking that expected columns exist, types are correct, and values are in range, and fail loudly before anything downstream runs. A <code>pointblank</code> agent pointed at the freshly-read file is a few lines and turns a silent upstream change into an immediate, diagnosable error.</p>
-</section><section id="sec-apis-practical" class="level2" data-number="13.8"><h2 data-number="13.8" class="anchored" data-anchor-id="sec-apis-practical">
-<span class="header-section-number">13.8</span> Practical Guidance</h2>
-<p><strong>Check for a package before writing request code.</strong> A maintained wrapper like <code>tidycensus</code> or <code>RSocrata</code> already handles pagination, types, and authentication.</p>
-<p><strong>Filter on the server.</strong> Use query parameters to request only the rows and columns you need, for the same reason you filter before <code><a href="https://dplyr.tidyverse.org/reference/compute.html">collect()</a></code> with a database.</p>
-<p><strong>Watch for silent row caps.</strong> If the row count of a pull is a suspiciously round number, you probably got page one of many.</p>
-<p><strong>Archive what you pull.</strong> A dated raw file in <code>data/raw/</code> is the reproducible input; the API is not, because the data behind it changes.</p>
-<p><strong>Treat keys like passwords.</strong> <code>.Renviron</code> locally, repository secrets in CI, never in code.</p>
-<p><strong>Validate every pull.</strong> Coerce types explicitly and check the schema, because the provider can change either one without telling you.</p>
+<p>A missing manifest stops this reuse step. The row-count check detects some accidental changes to an archive; it does not prove the source data was complete or unchanged during pagination. Keep the saved responses with the analysis and apply the coverage checks described in <a href="#sec-apis-validate" class="quarto-xref"><span>Section 18.7</span></a>. Report rendering should read this archive without making a new API call.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
@@ -999,13 +1104,13 @@ Walker, Kyle. 2023. <em>Analyzing US Census Data: Methods, Maps, and Models in r
     }
   });
   </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./databases.html" class="pagination-link" aria-label="Databases from R">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Databases from R</span></span>
+      <a href="./infrastructure.html" class="pagination-link" aria-label="Choosing and Paying for Data Infrastructure">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Choosing and Paying for Data Infrastructure</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./legacy.html" class="pagination-link" aria-label="Migrating from Legacy Workflows">
-        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Migrating from Legacy Workflows</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Migrating from Legacy Workflows</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

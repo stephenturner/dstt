@@ -8,7 +8,7 @@
 
 <meta name="author" content="Stephen D. Turner">
 
-<title>4&nbsp; Reproducible Reporting – Data Science Team Training</title>
+<title>6&nbsp; Reproducible Reporting – Data Science Team Training</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -70,7 +70,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./accessibility.html" rel="next">
-<link href="./validation.html" rel="prev">
+<link href="./debugging.html" rel="prev">
 <link href="./hex.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -122,7 +122,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./reporting.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Reproducible Reporting</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./reporting.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducible Reporting</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -202,80 +202,110 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Testing Analysis Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./debugging.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Debugging and Getting Help</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./reporting.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Reproducible Reporting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducible Reporting</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./accessibility.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Accessibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Accessibility</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ai.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Coding with AI</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Coding with AI</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dashboards.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dashboards</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Dashboards</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">BI Platforms</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./automation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Automation and Scheduling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Automation and Scheduling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./packageloading.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Package Loading</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Package Loading</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dependencies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Managing Package Dependencies</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./packagedevelopment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Package Development</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Package Development</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./environments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Reproducible Environments</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Reproducible Environments</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./databases.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Databases from R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Databases from R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./infrastructure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Choosing and Paying for Data Infrastructure</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./apis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">APIs and Public Data Sources</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./legacy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Migrating from Legacy Workflows</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Migrating from Legacy Workflows</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./codestyle.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Code Style</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Code Style</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./documentation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Documentation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Documentation</span></span></a>
   </div>
 </li>
       </ul>
@@ -292,31 +322,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./team.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Building and Sustaining a Data Science Team</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Building and Sustaining a Data Science Team</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./onboarding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Onboarding and the Team Handbook</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Project Management</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./governance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aigovernance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">AI Governance in a Health Agency</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./peerreview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./comms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Communicating Findings</span></span></a>
   </div>
 </li>
       </ul>
@@ -342,6 +384,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Additional Resources</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./trainingbudget.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Spending a Training Budget</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -354,27 +402,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-reporting-python" id="toc-sec-reporting-python" class="nav-link active" data-scroll-target="#sec-reporting-python"><span class="header-section-number">4.1</span> Not Just R</a></li>
-  <li><a href="#sec-reporting-anatomy" id="toc-sec-reporting-anatomy" class="nav-link" data-scroll-target="#sec-reporting-anatomy"><span class="header-section-number">4.2</span> Document Anatomy</a></li>
-  <li><a href="#sec-reporting-formats" id="toc-sec-reporting-formats" class="nav-link" data-scroll-target="#sec-reporting-formats"><span class="header-section-number">4.3</span> One Input, Many Output Formats</a></li>
-  <li><a href="#sec-reporting-inline" id="toc-sec-reporting-inline" class="nav-link" data-scroll-target="#sec-reporting-inline"><span class="header-section-number">4.4</span> Code Is the Report</a></li>
-  <li><a href="#sec-reporting-paths" id="toc-sec-reporting-paths" class="nav-link" data-scroll-target="#sec-reporting-paths"><span class="header-section-number">4.5</span> Paths and Project Structure</a></li>
-  <li><a href="#sec-reporting-params" id="toc-sec-reporting-params" class="nav-link" data-scroll-target="#sec-reporting-params"><span class="header-section-number">4.6</span> Parameterized Reports</a>
+  <li><a href="#sec-reporting-python" id="toc-sec-reporting-python" class="nav-link active" data-scroll-target="#sec-reporting-python"><span class="header-section-number">6.1</span> Python and Other Languages</a></li>
+  <li><a href="#sec-reporting-anatomy" id="toc-sec-reporting-anatomy" class="nav-link" data-scroll-target="#sec-reporting-anatomy"><span class="header-section-number">6.2</span> Document Anatomy</a></li>
+  <li><a href="#sec-reporting-formats" id="toc-sec-reporting-formats" class="nav-link" data-scroll-target="#sec-reporting-formats"><span class="header-section-number">6.3</span> One Input, Many Output Formats</a></li>
+  <li><a href="#sec-reporting-inline" id="toc-sec-reporting-inline" class="nav-link" data-scroll-target="#sec-reporting-inline"><span class="header-section-number">6.4</span> Code Is the Report</a></li>
+  <li><a href="#sec-reporting-paths" id="toc-sec-reporting-paths" class="nav-link" data-scroll-target="#sec-reporting-paths"><span class="header-section-number">6.5</span> Paths and Project Structure</a></li>
+  <li><a href="#sec-reporting-params" id="toc-sec-reporting-params" class="nav-link" data-scroll-target="#sec-reporting-params"><span class="header-section-number">6.6</span> Parameterized Reports</a>
   <ul class="collapse">
-  <li><a href="#declaring-parameters" id="toc-declaring-parameters" class="nav-link" data-scroll-target="#declaring-parameters"><span class="header-section-number">4.6.1</span> Declaring Parameters</a></li>
-  <li><a href="#using-parameters" id="toc-using-parameters" class="nav-link" data-scroll-target="#using-parameters"><span class="header-section-number">4.6.2</span> Using Parameters</a></li>
-  <li><a href="#rendering-with-different-parameters" id="toc-rendering-with-different-parameters" class="nav-link" data-scroll-target="#rendering-with-different-parameters"><span class="header-section-number">4.6.3</span> Rendering with Different Parameters</a></li>
+  <li><a href="#declaring-parameters" id="toc-declaring-parameters" class="nav-link" data-scroll-target="#declaring-parameters"><span class="header-section-number">6.6.1</span> Declaring Parameters</a></li>
+  <li><a href="#using-parameters" id="toc-using-parameters" class="nav-link" data-scroll-target="#using-parameters"><span class="header-section-number">6.6.2</span> Using Parameters</a></li>
+  <li><a href="#rendering-with-different-parameters" id="toc-rendering-with-different-parameters" class="nav-link" data-scroll-target="#rendering-with-different-parameters"><span class="header-section-number">6.6.3</span> Rendering with Different Parameters</a></li>
   </ul></li>
-  <li><a href="#sec-reporting-brand" id="toc-sec-reporting-brand" class="nav-link" data-scroll-target="#sec-reporting-brand"><span class="header-section-number">4.7</span> Consistent Branding with brand.yml</a></li>
+  <li><a href="#sec-reporting-brand" id="toc-sec-reporting-brand" class="nav-link" data-scroll-target="#sec-reporting-brand"><span class="header-section-number">6.7</span> Consistent Branding with brand.yml</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./reporting.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Reproducible Reporting</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git.html">Technical</a></li><li class="breadcrumb-item"><a href="./reporting.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducible Reporting</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-reporting" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Reproducible Reporting</span></span></h1>
+<h1 class="title"><span id="sec-reporting" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducible Reporting</span></span></h1>
 </div>
 
 
@@ -391,8 +439,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Every data team has lived through some version of this: the analysis is done, tables and figures have been generated, and now begins the tedious work of copying numbers into a Word document. Then the data updates. Or a reviewer catches an error in the underlying code. And every number in the document has to be found and replaced – manually, one at a time, with no guarantee that any were missed. Meanwhile, the number in the executive summary and the number in the appendix table, which should be identical, have quietly drifted apart.</p>
-<p>Reproducible reporting breaks this cycle. Instead of treating code and document as separate artifacts, the report <em>is</em> the code: prose, tables, and figures are assembled from a single source file that executes the analysis and weaves results directly into the output. Update the data, re-render, and every number updates automatically – because it was never copied in the first place.</p>
+<p>Copying analysis results into a Word document creates extra work whenever the data or code changes. Each number must be found and updated, and missed edits can leave the executive summary inconsistent with the tables.</p>
+<p>A reproducible report combines prose with code that generates tables, figures, and values in the text. After changing the data or analysis, render the document to update those results.</p>
 <p>Quarto is the tool that makes this practical. A Quarto document (<code>.qmd</code>) is a plain-text file that combines a YAML header describing the output format, prose, and code blocks that execute and embed their results. Render it once and get an HTML page. Change one line and render again to get a PDF or a Word document from the same source.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -404,12 +452,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The <a href="https://quarto.org/docs/">Quarto documentation</a> is the definitive reference for document options, output formats, and formatting syntax. This chapter covers the concepts and patterns that matter most for reproducible reporting; the Quarto docs are the place to go for comprehensive reference material.</p>
+<p>The <a href="https://quarto.org/docs/guide/">Quarto documentation</a> is the definitive reference for document options, output formats, and formatting syntax. This chapter covers the concepts and patterns that matter most for reproducible reporting; the Quarto docs are the place to go for comprehensive reference material.</p>
 </div>
 </div>
-<section id="sec-reporting-python" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="sec-reporting-python"><span class="header-section-number">4.1</span> Not Just R</h2>
-<p>Quarto works with R, Python, Julia, and Observable JavaScript – in the same document if needed. The rest of this chapter uses R in most examples because R is the primary language in many public health teams, but Python code blocks work exactly the same way: they execute when the document renders and their output appears in the report.</p>
+<section id="sec-reporting-python" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="sec-reporting-python"><span class="header-section-number">6.1</span> Python and Other Languages</h2>
+<p>Quarto supports R, Python, Julia, and Observable JavaScript; the execution engine determines which languages can share a document. The rest of this chapter uses R in most examples because R is the primary language in many public health teams, but Python code blocks work exactly the same way: they execute when the document renders and their output appears in the report.</p>
 <p>A Python block that requires no external packages:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statistics</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -422,7 +470,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Output:</p>
 <pre><code>Mean weekly cases: 122.7
 Peak week: 156</code></pre>
-<p>The <code>statistics</code> module is part of the Python standard library. The block executes at render time and its printed output appears in the document – no manual copying required.</p>
+<p>The <code>statistics</code> module is part of the Python standard library. In your <code>.qmd</code> file, use an executable cell starting with <code>```{python}</code> to run this code at render time.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -437,32 +485,33 @@ Note
 </div>
 </div>
 </section>
-<section id="sec-reporting-anatomy" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="sec-reporting-anatomy"><span class="header-section-number">4.2</span> Document Anatomy</h2>
+<section id="sec-reporting-anatomy" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="sec-reporting-anatomy"><span class="header-section-number">6.2</span> Document Anatomy</h2>
 <p>A Quarto document has three parts:</p>
 <p><strong>YAML front matter</strong>: a header block delimited by <code>---</code> that controls the title, author, date, and output format.</p>
 <p><strong>Prose</strong>: written in Markdown. The <a href="https://quarto.org/docs/authoring/markdown-basics.html">Quarto authoring guide</a> covers formatting. The short version: <code>**bold**</code>, <code>*italic*</code>, <code># Heading 1</code>, <code>## Heading 2</code>, and <code>- list item</code> cover the majority of what you need.</p>
-<p><strong>Code blocks</strong>: fenced blocks labeled with the language (<code>```r</code> or <code>```python</code>). When the document renders, each block executes in sequence and its output – printed values, tables, plots – is embedded in the output.</p>
+<p><strong>Code blocks</strong>: fenced blocks with braces around the language (<code>```{r}</code> or <code>```{python}</code>). When the document renders, each block executes in sequence and its output (printed values, tables, plots) is embedded in the output.</p>
 <p>A minimal Quarto document:</p>
-<pre><code>---
-title: "Influenza Surveillance Summary"
-author: "Epidemiology Team"
-date: today
-format: html
----
-
-## Overview
-
-This report summarizes influenza activity for the current surveillance week.
-
-```r
-#| label: fig-trend
-#| fig-cap: "Weekly influenza case counts"
-
-library(ggplot2)
-ggplot(flu_data, aes(x = week, y = cases)) +
-  geom_line()
-```</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Influenza Surveillance Summary"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Epidemiology Team"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>This report summarizes influenza activity for the current surveillance week.</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-trend</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Weekly influenza case counts"</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>flu_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">week =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">cases =</span> <span class="fu">c</span>(<span class="dv">23</span>, <span class="dv">41</span>, <span class="dv">30</span>, <span class="dv">38</span>))</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(flu_data, <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> cases)) <span class="sc">+</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Render from the terminal with <code>quarto render report.qmd</code>, or from within Positron or RStudio using the Render button. The output file (here, <code>report.html</code>) appears in the same directory.</p>
 <p>Code block options like <code>#| label:</code> and <code>#| fig-cap:</code> are set with the <code>#|</code> prefix on lines at the top of a block. Common options include:</p>
 <table class="caption-top table">
@@ -495,7 +544,7 @@ ggplot(flu_data, aes(x = week, y = cases)) +
 </tr>
 </tbody>
 </table>
-<p>A setup block at the top of the document – typically labeled <code>#| label: setup</code> with <code>#| include: false</code> – is the right place to load packages and read data so the rest of the document has access to them without displaying that machinery to readers.</p>
+<p>A setup block at the top of the document, typically labeled <code>#| label: setup</code> with <code>#| include: false</code>, is the right place to load packages and read data so the rest of the document has access to them without displaying that machinery to readers.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -506,13 +555,13 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>R code cells inside <code>.qmd</code> files can be formatted with the Air formatter (see <a href="codestyle.html#sec-style-air" class="quarto-xref"><span>Section 15.2</span></a>). Place your cursor in a cell and press <code>Cmd+K Cmd+F</code> (Mac) or <code>Ctrl+K Ctrl+F</code> (Windows/Linux) to format that cell. With format-on-save enabled for both <code>[r]</code> and <code>[quarto]</code> in your workspace settings, the active cell formats automatically when you save the document.</p>
+<p>R code cells inside <code>.qmd</code> files can be formatted with the Air formatter (see <a href="codestyle.html#sec-style-air" class="quarto-xref"><span>Section 20.2</span></a>). Place your cursor in a cell and press <code>Cmd+K Cmd+F</code> (Mac) or <code>Ctrl+K Ctrl+F</code> (Windows/Linux) to format that cell. With format-on-save enabled for both <code>[r]</code> and <code>[quarto]</code> in your workspace settings, the active cell formats automatically when you save the document.</p>
 </div>
 </div>
 </section>
-<section id="sec-reporting-formats" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="sec-reporting-formats"><span class="header-section-number">4.3</span> One Input, Many Output Formats</h2>
-<p>The same <code>.qmd</code> file can produce different output formats by changing the <code>format</code> key in the YAML header. This means you can share an HTML version with colleagues for day-to-day review, render a PDF for formal submission, and produce a Word document for stakeholders who need to annotate – all from one source file.</p>
+<section id="sec-reporting-formats" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="sec-reporting-formats"><span class="header-section-number">6.3</span> One Input, Many Output Formats</h2>
+<p>The same <code>.qmd</code> file can produce different output formats by changing the <code>format</code> key in the YAML header. This means you can share an HTML version with colleagues for day-to-day review, render a PDF for formal submission, and produce a Word document for stakeholders who need to annotate, all from one source file.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> html</span><span class="co">    # interactive HTML page</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> pdf</span><span class="co">     # PDF via LaTeX</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> docx</span><span class="co">    # Microsoft Word</span></span>
@@ -522,8 +571,10 @@ Tip
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span><span class="at"> default</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">docx</span><span class="kw">:</span><span class="at"> default</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pdf</span><span class="kw">:</span><span class="at"> default</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Running <code>quarto render report.qmd</code> then produces all three.</p>
-<p>The practical benefit of format independence is durability. A report that exists only as a finished Word document is locked to the moment it was created – any change requires re-opening it and editing manually. The <code>.qmd</code> file is the permanent, authoritative version. The Word document is just one of its outputs, and it can always be regenerated. For guidance on choosing which format best serves a given audience, see <a href="comms.html#sec-comms-format" class="quarto-xref"><span>Section 21.3</span></a>.</p>
+<p>Running <code>quarto render report.qmd --to all</code> produces all three.</p>
+<p>The practical benefit of format independence is durability. A report that exists only as a finished Word document is locked to the moment it was created; any change requires re-opening it and editing manually. The <code>.qmd</code> file is the permanent, authoritative version. The Word document is just one of its outputs, and it can always be regenerated. For guidance on choosing which format best serves a given audience, see <a href="comms.html#sec-comms-format" class="quarto-xref"><span>Section 28.3</span></a>.</p>
+<p>The same principle extends past Quarto’s own formats. A single prepared dataset can feed a Quarto narrative report and a Tableau or Power BI dashboard at the same time, with one definition of what each metric means (<a href="bi.html#sec-bi-metrics" class="quarto-xref"><span>Section 10.7</span></a>).</p>
+<p>Format choice also determines what accessibility work is required. HTML is the most accommodating target and the easiest to check; PDF is the most demanding. <a href="accessibility.html" class="quarto-xref"><span>Chapter 7</span></a> covers both, along with the alt text and color choices that apply regardless of format.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -534,13 +585,13 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Some content behaves differently across formats. Interactive elements like <code>plotly</code> charts and <code>DT</code> tables work in HTML but fall back to static output in PDF and Word. If Word or PDF is a primary deliverable, test your render early – not after a report is due – so you aren’t surprised by what doesn’t translate.</p>
+<p>Some content behaves differently across formats. Interactive elements like <code>plotly</code> charts and <code>DT</code> tables work in HTML but fall back to static output in PDF and Word. If Word or PDF is a primary deliverable, test your render early so you aren’t surprised by what doesn’t translate.</p>
 </div>
 </div>
 </section>
-<section id="sec-reporting-inline" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="sec-reporting-inline"><span class="header-section-number">4.4</span> Code Is the Report</h2>
-<p>The most consequential feature of reproducible reporting is not the output format – it is that computed values appear in prose automatically, without copy-paste.</p>
+<section id="sec-reporting-inline" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="sec-reporting-inline"><span class="header-section-number">6.4</span> Code Is the Report</h2>
+<p>Inline code inserts computed values directly into prose.</p>
 <p>In a Quarto document, inline R expressions surrounded by backticks evaluate and inject their result directly into text. Given a data frame called <code>cases</code> and an object <code>pct_change</code> computed in a prior code block:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>A total of <span class="in">`r nrow(cases)`</span> cases were reported in <span class="in">`r params$county`</span> County</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>during <span class="in">`r params$year`</span>, a <span class="in">`r pct_change`</span>% change from the prior year.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -548,7 +599,7 @@ Note
 <blockquote class="blockquote">
 <p>A total of 1,847 cases were reported in Fairfax County during 2024, a 12.3% change from the prior year.</p>
 </blockquote>
-<p>Every number came from code. If the underlying data is revised and the document is re-rendered, every figure that depends on it updates everywhere it appears – the executive summary, the body, the footnote. There is no list of cells to hunt down in a Word document, and no way for the number on page one to silently disagree with the table on page seven.</p>
+<p>Every number came from code. If the underlying data is revised and the document is re-rendered, every figure that depends on it updates everywhere it appears, including the executive summary, body, and footnotes. Reuse the same computed objects to keep these values consistent.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -559,21 +610,21 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Use <code>format()</code> or <code>scales::comma()</code> to control how numbers look inline. A raw expression produces <code>1847</code>; <code>scales::comma(nrow(cases))</code> produces <code>1,847</code>. For percentages, <code>scales::percent(pct_change, accuracy = 0.1)</code> gives <code>12.3%</code>. This formatting belongs in the inline expression, not in a separate variable, so the display logic stays close to where it’s used.</p>
+<p>Use <code>format()</code> or <code>scales::comma()</code> to control how numbers look inline. A raw expression produces <code>1847</code>; <code>scales::comma(nrow(cases))</code> produces <code>1,847</code>. For percentages, <code>scales::percent(0.123, accuracy = 0.1)</code> gives <code>12.3%</code>; this function expects a proportion, so divide an already-computed percentage by 100. This formatting belongs in the inline expression, not in a separate variable, so the display logic stays close to where it’s used.</p>
 </div>
 </div>
-<p>This approach also makes the analytical decision trail explicit. A number that appears in a report had to come from somewhere in the code. That traceability is exactly what public health accountability requires – when a number is questioned, you can show exactly how it was produced.</p>
+<p>This approach also makes the analytical decision trail explicit. A number that appears in a report had to come from somewhere in the code. That traceability is exactly what public health accountability requires: when a number is questioned, you can show exactly how it was produced.</p>
 </section>
-<section id="sec-reporting-paths" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="sec-reporting-paths"><span class="header-section-number">4.5</span> Paths and Project Structure</h2>
-<p>The most common way a reproducible report breaks on a different machine – or for a different team member – is an absolute file path. A path like <code>/Users/maria/Documents/Projects/flu-report/data/flu-2024.csv</code> works exactly once, on Maria’s laptop, and nowhere else.</p>
+<section id="sec-reporting-paths" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="sec-reporting-paths"><span class="header-section-number">6.5</span> Paths and Project Structure</h2>
+<p>An absolute file path can prevent a colleague from running a report. A path like <code>/Users/maria/Documents/Projects/flu-report/data/flu-2024.csv</code> depends on Maria’s directory structure.</p>
 <p>The solution is to use paths relative to the project root and to structure the project so that the <code>.qmd</code> file and its data live in the same directory tree. As described in <a href="dataorg.html" class="quarto-xref"><span>Chapter 2</span></a>, a well-organized project directory has a clear, stable structure:</p>
 <pre><code>flu-report/
 ├── flu-report.qmd
 ├── data/
 │   └── flu-2024.csv
 └── output/</code></pre>
-<p>From <code>flu-report.qmd</code>, the data file is simply <code>"data/flu-2024.csv"</code> – no absolute path, no machine-specific prefix.</p>
+<p>From <code>flu-report.qmd</code>, the data file is simply <code>"data/flu-2024.csv"</code>.</p>
 <p>If <code>.qmd</code> files are nested in subdirectories, the <a href="https://here.r-lib.org/"><code>here</code> package</a> resolves paths relative to the project root regardless of where the file sits:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>flu_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"flu-2024.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -592,11 +643,11 @@ Warning
 </div>
 </div>
 </section>
-<section id="sec-reporting-params" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="sec-reporting-params"><span class="header-section-number">4.6</span> Parameterized Reports</h2>
+<section id="sec-reporting-params" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="sec-reporting-params"><span class="header-section-number">6.6</span> Parameterized Reports</h2>
 <p><a href="https://posit.co/blog/parameterized-quarto/">Parameterized reports</a> take the reproducibility model one step further: instead of hardcoding a county, disease, or time period into the analysis, you declare those values as parameters and pass them in at render time. One template becomes many reports.</p>
-<section id="declaring-parameters" class="level3" data-number="4.6.1">
-<h3 data-number="4.6.1" class="anchored" data-anchor-id="declaring-parameters"><span class="header-section-number">4.6.1</span> Declaring Parameters</h3>
+<section id="declaring-parameters" class="level3" data-number="6.6.1">
+<h3 data-number="6.6.1" class="anchored" data-anchor-id="declaring-parameters"><span class="header-section-number">6.6.1</span> Declaring Parameters</h3>
 <p>Parameters are declared in the YAML front matter under the <code>params</code> key. Each parameter gets a name and a default value:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"County Disease Surveillance Report"</span></span>
@@ -611,9 +662,9 @@ Warning
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The default values are what render when you run <code>quarto render</code> with no additional arguments. They also define the parameter type: a quoted string is a character, a bare number is numeric.</p>
 </section>
-<section id="using-parameters" class="level3" data-number="4.6.2">
-<h3 data-number="4.6.2" class="anchored" data-anchor-id="using-parameters"><span class="header-section-number">4.6.2</span> Using Parameters</h3>
-<p>Inside the document, parameters are available as <code>params$name</code> – in code blocks and in inline expressions alike:</p>
+<section id="using-parameters" class="level3" data-number="6.6.2">
+<h3 data-number="6.6.2" class="anchored" data-anchor-id="using-parameters"><span class="header-section-number">6.6.2</span> Using Parameters</h3>
+<p>Inside the document, parameters are available as <code>params$name</code> in code blocks and inline expressions:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -638,8 +689,8 @@ Warning
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>a <span class="in">`r pct_change`</span>% change from the prior year.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Nothing in the body of the document is hardcoded to a specific county or year. The entire report adapts to whatever parameters are supplied at render time.</p>
 </section>
-<section id="rendering-with-different-parameters" class="level3" data-number="4.6.3">
-<h3 data-number="4.6.3" class="anchored" data-anchor-id="rendering-with-different-parameters"><span class="header-section-number">4.6.3</span> Rendering with Different Parameters</h3>
+<section id="rendering-with-different-parameters" class="level3" data-number="6.6.3">
+<h3 data-number="6.6.3" class="anchored" data-anchor-id="rendering-with-different-parameters"><span class="header-section-number">6.6.3</span> Rendering with Different Parameters</h3>
 <p>To render the report for a different county without editing the file, pass parameters on the command line:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render report.qmd <span class="dt">\</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-P</span> county:<span class="st">"Arlington"</span> <span class="dt">\</span></span>
@@ -658,7 +709,7 @@ Warning
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">output_file    =</span> <span class="fu">paste0</span>(<span class="fu">tolower</span>(<span class="fu">gsub</span>(<span class="st">" "</span>, <span class="st">"-"</span>, county)), <span class="st">"-2024.html"</span>)</span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This loop renders one HTML report per county – same template, different data, different output file – with no manual editing between runs. For recurring reports (weekly surveillance summaries, monthly dashboards), this loop can be driven by a script that pulls the current list of counties or time periods from the data itself.</p>
+<p>This loop uses the same template to render a separate HTML report for each county. For recurring reports (weekly surveillance summaries, monthly dashboards), this loop can be driven by a script that pulls the current list of counties or time periods from the data itself.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -674,9 +725,9 @@ Warning
 </div>
 </section>
 </section>
-<section id="sec-reporting-brand" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="sec-reporting-brand"><span class="header-section-number">4.7</span> Consistent Branding with brand.yml</h2>
-<p>When a team produces reports across multiple formats – HTML pages, Word documents, PDFs – maintaining consistent colors, fonts, and logos is tedious if each format is configured separately. <a href="https://posit-dev.github.io/brand-yml/"><code>brand.yml</code></a> is a specification for defining visual identity once and applying it across Quarto outputs and other Posit tools.</p>
+<section id="sec-reporting-brand" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="sec-reporting-brand"><span class="header-section-number">6.7</span> Consistent Branding with brand.yml</h2>
+<p>When a team produces reports across multiple formats (HTML, Word, PDF), maintaining consistent colors, fonts, and logos is tedious if each format is configured separately. <a href="https://posit-dev.github.io/brand-yml/"><code>brand.yml</code></a> is a specification for defining visual identity once and applying it across Quarto outputs and other Posit tools.</p>
 <p>A <code>_brand.yml</code> file defines the elements of an organization’s visual identity:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">meta</span><span class="kw">:</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"County Health Department"</span></span>
@@ -701,8 +752,8 @@ Warning
 <span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="fu">logo</span><span class="kw">:</span></span>
 <span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">small</span><span class="kw">:</span><span class="at">  </span><span class="st">"assets/logo-small.png"</span></span>
 <span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">medium</span><span class="kw">:</span><span class="at"> </span><span class="st">"assets/logo-medium.png"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Save this as <code>_brand.yml</code> in the project root. Quarto picks it up automatically at render time – no additional configuration required in each document’s YAML header.</p>
-<p>Brand settings cascade across formats: the same color palette applied to HTML output also applies to PDF, and both pick up the logo and typography definitions from the same file. Teams that produce recurring reports – weekly surveillance summaries, monthly dashboards, annual reports – can standardize the look across all outputs by maintaining a single <code>_brand.yml</code> rather than configuring each document separately.</p>
+<p>Save this as <code>_brand.yml</code> in the project root. Quarto picks it up automatically at render time for supported formats.</p>
+<p>Brand support varies by output format and template. HTML and Typst support many <code>_brand.yml</code> settings; check the <a href="https://quarto.org/docs/authoring/brand.html">format support table</a> before relying on a particular setting. A shared brand file reduces repeated configuration for recurring reports.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -714,8 +765,8 @@ Warning
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><strong>brand.yml specification:</strong> <a href="https://posit-dev.github.io/brand-yml/">posit-dev.github.io/brand-yml</a> – the full reference for all supported fields, including color, typography, logo, and defaults.</li>
-<li><strong>Quarto + brand.yml:</strong> <a href="https://quarto.org/docs/authoring/brand.html">quarto.org/docs/authoring/brand.html</a> – how Quarto consumes a <code>brand.yml</code> file and which output formats support it.</li>
+<li>brand.yml specification: <a href="https://posit-dev.github.io/brand-yml/">posit-dev.github.io/brand-yml</a>: the full reference for all supported fields, including color, typography, logo, and defaults.</li>
+<li>Quarto + brand.yml: <a href="https://quarto.org/docs/authoring/brand.html">quarto.org/docs/authoring/brand.html</a>: how Quarto consumes a <code>brand.yml</code> file and which output formats support it.</li>
 </ul>
 </div>
 </div>
@@ -1126,13 +1177,13 @@ Warning
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./validation.html" class="pagination-link" aria-label="Data Validation and QA">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Validation and QA</span></span>
+      <a href="./debugging.html" class="pagination-link" aria-label="Debugging and Getting Help">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Debugging and Getting Help</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./accessibility.html" class="pagination-link" aria-label="Accessibility">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Accessibility</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Accessibility</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

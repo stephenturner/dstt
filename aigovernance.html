@@ -8,7 +8,7 @@
 
 <meta name="author" content="Stephen D. Turner">
 
-<title>25&nbsp; Working with IT and Data Governance – Data Science Team Training</title>
+<title>26&nbsp; AI Governance in a Health Agency – Data Science Team Training</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,7 +24,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -34,8 +53,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./aigovernance.html" rel="next">
-<link href="./pm.html" rel="prev">
+<link href="./peerreview.html" rel="next">
+<link href="./governance.html" rel="prev">
 <link href="./hex.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -87,7 +106,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./team.html">Nontechnical</a></li><li class="breadcrumb-item"><a href="./governance.html"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./team.html">Nontechnical</a></li><li class="breadcrumb-item"><a href="./aigovernance.html"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">AI Governance in a Health Agency</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -304,13 +323,13 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./governance.html" class="sidebar-item-text sidebar-link active">
+  <a href="./governance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aigovernance.html" class="sidebar-item-text sidebar-link">
+  <a href="./aigovernance.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">AI Governance in a Health Agency</span></span></a>
   </div>
 </li>
@@ -367,42 +386,25 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-governance-environments" id="toc-sec-governance-environments" class="nav-link active" data-scroll-target="#sec-governance-environments"><span class="header-section-number">25.1</span> Data Environments in Public Health</a></li>
-  <li><a href="#sec-governance-dua" id="toc-sec-governance-dua" class="nav-link" data-scroll-target="#sec-governance-dua"><span class="header-section-number">25.2</span> Data Use Agreements</a>
-  <ul class="collapse">
-  <li><a href="#what-duas-cover" id="toc-what-duas-cover" class="nav-link" data-scroll-target="#what-duas-cover"><span class="header-section-number">25.2.1</span> What DUAs Cover</a></li>
-  <li><a href="#practical-guidance" id="toc-practical-guidance" class="nav-link" data-scroll-target="#practical-guidance"><span class="header-section-number">25.2.2</span> Practical Guidance</a></li>
-  </ul></li>
-  <li><a href="#sec-governance-hipaa" id="toc-sec-governance-hipaa" class="nav-link" data-scroll-target="#sec-governance-hipaa"><span class="header-section-number">25.3</span> HIPAA and Protected Health Information</a>
-  <ul class="collapse">
-  <li><a href="#what-hipaa-covers" id="toc-what-hipaa-covers" class="nav-link" data-scroll-target="#what-hipaa-covers"><span class="header-section-number">25.3.1</span> What HIPAA Covers</a></li>
-  <li><a href="#the-minimum-necessary-standard" id="toc-the-minimum-necessary-standard" class="nav-link" data-scroll-target="#the-minimum-necessary-standard"><span class="header-section-number">25.3.2</span> The Minimum Necessary Standard</a></li>
-  <li><a href="#de-identification" id="toc-de-identification" class="nav-link" data-scroll-target="#de-identification"><span class="header-section-number">25.3.3</span> De-identification</a></li>
-  </ul></li>
-  <li><a href="#sec-governance-access" id="toc-sec-governance-access" class="nav-link" data-scroll-target="#sec-governance-access"><span class="header-section-number">25.4</span> Getting Data Access</a>
-  <ul class="collapse">
-  <li><a href="#framing-requests" id="toc-framing-requests" class="nav-link" data-scroll-target="#framing-requests"><span class="header-section-number">25.4.1</span> Framing Requests</a></li>
-  </ul></li>
-  <li><a href="#sec-governance-secure" id="toc-sec-governance-secure" class="nav-link" data-scroll-target="#sec-governance-secure"><span class="header-section-number">25.5</span> Working in Secure Data Environments</a>
-  <ul class="collapse">
-  <li><a href="#common-constraints" id="toc-common-constraints" class="nav-link" data-scroll-target="#common-constraints"><span class="header-section-number">25.5.1</span> Common Constraints</a></li>
-  <li><a href="#adapting-your-workflow" id="toc-adapting-your-workflow" class="nav-link" data-scroll-target="#adapting-your-workflow"><span class="header-section-number">25.5.2</span> Adapting Your Workflow</a></li>
-  </ul></li>
-  <li><a href="#sec-governance-disclosure" id="toc-sec-governance-disclosure" class="nav-link" data-scroll-target="#sec-governance-disclosure"><span class="header-section-number">25.6</span> Disclosure Review and Small Number Suppression</a>
-  <ul class="collapse">
-  <li><a href="#when-disclosure-review-applies" id="toc-when-disclosure-review-applies" class="nav-link" data-scroll-target="#when-disclosure-review-applies"><span class="header-section-number">25.6.1</span> When Disclosure Review Applies</a></li>
-  <li><a href="#small-number-suppression" id="toc-small-number-suppression" class="nav-link" data-scroll-target="#small-number-suppression"><span class="header-section-number">25.6.2</span> Small Number Suppression</a></li>
-  <li><a href="#what-disclosure-review-examines" id="toc-what-disclosure-review-examines" class="nav-link" data-scroll-target="#what-disclosure-review-examines"><span class="header-section-number">25.6.3</span> What Disclosure Review Examines</a></li>
-  </ul></li>
+  <li><a href="#sec-aigovernance-policy" id="toc-sec-aigovernance-policy" class="nav-link active" data-scroll-target="#sec-aigovernance-policy"><span class="header-section-number">26.1</span> The Need for a Written Policy</a></li>
+  <li><a href="#sec-aigovernance-contents" id="toc-sec-aigovernance-contents" class="nav-link" data-scroll-target="#sec-aigovernance-contents"><span class="header-section-number">26.2</span> Contents of an Agency AI Policy</a></li>
+  <li><a href="#sec-aigovernance-review" id="toc-sec-aigovernance-review" class="nav-link" data-scroll-target="#sec-aigovernance-review"><span class="header-section-number">26.3</span> Formal Review Processes</a></li>
+  <li><a href="#sec-aigovernance-phi" id="toc-sec-aigovernance-phi" class="nav-link" data-scroll-target="#sec-aigovernance-phi"><span class="header-section-number">26.4</span> Protected Data and AI Tools</a></li>
+  <li><a href="#sec-aigovernance-inference" id="toc-sec-aigovernance-inference" class="nav-link" data-scroll-target="#sec-aigovernance-inference"><span class="header-section-number">26.5</span> Cloud and Self-Hosted Inference</a></li>
+  <li><a href="#sec-aigovernance-transparency" id="toc-sec-aigovernance-transparency" class="nav-link" data-scroll-target="#sec-aigovernance-transparency"><span class="header-section-number">26.6</span> Transparency in Modeling Tools</a></li>
+  <li><a href="#sec-aigovernance-code" id="toc-sec-aigovernance-code" class="nav-link" data-scroll-target="#sec-aigovernance-code"><span class="header-section-number">26.7</span> Generated Code</a></li>
+  <li><a href="#sec-aigovernance-reproducibility" id="toc-sec-aigovernance-reproducibility" class="nav-link" data-scroll-target="#sec-aigovernance-reproducibility"><span class="header-section-number">26.8</span> Reproducibility</a></li>
+  <li><a href="#sec-aigovernance-capability" id="toc-sec-aigovernance-capability" class="nav-link" data-scroll-target="#sec-aigovernance-capability"><span class="header-section-number">26.9</span> Staff Capability</a></li>
+  <li><a href="#sec-aigovernance-reading" id="toc-sec-aigovernance-reading" class="nav-link" data-scroll-target="#sec-aigovernance-reading"><span class="header-section-number">26.10</span> Further Reading</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./team.html">Nontechnical</a></li><li class="breadcrumb-item"><a href="./governance.html"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./team.html">Nontechnical</a></li><li class="breadcrumb-item"><a href="./aigovernance.html"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">AI Governance in a Health Agency</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-governance" class="quarto-section-identifier"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></h1>
+<h1 class="title"><span id="sec-aigovernance" class="quarto-section-identifier"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">AI Governance in a Health Agency</span></span></h1>
 </div>
 
 
@@ -419,15 +421,25 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Before beginning an analysis, locate the data and confirm the approvals needed to use it. Infrastructure, legal agreements, and agency policies determine where and how you can work. <a href="pm.html#sec-pm-it" class="quarto-xref"><span>Section 24.4</span></a> introduces IT as a project management concern; this chapter goes into the operational detail: the types of environments public health data scientists actually work in, the legal frameworks that govern data use, and the practical steps for getting access to data and meeting those requirements.</p>
-<section id="sec-governance-environments" class="level2" data-number="25.1">
-<h2 data-number="25.1" class="anchored" data-anchor-id="sec-governance-environments"><span class="header-section-number">25.1</span> Data Environments in Public Health</h2>
-<p>Public health data science happens across a wide range of computing environments, and the environment shapes what tools and workflows are feasible. Understanding where data lives, and what constraints that imposes, is the starting point.</p>
-<p><strong>Laptops and local files</strong> are the simplest setup. Data is on your machine, code runs locally, and there are no network permissions to navigate. This works for small, non-sensitive datasets (public-use files, aggregated data, synthetic data) but fails for anything regulated: sensitive data should not live on a personal laptop without explicit authorization.</p>
-<p><strong>Shared network drives</strong> are the most common data storage arrangement at state and local health departments. The data lives on a server managed by IT, mapped as a drive letter or network path on each authorized user’s machine. As described in <a href="dataorg.html" class="quarto-xref"><span>Chapter 2</span></a>, this creates a specific challenge: code lives in version control, but data cannot leave the drive. Use configurable paths to the shared drive as described in <a href="dataorg.html#sec-dataorg-sharedrive" class="quarto-xref"><span>Section 2.3.2</span></a>.</p>
-<p><strong>Institutional databases</strong> (SQL Server, Oracle, PostgreSQL) are increasingly common for high-volume surveillance data, vital records, and claims. Queries run on the server and return only results, so raw data never has to move. This is generally preferable to a shared drive for structured, regularly updated data. <a href="databases.html" class="quarto-xref"><span>Chapter 16</span></a> covers querying databases with DBI and dbplyr.</p>
-<p><strong>Secure remote desktops and data enclaves</strong> are used for the most sensitive data, including restricted-use vital records, Medicaid claims, and linked longitudinal datasets. Analysts connect via remote desktop to a server where the data lives. Copy-paste and file transfer are often disabled. Internet access may be restricted. The data never leaves the server; only approved outputs do, after passing a disclosure review. CDC’s Research Data Center and many state-level restricted data programs work this way.</p>
-<p><strong>Air-gapped systems</strong> go further: no external network connection at all. These are rare but exist for certain federal and state datasets. Code and packages must be brought in through an approved intake process, and every output leaves through a formal review.</p>
+<p><a href="ai.html" class="quarto-xref"><span>Chapter 8</span></a> covers the tools: what a completion service does, what an agent can do, which model to select. Agency policy should specify permitted uses, where staff may send data, who reviews AI-assisted analyses, and what records to retain.</p>
+<p>Policy and approval requirements can affect when a team can use a tool. Agencies that have stood up formal review processes for AI use of agency data have found that approval timelines affect when modeling work begins. Review cycles measured in weeks are common, and a project that budgets no time for them will lose that time from analysis.</p>
+<section id="sec-aigovernance-policy" class="level2" data-number="26.1">
+<h2 data-number="26.1" class="anchored" data-anchor-id="sec-aigovernance-policy"><span class="header-section-number">26.1</span> The Need for a Written Policy</h2>
+<p>Staff are already using these tools, in many cases on personal accounts and personal devices, because no institutional option was available and the work required doing.</p>
+<p>When tools become available before an agency has issued guidance, staff may be unsure what is permitted. Absent guidance, individual staff draw their own lines, and some of those lines are sound. Using a commercial assistant on a personal account to generate code that downloads and merges public, non-identifiable files, while deliberately declining to use it for interpretation, is a defensible position. The agency still needs to state which accounts and uses it authorizes.</p>
+<p>A written policy converts individual judgment into an agency position. It protects staff, who otherwise have no way to determine whether their practice is permitted. It gives supervisors something to reference other than instinct. And it means the first difficult question is not answered under pressure during an incident.</p>
+</section>
+<section id="sec-aigovernance-contents" class="level2" data-number="26.2">
+<h2 data-number="26.2" class="anchored" data-anchor-id="sec-aigovernance-contents"><span class="header-section-number">26.2</span> Contents of an Agency AI Policy</h2>
+<p>A workable policy addresses eight areas.</p>
+<p><strong>Scope.</strong> Which staff, which systems, and which activities are covered, and whether the policy applies only to generative AI or also to predictive modeling. A policy drafted for chatbots that inadvertently captures every regression model will be ignored.</p>
+<p><strong>Permitted and prohibited data classes.</strong> Make these instructions easy to find. Name the classes explicitly: public data, internal non-sensitive data, de-identified data, PII, PHI, and any restricted-use data governed by its own agreement. State which classes may be sent to which categories of tool. Vague instructions produce inconsistent practice.</p>
+<p><strong>Approved tools and the approval route.</strong> A list, and a defined path for adding to it. A policy naming three approved tools without a route for a fourth leaves staff without a process for requesting another tool.</p>
+<p><strong>Logging and retention.</strong> What is recorded when an approved tool is used, who may see those records, and how long they persist.</p>
+<p><strong>Human review requirements.</strong> The level of review an AI-assisted output requires before leaving the team, scaled to consequence. Code producing a figure in a published report warrants more review than code that reformats a file.</p>
+<p><strong>Procurement and cost ownership.</strong> Who funds API usage or seat licenses, what the approval threshold is, and who monitors spend. API billing is consumption-based and carries the same absence of a default ceiling described in <a href="infrastructure.html#sec-infrastructure-pricing" class="quarto-xref"><span>Section 17.5</span></a>.</p>
+<p><strong>Incident handling.</strong> The procedure when someone recognizes that they have disclosed something they should not have. Make reporting straightforward and handle reports fairly so staff report mistakes promptly.</p>
+<p><strong>Review cadence.</strong> Tools and terms change, so review the policy regularly. Assign an owner and a review date.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -438,25 +450,28 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The more restrictive the environment, the more planning is required upfront. In a data enclave, you cannot install a package on a whim or look up documentation online. Test your code on approved public-use or synthetic data in a less restricted environment first, resolve all dependency questions, and then bring the finalized analysis into the enclave.</p>
+<p>The <a href="https://www.nist.gov/itl/ai-risk-management-framework">NIST AI Risk Management Framework</a> <span class="citation" data-cites="nist2023airmf">(<a href="references.html#ref-nist2023airmf" role="doc-biblioref">National Institute of Standards and Technology 2023</a>)</span> supplies vocabulary and structure that security and compliance reviewers recognize, and several states have published agency AI policies suitable for adaptation. Adapting an existing policy is faster than drafting one, and adaptation helps identify requirements specific to your agency, as with the team handbook (<a href="onboarding.html#sec-onboarding-borrowing" class="quarto-xref"><span>Section 23.9</span></a>).</p>
 </div>
 </div>
 </section>
-<section id="sec-governance-dua" class="level2" data-number="25.2">
-<h2 data-number="25.2" class="anchored" data-anchor-id="sec-governance-dua"><span class="header-section-number">25.2</span> Data Use Agreements</h2>
-<p>A data use agreement (DUA) is a legal contract between the organization providing data and the organization receiving it. DUAs define what data is being shared, who is allowed to access it, what it can be used for, and what happens to it at the end of the project. They are routine in public health. Any time data is obtained from another agency, a federal program, a health system, or a research partner, expect a DUA.</p>
-<section id="what-duas-cover" class="level3" data-number="25.2.1">
-<h3 data-number="25.2.1" class="anchored" data-anchor-id="what-duas-cover"><span class="header-section-number">25.2.1</span> What DUAs Cover</h3>
-<p>The most consequential terms are:</p>
-<p><strong>Permitted uses.</strong> DUAs typically specify the exact purpose for which the data was obtained. Using data for a secondary purpose (even one that seems obviously fine) may require an amendment. Read this section carefully before scoping the analysis.</p>
-<p><strong>Authorized users.</strong> The agreement usually names individuals or roles who may access the data. Adding a new team member or sharing data with a collaborator at another agency requires notifying the data provider and may require an amendment.</p>
-<p><strong>Data environment requirements.</strong> Many DUAs specify where data may be stored and processed, for example only on a designated secure server, only within the jurisdiction’s network, or only in a HIPAA-compliant environment. “I’ll just put it on my laptop for a quick look” is a DUA violation if the agreement prohibits local storage.</p>
-<p><strong>Dissemination restrictions.</strong> Some DUAs restrict publication (requiring advance review by the data provider), prohibit releasing record-level data, or limit which findings can be publicly reported. Know these terms before drafting a report or dashboard.</p>
-<p><strong>Data destruction.</strong> Most DUAs require that data be destroyed or returned at the end of the project period, and that destruction be documented. This includes copies, backups, and any data that was transferred for analysis.</p>
+<section id="sec-aigovernance-review" class="level2" data-number="26.3">
+<h2 data-number="26.3" class="anchored" data-anchor-id="sec-aigovernance-review"><span class="header-section-number">26.3</span> Formal Review Processes</h2>
+<p>Agencies establishing a formal review for AI use of agency data generally construct something resembling an institutional review board: a written proposal, a committee, a scheduled meeting, and an approval that gates the work. Proposals of ten pages or more, establishing ownership and responsibility for AI use of data in an agency warehouse, are typical.</p>
+<p>Several design choices determine whether such a process functions.</p>
+<p><strong>Scale review to risk.</strong> Applying IRB-weight review to every use of a coding assistant will either exceed the committee’s capacity or be circumvented. A tiered process, with light registration for low-risk uses and full review for anything touching protected data or informing a public decision, is sustainable.</p>
+<p><strong>Include methodological expertise on the panel.</strong> Review requires relevant technical expertise. Review panels are frequently composed to require a subject-matter expert in the relevant health topic without requiring anyone with expertise in the method under review. A behavioral health expert can assess whether an outcome definition is sensible. Also include someone able to assess model validation, data leakage, and performance measures. A panel lacking that expertise approves and rejects proposals for reasons unrelated to their actual risk.</p>
+<p><strong>Publish evaluation criteria in advance.</strong> Applicants who know what will be asked submit better proposals, and the committee spends its time evaluating the proposed use.</p>
+<p><strong>Set a turnaround expectation.</strong> A review with no stated timeline becomes an indefinite hold. Two weeks is achievable for a tiered process. A month per project means programs will stop submitting.</p>
+<p><strong>Separate tool approval from use approval.</strong> Approving a tool once, for a class of uses, differs substantially from reviewing each analysis. Most agencies need both processes, and conflating them is what makes review slow.</p>
 </section>
-<section id="practical-guidance" class="level3" data-number="25.2.2">
-<h3 data-number="25.2.2" class="anchored" data-anchor-id="practical-guidance"><span class="header-section-number">25.2.2</span> Practical Guidance</h3>
-<p>Get a copy of the DUA before the data arrives. It is much easier to negotiate terms before signing than to discover a constraint mid-project. Loop in your supervisor and, if the terms are unfamiliar or restrictive, your agency’s legal or compliance office. When in doubt about whether a specific use is permitted, ask the data provider in writing (email creates a record).</p>
+<section id="sec-aigovernance-phi" class="level2" data-number="26.4">
+<h2 data-number="26.4" class="anchored" data-anchor-id="sec-aigovernance-phi"><span class="header-section-number">26.4</span> Protected Data and AI Tools</h2>
+<p>State which tools, if any, are approved for protected data and explain what counts as sharing. A prohibition on pasting patient records does not address files, console output, screenshots, or other context an assistant may receive.</p>
+<p>An assistant may receive sensitive context beyond the typed prompt. Coding assistants read files in the project directory. A data file containing real records in the working directory has been transmitted by an agent that reads it, whether or not anything was typed about it. This is invisible unless one already knows to look for it, which is why it belongs in training and not only in policy.</p>
+<p>Debugging is the other frequent route. An error that prints a data frame, a <code>head()</code> output pasted into a chat, a traceback carrying values. Debugging is precisely when people paste output without reading it closely, and a screenshot of the IDE sent to ask about a plotting problem carries the contents of the environment pane and console with it. File uploads are the obvious case and warrant explicit mention in the policy because staff ask about them.</p>
+<p>Some features transmit data by design. A natural-language query interface built into a data platform runs against real data; that is the product. Whether such use is permitted depends on the terms covering that specific service, which is a separate question from whether the underlying platform is covered (<a href="infrastructure.html#sec-infrastructure-phi" class="quarto-xref"><span>Section 17.8</span></a>).</p>
+<p>Use mock data for development when the assistant is not approved for the real data. <a href="governance.html#sec-governance-secure" class="quarto-xref"><span>Section 25.5</span></a> recommends this for secure environments, and the same discipline applies here: build and debug against synthetic or public-use data of the same structure, then execute the finished code against real data in an environment where no assistant is observing. Training and calibration datasets built for onboarding (<a href="onboarding.html#sec-onboarding-practice" class="quarto-xref"><span>Section 23.6</span></a>) serve this purpose directly.</p>
+<p>On de-identification, <a href="governance.html#sec-governance-hipaa" class="quarto-xref"><span>Section 25.3</span></a> enumerates the eighteen HIPAA identifiers. Safe Harbor also requires that the covered entity have no actual knowledge that the remaining information could identify a person. See the <a href="https://www.hhs.gov/hipaa/for-professionals/special-topics/de-identification/index.html">HHS de-identification guidance</a>. A dataset stripped of direct identifiers can remain effectively identifying where the combination of county, age, and a rare condition points to one person, which is the re-identification logic underlying small-number suppression (<a href="governance.html#sec-governance-disclosure" class="quarto-xref"><span>Section 25.6</span></a>). Data too small-celled to publish is generally too small-celled to paste into a chat.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -467,44 +482,32 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Data received informally (as an email attachment, a Dropbox link, or a thumb drive) still carries the same governance obligations as data received through a formal DUA process. “We didn’t sign anything” does not mean “there are no restrictions.” Ask how the data can be used before you use it.</p>
+<p>Treat anything transmitted to an external model as potentially persistent, regardless of the vendor’s stated retention policy. Zero-retention terms are real and worth negotiating for, and the agreement must specify which services and data it covers. Confirm that the data owner permits the disclosure before transmitting it.</p>
 </div>
 </div>
 </section>
+<section id="sec-aigovernance-inference" class="level2" data-number="26.5">
+<h2 data-number="26.5" class="anchored" data-anchor-id="sec-aigovernance-inference"><span class="header-section-number">26.5</span> Cloud and Self-Hosted Inference</h2>
+<p>A hosted service runs inference on a vendor’s infrastructure. A self-hosted deployment runs it on infrastructure your organization controls, which can include leased cloud hardware. Compare the actual model, workload, and controls in each proposal.</p>
+<p>For a hosted service, estimate request volume, input and output tokens, and repeated calls during agent sessions. Include subscription fees, usage limits, and the costs of connected services. For self-hosting, include hardware purchase or rental, utilization, electricity, maintenance, security updates, and staff support. Measure response time and answer quality on the same representative tasks. Neither location establishes which option is cheaper or more capable.</p>
+<p>An enterprise subscription does not by itself authorize PHI use. Confirm that any business associate agreement covers the specific service and features, and that the data owner permits their use. Retention settings, training policies, regions, and logging are separate checks. <a href="ai.html#sec-ai-models" class="quarto-xref"><span>Section 8.4</span></a> links the API data policies; <a href="governance.html" class="quarto-xref"><span>Chapter 25</span></a> covers the approval process.</p>
+<p>With self-hosting, verify network access, telemetry, logs, and connected tools before relying on isolation. A locally running model can still send data through a tool or logging service. Record who operates the deployment and maintains its controls.</p>
+<p>Check existing agency agreements before starting a procurement. Compare approved options against the workload and data requirements, including staff capacity to support them.</p>
 </section>
-<section id="sec-governance-hipaa" class="level2" data-number="25.3">
-<h2 data-number="25.3" class="anchored" data-anchor-id="sec-governance-hipaa"><span class="header-section-number">25.3</span> HIPAA and Protected Health Information</h2>
-<p>The Health Insurance Portability and Accountability Act (HIPAA) establishes federal standards for protecting the privacy and security of individually identifiable health information. This section is not a comprehensive HIPAA guide (your organization’s privacy officer is the right resource for that), but public health data scientists need a working understanding of what HIPAA covers and how it applies to their work.</p>
-<section id="what-hipaa-covers" class="level3" data-number="25.3.1">
-<h3 data-number="25.3.1" class="anchored" data-anchor-id="what-hipaa-covers"><span class="header-section-number">25.3.1</span> What HIPAA Covers</h3>
-<p>HIPAA applies to <em>covered entities</em> (healthcare providers, health plans, and healthcare clearinghouses) and their <em>business associates</em> (organizations that handle protected health information on their behalf). Many public health agencies are covered entities or business associates; many are not. The rules differ across jurisdictions, and some public health functions have explicit carve-outs under the HIPAA Privacy Rule (disease reporting, for example, is generally permitted without individual authorization).</p>
-<p><strong>Protected health information (PHI)</strong> is any individually identifiable health information held or transmitted by a covered entity. The HIPAA Safe Harbor method specifies 18 categories of identifiers to remove from health information. The list below groups related categories; consult the <a href="https://www.hhs.gov/hipaa/for-professionals/special-topics/de-identification/index.html">HHS guidance</a> for the full requirements:</p>
-<ul>
-<li>Names</li>
-<li>Geographic subdivisions smaller than a state (including ZIP codes, street addresses, cities in some cases)</li>
-<li>Date elements other than year directly related to an individual; ages over 89 and dates indicating such ages must be grouped as age 90 or older</li>
-<li>Telephone numbers, fax numbers, email addresses</li>
-<li>Social Security numbers</li>
-<li>Medical record numbers, health plan beneficiary numbers, account numbers</li>
-<li>Certificate and license numbers</li>
-<li>Vehicle identifiers (license plates, VINs)</li>
-<li>Device identifiers and serial numbers</li>
-<li>URLs and IP addresses</li>
-<li>Biometric identifiers (fingerprints, voiceprints)</li>
-<li>Full-face photographs</li>
-<li>Any other unique identifying number or code</li>
-</ul>
-<p>Whether information is PHI also depends on who holds it and applicable HIPAA exclusions. Ask the privacy officer to assess the dataset.</p>
+<section id="sec-aigovernance-transparency" class="level2" data-number="26.6">
+<h2 data-number="26.6" class="anchored" data-anchor-id="sec-aigovernance-transparency"><span class="header-section-number">26.6</span> Transparency in Modeling Tools</h2>
+<p>Automated machine learning tools differ in what they expose. Some provide candidate models, evaluation metrics, and explanations; <a href="https://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html">H2O AutoML</a> is one example. An interface alone tells you little about whether an analysis is reproducible or reviewable.</p>
+<p>Before using a tool’s result, require a record of the input data, preprocessing, candidate models, tuning settings, selection metric, and evaluation design. Check whether the fitted model and its predictions can be exported or reproduced, and whether reviewers can inspect the assumptions relevant to the decision. Reimplement a model when necessary to meet those requirements, and compare predictions to verify the translation.</p>
+<p>Use validation data or cross-validation to select and tune models. Evaluate the selected approach on an untouched test set. If you use test results to choose a winner or revise the analysis, those observations have become part of model development; a new evaluation is needed. Repeated tuning and limited data may call for nested cross-validation. Preserve relevant time, facility, or person groupings when defining splits. The <a href="https://scikit-learn.org/stable/modules/cross_validation.html">scikit-learn evaluation guide</a> explains these distinctions.</p>
+<p>For models informing public health decisions, also examine performance across relevant groups, calibration, and the consequences of errors. Document the reasons for the final choice so a reviewer can assess it independently of the software used.</p>
 </section>
-<section id="the-minimum-necessary-standard" class="level3" data-number="25.3.2">
-<h3 data-number="25.3.2" class="anchored" data-anchor-id="the-minimum-necessary-standard"><span class="header-section-number">25.3.2</span> The Minimum Necessary Standard</h3>
-<p>HIPAA’s minimum necessary standard requires that covered entities use, disclose, or request only the minimum amount of PHI needed to accomplish the intended purpose. For a data scientist, this means requesting only the variables needed for the analysis, not pulling a complete medical record when you only need diagnosis codes and dates.</p>
-</section>
-<section id="de-identification" class="level3" data-number="25.3.3">
-<h3 data-number="25.3.3" class="anchored" data-anchor-id="de-identification"><span class="header-section-number">25.3.3</span> De-identification</h3>
-<p>Properly de-identified data is not PHI and is not subject to HIPAA restrictions. HIPAA provides two paths to de-identification:</p>
-<p><strong>Safe harbor:</strong> Remove all 18 identifiers listed above, plus ensure that the data provider has no actual knowledge that the remaining information could identify an individual. Only qualifying three-digit ZIP codes may be retained; replace other ZIP prefixes with <code>000</code> and remove other geographic subdivisions smaller than a state.</p>
-<p><strong>Expert determination:</strong> A qualified statistician applies generally accepted statistical principles to certify that the risk of identifying any individual is very small. This allows more flexibility than safe harbor (for example, three-digit ZIP codes or specific dates) but requires documented statistical analysis.</p>
+<section id="sec-aigovernance-code" class="level2" data-number="26.7">
+<h2 data-number="26.7" class="anchored" data-anchor-id="sec-aigovernance-code"><span class="header-section-number">26.7</span> Generated Code</h2>
+<p>Generated code can run without errors and still produce wrong answers. This is what makes accepting generated code without understanding it hazardous: the failure is silent, and these tools are most useful in exploratory analysis, which is exactly where oversight is weakest.</p>
+<p><strong>Never accept code you cannot read.</strong> If a line is not understood, either learn what it does or do not use it. Understanding the code helps you evaluate it alongside tests and peer review.</p>
+<p><strong>Verify against a known result.</strong> Execute generated code against data where the answer is already known: a count computed by hand, a previously published figure, a small test case. <a href="testing.html" class="quarto-xref"><span>Chapter 4</span></a> covers building this verification into the project so it runs automatically.</p>
+<p><strong>Review it as ordinary code.</strong> <a href="peerreview.html#sec-peerreview-ai" class="quarto-xref"><span>Section 27.4</span></a> covers using AI as a review aid. The reciprocal case matters more: generated code belongs in the same peer review as hand-written code, and reviewers benefit from knowing which is which. Ask the author how they verified the code, including edge cases. Neither writing a function by hand nor accepting a generated version establishes correctness.</p>
+<p>Certain categories warrant particular attention because generated code is confidently wrong in them: date and time zone handling, joins that silently drop or duplicate rows, aggregations that disregard missing values, and any statistical method where a consequential assumption is embedded in a default argument. <a href="validation.html" class="quarto-xref"><span>Chapter 3</span></a> exists for these failures.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -515,99 +518,38 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>De-identification under HIPAA is a formal process, not a judgment call. Simply removing a name is not de-identification. If you are preparing data for release or for use in a less restricted environment, work with your privacy officer to ensure the de-identification is compliant.</p>
+<p>Translating legacy SAS programs is among the strongest applications of these tools and among those where verification matters most (<a href="legacy.html#sec-legacy-translate" class="quarto-xref"><span>Section 19.4</span></a>). A model can translate a thousand-line SAS program in minutes. Whether it translated the missing-value semantics correctly is answered only by parity testing (<a href="legacy.html#sec-legacy-parity" class="quarto-xref"><span>Section 19.5</span></a>).</p>
 </div>
 </div>
 </section>
+<section id="sec-aigovernance-reproducibility" class="level2" data-number="26.8">
+<h2 data-number="26.8" class="anchored" data-anchor-id="sec-aigovernance-reproducibility"><span class="header-section-number">26.8</span> Reproducibility</h2>
+<p>A prompt is not a method section, and an analysis that cannot be reconstructed is not defensible regardless of how it was produced.</p>
+<p>The reproducibility standard does not change because a model was involved. The final artifact remains code in version control that runs from raw data to result (<a href="reporting.html" class="quarto-xref"><span>Chapter 6</span></a>). Where an assistant wrote the code and the code is committed, reviewed, and reproducible, the code provides a reproducible record; follow any additional agency or publication requirements for disclosure and logging.</p>
+<p>The case that differs is where the analysis uses model outputs directly. Where a model categorized free-text records, selected variables, or produced a reported figure, reconstructing that result later requires more than the code. Record the model and version, the prompts, the date, any parameters set, and what was changed in the output. Keep nonsensitive configuration and decision records in version control (<a href="documentation.html#sec-documentation-project" class="quarto-xref"><span>Section 21.4</span></a>). Store sensitive prompts, model outputs, and logs in approved storage with appropriate access controls and retention rules. Put a nonsensitive record identifier or approved storage reference in the repository; do not copy protected content into it.</p>
+<p>Two caveats apply. Models are not deterministic by default, so complete records do not guarantee an identical rerun; they provide an auditable account of what occurred. Model versions are also retired. Archive model outputs used by recurring surveillance products and verify them before use. If a recurring product depends on model output, document how the team will monitor the output and replace the model when its behavior changes or its version becomes unavailable.</p>
 </section>
-<section id="sec-governance-access" class="level2" data-number="25.4">
-<h2 data-number="25.4" class="anchored" data-anchor-id="sec-governance-access"><span class="header-section-number">25.4</span> Getting Data Access</h2>
-<p>Data access in public health institutions involves more parties than most analysts expect. A clear map of who needs to be involved, and what each party needs to hear, prevents the most common delays.</p>
-<p><strong>The data steward</strong> owns or is responsible for the dataset within the source organization. They can tell you what is in the data, how it is structured, its known quality issues, and what access process is required. For internal datasets (data your own agency collects), the steward is typically in the program that runs the surveillance system. For external datasets (from another state agency, a federal program, or a partner organization), the steward is at the providing organization.</p>
-<p><strong>IT</strong> controls the infrastructure: server access, database credentials, software installation, network permissions, and VPN. A request to IT should be specific: what software is needed (including version numbers), which database or server needs to be accessed, what level of compute and storage the analysis requires, and whether the data is sensitive or regulated.</p>
-<p><strong>Legal and compliance</strong> reviews DUAs and data sharing agreements. Loop them in early (DUA review can take weeks at some institutions) and provide the full draft agreement.</p>
-<p><strong>Your supervisor</strong> can help identify the official authorized to sign DUAs and data sharing agreements on behalf of the agency. They should know about any data access requests that involve legal agreements before those agreements are presented for signature.</p>
-<section id="framing-requests" class="level3" data-number="25.4.1">
-<h3 data-number="25.4.1" class="anchored" data-anchor-id="framing-requests"><span class="header-section-number">25.4.1</span> Framing Requests</h3>
-<p>A request framed in terms of program need is easier to prioritize than a vague technical ask. Compare:</p>
-<blockquote class="blockquote">
-<p><em>“I need access to the vital records SQL Server database.”</em></p>
-</blockquote>
-<p>versus:</p>
-<blockquote class="blockquote">
-<p><em>“This analysis supports the quarterly overdose mortality report due to the State Health Officer in March. I need read access to the <code>vr_deaths</code> table in the vital records database and the ability to install <code>odbc</code> and <code>DBI</code> in my R environment. The data is governed by our existing MOU with vital records. I need this by February 15 to have time to validate before the report deadline.”</em></p>
-</blockquote>
-<p>The second version tells IT what the deadline is, what the legal basis is, and exactly what is needed. It also signals that someone outside IT will notice if the request is not addressed.</p>
+<section id="sec-aigovernance-capability" class="level2" data-number="26.9">
+<h2 data-number="26.9" class="anchored" data-anchor-id="sec-aigovernance-capability"><span class="header-section-number">26.9</span> Staff Capability</h2>
+<p>Training is the question that follows policy, and general AI literacy is a better investment than tool-specific instruction.</p>
+<p>Tool-specific training becomes obsolete on the vendor’s release schedule. What does not become obsolete is understanding what these models do, why they produce confident errors, what a context window is and why it constrains results, the difference between a model and a product, and how to evaluate a performance claim. An analyst with that understanding can adopt any tool; an analyst trained on one interface requires retraining when it changes.</p>
+<p>The second capability worth developing is the judgment to recognize when not to use these tools. This is harder to teach than the tools themselves, and it is what a policy ultimately depends on, since no written rule anticipates every case. <a href="trainingbudget.html#sec-trainingbudget-principles" class="quarto-xref"><span>Section B.1</span></a> covers where this fits within a training budget.</p>
 </section>
-</section>
-<section id="sec-governance-secure" class="level2" data-number="25.5">
-<h2 data-number="25.5" class="anchored" data-anchor-id="sec-governance-secure"><span class="header-section-number">25.5</span> Working in Secure Data Environments</h2>
-<p>When data cannot leave a controlled environment, the analysis has to come to the data. Secure remote desktops and data enclaves impose constraints that require adapting the workflows described elsewhere in this book.</p>
-<section id="common-constraints" class="level3" data-number="25.5.1">
-<h3 data-number="25.5.1" class="anchored" data-anchor-id="common-constraints"><span class="header-section-number">25.5.1</span> Common Constraints</h3>
+<section id="sec-aigovernance-reading" class="level2" data-number="26.10">
+<h2 data-number="26.10" class="anchored" data-anchor-id="sec-aigovernance-reading"><span class="header-section-number">26.10</span> Further Reading</h2>
 <ul>
-<li>No internet access, or access limited to specific approved sites</li>
-<li>No USB or removable media, preventing local file transfer</li>
-<li>Copy-paste disabled between the remote session and the local machine</li>
-<li>No administrator rights, preventing ad-hoc software or package installation</li>
-<li>Output review, meaning no file can leave the environment until it passes a disclosure review</li>
+<li>The <a href="https://www.nist.gov/itl/ai-risk-management-framework">NIST AI Risk Management Framework</a> <span class="citation" data-cites="nist2023airmf">(<a href="references.html#ref-nist2023airmf" role="doc-biblioref">National Institute of Standards and Technology 2023</a>)</span> is the reference document security and compliance reviewers are most likely to recognize. Its four functions (govern, map, measure, manage) supply a policy’s structure, and the companion playbook contains concrete suggested actions.</li>
+<li>The Office of Management and Budget issues memoranda governing federal agency use of AI. These are revised periodically and by administration, so check the current <a href="https://www.whitehouse.gov/omb/information-for-agencies/memoranda/">OMB memoranda index</a>. State and local agencies are not bound by them, and they shape expectations that reach agencies through federal partners and cooperative agreements.</li>
+<li>HHS publishes AI strategy and guidance specific to health data, and several states have published agency AI use policies. Both are worth reviewing as templates before drafting.</li>
+<li><a href="governance.html" class="quarto-xref"><span>Chapter 25</span></a> covers the underlying data governance on which all of this rests: data use agreements, HIPAA, secure environments, and disclosure review. An AI policy cannot override restrictions in a data use agreement.</li>
 </ul>
-</section>
-<section id="adapting-your-workflow" class="level3" data-number="25.5.2">
-<h3 data-number="25.5.2" class="anchored" data-anchor-id="adapting-your-workflow"><span class="header-section-number">25.5.2</span> Adapting Your Workflow</h3>
-<p><strong>Resolve package dependencies before entering the environment.</strong> Use <code>renv</code> (see <a href="environments.html" class="quarto-xref"><span>Chapter 15</span></a>) to capture your project’s exact package list. Submit the lockfile to IT for review; they can pre-install those packages in the secure environment, or arrange an approved intake path. Discovering mid-analysis that a package is unavailable is a significant delay.</p>
-<p><strong>Plan the analysis before entering.</strong> Write and test your code on a representative mock dataset (public-use data with similar structure, or synthetic data generated from the real data’s structure) before bringing the code into the secure environment. Plan for further exploration inside the enclave when the real data raises questions that mock data could not reveal. The same mock datasets are what make it safe to use an AI coding assistant while you develop (<a href="aigovernance.html#sec-aigovernance-phi" class="quarto-xref"><span>Section 26.4</span></a>).</p>
-<p><strong>Keep code in version control accessible from within the environment.</strong> Some enclaves have access to an internal Git server, or allow code to be transferred via an approved intake process. Maintain your code in a repository (see <a href="git.html" class="quarto-xref"><span>Chapter 1</span></a>) so it can be moved in as a single unit.</p>
-<p><strong>Document outputs before requesting export.</strong> Every output (tables, figures, and reports) that leaves the environment will be reviewed. Organize outputs clearly, understand the suppression rules that apply (see <a href="#sec-governance-disclosure" class="quarto-xref"><span>Section 25.6</span></a>), and apply them yourself before submission. Self-review before the formal review reduces round trips.</p>
-</section>
-</section>
-<section id="sec-governance-disclosure" class="level2" data-number="25.6">
-<h2 data-number="25.6" class="anchored" data-anchor-id="sec-governance-disclosure"><span class="header-section-number">25.6</span> Disclosure Review and Small Number Suppression</h2>
-<p>Even properly de-identified data can allow re-identification when cell counts are small. A table showing that a specific rural county had 2 opioid overdose deaths among people aged 25–34 may effectively identify those individuals in a small community. Disclosure review is the process of checking whether outputs could allow such re-identification before they are released.</p>
-<section id="when-disclosure-review-applies" class="level3" data-number="25.6.1">
-<h3 data-number="25.6.1" class="anchored" data-anchor-id="when-disclosure-review-applies"><span class="header-section-number">25.6.1</span> When Disclosure Review Applies</h3>
-<p>Disclosure review is typically required for:</p>
-<ul>
-<li>Any output leaving a secure data environment</li>
-<li>Outputs derived from restricted-use data, regardless of environment</li>
-<li>Public-facing reports and dashboards based on individual-level surveillance data</li>
-<li>Analyses submitted for publication when the underlying data is restricted</li>
-</ul>
-<p>Your DUA and your agency’s data governance policies will specify what review process applies. For internally-collected surveillance data, the process is usually internal. For federally restricted data (NCHS, CMS), the providing agency conducts the review.</p>
-</section>
-<section id="small-number-suppression" class="level3" data-number="25.6.2">
-<h3 data-number="25.6.2" class="anchored" data-anchor-id="small-number-suppression"><span class="header-section-number">25.6.2</span> Small Number Suppression</h3>
-<p>Suppression thresholds vary by data provider, dataset, and agency policy. Follow the applicable rule, including whether zero counts may be shown. The illustrative rule in <a href="testing.html" class="quarto-xref"><span>Chapter 4</span></a> suppresses counts from 1 through 4 and retains zero; it is not a universal public health standard.</p>
-<p><strong>Complementary suppression</strong> is required when suppressing one cell would allow back-calculation of another. If a row shows a total and several cells, and only one cell is suppressed, the suppressed value can be calculated by subtraction. The fix is to suppress an additional cell (typically the next-smallest) so that the suppressed value cannot be derived. This often requires checking row and column totals as well as individual cells.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Example:</strong> A county reports 7 total influenza deaths. By age group: 25–34: 4 (suppressed, &lt; 5), 35–44: 2 (suppressed), 45+: 1 (suppressed). The total (7) may still be releasable if it is not small, but all three age group cells must be suppressed. If only the first cell were suppressed, the other two would reveal the suppressed value.</p>
-<p>In practice, suppression logic can be complex for multi-dimensional tables. Use code or review tools to check suppression, followed by disclosure review.</p>
-</div>
-</div>
-</section>
-<section id="what-disclosure-review-examines" class="level3" data-number="25.6.3">
-<h3 data-number="25.6.3" class="anchored" data-anchor-id="what-disclosure-review-examines"><span class="header-section-number">25.6.3</span> What Disclosure Review Examines</h3>
-<p>A reviewer will typically check:</p>
-<ul>
-<li>All cells meet the minimum count threshold</li>
-<li>Complementary suppression has been applied correctly</li>
-<li>Geographic or demographic combinations that are highly specific (a single rural county × a specific age group × a specific cause) do not expose individuals even if each cell alone is above the threshold</li>
-<li>Percentages, rates, and proportions are checked: a rate computed from a suppressed count is itself suppressed</li>
-</ul>
-<p>When reporting suppressed data to a lay audience, explain why: “Data suppressed to protect individual privacy” is preferable to an unexplained asterisk or blank cell.</p>
-<p>Suppression rules also constrain design decisions upstream of the output. A dashboard permitting users to filter to a single county, a single month, and a single age group can produce a cell below the threshold, whatever the default view displays. Quarterly aggregation may reduce small cells, but it still requires disclosure checks. Choosing the aggregation grain with these thresholds in mind, and applying suppression in code on the way out, is covered in <a href="bi.html#sec-bi-aggregate" class="quarto-xref"><span>Section 10.2</span></a>.</p>
 
 
-</section>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-nist2023airmf" class="csl-entry" role="listitem">
+National Institute of Standards and Technology. 2023. <em>Artificial Intelligence Risk Management Framework (AI RMF 1.0)</em>. NIST AI 100-1. U.S. Department of Commerce. <a href="https://doi.org/10.6028/NIST.AI.100-1">https://doi.org/10.6028/NIST.AI.100-1</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -1013,13 +955,13 @@ Note
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./pm.html" class="pagination-link" aria-label="Project Management">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Project Management</span></span>
+      <a href="./governance.html" class="pagination-link" aria-label="Working with IT and Data Governance">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./aigovernance.html" class="pagination-link" aria-label="AI Governance in a Health Agency">
-        <span class="nav-page-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">AI Governance in a Health Agency</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./peerreview.html" class="pagination-link" aria-label="Peer Review for Data Analysis">
+        <span class="nav-page-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Peer Review for Data Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

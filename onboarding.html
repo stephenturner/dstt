@@ -8,7 +8,7 @@
 
 <meta name="author" content="Stephen D. Turner">
 
-<title>25&nbsp; Working with IT and Data Governance – Data Science Team Training</title>
+<title>23&nbsp; Onboarding and the Team Handbook – Data Science Team Training</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -34,8 +34,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./aigovernance.html" rel="next">
-<link href="./pm.html" rel="prev">
+<link href="./pm.html" rel="next">
+<link href="./team.html" rel="prev">
 <link href="./hex.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -87,7 +87,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./team.html">Nontechnical</a></li><li class="breadcrumb-item"><a href="./governance.html"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./team.html">Nontechnical</a></li><li class="breadcrumb-item"><a href="./onboarding.html"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Onboarding and the Team Handbook</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -292,7 +292,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./onboarding.html" class="sidebar-item-text sidebar-link">
+  <a href="./onboarding.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Onboarding and the Team Handbook</span></span></a>
   </div>
 </li>
@@ -304,7 +304,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./governance.html" class="sidebar-item-text sidebar-link active">
+  <a href="./governance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
   </div>
 </li>
@@ -367,42 +367,27 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-governance-environments" id="toc-sec-governance-environments" class="nav-link active" data-scroll-target="#sec-governance-environments"><span class="header-section-number">25.1</span> Data Environments in Public Health</a></li>
-  <li><a href="#sec-governance-dua" id="toc-sec-governance-dua" class="nav-link" data-scroll-target="#sec-governance-dua"><span class="header-section-number">25.2</span> Data Use Agreements</a>
-  <ul class="collapse">
-  <li><a href="#what-duas-cover" id="toc-what-duas-cover" class="nav-link" data-scroll-target="#what-duas-cover"><span class="header-section-number">25.2.1</span> What DUAs Cover</a></li>
-  <li><a href="#practical-guidance" id="toc-practical-guidance" class="nav-link" data-scroll-target="#practical-guidance"><span class="header-section-number">25.2.2</span> Practical Guidance</a></li>
-  </ul></li>
-  <li><a href="#sec-governance-hipaa" id="toc-sec-governance-hipaa" class="nav-link" data-scroll-target="#sec-governance-hipaa"><span class="header-section-number">25.3</span> HIPAA and Protected Health Information</a>
-  <ul class="collapse">
-  <li><a href="#what-hipaa-covers" id="toc-what-hipaa-covers" class="nav-link" data-scroll-target="#what-hipaa-covers"><span class="header-section-number">25.3.1</span> What HIPAA Covers</a></li>
-  <li><a href="#the-minimum-necessary-standard" id="toc-the-minimum-necessary-standard" class="nav-link" data-scroll-target="#the-minimum-necessary-standard"><span class="header-section-number">25.3.2</span> The Minimum Necessary Standard</a></li>
-  <li><a href="#de-identification" id="toc-de-identification" class="nav-link" data-scroll-target="#de-identification"><span class="header-section-number">25.3.3</span> De-identification</a></li>
-  </ul></li>
-  <li><a href="#sec-governance-access" id="toc-sec-governance-access" class="nav-link" data-scroll-target="#sec-governance-access"><span class="header-section-number">25.4</span> Getting Data Access</a>
-  <ul class="collapse">
-  <li><a href="#framing-requests" id="toc-framing-requests" class="nav-link" data-scroll-target="#framing-requests"><span class="header-section-number">25.4.1</span> Framing Requests</a></li>
-  </ul></li>
-  <li><a href="#sec-governance-secure" id="toc-sec-governance-secure" class="nav-link" data-scroll-target="#sec-governance-secure"><span class="header-section-number">25.5</span> Working in Secure Data Environments</a>
-  <ul class="collapse">
-  <li><a href="#common-constraints" id="toc-common-constraints" class="nav-link" data-scroll-target="#common-constraints"><span class="header-section-number">25.5.1</span> Common Constraints</a></li>
-  <li><a href="#adapting-your-workflow" id="toc-adapting-your-workflow" class="nav-link" data-scroll-target="#adapting-your-workflow"><span class="header-section-number">25.5.2</span> Adapting Your Workflow</a></li>
-  </ul></li>
-  <li><a href="#sec-governance-disclosure" id="toc-sec-governance-disclosure" class="nav-link" data-scroll-target="#sec-governance-disclosure"><span class="header-section-number">25.6</span> Disclosure Review and Small Number Suppression</a>
-  <ul class="collapse">
-  <li><a href="#when-disclosure-review-applies" id="toc-when-disclosure-review-applies" class="nav-link" data-scroll-target="#when-disclosure-review-applies"><span class="header-section-number">25.6.1</span> When Disclosure Review Applies</a></li>
-  <li><a href="#small-number-suppression" id="toc-small-number-suppression" class="nav-link" data-scroll-target="#small-number-suppression"><span class="header-section-number">25.6.2</span> Small Number Suppression</a></li>
-  <li><a href="#what-disclosure-review-examines" id="toc-what-disclosure-review-examines" class="nav-link" data-scroll-target="#what-disclosure-review-examines"><span class="header-section-number">25.6.3</span> What Disclosure Review Examines</a></li>
-  </ul></li>
+  <li><a href="#sec-onboarding-why" id="toc-sec-onboarding-why" class="nav-link active" data-scroll-target="#sec-onboarding-why"><span class="header-section-number">23.1</span> Why Keep a Handbook</a></li>
+  <li><a href="#sec-onboarding-contents" id="toc-sec-onboarding-contents" class="nav-link" data-scroll-target="#sec-onboarding-contents"><span class="header-section-number">23.2</span> Contents of the Handbook</a></li>
+  <li><a href="#sec-onboarding-setup" id="toc-sec-onboarding-setup" class="nav-link" data-scroll-target="#sec-onboarding-setup"><span class="header-section-number">23.3</span> Testing Setup Documentation</a></li>
+  <li><a href="#sec-onboarding-conventions" id="toc-sec-onboarding-conventions" class="nav-link" data-scroll-target="#sec-onboarding-conventions"><span class="header-section-number">23.4</span> Conventions</a></li>
+  <li><a href="#sec-onboarding-protocols" id="toc-sec-onboarding-protocols" class="nav-link" data-scroll-target="#sec-onboarding-protocols"><span class="header-section-number">23.5</span> Update Protocols</a></li>
+  <li><a href="#sec-onboarding-practice" id="toc-sec-onboarding-practice" class="nav-link" data-scroll-target="#sec-onboarding-practice"><span class="header-section-number">23.6</span> Practice Repositories and Training Data</a></li>
+  <li><a href="#sec-onboarding-crosstraining" id="toc-sec-onboarding-crosstraining" class="nav-link" data-scroll-target="#sec-onboarding-crosstraining"><span class="header-section-number">23.7</span> Cross-Training</a></li>
+  <li><a href="#sec-onboarding-offboarding" id="toc-sec-onboarding-offboarding" class="nav-link" data-scroll-target="#sec-onboarding-offboarding"><span class="header-section-number">23.8</span> Handoff and Offboarding</a></li>
+  <li><a href="#sec-onboarding-borrowing" id="toc-sec-onboarding-borrowing" class="nav-link" data-scroll-target="#sec-onboarding-borrowing"><span class="header-section-number">23.9</span> Adapting an Existing Handbook</a></li>
+  <li><a href="#sec-onboarding-maintenance" id="toc-sec-onboarding-maintenance" class="nav-link" data-scroll-target="#sec-onboarding-maintenance"><span class="header-section-number">23.10</span> Maintaining the Handbook</a></li>
+  <li><a href="#sec-onboarding-it" id="toc-sec-onboarding-it" class="nav-link" data-scroll-target="#sec-onboarding-it"><span class="header-section-number">23.11</span> The IT Liaison</a></li>
+  <li><a href="#sec-onboarding-reading" id="toc-sec-onboarding-reading" class="nav-link" data-scroll-target="#sec-onboarding-reading"><span class="header-section-number">23.12</span> Further Reading</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./team.html">Nontechnical</a></li><li class="breadcrumb-item"><a href="./governance.html"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./team.html">Nontechnical</a></li><li class="breadcrumb-item"><a href="./onboarding.html"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Onboarding and the Team Handbook</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-governance" class="quarto-section-identifier"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></h1>
+<h1 class="title"><span id="sec-onboarding" class="quarto-section-identifier"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Onboarding and the Team Handbook</span></span></h1>
 </div>
 
 
@@ -419,15 +404,48 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Before beginning an analysis, locate the data and confirm the approvals needed to use it. Infrastructure, legal agreements, and agency policies determine where and how you can work. <a href="pm.html#sec-pm-it" class="quarto-xref"><span>Section 24.4</span></a> introduces IT as a project management concern; this chapter goes into the operational detail: the types of environments public health data scientists actually work in, the legal frameworks that govern data use, and the practical steps for getting access to data and meeting those requirements.</p>
-<section id="sec-governance-environments" class="level2" data-number="25.1">
-<h2 data-number="25.1" class="anchored" data-anchor-id="sec-governance-environments"><span class="header-section-number">25.1</span> Data Environments in Public Health</h2>
-<p>Public health data science happens across a wide range of computing environments, and the environment shapes what tools and workflows are feasible. Understanding where data lives, and what constraints that imposes, is the starting point.</p>
-<p><strong>Laptops and local files</strong> are the simplest setup. Data is on your machine, code runs locally, and there are no network permissions to navigate. This works for small, non-sensitive datasets (public-use files, aggregated data, synthetic data) but fails for anything regulated: sensitive data should not live on a personal laptop without explicit authorization.</p>
-<p><strong>Shared network drives</strong> are the most common data storage arrangement at state and local health departments. The data lives on a server managed by IT, mapped as a drive letter or network path on each authorized user’s machine. As described in <a href="dataorg.html" class="quarto-xref"><span>Chapter 2</span></a>, this creates a specific challenge: code lives in version control, but data cannot leave the drive. Use configurable paths to the shared drive as described in <a href="dataorg.html#sec-dataorg-sharedrive" class="quarto-xref"><span>Section 2.3.2</span></a>.</p>
-<p><strong>Institutional databases</strong> (SQL Server, Oracle, PostgreSQL) are increasingly common for high-volume surveillance data, vital records, and claims. Queries run on the server and return only results, so raw data never has to move. This is generally preferable to a shared drive for structured, regularly updated data. <a href="databases.html" class="quarto-xref"><span>Chapter 16</span></a> covers querying databases with DBI and dbplyr.</p>
-<p><strong>Secure remote desktops and data enclaves</strong> are used for the most sensitive data, including restricted-use vital records, Medicaid claims, and linked longitudinal datasets. Analysts connect via remote desktop to a server where the data lives. Copy-paste and file transfer are often disabled. Internet access may be restricted. The data never leaves the server; only approved outputs do, after passing a disclosure review. CDC’s Research Data Center and many state-level restricted data programs work this way.</p>
-<p><strong>Air-gapped systems</strong> go further: no external network connection at all. These are rare but exist for certain federal and state datasets. Code and packages must be brought in through an approved intake process, and every output leaves through a formal review.</p>
+<p>Staff leave with two weeks’ notice. Fellows rotate on an annual cycle. Someone goes on parental leave in the middle of a surveillance season, and the person covering has never opened the script. In each case a recurring product has to change hands in a window too short to write documentation from scratch.</p>
+<p><a href="team.html#sec-team-onboarding" class="quarto-xref"><span>Section 22.4</span></a> describes the risks of relying on one person. Maintain a written handbook a new analyst can follow on the first day, which continues to function after its author departs.</p>
+<section id="sec-onboarding-why" class="level2" data-number="23.1">
+<h2 data-number="23.1" class="anchored" data-anchor-id="sec-onboarding-why"><span class="header-section-number">23.1</span> Why Keep a Handbook</h2>
+<p>Most teams know they should document their work. What they produce is scattered: a README in one repository, a data dictionary in a shared drive folder, setup instructions in an old email thread, and procedures that only one person knows.</p>
+<p>A handbook differs in having a single entry point. A new staff member is directed to one document, and everything required is either in it or linked from it. This gives a new analyst instructions they can follow even when the person who wrote them is unavailable.</p>
+<p>A handbook reduces time spent repeating setup instructions, leaving colleagues more time to discuss the work itself.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A handbook is distinct from project documentation. <a href="documentation.html" class="quarto-xref"><span>Chapter 21</span></a> covers READMEs, inline comments, and data dictionaries, which document specific code and specific datasets. The handbook documents how the team operates: where things are, who approves what, and what to do when an extract fails.</p>
+</div>
+</div>
+</section>
+<section id="sec-onboarding-contents" class="level2" data-number="23.2">
+<h2 data-number="23.2" class="anchored" data-anchor-id="sec-onboarding-contents"><span class="header-section-number">23.2</span> Contents of the Handbook</h2>
+<p>A workable table of contents for a small public health analytic team:</p>
+<ol type="1">
+<li>Orientation: what the team does, which products it delivers and on what cadence, and who the stakeholders are.</li>
+<li>Environment setup: installing and configuring R, Positron, Git, and any database drivers on an agency-managed machine. <a href="environments.html" class="quarto-xref"><span>Chapter 15</span></a> covers the reproducible-environment side of this.</li>
+<li>Access requests: every system the team touches, who owns it, who approves access, which form to file, and typical approval time. This section saves the most calendar time, because a new analyst who files all access requests on the first day becomes productive weeks earlier than one who discovers each requirement upon encountering it.</li>
+<li>Repository layout and naming conventions: where code lives, where data lives, and how projects are named (<a href="dataorg.html" class="quarto-xref"><span>Chapter 2</span></a>, <a href="git.html" class="quarto-xref"><span>Chapter 1</span></a>).</li>
+<li>Update protocols, one document per recurring product, covered below.</li>
+<li>Data source inventory: every source the team uses, its origin, its update frequency, its upstream owner, and its known defects.</li>
+<li>Glossary and metric definitions: what the team means by a case, a rate, a denominator, and a reporting week. Disagreements here produce figures that do not reconcile across products.</li>
+<li>Contacts: names and roles for upstream data owners, IT contacts, the disclosure reviewer, and whoever understands why the county denominators are adjusted.</li>
+</ol>
+<p>Keep the handbook in version control alongside the code, written in markdown and rendered if desired. Whatever format you choose, record changes and assign responsibility for keeping it current.</p>
+</section>
+<section id="sec-onboarding-setup" class="level2" data-number="23.3">
+<h2 data-number="23.3" class="anchored" data-anchor-id="sec-onboarding-setup"><span class="header-section-number">23.3</span> Testing Setup Documentation</h2>
+<p>Test the setup instructions with a colleague.</p>
+<p>Write the setup instructions, then hand them to someone who has never performed the setup, sit beside them, and observe. Provide no assistance. Record every point at which they stop, guess, or ask a question. Those points are the gaps in the documentation, including assumptions the author may have overlooked.</p>
+<p>An experienced colleague unfamiliar with the setup can be a useful first reader. Make clear that you are testing the instructions, so readers feel comfortable reporting unclear steps.</p>
+<p>Common gaps include assumed software or permissions, screenshots from another version, Unix commands that do not work on a managed Windows machine, and Git instructions that assume prior experience.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -438,25 +456,19 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The more restrictive the environment, the more planning is required upfront. In a data enclave, you cannot install a package on a whim or look up documentation online. Test your code on approved public-use or synthetic data in a less restricted environment first, resolve all dependency questions, and then bring the finalized analysis into the enclave.</p>
+<p>Date screenshots, or record the software version they depict. Screenshots can clarify instructions, but interfaces change. A line reading “screenshots current as of GitLab 17.2, October 2025” tells the reader whether to trust what they are looking at.</p>
 </div>
 </div>
 </section>
-<section id="sec-governance-dua" class="level2" data-number="25.2">
-<h2 data-number="25.2" class="anchored" data-anchor-id="sec-governance-dua"><span class="header-section-number">25.2</span> Data Use Agreements</h2>
-<p>A data use agreement (DUA) is a legal contract between the organization providing data and the organization receiving it. DUAs define what data is being shared, who is allowed to access it, what it can be used for, and what happens to it at the end of the project. They are routine in public health. Any time data is obtained from another agency, a federal program, a health system, or a research partner, expect a DUA.</p>
-<section id="what-duas-cover" class="level3" data-number="25.2.1">
-<h3 data-number="25.2.1" class="anchored" data-anchor-id="what-duas-cover"><span class="header-section-number">25.2.1</span> What DUAs Cover</h3>
-<p>The most consequential terms are:</p>
-<p><strong>Permitted uses.</strong> DUAs typically specify the exact purpose for which the data was obtained. Using data for a secondary purpose (even one that seems obviously fine) may require an amendment. Read this section carefully before scoping the analysis.</p>
-<p><strong>Authorized users.</strong> The agreement usually names individuals or roles who may access the data. Adding a new team member or sharing data with a collaborator at another agency requires notifying the data provider and may require an amendment.</p>
-<p><strong>Data environment requirements.</strong> Many DUAs specify where data may be stored and processed, for example only on a designated secure server, only within the jurisdiction’s network, or only in a HIPAA-compliant environment. “I’ll just put it on my laptop for a quick look” is a DUA violation if the agreement prohibits local storage.</p>
-<p><strong>Dissemination restrictions.</strong> Some DUAs restrict publication (requiring advance review by the data provider), prohibit releasing record-level data, or limit which findings can be publicly reported. Know these terms before drafting a report or dashboard.</p>
-<p><strong>Data destruction.</strong> Most DUAs require that data be destroyed or returned at the end of the project period, and that destruction be documented. This includes copies, backups, and any data that was transferred for analysis.</p>
+<section id="sec-onboarding-conventions" class="level2" data-number="23.4">
+<h2 data-number="23.4" class="anchored" data-anchor-id="sec-onboarding-conventions"><span class="header-section-number">23.4</span> Conventions</h2>
+<p>Record the choices specific to your team: branch naming, commit size, file naming, documentation requirements, and where restricted data belongs. Link to <a href="git.html#sec-git-branching" class="quarto-xref"><span>Section 1.2</span></a>, <a href="dataorg.html" class="quarto-xref"><span>Chapter 2</span></a>, and <a href="documentation.html" class="quarto-xref"><span>Chapter 21</span></a> for the general practices. Use examples from your own repositories where a rule is easy to misinterpret.</p>
 </section>
-<section id="practical-guidance" class="level3" data-number="25.2.2">
-<h3 data-number="25.2.2" class="anchored" data-anchor-id="practical-guidance"><span class="header-section-number">25.2.2</span> Practical Guidance</h3>
-<p>Get a copy of the DUA before the data arrives. It is much easier to negotiate terms before signing than to discover a constraint mid-project. Loop in your supervisor and, if the terms are unfamiliar or restrictive, your agency’s legal or compliance office. When in doubt about whether a specific use is permitted, ask the data provider in writing (email creates a record).</p>
+<section id="sec-onboarding-protocols" class="level2" data-number="23.5">
+<h2 data-number="23.5" class="anchored" data-anchor-id="sec-onboarding-protocols"><span class="header-section-number">23.5</span> Update Protocols</h2>
+<p>For each recurring product the team delivers, write one document covering the steps required to produce it, the inputs and their sources, the expected outputs and their appearance, the known failure modes and the response to each, and whom to contact for anything not listed.</p>
+<p>These documents serve two purposes. They are the coverage plan when the owner is unavailable, and they are the training material when someone new assumes the product.</p>
+<p>Writing the protocols can reveal knowledge gaps between roles. Where a team has specialized, with one person in biosurveillance, one writing R, and one maintaining the dashboard, the incomplete section of the protocol document may concern a handoff between those roles. Gaps in protocol documentation indicate where knowledge is not shared.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -467,44 +479,21 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Data received informally (as an email attachment, a Dropbox link, or a thumb drive) still carries the same governance obligations as data received through a formal DUA process. “We didn’t sign anything” does not mean “there are no restrictions.” Ask how the data can be used before you use it.</p>
+<p>Include instructions for known failures. A line reading “if the query returns zero rows, check whether the facility list changed; this occurs roughly twice a year” gives the next analyst a specific check to try. Add an entry each time something breaks.</p>
 </div>
 </div>
 </section>
+<section id="sec-onboarding-practice" class="level2" data-number="23.6">
+<h2 data-number="23.6" class="anchored" data-anchor-id="sec-onboarding-practice"><span class="header-section-number">23.6</span> Practice Repositories and Training Data</h2>
+<p>New analysts require somewhere to make mistakes. A practice repository seeded with a small realistic project allows someone to learn the team’s Git workflow by branching, breaking something, and opening a merge request without touching a production pipeline. This gives new analysts practice with the workflow.</p>
+<p>The data equivalent is a set of standardized training datasets mirroring the structure of real data without the protected information: the same column names, the same types, the same awkward date formats, the same known quirks, with fabricated values. Their utility extends well beyond onboarding. They are what you develop against before entering a secure environment (<a href="governance.html#sec-governance-secure" class="quarto-xref"><span>Section 25.5</span></a>), what you use to demonstrate a problem to a colleague, and what you provide to a support request or an AI assistant in place of real records (<a href="aigovernance.html" class="quarto-xref"><span>Chapter 26</span></a>).</p>
+<p>Building them is not free, and the task never becomes urgent on its own. The argument that funds it is that the same datasets serve onboarding, development, and debugging. A team establishing shared enterprise datasets (<a href="infrastructure.html#sec-infrastructure-enterprise" class="quarto-xref"><span>Section 17.9</span></a>) is already performing most of the specification work, so the training versions should be built in the same effort.</p>
 </section>
-<section id="sec-governance-hipaa" class="level2" data-number="25.3">
-<h2 data-number="25.3" class="anchored" data-anchor-id="sec-governance-hipaa"><span class="header-section-number">25.3</span> HIPAA and Protected Health Information</h2>
-<p>The Health Insurance Portability and Accountability Act (HIPAA) establishes federal standards for protecting the privacy and security of individually identifiable health information. This section is not a comprehensive HIPAA guide (your organization’s privacy officer is the right resource for that), but public health data scientists need a working understanding of what HIPAA covers and how it applies to their work.</p>
-<section id="what-hipaa-covers" class="level3" data-number="25.3.1">
-<h3 data-number="25.3.1" class="anchored" data-anchor-id="what-hipaa-covers"><span class="header-section-number">25.3.1</span> What HIPAA Covers</h3>
-<p>HIPAA applies to <em>covered entities</em> (healthcare providers, health plans, and healthcare clearinghouses) and their <em>business associates</em> (organizations that handle protected health information on their behalf). Many public health agencies are covered entities or business associates; many are not. The rules differ across jurisdictions, and some public health functions have explicit carve-outs under the HIPAA Privacy Rule (disease reporting, for example, is generally permitted without individual authorization).</p>
-<p><strong>Protected health information (PHI)</strong> is any individually identifiable health information held or transmitted by a covered entity. The HIPAA Safe Harbor method specifies 18 categories of identifiers to remove from health information. The list below groups related categories; consult the <a href="https://www.hhs.gov/hipaa/for-professionals/special-topics/de-identification/index.html">HHS guidance</a> for the full requirements:</p>
-<ul>
-<li>Names</li>
-<li>Geographic subdivisions smaller than a state (including ZIP codes, street addresses, cities in some cases)</li>
-<li>Date elements other than year directly related to an individual; ages over 89 and dates indicating such ages must be grouped as age 90 or older</li>
-<li>Telephone numbers, fax numbers, email addresses</li>
-<li>Social Security numbers</li>
-<li>Medical record numbers, health plan beneficiary numbers, account numbers</li>
-<li>Certificate and license numbers</li>
-<li>Vehicle identifiers (license plates, VINs)</li>
-<li>Device identifiers and serial numbers</li>
-<li>URLs and IP addresses</li>
-<li>Biometric identifiers (fingerprints, voiceprints)</li>
-<li>Full-face photographs</li>
-<li>Any other unique identifying number or code</li>
-</ul>
-<p>Whether information is PHI also depends on who holds it and applicable HIPAA exclusions. Ask the privacy officer to assess the dataset.</p>
-</section>
-<section id="the-minimum-necessary-standard" class="level3" data-number="25.3.2">
-<h3 data-number="25.3.2" class="anchored" data-anchor-id="the-minimum-necessary-standard"><span class="header-section-number">25.3.2</span> The Minimum Necessary Standard</h3>
-<p>HIPAA’s minimum necessary standard requires that covered entities use, disclose, or request only the minimum amount of PHI needed to accomplish the intended purpose. For a data scientist, this means requesting only the variables needed for the analysis, not pulling a complete medical record when you only need diagnosis codes and dates.</p>
-</section>
-<section id="de-identification" class="level3" data-number="25.3.3">
-<h3 data-number="25.3.3" class="anchored" data-anchor-id="de-identification"><span class="header-section-number">25.3.3</span> De-identification</h3>
-<p>Properly de-identified data is not PHI and is not subject to HIPAA restrictions. HIPAA provides two paths to de-identification:</p>
-<p><strong>Safe harbor:</strong> Remove all 18 identifiers listed above, plus ensure that the data provider has no actual knowledge that the remaining information could identify an individual. Only qualifying three-digit ZIP codes may be retained; replace other ZIP prefixes with <code>000</code> and remove other geographic subdivisions smaller than a state.</p>
-<p><strong>Expert determination:</strong> A qualified statistician applies generally accepted statistical principles to certify that the risk of identifying any individual is very small. This allows more flexibility than safe harbor (for example, three-digit ZIP codes or specific dates) but requires documented statistical analysis.</p>
+<section id="sec-onboarding-crosstraining" class="level2" data-number="23.7">
+<h2 data-number="23.7" class="anchored" data-anchor-id="sec-onboarding-crosstraining"><span class="header-section-number">23.7</span> Cross-Training</h2>
+<p>Specialization occurs without anyone deciding on it. One person becomes the dashboard person, another the R person, another the one who understands the syndromic surveillance feed. The arrangement is efficient until one of them is unavailable.</p>
+<p>Rotating ownership of recurring products is the practical countermeasure, so reserve time for it. Select one product per quarter. The current owner does not run it; they sit with a colleague while that colleague runs it from the protocol document, and every inaccuracy in the document is corrected as it is found. The result is a tested protocol and a second person who has performed the work, which differs from a second person who has read about it.</p>
+<p>Complete a rotation before a known absence. Teams that handle parental leave, overlapping PTO, and the question of who covers a script have generally answered that question in advance.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -515,99 +504,59 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>De-identification under HIPAA is a formal process, not a judgment call. Simply removing a name is not de-identification. If you are preparing data for release or for use in a less restricted environment, work with your privacy officer to ensure the de-identification is compliant.</p>
+<p>Pair rotation with code review (<a href="peerreview.html" class="quarto-xref"><span>Chapter 27</span></a>). Running a product yourself gives you useful context for reviewing changes to it.</p>
 </div>
 </div>
 </section>
+<section id="sec-onboarding-offboarding" class="level2" data-number="23.8">
+<h2 data-number="23.8" class="anchored" data-anchor-id="sec-onboarding-offboarding"><span class="header-section-number">23.8</span> Handoff and Offboarding</h2>
+<p>Two weeks is the customary notice period and is insufficient for writing documentation from scratch. It is sufficient for executing a checklist that already exists.</p>
+<p>Inventory what the departing person owns: every recurring product, repository, scheduled job, credential, and relationship with an upstream data owner. Compile this before it is needed and keep it in the handbook.</p>
+<p>Name the person taking over each item.</p>
+<p>Run each recurring product once, with the departing person observing and the new owner operating from the protocol document, correcting the document wherever it fails.</p>
+<p>Transfer or reissue credentials. Scheduled jobs running under a departing employee’s account are a common cause of a pipeline dying several weeks after their last day, and the failure is particularly damaging because nothing errors visibly until an expected report does not arrive (<a href="automation.html#sec-automation-monitoring" class="quarto-xref"><span>Section 11.6</span></a>).</p>
+<p>Record the undocumented reasoning. Half an hour spent asking why a county is excluded and why the analysis uses the March file recovers knowledge that is otherwise lost.</p>
+<p>Update the handbook, including the contacts section, before the last day.</p>
 </section>
-<section id="sec-governance-access" class="level2" data-number="25.4">
-<h2 data-number="25.4" class="anchored" data-anchor-id="sec-governance-access"><span class="header-section-number">25.4</span> Getting Data Access</h2>
-<p>Data access in public health institutions involves more parties than most analysts expect. A clear map of who needs to be involved, and what each party needs to hear, prevents the most common delays.</p>
-<p><strong>The data steward</strong> owns or is responsible for the dataset within the source organization. They can tell you what is in the data, how it is structured, its known quality issues, and what access process is required. For internal datasets (data your own agency collects), the steward is typically in the program that runs the surveillance system. For external datasets (from another state agency, a federal program, or a partner organization), the steward is at the providing organization.</p>
-<p><strong>IT</strong> controls the infrastructure: server access, database credentials, software installation, network permissions, and VPN. A request to IT should be specific: what software is needed (including version numbers), which database or server needs to be accessed, what level of compute and storage the analysis requires, and whether the data is sensitive or regulated.</p>
-<p><strong>Legal and compliance</strong> reviews DUAs and data sharing agreements. Loop them in early (DUA review can take weeks at some institutions) and provide the full draft agreement.</p>
-<p><strong>Your supervisor</strong> can help identify the official authorized to sign DUAs and data sharing agreements on behalf of the agency. They should know about any data access requests that involve legal agreements before those agreements are presented for signature.</p>
-<section id="framing-requests" class="level3" data-number="25.4.1">
-<h3 data-number="25.4.1" class="anchored" data-anchor-id="framing-requests"><span class="header-section-number">25.4.1</span> Framing Requests</h3>
-<p>A request framed in terms of program need is easier to prioritize than a vague technical ask. Compare:</p>
-<blockquote class="blockquote">
-<p><em>“I need access to the vital records SQL Server database.”</em></p>
-</blockquote>
-<p>versus:</p>
-<blockquote class="blockquote">
-<p><em>“This analysis supports the quarterly overdose mortality report due to the State Health Officer in March. I need read access to the <code>vr_deaths</code> table in the vital records database and the ability to install <code>odbc</code> and <code>DBI</code> in my R environment. The data is governed by our existing MOU with vital records. I need this by February 15 to have time to validate before the report deadline.”</em></p>
-</blockquote>
-<p>The second version tells IT what the deadline is, what the legal basis is, and exactly what is needed. It also signals that someone outside IT will notice if the request is not addressed.</p>
+<section id="sec-onboarding-borrowing" class="level2" data-number="23.9">
+<h2 data-number="23.9" class="anchored" data-anchor-id="sec-onboarding-borrowing"><span class="header-section-number">23.9</span> Adapting an Existing Handbook</h2>
+<p>Look for existing handbooks you can adapt. Other agencies have written most of what you need, and many publish it.</p>
+<p>Adapting a borrowed handbook is faster than drafting one, and the translation is where much of the value lies. Converting instructions written for a hosted Git service into instructions for a self-hosted instance requires stating how your instance differs. Converting instructions written for a team with a managed analytics server requires stating where your team actually executes code. Each substitution helps identify assumptions your handbook should explain.</p>
+<p>Ask through whatever professional network or community platform your team participates in. Agencies are generally willing to share, and they are solving the same problems in parallel without any means of discovering one another.</p>
 </section>
-</section>
-<section id="sec-governance-secure" class="level2" data-number="25.5">
-<h2 data-number="25.5" class="anchored" data-anchor-id="sec-governance-secure"><span class="header-section-number">25.5</span> Working in Secure Data Environments</h2>
-<p>When data cannot leave a controlled environment, the analysis has to come to the data. Secure remote desktops and data enclaves impose constraints that require adapting the workflows described elsewhere in this book.</p>
-<section id="common-constraints" class="level3" data-number="25.5.1">
-<h3 data-number="25.5.1" class="anchored" data-anchor-id="common-constraints"><span class="header-section-number">25.5.1</span> Common Constraints</h3>
-<ul>
-<li>No internet access, or access limited to specific approved sites</li>
-<li>No USB or removable media, preventing local file transfer</li>
-<li>Copy-paste disabled between the remote session and the local machine</li>
-<li>No administrator rights, preventing ad-hoc software or package installation</li>
-<li>Output review, meaning no file can leave the environment until it passes a disclosure review</li>
-</ul>
-</section>
-<section id="adapting-your-workflow" class="level3" data-number="25.5.2">
-<h3 data-number="25.5.2" class="anchored" data-anchor-id="adapting-your-workflow"><span class="header-section-number">25.5.2</span> Adapting Your Workflow</h3>
-<p><strong>Resolve package dependencies before entering the environment.</strong> Use <code>renv</code> (see <a href="environments.html" class="quarto-xref"><span>Chapter 15</span></a>) to capture your project’s exact package list. Submit the lockfile to IT for review; they can pre-install those packages in the secure environment, or arrange an approved intake path. Discovering mid-analysis that a package is unavailable is a significant delay.</p>
-<p><strong>Plan the analysis before entering.</strong> Write and test your code on a representative mock dataset (public-use data with similar structure, or synthetic data generated from the real data’s structure) before bringing the code into the secure environment. Plan for further exploration inside the enclave when the real data raises questions that mock data could not reveal. The same mock datasets are what make it safe to use an AI coding assistant while you develop (<a href="aigovernance.html#sec-aigovernance-phi" class="quarto-xref"><span>Section 26.4</span></a>).</p>
-<p><strong>Keep code in version control accessible from within the environment.</strong> Some enclaves have access to an internal Git server, or allow code to be transferred via an approved intake process. Maintain your code in a repository (see <a href="git.html" class="quarto-xref"><span>Chapter 1</span></a>) so it can be moved in as a single unit.</p>
-<p><strong>Document outputs before requesting export.</strong> Every output (tables, figures, and reports) that leaves the environment will be reviewed. Organize outputs clearly, understand the suppression rules that apply (see <a href="#sec-governance-disclosure" class="quarto-xref"><span>Section 25.6</span></a>), and apply them yourself before submission. Self-review before the formal review reduces round trips.</p>
-</section>
-</section>
-<section id="sec-governance-disclosure" class="level2" data-number="25.6">
-<h2 data-number="25.6" class="anchored" data-anchor-id="sec-governance-disclosure"><span class="header-section-number">25.6</span> Disclosure Review and Small Number Suppression</h2>
-<p>Even properly de-identified data can allow re-identification when cell counts are small. A table showing that a specific rural county had 2 opioid overdose deaths among people aged 25–34 may effectively identify those individuals in a small community. Disclosure review is the process of checking whether outputs could allow such re-identification before they are released.</p>
-<section id="when-disclosure-review-applies" class="level3" data-number="25.6.1">
-<h3 data-number="25.6.1" class="anchored" data-anchor-id="when-disclosure-review-applies"><span class="header-section-number">25.6.1</span> When Disclosure Review Applies</h3>
-<p>Disclosure review is typically required for:</p>
-<ul>
-<li>Any output leaving a secure data environment</li>
-<li>Outputs derived from restricted-use data, regardless of environment</li>
-<li>Public-facing reports and dashboards based on individual-level surveillance data</li>
-<li>Analyses submitted for publication when the underlying data is restricted</li>
-</ul>
-<p>Your DUA and your agency’s data governance policies will specify what review process applies. For internally-collected surveillance data, the process is usually internal. For federally restricted data (NCHS, CMS), the providing agency conducts the review.</p>
-</section>
-<section id="small-number-suppression" class="level3" data-number="25.6.2">
-<h3 data-number="25.6.2" class="anchored" data-anchor-id="small-number-suppression"><span class="header-section-number">25.6.2</span> Small Number Suppression</h3>
-<p>Suppression thresholds vary by data provider, dataset, and agency policy. Follow the applicable rule, including whether zero counts may be shown. The illustrative rule in <a href="testing.html" class="quarto-xref"><span>Chapter 4</span></a> suppresses counts from 1 through 4 and retains zero; it is not a universal public health standard.</p>
-<p><strong>Complementary suppression</strong> is required when suppressing one cell would allow back-calculation of another. If a row shows a total and several cells, and only one cell is suppressed, the suppressed value can be calculated by subtraction. The fix is to suppress an additional cell (typically the next-smallest) so that the suppressed value cannot be derived. This often requires checking row and column totals as well as individual cells.</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<section id="sec-onboarding-maintenance" class="level2" data-number="23.10">
+<h2 data-number="23.10" class="anchored" data-anchor-id="sec-onboarding-maintenance"><span class="header-section-number">23.10</span> Maintaining the Handbook</h2>
+<p>Without regular maintenance, a handbook can give new staff outdated instructions.</p>
+<p>Assign an owner by name. Review on a schedule, quarterly being reasonable for a small team, and attach the review to something that already occurs so that it requires no independent motivation. The natural triggers are onboarding a new person, which provides a chance to test the instructions, and any occasion when a protocol document proves wrong during an incident.</p>
+<p>Keep edits inexpensive. A handbook requiring a merge request, three reviewers, and a rendering step will not be updated during the ten minutes when someone notices a broken instruction. Markdown files in the team repository with a low review threshold strike an appropriate balance.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Example:</strong> A county reports 7 total influenza deaths. By age group: 25–34: 4 (suppressed, &lt; 5), 35–44: 2 (suppressed), 45+: 1 (suppressed). The total (7) may still be releasable if it is not small, but all three age group cells must be suppressed. If only the first cell were suppressed, the other two would reveal the suppressed value.</p>
-<p>In practice, suppression logic can be complex for multi-dimensional tables. Use code or review tools to check suppression, followed by disclosure review.</p>
+<p>The best occasion to write a handbook section is the first time you explain something to a colleague. The explanation is already being composed; recording it is cheaper than delivering it twice.</p>
 </div>
 </div>
 </section>
-<section id="what-disclosure-review-examines" class="level3" data-number="25.6.3">
-<h3 data-number="25.6.3" class="anchored" data-anchor-id="what-disclosure-review-examines"><span class="header-section-number">25.6.3</span> What Disclosure Review Examines</h3>
-<p>A reviewer will typically check:</p>
+<section id="sec-onboarding-it" class="level2" data-number="23.11">
+<h2 data-number="23.11" class="anchored" data-anchor-id="sec-onboarding-it"><span class="header-section-number">23.11</span> The IT Liaison</h2>
+<p>Where possible, involve a named IT representative early enough to understand the team’s systems and priorities. They can identify approval lead times and suggest supported alternatives before infrastructure constraints delay a project. Record the contact’s responsibilities in the handbook, along with the procedures for requesting access, installing approved software, and escalating incidents. <a href="pm.html#sec-pm-it" class="quarto-xref"><span>Section 24.4</span></a> covers planning these requests.</p>
+</section>
+<section id="sec-onboarding-reading" class="level2" data-number="23.12">
+<h2 data-number="23.12" class="anchored" data-anchor-id="sec-onboarding-reading"><span class="header-section-number">23.12</span> Further Reading</h2>
 <ul>
-<li>All cells meet the minimum count threshold</li>
-<li>Complementary suppression has been applied correctly</li>
-<li>Geographic or demographic combinations that are highly specific (a single rural county × a specific age group × a specific cause) do not expose individuals even if each cell alone is above the threshold</li>
-<li>Percentages, rates, and proportions are checked: a rate computed from a suppressed count is itself suppressed</li>
+<li><a href="documentation.html" class="quarto-xref"><span>Chapter 21</span></a> covers code and project documentation; link to those documents from the handbook.</li>
+<li><a href="team.html" class="quarto-xref"><span>Chapter 22</span></a> covers roles, hiring, and retention, of which onboarding is one component.</li>
+<li><a href="trainingbudget.html" class="quarto-xref"><span>Appendix B</span></a> covers funding the training that a new analyst’s onboarding plan identifies as a gap.</li>
+<li>GitLab publishes its complete company handbook at <a href="https://handbook.gitlab.com/">handbook.gitlab.com</a>. It is far larger than a small analytic team requires and shows how an organization can document its operations in a shared handbook. The sections describing how the handbook itself is maintained are the relevant ones.</li>
 </ul>
-<p>When reporting suppressed data to a lay audience, explain why: “Data suppressed to protect individual privacy” is preferable to an unexplained asterisk or blank cell.</p>
-<p>Suppression rules also constrain design decisions upstream of the output. A dashboard permitting users to filter to a single county, a single month, and a single age group can produce a cell below the threshold, whatever the default view displays. Quarterly aggregation may reduce small cells, but it still requires disclosure checks. Choosing the aggregation grain with these thresholds in mind, and applying suppression in code on the way out, is covered in <a href="bi.html#sec-bi-aggregate" class="quarto-xref"><span>Section 10.2</span></a>.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1013,13 +962,13 @@ Note
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./pm.html" class="pagination-link" aria-label="Project Management">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Project Management</span></span>
+      <a href="./team.html" class="pagination-link" aria-label="Building and Sustaining a Data Science Team">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Building and Sustaining a Data Science Team</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./aigovernance.html" class="pagination-link" aria-label="AI Governance in a Health Agency">
-        <span class="nav-page-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">AI Governance in a Health Agency</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./pm.html" class="pagination-link" aria-label="Project Management">
+        <span class="nav-page-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Project Management</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

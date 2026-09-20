@@ -2,91 +2,119 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://dstt.stephenturner.us/index.html</loc>
-    <lastmod>2026-07-02T09:18:25.973Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.524Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/git.html</loc>
-    <lastmod>2026-04-16T09:54:51.455Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.523Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/dataorg.html</loc>
-    <lastmod>2026-07-02T09:18:29.887Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.521Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/validation.html</loc>
-    <lastmod>2026-07-02T09:18:44.766Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.530Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dstt.stephenturner.us/testing.html</loc>
+    <lastmod>2026-09-20T20:42:30.529Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dstt.stephenturner.us/debugging.html</loc>
+    <lastmod>2026-09-20T20:42:30.521Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/reporting.html</loc>
-    <lastmod>2026-02-28T14:47:25.879Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.528Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/accessibility.html</loc>
-    <lastmod>2026-03-25T13:19:04.594Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.517Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/ai.html</loc>
-    <lastmod>2026-07-02T09:18:49.081Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.517Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/dashboards.html</loc>
-    <lastmod>2026-02-28T12:42:11.831Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.520Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dstt.stephenturner.us/bi.html</loc>
+    <lastmod>2026-09-20T20:42:30.519Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/automation.html</loc>
-    <lastmod>2026-07-02T09:18:41.922Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.518Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/packageloading.html</loc>
-    <lastmod>2026-03-25T13:15:49.794Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.526Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dstt.stephenturner.us/dependencies.html</loc>
+    <lastmod>2026-09-20T20:42:30.522Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/packagedevelopment.html</loc>
-    <lastmod>2026-03-27T14:21:52.565Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.526Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/environments.html</loc>
-    <lastmod>2026-03-25T13:15:33.997Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.523Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/databases.html</loc>
-    <lastmod>2026-07-02T09:18:38.623Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.520Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dstt.stephenturner.us/infrastructure.html</loc>
+    <lastmod>2026-09-20T20:42:30.524Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/apis.html</loc>
-    <lastmod>2026-07-02T09:44:32.372Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.518Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/legacy.html</loc>
-    <lastmod>2026-07-02T09:44:50.833Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.525Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/codestyle.html</loc>
-    <lastmod>2026-02-28T17:16:33.389Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.519Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/documentation.html</loc>
-    <lastmod>2026-03-01T11:11:16.621Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.522Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/team.html</loc>
-    <lastmod>2026-07-02T09:19:06.346Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.529Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dstt.stephenturner.us/onboarding.html</loc>
+    <lastmod>2026-09-20T20:42:30.525Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/pm.html</loc>
-    <lastmod>2026-02-28T12:41:54.265Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.527Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/governance.html</loc>
-    <lastmod>2026-02-28T13:09:53.999Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.524Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dstt.stephenturner.us/aigovernance.html</loc>
+    <lastmod>2026-09-20T20:42:30.517Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/peerreview.html</loc>
-    <lastmod>2026-03-01T11:11:16.082Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.527Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/comms.html</loc>
-    <lastmod>2026-02-28T13:09:04.601Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.519Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/references.html</loc>
@@ -94,14 +122,18 @@
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/resources.html</loc>
-    <lastmod>2026-07-02T09:19:17.325Z</lastmod>
+    <lastmod>2026-09-20T20:42:30.528Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dstt.stephenturner.us/trainingbudget.html</loc>
+    <lastmod>2026-09-20T20:42:30.530Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/Data-Science-Team-Training.epub</loc>
-    <lastmod>2026-07-02T09:46:13.194Z</lastmod>
+    <lastmod>2026-09-20T20:44:00.993Z</lastmod>
   </url>
   <url>
     <loc>https://dstt.stephenturner.us/Data-Science-Team-Training.pdf</loc>
-    <lastmod>2026-07-02T09:46:18.185Z</lastmod>
+    <lastmod>2026-09-20T20:44:09.826Z</lastmod>
   </url>
 </urlset>

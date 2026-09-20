@@ -8,7 +8,7 @@
 
 <meta name="author" content="Stephen D. Turner">
 
-<title>25&nbsp; Working with IT and Data Governance – Data Science Team Training</title>
+<title>Appendix B — Spending a Training Budget – Data Science Team Training</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,7 +24,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -34,8 +53,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./aigovernance.html" rel="next">
-<link href="./pm.html" rel="prev">
+<link href="./resources.html" rel="prev">
 <link href="./hex.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -87,7 +105,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./team.html">Nontechnical</a></li><li class="breadcrumb-item"><a href="./governance.html"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">Appendices</a></li><li class="breadcrumb-item"><a href="./trainingbudget.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Spending a Training Budget</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -304,7 +322,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./governance.html" class="sidebar-item-text sidebar-link active">
+  <a href="./governance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></a>
   </div>
 </li>
@@ -351,7 +369,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./trainingbudget.html" class="sidebar-item-text sidebar-link">
+  <a href="./trainingbudget.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Spending a Training Budget</span></span></a>
   </div>
 </li>
@@ -367,42 +385,23 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-governance-environments" id="toc-sec-governance-environments" class="nav-link active" data-scroll-target="#sec-governance-environments"><span class="header-section-number">25.1</span> Data Environments in Public Health</a></li>
-  <li><a href="#sec-governance-dua" id="toc-sec-governance-dua" class="nav-link" data-scroll-target="#sec-governance-dua"><span class="header-section-number">25.2</span> Data Use Agreements</a>
-  <ul class="collapse">
-  <li><a href="#what-duas-cover" id="toc-what-duas-cover" class="nav-link" data-scroll-target="#what-duas-cover"><span class="header-section-number">25.2.1</span> What DUAs Cover</a></li>
-  <li><a href="#practical-guidance" id="toc-practical-guidance" class="nav-link" data-scroll-target="#practical-guidance"><span class="header-section-number">25.2.2</span> Practical Guidance</a></li>
-  </ul></li>
-  <li><a href="#sec-governance-hipaa" id="toc-sec-governance-hipaa" class="nav-link" data-scroll-target="#sec-governance-hipaa"><span class="header-section-number">25.3</span> HIPAA and Protected Health Information</a>
-  <ul class="collapse">
-  <li><a href="#what-hipaa-covers" id="toc-what-hipaa-covers" class="nav-link" data-scroll-target="#what-hipaa-covers"><span class="header-section-number">25.3.1</span> What HIPAA Covers</a></li>
-  <li><a href="#the-minimum-necessary-standard" id="toc-the-minimum-necessary-standard" class="nav-link" data-scroll-target="#the-minimum-necessary-standard"><span class="header-section-number">25.3.2</span> The Minimum Necessary Standard</a></li>
-  <li><a href="#de-identification" id="toc-de-identification" class="nav-link" data-scroll-target="#de-identification"><span class="header-section-number">25.3.3</span> De-identification</a></li>
-  </ul></li>
-  <li><a href="#sec-governance-access" id="toc-sec-governance-access" class="nav-link" data-scroll-target="#sec-governance-access"><span class="header-section-number">25.4</span> Getting Data Access</a>
-  <ul class="collapse">
-  <li><a href="#framing-requests" id="toc-framing-requests" class="nav-link" data-scroll-target="#framing-requests"><span class="header-section-number">25.4.1</span> Framing Requests</a></li>
-  </ul></li>
-  <li><a href="#sec-governance-secure" id="toc-sec-governance-secure" class="nav-link" data-scroll-target="#sec-governance-secure"><span class="header-section-number">25.5</span> Working in Secure Data Environments</a>
-  <ul class="collapse">
-  <li><a href="#common-constraints" id="toc-common-constraints" class="nav-link" data-scroll-target="#common-constraints"><span class="header-section-number">25.5.1</span> Common Constraints</a></li>
-  <li><a href="#adapting-your-workflow" id="toc-adapting-your-workflow" class="nav-link" data-scroll-target="#adapting-your-workflow"><span class="header-section-number">25.5.2</span> Adapting Your Workflow</a></li>
-  </ul></li>
-  <li><a href="#sec-governance-disclosure" id="toc-sec-governance-disclosure" class="nav-link" data-scroll-target="#sec-governance-disclosure"><span class="header-section-number">25.6</span> Disclosure Review and Small Number Suppression</a>
-  <ul class="collapse">
-  <li><a href="#when-disclosure-review-applies" id="toc-when-disclosure-review-applies" class="nav-link" data-scroll-target="#when-disclosure-review-applies"><span class="header-section-number">25.6.1</span> When Disclosure Review Applies</a></li>
-  <li><a href="#small-number-suppression" id="toc-small-number-suppression" class="nav-link" data-scroll-target="#small-number-suppression"><span class="header-section-number">25.6.2</span> Small Number Suppression</a></li>
-  <li><a href="#what-disclosure-review-examines" id="toc-what-disclosure-review-examines" class="nav-link" data-scroll-target="#what-disclosure-review-examines"><span class="header-section-number">25.6.3</span> What Disclosure Review Examines</a></li>
-  </ul></li>
+  <li><a href="#sec-trainingbudget-principles" id="toc-sec-trainingbudget-principles" class="nav-link active" data-scroll-target="#sec-trainingbudget-principles"><span class="header-section-number">B.1</span> Principles</a></li>
+  <li><a href="#sec-trainingbudget-skills" id="toc-sec-trainingbudget-skills" class="nav-link" data-scroll-target="#sec-trainingbudget-skills"><span class="header-section-number">B.2</span> Skills Worth Buying</a></li>
+  <li><a href="#sec-trainingbudget-courses" id="toc-sec-trainingbudget-courses" class="nav-link" data-scroll-target="#sec-trainingbudget-courses"><span class="header-section-number">B.3</span> Courses and Subscriptions</a></li>
+  <li><a href="#sec-trainingbudget-books" id="toc-sec-trainingbudget-books" class="nav-link" data-scroll-target="#sec-trainingbudget-books"><span class="header-section-number">B.4</span> Books</a></li>
+  <li><a href="#sec-trainingbudget-consulting" id="toc-sec-trainingbudget-consulting" class="nav-link" data-scroll-target="#sec-trainingbudget-consulting"><span class="header-section-number">B.5</span> Consulting</a></li>
+  <li><a href="#sec-trainingbudget-procurement" id="toc-sec-trainingbudget-procurement" class="nav-link" data-scroll-target="#sec-trainingbudget-procurement"><span class="header-section-number">B.6</span> Procurement Constraints</a></li>
+  <li><a href="#sec-trainingbudget-worked" id="toc-sec-trainingbudget-worked" class="nav-link" data-scroll-target="#sec-trainingbudget-worked"><span class="header-section-number">B.7</span> A Worked Plan</a></li>
+  <li><a href="#sec-trainingbudget-next" id="toc-sec-trainingbudget-next" class="nav-link" data-scroll-target="#sec-trainingbudget-next"><span class="header-section-number">B.8</span> Requesting Next Year’s Funding</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./team.html">Nontechnical</a></li><li class="breadcrumb-item"><a href="./governance.html"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">Appendices</a></li><li class="breadcrumb-item"><a href="./trainingbudget.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Spending a Training Budget</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-governance" class="quarto-section-identifier"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Working with IT and Data Governance</span></span></h1>
+<h1 class="title"><span id="sec-trainingbudget" class="quarto-section-identifier">Appendix B — Spending a Training Budget</span></h1>
 </div>
 
 
@@ -419,15 +418,29 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Before beginning an analysis, locate the data and confirm the approvals needed to use it. Infrastructure, legal agreements, and agency policies determine where and how you can work. <a href="pm.html#sec-pm-it" class="quarto-xref"><span>Section 24.4</span></a> introduces IT as a project management concern; this chapter goes into the operational detail: the types of environments public health data scientists actually work in, the legal frameworks that govern data use, and the practical steps for getting access to data and meeting those requirements.</p>
-<section id="sec-governance-environments" class="level2" data-number="25.1">
-<h2 data-number="25.1" class="anchored" data-anchor-id="sec-governance-environments"><span class="header-section-number">25.1</span> Data Environments in Public Health</h2>
-<p>Public health data science happens across a wide range of computing environments, and the environment shapes what tools and workflows are feasible. Understanding where data lives, and what constraints that imposes, is the starting point.</p>
-<p><strong>Laptops and local files</strong> are the simplest setup. Data is on your machine, code runs locally, and there are no network permissions to navigate. This works for small, non-sensitive datasets (public-use files, aggregated data, synthetic data) but fails for anything regulated: sensitive data should not live on a personal laptop without explicit authorization.</p>
-<p><strong>Shared network drives</strong> are the most common data storage arrangement at state and local health departments. The data lives on a server managed by IT, mapped as a drive letter or network path on each authorized user’s machine. As described in <a href="dataorg.html" class="quarto-xref"><span>Chapter 2</span></a>, this creates a specific challenge: code lives in version control, but data cannot leave the drive. Use configurable paths to the shared drive as described in <a href="dataorg.html#sec-dataorg-sharedrive" class="quarto-xref"><span>Section 2.3.2</span></a>.</p>
-<p><strong>Institutional databases</strong> (SQL Server, Oracle, PostgreSQL) are increasingly common for high-volume surveillance data, vital records, and claims. Queries run on the server and return only results, so raw data never has to move. This is generally preferable to a shared drive for structured, regularly updated data. <a href="databases.html" class="quarto-xref"><span>Chapter 16</span></a> covers querying databases with DBI and dbplyr.</p>
-<p><strong>Secure remote desktops and data enclaves</strong> are used for the most sensitive data, including restricted-use vital records, Medicaid claims, and linked longitudinal datasets. Analysts connect via remote desktop to a server where the data lives. Copy-paste and file transfer are often disabled. Internet access may be restricted. The data never leaves the server; only approved outputs do, after passing a disclosure review. CDC’s Research Data Center and many state-level restricted data programs work this way.</p>
-<p><strong>Air-gapped systems</strong> go further: no external network connection at all. These are rare but exist for certain federal and state datasets. Code and packages must be brought in through an approved intake process, and every output leaves through a formal review.</p>
+<p>Professional development funds (both from DSTT and possibly from your employer) typically have a deadline attached and sometimes little guidance. The common outcome is that a team identifies what it wants in the final weeks, discovers a procurement constraint it did not know about, and either buys whatever can be approved quickly or returns the money.</p>
+<p>Plan training purchases around the team’s needs and the procurement deadline. <a href="team.html#sec-team-upskilling" class="quarto-xref"><span>Section 22.3</span></a> covers staff development, and <a href="resources.html" class="quarto-xref"><span>Appendix A</span></a> lists free material to consider alongside paid options.</p>
+<section id="sec-trainingbudget-principles" class="level2" data-number="B.1">
+<h2 data-number="B.1" class="anchored" data-anchor-id="sec-trainingbudget-principles"><span class="header-section-number">B.1</span> Principles</h2>
+<p>Start with the skills the team needs for its current work.</p>
+<p>Buy skills that transfer. SQL, R fundamentals, and version control will remain useful in five years, and will remain useful if the agency replaces its BI platform, its warehouse, or its surveillance system. Training in a particular interface may need updating when the product changes.</p>
+<p>The same reasoning applies to AI training. A general course covering how these models work, what they do well, and where they fail will age better than instruction in the prompt syntax of whichever assistant the agency licensed this year. <a href="aigovernance.html" class="quarto-xref"><span>Chapter 26</span></a> explains why understanding the method matters more than knowing the interface.</p>
+<p>Choose training that includes practice. For SQL, look for exercises in which learners write queries and inspect the results.</p>
+</section>
+<section id="sec-trainingbudget-skills" class="level2" data-number="B.2">
+<h2 data-number="B.2" class="anchored" data-anchor-id="sec-trainingbudget-skills"><span class="header-section-number">B.2</span> Skills Worth Buying</h2>
+<p>SQL comes first. It is chronically underrated and becomes unavoidable as agencies move surveillance data into warehouses (<a href="infrastructure.html" class="quarto-xref"><span>Chapter 17</span></a>). An analyst who can only receive extracts depends on whoever writes them, which adds days to every ad hoc question. Include hands-on practice.</p>
+<p>R fundamentals follow, specifically functions. Most public health analysts learn R as a sequence of scripts executing top to bottom. The transition from scripts to functions is what makes testing (<a href="testing.html" class="quarto-xref"><span>Chapter 4</span></a>), packaging (<a href="packagedevelopment.html" class="quarto-xref"><span>Chapter 14</span></a>), and substantive code review (<a href="peerreview.html" class="quarto-xref"><span>Chapter 27</span></a>) possible, and it helps analysts reuse and test their work.</p>
+<p>Version control comes next. It is inexpensive to learn relative to how much it changes a team’s working practice (<a href="git.html" class="quarto-xref"><span>Chapter 1</span></a>).</p>
+<p>Data visualization and communication follow, including selecting a visual encoding and structuring a message (<a href="comms.html" class="quarto-xref"><span>Chapter 28</span></a>). Start with the free reproducible reporting documentation before paying for additional instruction. General AI literacy completes the list.</p>
+</section>
+<section id="sec-trainingbudget-courses" class="level2" data-number="B.3">
+<h2 data-number="B.3" class="anchored" data-anchor-id="sec-trainingbudget-courses"><span class="header-section-number">B.3</span> Courses and Subscriptions</h2>
+<p><strong>Public-health-specific providers.</strong> <a href="https://appliedepi.org/">Applied Epi</a> offers Intro to R for Applied Epidemiology and related courses taught by epidemiologists, with examples such as line lists and case counts. CSTE offers training tied to its own programs. These catalogs are narrow. Where an agency restricts purchases to public-health-approved content, the GIS or Shiny course a team actually wants may be unavailable, so check eligibility before selecting a course.</p>
+<p><strong>General platforms.</strong> <a href="https://www.datacamp.com/">DataCamp</a> is strong for hands-on SQL and R practice in a browser sandbox requiring no local installation, which can help when staff cannot install software locally. Check current prices and whether the advertised rate requires annual billing. <a href="https://www.coursera.org/">Coursera</a> hosts the Johns Hopkins Data Science Specialization and the Executive Data Science sequence, both described in <a href="resources.html" class="quarto-xref"><span>Appendix A</span></a>. Udemy and Codecademy are inexpensive and uneven; evaluate the specific course you intend to use.</p>
+<p><strong>R-focused training companies.</strong> <a href="https://www.jumpingrivers.com/">Jumping Rivers</a> and comparable firms sell instructor-led private training. The per-seat cost is high, and a single-day workshop delivered to an entire team can represent better value than five individual subscriptions, with content built around the team’s own data.</p>
+<p><strong>Free and community options.</strong> <a href="https://carpentries.org/">The Carpentries</a> publish workshop curricula on R, Git, and the shell that a team can work through independently. <a href="https://sites.google.com/view/dariia-mykhailyshyna/main/r-workshops-for-ukraine">Workshops for Ukraine</a> sells individual sessions on specific topics for a small donation and maintains a deep back catalog. <a href="https://epirhandbook.com/">The Epidemiologist R Handbook</a> is free and is the most directly applicable R reference for this audience.</p>
+<p><strong>Conferences.</strong> <a href="https://posit.co/conference/">posit::conf</a> offers R and Python sessions for practitioners, CSTE’s annual conference offers opportunities to meet other public health practitioners, and vendor summits are useful primarily to organizations already committed to that vendor. Include registration, travel, and staff time when comparing conference costs. Where the choice is one conference trip for one person against a year of hands-on training for the team, the training is the better purchase.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -438,25 +451,41 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The more restrictive the environment, the more planning is required upfront. In a data enclave, you cannot install a package on a whim or look up documentation online. Test your code on approved public-use or synthetic data in a less restricted environment first, resolve all dependency questions, and then bring the finalized analysis into the enclave.</p>
+<p>Before purchasing a subscription, determine whether the state health department, a university partner, or the library system already holds an enterprise license. Several agencies pay for these platforms at the department level without informing program staff.</p>
 </div>
 </div>
 </section>
-<section id="sec-governance-dua" class="level2" data-number="25.2">
-<h2 data-number="25.2" class="anchored" data-anchor-id="sec-governance-dua"><span class="header-section-number">25.2</span> Data Use Agreements</h2>
-<p>A data use agreement (DUA) is a legal contract between the organization providing data and the organization receiving it. DUAs define what data is being shared, who is allowed to access it, what it can be used for, and what happens to it at the end of the project. They are routine in public health. Any time data is obtained from another agency, a federal program, a health system, or a research partner, expect a DUA.</p>
-<section id="what-duas-cover" class="level3" data-number="25.2.1">
-<h3 data-number="25.2.1" class="anchored" data-anchor-id="what-duas-cover"><span class="header-section-number">25.2.1</span> What DUAs Cover</h3>
-<p>The most consequential terms are:</p>
-<p><strong>Permitted uses.</strong> DUAs typically specify the exact purpose for which the data was obtained. Using data for a secondary purpose (even one that seems obviously fine) may require an amendment. Read this section carefully before scoping the analysis.</p>
-<p><strong>Authorized users.</strong> The agreement usually names individuals or roles who may access the data. Adding a new team member or sharing data with a collaborator at another agency requires notifying the data provider and may require an amendment.</p>
-<p><strong>Data environment requirements.</strong> Many DUAs specify where data may be stored and processed, for example only on a designated secure server, only within the jurisdiction’s network, or only in a HIPAA-compliant environment. “I’ll just put it on my laptop for a quick look” is a DUA violation if the agreement prohibits local storage.</p>
-<p><strong>Dissemination restrictions.</strong> Some DUAs restrict publication (requiring advance review by the data provider), prohibit releasing record-level data, or limit which findings can be publicly reported. Know these terms before drafting a report or dashboard.</p>
-<p><strong>Data destruction.</strong> Most DUAs require that data be destroyed or returned at the end of the project period, and that destruction be documented. This includes copies, backups, and any data that was transferred for analysis.</p>
+<section id="sec-trainingbudget-books" class="level2" data-number="B.4">
+<h2 data-number="B.4" class="anchored" data-anchor-id="sec-trainingbudget-books"><span class="header-section-number">B.4</span> Books</h2>
+<p><a href="resources.html" class="quarto-xref"><span>Appendix A</span></a> covers the technical R books worth owning, most of which are free online. Books remain worth purchasing for a team shelf, and they are the easiest item to buy quickly against a closing deadline.</p>
+<p>Beyond the R canon, consider books on communication: <em>Storytelling with Data</em> and its companion exercise book, <em>Talking Health</em>, and Edward Tufte’s visualization books. For R specifically, <em>R for Data Science</em> <span class="citation" data-cites="wickham2023r4ds">(<a href="references.html#ref-wickham2023r4ds" role="doc-biblioref">Wickham et al. 2023</a>)</span>, the functions and control flow chapters of <em>Advanced R</em>, and <em>Hands-On Programming with R</em> cover the fundamentals identified above. Where anyone on the team works in Python, <em>Python for Data Analysis</em> is the standard reference.</p>
 </section>
-<section id="practical-guidance" class="level3" data-number="25.2.2">
-<h3 data-number="25.2.2" class="anchored" data-anchor-id="practical-guidance"><span class="header-section-number">25.2.2</span> Practical Guidance</h3>
-<p>Get a copy of the DUA before the data arrives. It is much easier to negotiate terms before signing than to discover a constraint mid-project. Loop in your supervisor and, if the terms are unfamiliar or restrictive, your agency’s legal or compliance office. When in doubt about whether a specific use is permitted, ask the data provider in writing (email creates a record).</p>
+<section id="sec-trainingbudget-consulting" class="level2" data-number="B.5">
+<h2 data-number="B.5" class="anchored" data-anchor-id="sec-trainingbudget-consulting"><span class="header-section-number">B.5</span> Consulting</h2>
+<p>Some of what a team needs is not sold as a course. Where the gap is one specific workflow, a pipeline that needs to be made reproducible, a dashboard nobody has time to finish, or training built around your own data, a short consulting engagement can be a better use of the money than another subscription.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Training and consulting from the author
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>I am available for that kind of work, including after a team’s DSTT program year ends. I have worked with DSTT teams for years as a project coach, and I consult on data science and bioinformatics across a range of fields. I am a professor in the University of Virginia School of Data Science, and I was previously a professor of public health sciences in the UVA School of Medicine. The fastest way to reach me is <a href="https://stephenturner.us/email">stephenturner.us/email</a>.</p>
+</div>
+</div>
+</section>
+<section id="sec-trainingbudget-procurement" class="level2" data-number="B.6">
+<h2 data-number="B.6" class="anchored" data-anchor-id="sec-trainingbudget-procurement"><span class="header-section-number">B.6</span> Procurement Constraints</h2>
+<p>Confirm the purchasing rules before committing to a course or event.</p>
+<p><strong>Establish what “spent” means to your finance office.</strong> Committed and spent are different states. Some offices count a purchase order issued before the deadline; others require the invoice paid and reconciled. Ask in writing and ask early, because the answer changes what can be purchased.</p>
+<p><strong>Establish whether a purchasing blackout applies.</strong> Many local governments freeze non-essential purchasing near the end of a fiscal year, which frequently coincides with training deadlines. Do not assume a personal purchase will be reimbursed. Obtain written approval before anyone incurs an expense.</p>
+<p><strong>Map travel restrictions before planning travel.</strong> Out-of-state travel bans are common and sometimes absolute, including for conferences, which can require an entire stipend to be spent in state. Virtual conference registration and subscription training are the usual substitutes when travel is unavailable.</p>
+<p><strong>Determine whether registering now for a later event counts.</strong> Registering and paying for a conference before a spending deadline for an event occurring months afterward is often possible, and whether a finance office accepts it varies. Ask, and hold a backup plan, since travel approval and scheduling can still prevent attendance after the money is committed.</p>
+<p><strong>Plan reconciliation where multiple payers are involved.</strong> A program sponsor, a county finance office, a grant, and a personal reimbursement within one purchase produce four sets of documentation, and reconciliation across several payers can consume more staff time than the training itself. Retain every receipt and record which fund each purchase draws on as it occurs.</p>
+<p><strong>Begin earlier than appears necessary.</strong> Approval lead times exceed expectations consistently. Sole-source justifications, vendor onboarding, and tax documentation for a small training company can require weeks. Six weeks before a deadline is late.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -467,44 +496,18 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Data received informally (as an email attachment, a Dropbox link, or a thumb drive) still carries the same governance obligations as data received through a formal DUA process. “We didn’t sign anything” does not mean “there are no restrictions.” Ask how the data can be used before you use it.</p>
+<p>A delayed approval can leave a team choosing from an approved catalog in the final week, even when none of the courses meets its needs. Verify the approval path before reviewing the catalog.</p>
 </div>
 </div>
 </section>
-</section>
-<section id="sec-governance-hipaa" class="level2" data-number="25.3">
-<h2 data-number="25.3" class="anchored" data-anchor-id="sec-governance-hipaa"><span class="header-section-number">25.3</span> HIPAA and Protected Health Information</h2>
-<p>The Health Insurance Portability and Accountability Act (HIPAA) establishes federal standards for protecting the privacy and security of individually identifiable health information. This section is not a comprehensive HIPAA guide (your organization’s privacy officer is the right resource for that), but public health data scientists need a working understanding of what HIPAA covers and how it applies to their work.</p>
-<section id="what-hipaa-covers" class="level3" data-number="25.3.1">
-<h3 data-number="25.3.1" class="anchored" data-anchor-id="what-hipaa-covers"><span class="header-section-number">25.3.1</span> What HIPAA Covers</h3>
-<p>HIPAA applies to <em>covered entities</em> (healthcare providers, health plans, and healthcare clearinghouses) and their <em>business associates</em> (organizations that handle protected health information on their behalf). Many public health agencies are covered entities or business associates; many are not. The rules differ across jurisdictions, and some public health functions have explicit carve-outs under the HIPAA Privacy Rule (disease reporting, for example, is generally permitted without individual authorization).</p>
-<p><strong>Protected health information (PHI)</strong> is any individually identifiable health information held or transmitted by a covered entity. The HIPAA Safe Harbor method specifies 18 categories of identifiers to remove from health information. The list below groups related categories; consult the <a href="https://www.hhs.gov/hipaa/for-professionals/special-topics/de-identification/index.html">HHS guidance</a> for the full requirements:</p>
-<ul>
-<li>Names</li>
-<li>Geographic subdivisions smaller than a state (including ZIP codes, street addresses, cities in some cases)</li>
-<li>Date elements other than year directly related to an individual; ages over 89 and dates indicating such ages must be grouped as age 90 or older</li>
-<li>Telephone numbers, fax numbers, email addresses</li>
-<li>Social Security numbers</li>
-<li>Medical record numbers, health plan beneficiary numbers, account numbers</li>
-<li>Certificate and license numbers</li>
-<li>Vehicle identifiers (license plates, VINs)</li>
-<li>Device identifiers and serial numbers</li>
-<li>URLs and IP addresses</li>
-<li>Biometric identifiers (fingerprints, voiceprints)</li>
-<li>Full-face photographs</li>
-<li>Any other unique identifying number or code</li>
-</ul>
-<p>Whether information is PHI also depends on who holds it and applicable HIPAA exclusions. Ask the privacy officer to assess the dataset.</p>
-</section>
-<section id="the-minimum-necessary-standard" class="level3" data-number="25.3.2">
-<h3 data-number="25.3.2" class="anchored" data-anchor-id="the-minimum-necessary-standard"><span class="header-section-number">25.3.2</span> The Minimum Necessary Standard</h3>
-<p>HIPAA’s minimum necessary standard requires that covered entities use, disclose, or request only the minimum amount of PHI needed to accomplish the intended purpose. For a data scientist, this means requesting only the variables needed for the analysis, not pulling a complete medical record when you only need diagnosis codes and dates.</p>
-</section>
-<section id="de-identification" class="level3" data-number="25.3.3">
-<h3 data-number="25.3.3" class="anchored" data-anchor-id="de-identification"><span class="header-section-number">25.3.3</span> De-identification</h3>
-<p>Properly de-identified data is not PHI and is not subject to HIPAA restrictions. HIPAA provides two paths to de-identification:</p>
-<p><strong>Safe harbor:</strong> Remove all 18 identifiers listed above, plus ensure that the data provider has no actual knowledge that the remaining information could identify an individual. Only qualifying three-digit ZIP codes may be retained; replace other ZIP prefixes with <code>000</code> and remove other geographic subdivisions smaller than a state.</p>
-<p><strong>Expert determination:</strong> A qualified statistician applies generally accepted statistical principles to certify that the risk of identifying any individual is very small. This allows more flexibility than safe harbor (for example, three-digit ZIP codes or specific dates) but requires documented statistical analysis.</p>
+<section id="sec-trainingbudget-worked" class="level2" data-number="B.7">
+<h2 data-number="B.7" class="anchored" data-anchor-id="sec-trainingbudget-worked"><span class="header-section-number">B.7</span> A Worked Plan</h2>
+<p>Consider $3,000, six weeks, and a three-person team.</p>
+<p>In week one, confirm the rules: what constitutes spending, whether a blackout applies, whether travel is permitted, and what catalog restrictions exist. In parallel, ask each staff member which of the skills above most limits their current work.</p>
+<p>In week two, order books if the required approvals are in place. Allocate roughly $300 in this example.</p>
+<p>In weeks two and three, submit the subscription request. Reserve roughly $500 for subscriptions in this example, subject to a current quote and comparison with free practice materials. Submit early, because vendor onboarding is the slow component.</p>
+<p>In weeks three through five, allocate the remaining $2,200 to the team’s highest-priority training need: a private instructor-led R or SQL workshop for the full team, a course seat for each analyst, or virtual conference registration for each. Obtain quotes and start approval for instructor-led training in week one; its lead time may exceed six weeks.</p>
+<p>In week six, reconcile. Do not plan to purchase anything in week six.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -515,99 +518,21 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>De-identification under HIPAA is a formal process, not a judgment call. Simply removing a name is not de-identification. If you are preparing data for release or for use in a less restricted environment, work with your privacy officer to ensure the de-identification is compliant.</p>
+<p>This plan excludes individual conference travel deliberately. Travel could consume much of this example budget. Purchase travel when the objective is the professional relationships, and state that as the objective.</p>
 </div>
 </div>
 </section>
-</section>
-<section id="sec-governance-access" class="level2" data-number="25.4">
-<h2 data-number="25.4" class="anchored" data-anchor-id="sec-governance-access"><span class="header-section-number">25.4</span> Getting Data Access</h2>
-<p>Data access in public health institutions involves more parties than most analysts expect. A clear map of who needs to be involved, and what each party needs to hear, prevents the most common delays.</p>
-<p><strong>The data steward</strong> owns or is responsible for the dataset within the source organization. They can tell you what is in the data, how it is structured, its known quality issues, and what access process is required. For internal datasets (data your own agency collects), the steward is typically in the program that runs the surveillance system. For external datasets (from another state agency, a federal program, or a partner organization), the steward is at the providing organization.</p>
-<p><strong>IT</strong> controls the infrastructure: server access, database credentials, software installation, network permissions, and VPN. A request to IT should be specific: what software is needed (including version numbers), which database or server needs to be accessed, what level of compute and storage the analysis requires, and whether the data is sensitive or regulated.</p>
-<p><strong>Legal and compliance</strong> reviews DUAs and data sharing agreements. Loop them in early (DUA review can take weeks at some institutions) and provide the full draft agreement.</p>
-<p><strong>Your supervisor</strong> can help identify the official authorized to sign DUAs and data sharing agreements on behalf of the agency. They should know about any data access requests that involve legal agreements before those agreements are presented for signature.</p>
-<section id="framing-requests" class="level3" data-number="25.4.1">
-<h3 data-number="25.4.1" class="anchored" data-anchor-id="framing-requests"><span class="header-section-number">25.4.1</span> Framing Requests</h3>
-<p>A request framed in terms of program need is easier to prioritize than a vague technical ask. Compare:</p>
-<blockquote class="blockquote">
-<p><em>“I need access to the vital records SQL Server database.”</em></p>
-</blockquote>
-<p>versus:</p>
-<blockquote class="blockquote">
-<p><em>“This analysis supports the quarterly overdose mortality report due to the State Health Officer in March. I need read access to the <code>vr_deaths</code> table in the vital records database and the ability to install <code>odbc</code> and <code>DBI</code> in my R environment. The data is governed by our existing MOU with vital records. I need this by February 15 to have time to validate before the report deadline.”</em></p>
-</blockquote>
-<p>The second version tells IT what the deadline is, what the legal basis is, and exactly what is needed. It also signals that someone outside IT will notice if the request is not addressed.</p>
-</section>
-</section>
-<section id="sec-governance-secure" class="level2" data-number="25.5">
-<h2 data-number="25.5" class="anchored" data-anchor-id="sec-governance-secure"><span class="header-section-number">25.5</span> Working in Secure Data Environments</h2>
-<p>When data cannot leave a controlled environment, the analysis has to come to the data. Secure remote desktops and data enclaves impose constraints that require adapting the workflows described elsewhere in this book.</p>
-<section id="common-constraints" class="level3" data-number="25.5.1">
-<h3 data-number="25.5.1" class="anchored" data-anchor-id="common-constraints"><span class="header-section-number">25.5.1</span> Common Constraints</h3>
-<ul>
-<li>No internet access, or access limited to specific approved sites</li>
-<li>No USB or removable media, preventing local file transfer</li>
-<li>Copy-paste disabled between the remote session and the local machine</li>
-<li>No administrator rights, preventing ad-hoc software or package installation</li>
-<li>Output review, meaning no file can leave the environment until it passes a disclosure review</li>
-</ul>
-</section>
-<section id="adapting-your-workflow" class="level3" data-number="25.5.2">
-<h3 data-number="25.5.2" class="anchored" data-anchor-id="adapting-your-workflow"><span class="header-section-number">25.5.2</span> Adapting Your Workflow</h3>
-<p><strong>Resolve package dependencies before entering the environment.</strong> Use <code>renv</code> (see <a href="environments.html" class="quarto-xref"><span>Chapter 15</span></a>) to capture your project’s exact package list. Submit the lockfile to IT for review; they can pre-install those packages in the secure environment, or arrange an approved intake path. Discovering mid-analysis that a package is unavailable is a significant delay.</p>
-<p><strong>Plan the analysis before entering.</strong> Write and test your code on a representative mock dataset (public-use data with similar structure, or synthetic data generated from the real data’s structure) before bringing the code into the secure environment. Plan for further exploration inside the enclave when the real data raises questions that mock data could not reveal. The same mock datasets are what make it safe to use an AI coding assistant while you develop (<a href="aigovernance.html#sec-aigovernance-phi" class="quarto-xref"><span>Section 26.4</span></a>).</p>
-<p><strong>Keep code in version control accessible from within the environment.</strong> Some enclaves have access to an internal Git server, or allow code to be transferred via an approved intake process. Maintain your code in a repository (see <a href="git.html" class="quarto-xref"><span>Chapter 1</span></a>) so it can be moved in as a single unit.</p>
-<p><strong>Document outputs before requesting export.</strong> Every output (tables, figures, and reports) that leaves the environment will be reviewed. Organize outputs clearly, understand the suppression rules that apply (see <a href="#sec-governance-disclosure" class="quarto-xref"><span>Section 25.6</span></a>), and apply them yourself before submission. Self-review before the formal review reduces round trips.</p>
-</section>
-</section>
-<section id="sec-governance-disclosure" class="level2" data-number="25.6">
-<h2 data-number="25.6" class="anchored" data-anchor-id="sec-governance-disclosure"><span class="header-section-number">25.6</span> Disclosure Review and Small Number Suppression</h2>
-<p>Even properly de-identified data can allow re-identification when cell counts are small. A table showing that a specific rural county had 2 opioid overdose deaths among people aged 25–34 may effectively identify those individuals in a small community. Disclosure review is the process of checking whether outputs could allow such re-identification before they are released.</p>
-<section id="when-disclosure-review-applies" class="level3" data-number="25.6.1">
-<h3 data-number="25.6.1" class="anchored" data-anchor-id="when-disclosure-review-applies"><span class="header-section-number">25.6.1</span> When Disclosure Review Applies</h3>
-<p>Disclosure review is typically required for:</p>
-<ul>
-<li>Any output leaving a secure data environment</li>
-<li>Outputs derived from restricted-use data, regardless of environment</li>
-<li>Public-facing reports and dashboards based on individual-level surveillance data</li>
-<li>Analyses submitted for publication when the underlying data is restricted</li>
-</ul>
-<p>Your DUA and your agency’s data governance policies will specify what review process applies. For internally-collected surveillance data, the process is usually internal. For federally restricted data (NCHS, CMS), the providing agency conducts the review.</p>
-</section>
-<section id="small-number-suppression" class="level3" data-number="25.6.2">
-<h3 data-number="25.6.2" class="anchored" data-anchor-id="small-number-suppression"><span class="header-section-number">25.6.2</span> Small Number Suppression</h3>
-<p>Suppression thresholds vary by data provider, dataset, and agency policy. Follow the applicable rule, including whether zero counts may be shown. The illustrative rule in <a href="testing.html" class="quarto-xref"><span>Chapter 4</span></a> suppresses counts from 1 through 4 and retains zero; it is not a universal public health standard.</p>
-<p><strong>Complementary suppression</strong> is required when suppressing one cell would allow back-calculation of another. If a row shows a total and several cells, and only one cell is suppressed, the suppressed value can be calculated by subtraction. The fix is to suppress an additional cell (typically the next-smallest) so that the suppressed value cannot be derived. This often requires checking row and column totals as well as individual cells.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Example:</strong> A county reports 7 total influenza deaths. By age group: 25–34: 4 (suppressed, &lt; 5), 35–44: 2 (suppressed), 45+: 1 (suppressed). The total (7) may still be releasable if it is not small, but all three age group cells must be suppressed. If only the first cell were suppressed, the other two would reveal the suppressed value.</p>
-<p>In practice, suppression logic can be complex for multi-dimensional tables. Use code or review tools to check suppression, followed by disclosure review.</p>
-</div>
-</div>
-</section>
-<section id="what-disclosure-review-examines" class="level3" data-number="25.6.3">
-<h3 data-number="25.6.3" class="anchored" data-anchor-id="what-disclosure-review-examines"><span class="header-section-number">25.6.3</span> What Disclosure Review Examines</h3>
-<p>A reviewer will typically check:</p>
-<ul>
-<li>All cells meet the minimum count threshold</li>
-<li>Complementary suppression has been applied correctly</li>
-<li>Geographic or demographic combinations that are highly specific (a single rural county × a specific age group × a specific cause) do not expose individuals even if each cell alone is above the threshold</li>
-<li>Percentages, rates, and proportions are checked: a rate computed from a suppressed count is itself suppressed</li>
-</ul>
-<p>When reporting suppressed data to a lay audience, explain why: “Data suppressed to protect individual privacy” is preferable to an unexplained asterisk or blank cell.</p>
-<p>Suppression rules also constrain design decisions upstream of the output. A dashboard permitting users to filter to a single county, a single month, and a single age group can produce a cell below the threshold, whatever the default view displays. Quarterly aggregation may reduce small cells, but it still requires disclosure checks. Choosing the aggregation grain with these thresholds in mind, and applying suppression in code on the way out, is covered in <a href="bi.html#sec-bi-aggregate" class="quarto-xref"><span>Section 10.2</span></a>.</p>
+<section id="sec-trainingbudget-next" class="level2" data-number="B.8">
+<h2 data-number="B.8" class="anchored" data-anchor-id="sec-trainingbudget-next"><span class="header-section-number">B.8</span> Requesting Next Year’s Funding</h2>
+<p>Tie the request to a specific improvement. For example: “Three SQL course seats will help analysts query the warehouse directly. We currently wait four days for each extract request.” Use measured delays from your own team.</p>
+<p>Record what was purchased and what changed as a result. Where last year’s version control training is the reason a weekly report survived an analyst’s departure, document that outcome in this year’s request. The continuity argument in <a href="onboarding.html" class="quarto-xref"><span>Chapter 23</span></a> and <a href="team.html#sec-team-retention" class="quarto-xref"><span>Section 22.6</span></a> is the strongest case available for training funds, because turnover is a risk leadership is already concerned about.</p>
 
 
-</section>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-wickham2023r4ds" class="csl-entry" role="listitem">
+Wickham, Hadley, Mine Cetinkaya-Rundel, and Garrett Grolemund. 2023. <em>R for Data Science</em>. 2nd ed. O’Reilly Media. <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -1013,14 +938,11 @@ Note
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./pm.html" class="pagination-link" aria-label="Project Management">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Project Management</span></span>
+      <a href="./resources.html" class="pagination-link" aria-label="Additional Resources">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Additional Resources</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./aigovernance.html" class="pagination-link" aria-label="AI Governance in a Health Agency">
-        <span class="nav-page-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">AI Governance in a Health Agency</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
