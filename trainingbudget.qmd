@@ -4,6 +4,10 @@ Professional development funds (both from DSTT and possibly from your employer) 
 
 Plan training purchases around the team's needs and the procurement deadline. @sec-team-upskilling covers staff development, and @sec-resources lists free material to consider alongside paid options.
 
+::: {.callout-tip}
+These guidelines are written for a general public health practitioner with a training budget looking to continue upskilling and professional development, and not necessarily guidelines specific for the DSTT training budget. Check with DSTT program staff for any DSTT-specific guidance.
+:::
+
 ## Principles {#sec-trainingbudget-principles}
 
 Start with the skills the team needs for its current work.
