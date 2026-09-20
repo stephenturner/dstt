@@ -45,7 +45,7 @@ Base R errors are terser, and a few of them are famous for saying something true
 | `undefined columns selected` | A column name in `df[, "name"]` does not exist, often a typo or a renamed column |
 | `replacement has 4 rows, data has 5` | Assigning a vector of the wrong length into a data frame column |
 
-The “closure” error is easier to understand with an example. R's stats package provides a function named `df`, which computes the density of the F distribution. If a line meant to create a data frame called `df` never ran, that name can still resolve to the function:
+The "closure" error is easier to understand with an example. R's stats package provides a function named `df`, which computes the density of the F distribution. If a line meant to create a data frame called `df` never ran, that name can still resolve to the function:
 
 ```{r}
 #| label: closure-error

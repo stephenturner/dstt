@@ -197,7 +197,7 @@ q <- flu_tbl |>
 q
 ```
 
-The `Source: SQL` header identifies a lazy query. Printing it fetches a preview; `collect()` retrieves the full result:
+The `# A query:` header identifies a lazy query; `??` means dbplyr has not determined the total row count. Printing it fetches a preview; `collect()` retrieves the full result:
 
 ```{r}
 #| label: dbplyr-collect

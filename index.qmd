@@ -19,10 +19,10 @@ Cite this book:
 ```bibtex
 @book{turner2026dstt,
   title   = {Data Science Team Training},
-  author = {Turner, Stephen D.},
-  date = {2026},
+  author  = {Turner, Stephen D.},
+  date    = {2026},
   edition = {2},
-  url = {https://dstt.stephenturner.us/}
+  url     = {https://dstt.stephenturner.us/}
 }
 ```
 

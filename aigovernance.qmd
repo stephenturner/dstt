@@ -12,7 +12,6 @@ When tools become available before an agency has issued guidance, staff may be u
 
 A written policy converts individual judgment into an agency position. It protects staff, who otherwise have no way to determine whether their practice is permitted. It gives supervisors something to reference other than instinct. And it means the first difficult question is not answered under pressure during an incident.
 
-
 ## Contents of an Agency AI Policy {#sec-aigovernance-contents}
 
 A workable policy addresses eight areas.
@@ -117,7 +116,7 @@ The reproducibility standard does not change because a model was involved. The f
 
 The case that differs is where the analysis uses model outputs directly. Where a model categorized free-text records, selected variables, or produced a reported figure, reconstructing that result later requires more than the code. Record the model and version, the prompts, the date, any parameters set, and what was changed in the output. Keep nonsensitive configuration and decision records in version control (@sec-documentation-project). Store sensitive prompts, model outputs, and logs in approved storage with appropriate access controls and retention rules. Put a nonsensitive record identifier or approved storage reference in the repository; do not copy protected content into it.
 
-Two caveats apply. Models are not deterministic by default, so complete records do not guarantee an identical rerun; they guarantee an auditable account of what occurred, which is what a reviewer requires. And model versions are retired, so a result produced by a model that no longer exists cannot be regenerated at all. Both argue for archiving model outputs used by recurring surveillance products and verifying them before use.
+Two caveats apply. Models are not deterministic by default, so complete records do not guarantee an identical rerun; they provide an auditable account of what occurred. Model versions are also retired. Archive model outputs used by recurring surveillance products and verify them before use. If a recurring product depends on model output, document how the team will monitor the output and replace the model when its behavior changes or its version becomes unavailable.
 
 ## Staff Capability {#sec-aigovernance-capability}
 

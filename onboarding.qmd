@@ -119,7 +119,7 @@ The best occasion to write a handbook section is the first time you explain some
 
 ## The IT Liaison {#sec-onboarding-it}
 
-Record the team's IT contact and their responsibilities in the handbook. Include the procedures for requesting access, installing approved software, and escalating incidents. @sec-pm-it covers planning these requests and accounting for their lead times.
+Where possible, involve a named IT representative early enough to understand the team's systems and priorities. They can identify approval lead times and suggest supported alternatives before infrastructure constraints delay a project. Record the contact's responsibilities in the handbook, along with the procedures for requesting access, installing approved software, and escalating incidents. @sec-pm-it covers planning these requests.
 
 ## Further Reading {#sec-onboarding-reading}
 

@@ -183,7 +183,7 @@ targets::tar_make()
 
 Open `report.html`. It should show 64 cases for week 1 and 68 for week 2. Running the pipeline again without changing anything should skip all targets.
 
-Before scheduling the pipeline, check which steps rerun after each kind of change. Changing a count in the CSV should rebuild the data preparation and report. Changing `summarize_by_week()` should rebuild the summary and report. Editing only the report text should rerender the report without repeating data preparation. `targets::tar_outdated()` lists targets that need updating, and `targets::tar_visnetwork()` displays the dependency graph. A dependency the pipeline does not know about cannot trigger a rebuild.
+Before scheduling the pipeline, check which steps rerun after each kind of change. Changing a count in the CSV should rebuild the data preparation and report. Changing `summarize_by_week()` should rebuild the summary, and the report if the summary's value changed. Editing only the report text should rerender the report without repeating data preparation. `targets::tar_outdated()` lists targets that need updating, and `targets::tar_visnetwork()` displays the dependency graph. A dependency the pipeline does not know about cannot trigger a rebuild.
 
 ## Running in a Reproducible Environment {#sec-automation-environment}
 

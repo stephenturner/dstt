@@ -38,7 +38,7 @@ A few sources cover most of what public health teams pull from outside their age
 
 Check for a maintained package before implementing requests yourself. [`tidycensus`](https://walker-data.com/tidycensus/) handles Census queries and returns estimates with margins of error. [`RSocrata`](https://github.com/Chicago/RSocrata) handles pagination and date conversion for Socrata portals. Confirm the package supports the dataset and fields you need; a wrapper does not remove the need to validate the result.
 
-For example, this `tidycensus` call requests county population estimates for Virginia from the 2023 five-year ACS. Set up your Census API key before running it:
+For example, this `tidycensus` call requests county population estimates for Virginia from the 2023 five-year ACS. Request a free key at <https://api.census.gov/data/key_signup.html> and store it with `tidycensus::census_api_key("YOUR_KEY", install = TRUE)`. This writes the key to `.Renviron` for future sessions (@sec-apis-keys). Restart R, or run `readRenviron("~/.Renviron")`, before making a request in the current session. Then run:
 
 ```{r}
 #| label: census-package-example
@@ -111,7 +111,7 @@ In a scheduled pipeline, supply the credential through the job's approved secret
 
 ## Separate the Pull from the Analysis {#sec-apis-pull}
 
-Do not put an API call at the top of an analysis script. Put it in its own script, write the raw response to `data/raw/` with a dated filename (@sec-dataorg-project), and have the analysis read the file.
+Do not put an API call at the top of an analysis script. Put it in its own script, write the raw response to `data/raw/` under a dated filename or directory (@sec-dataorg-project), and have the analysis read the file.
 
 Saving the response preserves the data used by the analysis. An API reflects the data as of right now, and many public health sources revise: CDC's provisional death counts, for example, are updated for recent weeks as certificates arrive, so the same query run a month apart returns different numbers. The archived pages record what you retrieved in that run. Read and combine those files when reproducing the analysis. Separating the pull also means the analysis renders offline and keeps working when the API is down or the dataset moves, and iterating on a report no longer re-downloads the same data on every render.
 
