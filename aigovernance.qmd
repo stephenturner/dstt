@@ -1,0 +1,134 @@
+# AI Governance in a Health Agency {#sec-aigovernance}
+
+@sec-ai covers the tools: what a completion service does, what an agent can do, which model to select. Agency policy should specify permitted uses, where staff may send data, who reviews AI-assisted analyses, and what records to retain.
+
+Policy and approval requirements can affect when a team can use a tool. Agencies that have stood up formal review processes for AI use of agency data have found that approval timelines affect when modeling work begins. Review cycles measured in weeks are common, and a project that budgets no time for them will lose that time from analysis.
+
+## The Need for a Written Policy {#sec-aigovernance-policy}
+
+Staff are already using these tools, in many cases on personal accounts and personal devices, because no institutional option was available and the work required doing.
+
+When tools become available before an agency has issued guidance, staff may be unsure what is permitted. Absent guidance, individual staff draw their own lines, and some of those lines are sound. Using a commercial assistant on a personal account to generate code that downloads and merges public, non-identifiable files, while deliberately declining to use it for interpretation, is a defensible position. The agency still needs to state which accounts and uses it authorizes.
+
+A written policy converts individual judgment into an agency position. It protects staff, who otherwise have no way to determine whether their practice is permitted. It gives supervisors something to reference other than instinct. And it means the first difficult question is not answered under pressure during an incident.
+
+## Contents of an Agency AI Policy {#sec-aigovernance-contents}
+
+A workable policy addresses eight areas.
+
+**Scope.** Which staff, which systems, and which activities are covered, and whether the policy applies only to generative AI or also to predictive modeling. A policy drafted for chatbots that inadvertently captures every regression model will be ignored.
+
+**Permitted and prohibited data classes.** Make these instructions easy to find. Name the classes explicitly: public data, internal non-sensitive data, de-identified data, PII, PHI, and any restricted-use data governed by its own agreement. State which classes may be sent to which categories of tool. Vague instructions produce inconsistent practice.
+
+**Approved tools and the approval route.** A list, and a defined path for adding to it. A policy naming three approved tools without a route for a fourth leaves staff without a process for requesting another tool.
+
+**Logging and retention.** What is recorded when an approved tool is used, who may see those records, and how long they persist.
+
+**Human review requirements.** The level of review an AI-assisted output requires before leaving the team, scaled to consequence. Code producing a figure in a published report warrants more review than code that reformats a file.
+
+**Procurement and cost ownership.** Who funds API usage or seat licenses, what the approval threshold is, and who monitors spend. API billing is consumption-based and carries the same absence of a default ceiling described in @sec-infrastructure-pricing.
+
+**Incident handling.** The procedure when someone recognizes that they have disclosed something they should not have. Make reporting straightforward and handle reports fairly so staff report mistakes promptly.
+
+**Review cadence.** Tools and terms change, so review the policy regularly. Assign an owner and a review date.
+
+::: {.callout-tip}
+The [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) [@nist2023airmf] supplies vocabulary and structure that security and compliance reviewers recognize, and several states have published agency AI policies suitable for adaptation. Adapting an existing policy is faster than drafting one, and adaptation helps identify requirements specific to your agency, as with the team handbook (@sec-onboarding-borrowing).
+:::
+
+## Formal Review Processes {#sec-aigovernance-review}
+
+Agencies establishing a formal review for AI use of agency data generally construct something resembling an institutional review board: a written proposal, a committee, a scheduled meeting, and an approval that gates the work. Proposals of ten pages or more, establishing ownership and responsibility for AI use of data in an agency warehouse, are typical.
+
+Several design choices determine whether such a process functions.
+
+**Scale review to risk.** Applying IRB-weight review to every use of a coding assistant will either exceed the committee's capacity or be circumvented. A tiered process, with light registration for low-risk uses and full review for anything touching protected data or informing a public decision, is sustainable.
+
+**Include methodological expertise on the panel.** Review requires relevant technical expertise. Review panels are frequently composed to require a subject-matter expert in the relevant health topic without requiring anyone with expertise in the method under review. A behavioral health expert can assess whether an outcome definition is sensible. Also include someone able to assess model validation, data leakage, and performance measures. A panel lacking that expertise approves and rejects proposals for reasons unrelated to their actual risk.
+
+**Publish evaluation criteria in advance.** Applicants who know what will be asked submit better proposals, and the committee spends its time evaluating the proposed use.
+
+**Set a turnaround expectation.** A review with no stated timeline becomes an indefinite hold. Two weeks is achievable for a tiered process. A month per project means programs will stop submitting.
+
+**Separate tool approval from use approval.** Approving a tool once, for a class of uses, differs substantially from reviewing each analysis. Most agencies need both processes, and conflating them is what makes review slow.
+
+## Protected Data and AI Tools {#sec-aigovernance-phi}
+
+State which tools, if any, are approved for protected data and explain what counts as sharing. A prohibition on pasting patient records does not address files, console output, screenshots, or other context an assistant may receive.
+
+An assistant may receive sensitive context beyond the typed prompt. Coding assistants read files in the project directory. A data file containing real records in the working directory has been transmitted by an agent that reads it, whether or not anything was typed about it. This is invisible unless one already knows to look for it, which is why it belongs in training and not only in policy.
+
+Debugging is the other frequent route. An error that prints a data frame, a `head()` output pasted into a chat, a traceback carrying values. Debugging is precisely when people paste output without reading it closely, and a screenshot of the IDE sent to ask about a plotting problem carries the contents of the environment pane and console with it. File uploads are the obvious case and warrant explicit mention in the policy because staff ask about them.
+
+Some features transmit data by design. A natural-language query interface built into a data platform runs against real data; that is the product. Whether such use is permitted depends on the terms covering that specific service, which is a separate question from whether the underlying platform is covered (@sec-infrastructure-phi).
+
+Use mock data for development when the assistant is not approved for the real data. @sec-governance-secure recommends this for secure environments, and the same discipline applies here: build and debug against synthetic or public-use data of the same structure, then execute the finished code against real data in an environment where no assistant is observing. Training and calibration datasets built for onboarding (@sec-onboarding-practice) serve this purpose directly.
+
+On de-identification, @sec-governance-hipaa enumerates the eighteen HIPAA identifiers. Safe Harbor also requires that the covered entity have no actual knowledge that the remaining information could identify a person. See the [HHS de-identification guidance](https://www.hhs.gov/hipaa/for-professionals/special-topics/de-identification/index.html). A dataset stripped of direct identifiers can remain effectively identifying where the combination of county, age, and a rare condition points to one person, which is the re-identification logic underlying small-number suppression (@sec-governance-disclosure). Data too small-celled to publish is generally too small-celled to paste into a chat.
+
+::: {.callout-warning}
+Treat anything transmitted to an external model as potentially persistent, regardless of the vendor's stated retention policy. Zero-retention terms are real and worth negotiating for, and the agreement must specify which services and data it covers. Confirm that the data owner permits the disclosure before transmitting it.
+:::
+
+## Cloud and Self-Hosted Inference {#sec-aigovernance-inference}
+
+A hosted service runs inference on a vendor's infrastructure. A self-hosted deployment runs it on infrastructure your organization controls, which can include leased cloud hardware. Compare the actual model, workload, and controls in each proposal.
+
+For a hosted service, estimate request volume, input and output tokens, and repeated calls during agent sessions. Include subscription fees, usage limits, and the costs of connected services. For self-hosting, include hardware purchase or rental, utilization, electricity, maintenance, security updates, and staff support. Measure response time and answer quality on the same representative tasks. Neither location establishes which option is cheaper or more capable.
+
+An enterprise subscription does not by itself authorize PHI use. Confirm that any business associate agreement covers the specific service and features, and that the data owner permits their use. Retention settings, training policies, regions, and logging are separate checks. @sec-ai-models links the API data policies; @sec-governance covers the approval process.
+
+With self-hosting, verify network access, telemetry, logs, and connected tools before relying on isolation. A locally running model can still send data through a tool or logging service. Record who operates the deployment and maintains its controls.
+
+Check existing agency agreements before starting a procurement. Compare approved options against the workload and data requirements, including staff capacity to support them.
+
+## Transparency in Modeling Tools {#sec-aigovernance-transparency}
+
+Automated machine learning tools differ in what they expose. Some provide candidate models, evaluation metrics, and explanations; [H2O AutoML](https://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html) is one example. An interface alone tells you little about whether an analysis is reproducible or reviewable.
+
+Before using a tool's result, require a record of the input data, preprocessing, candidate models, tuning settings, selection metric, and evaluation design. Check whether the fitted model and its predictions can be exported or reproduced, and whether reviewers can inspect the assumptions relevant to the decision. Reimplement a model when necessary to meet those requirements, and compare predictions to verify the translation.
+
+Use validation data or cross-validation to select and tune models. Evaluate the selected approach on an untouched test set. If you use test results to choose a winner or revise the analysis, those observations have become part of model development; a new evaluation is needed. Repeated tuning and limited data may call for nested cross-validation. Preserve relevant time, facility, or person groupings when defining splits. The [scikit-learn evaluation guide](https://scikit-learn.org/stable/modules/cross_validation.html) explains these distinctions.
+
+For models informing public health decisions, also examine performance across relevant groups, calibration, and the consequences of errors. Document the reasons for the final choice so a reviewer can assess it independently of the software used.
+
+## Generated Code {#sec-aigovernance-code}
+
+Generated code can run without errors and still produce wrong answers. This is what makes accepting generated code without understanding it hazardous: the failure is silent, and these tools are most useful in exploratory analysis, which is exactly where oversight is weakest.
+
+**Never accept code you cannot read.** If a line is not understood, either learn what it does or do not use it. Understanding the code helps you evaluate it alongside tests and peer review.
+
+**Verify against a known result.** Execute generated code against data where the answer is already known: a count computed by hand, a previously published figure, a small test case. @sec-testing covers building this verification into the project so it runs automatically.
+
+**Review it as ordinary code.** @sec-peerreview-ai covers using AI as a review aid. The reciprocal case matters more: generated code belongs in the same peer review as hand-written code, and reviewers benefit from knowing which is which. Ask the author how they verified the code, including edge cases. Neither writing a function by hand nor accepting a generated version establishes correctness.
+
+Certain categories warrant particular attention because generated code is confidently wrong in them: date and time zone handling, joins that silently drop or duplicate rows, aggregations that disregard missing values, and any statistical method where a consequential assumption is embedded in a default argument. @sec-validation exists for these failures.
+
+::: {.callout-note}
+Translating legacy SAS programs is among the strongest applications of these tools and among those where verification matters most (@sec-legacy-translate). A model can translate a thousand-line SAS program in minutes. Whether it translated the missing-value semantics correctly is answered only by parity testing (@sec-legacy-parity).
+:::
+
+## Reproducibility {#sec-aigovernance-reproducibility}
+
+A prompt is not a method section, and an analysis that cannot be reconstructed is not defensible regardless of how it was produced.
+
+The reproducibility standard does not change because a model was involved. The final artifact remains code in version control that runs from raw data to result (@sec-reporting). Where an assistant wrote the code and the code is committed, reviewed, and reproducible, the code provides a reproducible record; follow any additional agency or publication requirements for disclosure and logging.
+
+The case that differs is where the analysis uses model outputs directly. Where a model categorized free-text records, selected variables, or produced a reported figure, reconstructing that result later requires more than the code. Record the model and version, the prompts, the date, any parameters set, and what was changed in the output. Keep nonsensitive configuration and decision records in version control (@sec-documentation-project). Store sensitive prompts, model outputs, and logs in approved storage with appropriate access controls and retention rules. Put a nonsensitive record identifier or approved storage reference in the repository; do not copy protected content into it.
+
+Two caveats apply. Models are not deterministic by default, so complete records do not guarantee an identical rerun; they provide an auditable account of what occurred. Model versions are also retired. Archive model outputs used by recurring surveillance products and verify them before use. If a recurring product depends on model output, document how the team will monitor the output and replace the model when its behavior changes or its version becomes unavailable.
+
+## Staff Capability {#sec-aigovernance-capability}
+
+Training is the question that follows policy, and general AI literacy is a better investment than tool-specific instruction.
+
+Tool-specific training becomes obsolete on the vendor's release schedule. What does not become obsolete is understanding what these models do, why they produce confident errors, what a context window is and why it constrains results, the difference between a model and a product, and how to evaluate a performance claim. An analyst with that understanding can adopt any tool; an analyst trained on one interface requires retraining when it changes.
+
+The second capability worth developing is the judgment to recognize when not to use these tools. This is harder to teach than the tools themselves, and it is what a policy ultimately depends on, since no written rule anticipates every case. @sec-trainingbudget-principles covers where this fits within a training budget.
+
+## Further Reading {#sec-aigovernance-reading}
+
+- The [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) [@nist2023airmf] is the reference document security and compliance reviewers are most likely to recognize. Its four functions (govern, map, measure, manage) supply a policy's structure, and the companion playbook contains concrete suggested actions.
+- The Office of Management and Budget issues memoranda governing federal agency use of AI. These are revised periodically and by administration, so check the current [OMB memoranda index](https://www.whitehouse.gov/omb/information-for-agencies/memoranda/). State and local agencies are not bound by them, and they shape expectations that reach agencies through federal partners and cooperative agreements.
+- HHS publishes AI strategy and guidance specific to health data, and several states have published agency AI use policies. Both are worth reviewing as templates before drafting.
+- @sec-governance covers the underlying data governance on which all of this rests: data use agreements, HIPAA, secure environments, and disclosure review. An AI policy cannot override restrictions in a data use agreement.

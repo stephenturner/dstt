@@ -1,0 +1,347 @@
+# Testing Analysis Code {#sec-testing}
+
+A test records what a piece of code should do and checks that behavior after changes. For a recurring analysis, prioritize decisions that affect published results: denominator selection, reporting periods, suppression, and joins. @sec-validation covers checks on the incoming data.
+
+These rules often appear in several reports and outlast the person who first wrote them. A colleague editing a suppression function needs to know whether zero should be retained, what happens to missing values, and whether the threshold itself is suppressed. Tests record those decisions as examples the team can run. They help reviewers assess a change and can detect a broken rule before it affects a report.
+
+You can use the [`testthat`](https://testthat.r-lib.org/) package in an ordinary analysis project. Creating an R package is optional; if the functions later become a package, their tests can move with them (@sec-package-development). Install testthat once, then load it in the session where you run the examples:
+
+```{r}
+#| label: install-testthat
+#| eval: false
+install.packages("testthat")
+```
+
+```{r}
+#| label: load-testthat
+#| message: false
+library(testthat)
+```
+
+## Start with Functions {#sec-testing-functions}
+
+A calculation embedded in a long reporting script can be difficult to test on its own. Extracting it into a function lets you supply small inputs and inspect the result without importing the full dataset or rendering the report. It also gives the team one definition to maintain when several parts of an analysis use the same rule.
+
+Start with a rate calculation:
+
+```{r}
+#| label: initial-rate-function
+calc_rate <- function(cases, population, per = 100000) {
+  cases / population * per
+}
+```
+
+This version handles ordinary numeric inputs. It does not yet check input types or define what should happen with a zero denominator. We will add those requirements and tests below.
+
+Write down what callers can expect before choosing tests. For this function, rates use per-100,000 units by default. A shared population should work with several case counts, and vectors of equal length should be calculated element by element. Missing counts and zero or missing populations should return numeric missing values. Negative values and incompatible vector lengths should fail. These are choices about the function's behavior; a different analysis may need different rules.
+
+## First Tests with testthat {#sec-testing-testthat}
+
+A `test_that()` block names a behavior and checks it with one or more expectations. Use invented inputs whose answers you can calculate independently:
+
+```{r}
+#| label: rate-contract-test
+test_that("rates use per-100,000 units and accept a shared population", {
+  expect_equal(calc_rate(5, 50000), 10)
+  expect_equal(calc_rate(c(3, 4), 100000), c(3, 4))
+})
+```
+
+Five cases in a population of 50,000 gives a rate of 10 per 100,000. That expected answer stays fixed even if someone rewrites the calculation. Repeating the function's own formula inside the expectation could repeat the same error.
+
+Suppose someone changes the default units to per 1,000. This deliberately incorrect version shows how the test reports the change:
+
+```{r}
+#| label: rate-units-failure
+#| error: true
+calc_rate_changed <- function(cases, population, per = 1000) {
+  cases / population * per
+}
+
+test_that("rates use per-100,000 units", {
+  expect_equal(calc_rate_changed(5, 50000), 10)
+})
+```
+
+The failure identifies the test and compares the actual value, 0.1, with the expected value, 10. That tells the maintainer which requirement no longer holds. A description such as "test calc_rate" would give much less information. Name the behavior so someone unfamiliar with the implementation can understand the failure.
+
+## Choosing Expectations {#sec-testing-expectations}
+
+Choose the expectation to match the requirement:
+
+| What matters | Expectation | Example |
+|---|---|---|
+| Numeric values, allowing floating-point tolerance | `expect_equal()` | A calculated rate |
+| Exact value and type | `expect_identical()` | Numeric missing values or an empty numeric vector |
+| Rejection of invalid input | `expect_error()` | Negative counts or incompatible vector lengths |
+| A logical condition | `expect_true()` | An invariant required by a transformation |
+| Size of a result | `expect_length()` | One result for each input count |
+
+The difference between numeric equality and exact identity matters because floating-point calculations can introduce small rounding differences:
+
+```{r}
+#| label: floating-point-comparison
+0.1 + 0.2 == 0.3
+
+expect_equal(0.1 + 0.2, 0.3)
+```
+
+The direct comparison returns `FALSE`, but `expect_equal()` passes within its numeric tolerance. Use it for calculated quantities. Use `expect_identical()` when the type is part of the requirement, such as a helper that must return a double vector even when every value is missing.
+
+`expect_error()` checks that an invalid call fails. It passes when the expected error occurs:
+
+```{r}
+#| label: rate-character-input-test
+test_that("rates reject character case counts", {
+  expect_error(calc_rate("3", 100000))
+})
+```
+
+This simple version passes because R rejects arithmetic on character input. The complete implementation below supplies a more specific message. Matching part of that message in a test helps distinguish the intended input check from an unrelated error.
+
+## Edge Cases {#sec-testing-edges}
+
+For an illustrative suppression rule, keep zero and mask positive counts below 5. The important boundaries are 0, 1, 4, and 5; missing values should stay missing. Confirm your agency's actual rule before adapting this example (@sec-governance-disclosure). This helper does not implement complementary suppression or establish that a release is safe.
+
+A short implementation looks plausible:
+
+```{r}
+#| label: suppression-naive
+suppress_small_naive <- function(x, threshold = 5) {
+  ifelse(!is.na(x) & x > 0 & x < threshold, NA, x)
+}
+```
+
+But suppose callers require a double vector. Test an input where every count is suppressed:
+
+```{r}
+#| label: suppression-type-failure
+#| error: true
+test_that("suppressed counts remain numeric", {
+  expect_identical(suppress_small_naive(3), NA_real_)
+})
+```
+
+The bare `NA` is logical. For this input, `ifelse()` returns a logical missing value, so the test fails. This can violate a caller's type requirements even though the printed result looks right. Replacing `NA` with `NA_real_` handles this case, but an empty input to `ifelse()` still returns `logical(0)`. To guarantee a double result, convert the input first and then replace the selected values.
+
+The following implementation also rejects invalid counts. Both helpers in this chapter use `check_numeric()` to require plain numeric vectors with finite, nonnegative values or missing values. Counts must be whole numbers:
+
+```{r}
+#| label: numeric-input-check
+check_numeric <- function(x, name, whole = FALSE) {
+  if (!is.numeric(x) || is.object(x) || !is.null(dim(x))) {
+    stop(name, " must be a plain numeric vector", call. = FALSE)
+  }
+  present <- x[!is.na(x)]
+  if (any(!is.finite(present)) || any(present < 0)) {
+    stop(name, " must contain finite, nonnegative values or NA", call. = FALSE)
+  }
+  if (whole && any(present != floor(present))) {
+    stop(name, " must contain whole counts or NA", call. = FALSE)
+  }
+}
+```
+
+```{r}
+#| label: suppression-fixed
+suppress_small <- function(x, threshold = 5) {
+  check_numeric(x, "x", whole = TRUE)
+  check_numeric(threshold, "threshold", whole = TRUE)
+  if (length(threshold) != 1L || is.na(threshold) || threshold < 1) {
+    stop("threshold must be one positive whole number", call. = FALSE)
+  }
+  out <- as.double(x)
+  out[is.na(out) | (!is.na(out) & out > 0 & out < threshold)] <- NA_real_
+  out
+}
+```
+
+Check the policy boundaries and the type requirements together:
+
+```{r}
+#| label: suppression-contract-test
+test_that("suppression preserves boundaries and the output type", {
+  expect_identical(
+    suppress_small(c(0, 1, 4, 5, NA)),
+    c(0, NA_real_, NA_real_, 5, NA_real_)
+  )
+  expect_identical(suppress_small(3), NA_real_)
+  expect_identical(suppress_small(numeric(0)), numeric(0))
+})
+```
+
+Each input checks a separate decision. Zero is retained, counts 1 and 4 are masked, and 5 is retained because the threshold is exclusive. The last expectation checks an empty result, which may occur after filtering. Test cases like these explain the rule to a future maintainer without requiring them to infer it from the function.
+
+## Regression Tests {#sec-testing-regression}
+
+When debugging identifies an error (@sec-debugging), first reproduce it in a test. For example, a new row in a population lookup table might contain zero. The initial rate function returns infinity:
+
+```{r}
+#| label: zero-denominator-result
+calc_rate(3, 0)
+```
+
+Record the intended behavior before changing the function:
+
+```{r}
+#| label: zero-denominator-failure
+#| error: true
+test_that("zero or missing populations yield numeric missing rates", {
+  expect_identical(calc_rate(3, 0), NA_real_)
+  expect_identical(calc_rate(3, NA_real_), NA_real_)
+})
+```
+
+Seeing the test fail confirms that it detects the reported problem. After the fix, keep it in the suite so later changes are checked against the same case.
+
+A tempting fix uses `ifelse()` with a condition based only on population. That creates another problem when the population is a single value and case counts form a vector:
+
+```{r}
+#| label: rate-ifelse-failure
+#| error: true
+calc_rate_ifelse <- function(cases, population, per = 100000) {
+  ifelse(is.na(population) | population <= 0,
+         NA_real_, cases / population * per)
+}
+
+test_that("one population can be used with several case counts", {
+  expect_equal(calc_rate_ifelse(c(3, 4), 100000), c(3, 4))
+})
+```
+
+The condition has length one, so `ifelse()` returns only the first rate. A test of `calc_rate_ifelse(3, 0)` alone would miss this. Run earlier tests after a fix as well as the test for the newly reported bug.
+
+Here is the complete corrected rate function. It uses `check_numeric()` from the previous section, checks input lengths, and expands a scalar to match the other vector before calculating. Two empty inputs, or an empty input paired with a scalar, return `numeric(0)`. Other unequal lengths fail:
+
+```{r}
+#| label: rate-fixed
+calc_rate <- function(cases, population, per = 100000) {
+  check_numeric(cases, "cases", whole = TRUE)
+  check_numeric(population, "population")
+  check_numeric(per, "per")
+  if (length(per) != 1L || is.na(per) || per <= 0) {
+    stop("per must be one finite positive number", call. = FALSE)
+  }
+  nc <- length(cases)
+  np <- length(population)
+  if (nc != np && nc != 1L && np != 1L) {
+    stop("cases and population must have equal lengths or one must be scalar",
+         call. = FALSE)
+  }
+  if (nc == 0L || np == 0L) return(numeric(0))
+  n <- max(nc, np)
+  cases <- rep_len(as.double(cases), n)
+  population <- rep_len(as.double(population), n)
+  rate <- rep(NA_real_, n)
+  usable <- !is.na(cases) & !is.na(population) & population > 0
+  rate[usable] <- cases[usable] / population[usable] * per
+  if (any(!is.na(rate) & !is.finite(rate))) {
+    stop("rate exceeds the finite numeric range", call. = FALSE)
+  }
+  rate
+}
+```
+
+Now check the repaired behavior and the ordinary calculations:
+
+```{r}
+#| label: rate-regression-tests
+test_that("zero and missing inputs have explicit results", {
+  expect_identical(calc_rate(3, 0), NA_real_)
+  expect_identical(calc_rate(3, NA_real_), NA_real_)
+  expect_identical(calc_rate(NA_real_, 100), NA_real_)
+  expect_identical(
+    calc_rate(c(3, NA_real_, 0, 4), c(0, 100, 100, NA_real_)),
+    c(NA_real_, NA_real_, 0, NA_real_)
+  )
+})
+
+test_that("rates retain the stated units and vector behavior", {
+  expect_equal(calc_rate(5, 50000), 10)
+  expect_equal(calc_rate(c(3, 4), 100000), c(3, 4))
+  expect_equal(calc_rate(3, c(100000, 50000)), c(3, 6))
+  expect_equal(calc_rate(c(3, 4), c(100000, 50000)), c(3, 8))
+  expect_equal(calc_rate(5, 50000, per = 1000), 0.1)
+})
+```
+
+The remaining tests cover empty inputs, invalid values, and changes to the suppression threshold. These cases follow from the stated requirements:
+
+```{r}
+#| label: remaining-contract-tests
+test_that("empty vectors keep a numeric type", {
+  expect_identical(calc_rate(numeric(0), numeric(0)), numeric(0))
+  expect_identical(calc_rate(numeric(0), 100), numeric(0))
+  expect_identical(calc_rate(3, numeric(0)), numeric(0))
+  expect_identical(suppress_small(numeric(0)), numeric(0))
+})
+
+test_that("invalid inputs fail instead of being silently recycled or coerced", {
+  expect_error(calc_rate(1:2, c(100, 200, 300)), "equal lengths")
+  expect_error(calc_rate(numeric(0), c(100, 200)), "equal lengths")
+  expect_error(calc_rate("3", 100), "numeric vector")
+  expect_error(calc_rate(matrix(3), 100), "numeric vector")
+  expect_error(calc_rate(-1, 100), "nonnegative")
+  expect_error(calc_rate(0.5, 100), "whole counts")
+  expect_error(calc_rate(1, -100), "nonnegative")
+  expect_error(calc_rate(1, Inf), "finite")
+  expect_error(calc_rate(1, 100, per = 0), "positive")
+  expect_error(calc_rate(1, 100, per = NA_real_), "positive")
+  expect_error(calc_rate(1, 100, per = c(100, 1000)), "one finite")
+})
+
+test_that("suppression implements the illustrative policy without changing type", {
+  expect_identical(suppress_small(c(0, 1, 4, 5, 12, NA)),
+                   c(0, NA_real_, NA_real_, 5, 12, NA_real_))
+  expect_identical(suppress_small(1:4), rep(NA_real_, 4))
+  expect_identical(suppress_small(c(0L, 5L)), c(0, 5))
+  expect_identical(suppress_small(c(5, 9, 10), 10), c(NA_real_, NA_real_, 10))
+  expect_error(suppress_small(-1), "nonnegative")
+  expect_error(suppress_small(1.5), "whole counts")
+  expect_error(suppress_small(3, threshold = 0), "positive whole")
+  expect_error(suppress_small(3, threshold = c(5, 10)), "one positive")
+})
+```
+
+A passing suite establishes that these cases work. It does not prove correctness for every input. Add tests when requirements change or a new failure exposes a case the suite missed.
+
+## Organizing Tests in a Project {#sec-testing-organize}
+
+The examples above run inline so you can see each failure and fix. In an analysis project, keep the final functions and their tests in separate files:
+
+```text
+flu-report/
+  R/
+    rates.R
+  tests/
+    test-rates.R
+  report.qmd
+```
+
+Put the final `check_numeric()`, `suppress_small()`, and `calc_rate()` definitions in `R/rates.R`. Start `tests/test-rates.R` with this line:
+
+```r
+source(file.path("..", "R", "rates.R"))
+```
+
+Then copy the passing `test_that()` blocks into that test file. Omit the deliberately failing demonstrations and the functions named `calc_rate_changed`, `suppress_small_naive`, and `calc_rate_ifelse`. Test filenames must begin with `test` for testthat to find them. `test_dir()` runs these tests from the test directory, which is why the source path starts with `..`.
+
+Run the suite from the project root:
+
+```r
+testthat::test_dir("tests")
+```
+
+Run relevant tests while changing a rule and the full suite before committing (@sec-git). For shared projects, also run them in continuous integration (@sec-automation-actions), where a clean session can reveal dependencies on your local workspace. Assign responsibility for investigating failures; ignored failures do not protect the analysis.
+
+Shared functions used across projects may belong in a package (@sec-package-development). Package tests have a standard location, `tests/testthat/`, and can be run with `devtools::test()`. The expectations carry over; the package handles loading its functions, so remove the `source()` line.
+
+## Tests and Validation Are Different Checks {#sec-testing-vs-validation}
+
+Tests use controlled inputs to check code behavior. Validation checks the actual input and intermediate data for each run. A passing rate-function test cannot establish that this week's extract includes every county. A validation check for complete county coverage cannot establish that the rate function uses the correct units.
+
+When a data problem exposes a code bug, add both the relevant validation rule and a regression test. If a zero population caused an infinite rate, the input validation should flag the unexpected denominator, and the function test should check how the calculation handles it. Include both checks in code review so reviewers can see how the incident was addressed (@sec-peerreview).
+
+## Further Reading {#sec-testing-reading}
+
+The [testing chapters of *R Packages*](https://r-pkgs.org/testing-basics.html) explain test design, fixtures, and organization. The [testthat documentation](https://testthat.r-lib.org/) describes individual expectations and snapshot testing.

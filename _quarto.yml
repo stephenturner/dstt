@@ -3,6 +3,7 @@ project:
 
 book:
   title: "Data Science Team Training"
+  subtitle: "_Second edition_"
   author: "Stephen D. Turner, Ph.D."
   page-footer:
     left: "&copy; 2026 Stephen D. Turner"
@@ -32,15 +33,20 @@ book:
         - git.qmd
         - dataorg.qmd
         - validation.qmd
+        - testing.qmd
+        - debugging.qmd
         - reporting.qmd
         - accessibility.qmd
         - ai.qmd
         - dashboards.qmd
+        - bi.qmd
         - automation.qmd
         - packageloading.qmd
+        - dependencies.qmd
         - packagedevelopment.qmd
         - environments.qmd
         - databases.qmd
+        - infrastructure.qmd
         - apis.qmd
         - legacy.qmd
         - codestyle.qmd
@@ -48,13 +54,16 @@ book:
     - part: "Nontechnical"
       chapters:
         - team.qmd
+        - onboarding.qmd
         - pm.qmd
         - governance.qmd
+        - aigovernance.qmd
         - peerreview.qmd
         - comms.qmd
   appendices:
   - references.qmd
   - resources.qmd
+  - trainingbudget.qmd
 
 callout-appearance: default
 callout-icon: true
@@ -74,3 +83,6 @@ format:
     template-partials:
       - typst-show.typ
 
+
+metadata:
+  edition: 2

@@ -2,9 +2,9 @@
 
 Not every analysis starts with data your agency collects. The denominators for your rates come from the Census Bureau, the national counts you compare against come from CDC, and both live on someone else's server, published for exactly this kind of use.
 
-The usual way to get that data is to browse to the portal, click through some filters, hit Export, and download a CSV, which works exactly once. Six months later, nobody remembers which filters were applied or whether the provider has revised the numbers since, and the download is the one step of the analysis that cannot be re-run.
+The usual way to get that data is to browse to the portal, click through some filters, hit Export, and download a CSV, which can leave the download settings unrecorded. Six months later, nobody remembers which filters were applied or whether the provider has revised the numbers since, and the download is the one step of the analysis that cannot be re-run.
 
-The fix is to script the download, and web APIs make that possible. This chapter covers how to pull data from public APIs in R: using a dedicated package when one exists, building requests with `httr2` when one does not, handling API keys, and structuring the pull so the rest of the analysis stays reproducible.
+Scripted downloads record the request and make it repeatable. In R, this means using a dedicated package when one exists, building requests with `httr2` when one does not, handling API keys, and structuring the pull so the rest of the analysis stays reproducible.
 
 ::: {.callout-note}
 This chapter is about *public* data sources, where the data is intended for download and the main concerns are reproducibility and politeness. Getting access to your agency's internal databases is covered in @sec-databases, and the governance process around restricted data in @sec-governance.
@@ -12,27 +12,15 @@ This chapter is about *public* data sources, where the data is intended for down
 
 ## What an API Request Looks Like {#sec-apis-anatomy}
 
-An API (application programming interface), for our purposes, is a URL that returns data instead of a web page. Here is a real one. CDC publishes NNDSS weekly notifiable disease counts on its open data portal, and this URL asks for the 2024 pertussis records:
+A web API (application programming interface) lets code request data or operations from a service. Its endpoints are URLs; the example here returns data. CDC publishes NNDSS weekly notifiable disease counts on its open data portal, and this URL asks for the 2024 pertussis records:
 
 ```
 https://data.cdc.gov/resource/x9gk-5huc.json?label=Pertussis&year=2024
 ```
 
-The pieces: `data.cdc.gov` is the portal, `x9gk-5huc` identifies the dataset, `.json` is the response format, and everything after the `?` is a set of query parameters that filter the result. Paste it into a browser and you get back JSON, a plain-text format for structured data that looks like this:
+The pieces: `data.cdc.gov` is the portal, `x9gk-5huc` identifies the dataset, `.json` is the response format, and everything after the `?` is a set of query parameters that filter the result. Paste it into a browser to see JSON, a plain-text format for structured data. The response contains records and named fields.
 
-```{r}
-#| label: apis-json
-library(jsonlite)
-
-flu_json <- '[
-  {"county": "Fairfax",   "week": "2024-01-06", "cases": "23"},
-  {"county": "Arlington", "week": "2024-01-06", "cases": "41"}
-]'
-
-fromJSON(flu_json)
-```
-
-The `jsonlite` package converts JSON to a data frame, and for a flat, rectangular response like this the conversion is automatic. Notice that `cases` came back as a character column, quotes and all. Many APIs, including CDC's, return every field as a string regardless of what it contains. More on that in @sec-apis-validate.
+JSON values can be text even when they represent numbers. Inspect the provider's field definitions before converting types (@sec-apis-validate).
 
 ## Where Public Health Data Lives {#sec-apis-sources}
 
@@ -48,179 +36,246 @@ A few sources cover most of what public health teams pull from outside their age
 
 ## Use a Package When One Exists {#sec-apis-packages}
 
-Before writing any request code, check whether someone has already wrapped the API in an R package. A good wrapper handles authentication, pagination, and type conversion for you, and it encodes knowledge about the API's quirks that you would otherwise learn the hard way.
+Check for a maintained package before implementing requests yourself. [`tidycensus`](https://walker-data.com/tidycensus/) handles Census queries and returns estimates with margins of error. [`RSocrata`](https://github.com/Chicago/RSocrata) handles pagination and date conversion for Socrata portals. Confirm the package supports the dataset and fields you need; a wrapper does not remove the need to validate the result.
 
-The clearest example is [`tidycensus`](https://walker-data.com/tidycensus/), which wraps the Census Bureau APIs. Getting county population denominators for Virginia is a few lines:
+For example, this `tidycensus` call requests county population estimates for Virginia from the 2023 five-year ACS. Request a free key at <https://api.census.gov/data/key_signup.html> and store it with `tidycensus::census_api_key("YOUR_KEY", install = TRUE)`. This writes the key to `.Renviron` for future sessions (@sec-apis-keys). Restart R, or run `readRenviron("~/.Renviron")`, before making a request in the current session. Then run:
 
 ```{r}
-#| label: tidycensus-example
+#| label: census-package-example
 #| eval: false
-library(tidycensus)
-
-# One-time setup: request a free key at
-# https://api.census.gov/data/key_signup.html
-census_api_key("YOUR_KEY_HERE", install = TRUE)
-
-va_pop <- get_acs(
+va_pop <- tidycensus::get_acs(
   geography = "county",
   state = "VA",
   variables = c(population = "B01003_001"),
-  year = 2023
+  year = 2023,
+  survey = "acs5"
 )
 ```
 
-The result arrives as a tidy data frame with proper types, margins of error included. Kyle Walker's book *Analyzing US Census Data* [@walker2023census], freely available online, covers the census APIs and `tidycensus` in depth.
-
-For Socrata portals like data.cdc.gov, the [`RSocrata`](https://github.com/Chicago/RSocrata) package (maintained by the City of Chicago) does the same job. Point it at the dataset URL, filters and all:
+For a Socrata dataset, `RSocrata` can handle the page requests:
 
 ```{r}
-#| label: rsocrata-example
+#| label: socrata-package-example
 #| eval: false
-library(RSocrata)
-
-pertussis <- read.socrata(
+pertussis <- RSocrata::read.socrata(
   "https://data.cdc.gov/resource/x9gk-5huc.json?label=Pertussis&year=2024"
 )
 ```
 
-`read.socrata()` pages through the full result automatically and converts date fields, two things you would otherwise handle yourself.
+Kyle Walker's *Analyzing US Census Data* [@walker2023census] covers Census data and `tidycensus` in detail. The `httr2` example below gives you control over the request and archiving steps when a package does not provide the options you need.
 
 ## Building Requests with httr2 {#sec-apis-httr2}
 
-When no package exists, the [`httr2`](https://httr2.r-lib.org/) package is the general-purpose tool for talking to APIs from R. You build a request object piece by piece, then perform it.
+When no suitable wrapper exists, [`httr2`](https://httr2.r-lib.org/) lets you construct and inspect a request before sending it. Record the endpoint, filters, selected fields, and any version parameter. Keep requests in a separate acquisition script so changing a report does not repeatedly contact the service.
+
+The complete example below uses `httr2`, `jsonlite`, and `dplyr`. Install those packages before running it. The function definitions can be run without contacting the API; the download happens only when you call `fetch_nndss()` in @sec-apis-practical.
+
+First, define the request for the 2024 pertussis records:
 
 ```{r}
-#| label: httr2-build
-#| message: false
-library(httr2)
-
-req <- request("https://data.cdc.gov/resource/x9gk-5huc.json") |>
-  req_url_query(
-    `$where` = "label='Pertussis' AND year='2024'",
-    `$limit` = 5000
-  )
-
-req
+#| label: nndss-request
+nndss_request <- function() {
+  req <- httr2::request("https://data.cdc.gov/resource/x9gk-5huc.json") |>
+    httr2::req_url_query(
+      `$where` = "label='Pertussis' AND year='2024'",
+      `$limit` = 5000,
+      `$order` = ":id"
+    ) |>
+    httr2::req_retry(max_tries = 3) |>
+    httr2::req_throttle(capacity = 30, fill_time_s = 60)
+  token <- Sys.getenv("SOCRATA_APP_TOKEN")
+  if (nzchar(token)) {
+    req <- httr2::req_headers(req, `X-App-Token` = token)
+  }
+  req
+}
 ```
 
-Printing the request shows the method and the assembled URL. Nothing has been sent yet; `req_url_query()` also took care of encoding the spaces and quotes in the `$where` clause. The `$where` and `$limit` parameters are part of Socrata's query language ([SoQL](https://dev.socrata.com/docs/queries/)), which supports SQL-like filtering, selecting, and ordering directly in the URL, so the server does the subsetting and you download only what you need, the same idea as filtering before `collect()` in @sec-databases.
-
-Performing the request and parsing the response:
-
-```{r}
-#| label: httr2-perform
-#| eval: false
-resp <- req_perform(req)
-pertussis <- resp_body_json(resp, simplifyVector = TRUE)
-```
-
-`simplifyVector = TRUE` hands the JSON to `jsonlite` for the same automatic data-frame conversion shown earlier.
+`req_url_query()` encodes the filter and other query parameters. The page size and ordering will stay fixed while the download function changes the offset. The optional token comes from your environment (@sec-apis-keys); it is not part of the URL or the saved metadata.
 
 ### Pagination
 
-APIs cap how many rows one request returns, and the cap is easy to miss. Socrata's default is 1,000 rows: ask for a dataset with 50,000 rows and you get the first 1,000, with no error and no warning. The `$limit` parameter raises the cap, and `$offset` requests subsequent pages. `httr2` can iterate the pages for you:
+Check the API's row limit and completion rule. A successful HTTP response can contain only the first page. For offset-based pagination, use a stable ordering and continue until the documented completion condition is met. Socrata recommends an explicit [order such as `:id`](https://dev.socrata.com/docs/queries/order.html). Changes to the dataset during pagination can still affect results; use a provider snapshot when available.
 
-```{r}
-#| label: httr2-pagination
-#| eval: false
-resps <- req_perform_iterative(
-  req,
-  next_req = iterate_with_offset(
-    "$offset",
-    start = 0,
-    offset = 5000,
-    resp_complete = \(resp) length(resp_body_json(resp)) == 0
-  ),
-  max_reqs = Inf
-)
-```
+Set a maximum number of requests to catch accidental loops, and treat reaching it as an incomplete pull. Compare the final row count and coverage with expectations. A round count is a reason to investigate, but neither a round nor an irregular count proves completeness.
 
-Whatever tool you use, check the row count of what came back against what you expected. A suspiciously round number like exactly 1,000 or exactly 50,000 usually means you hit a cap.
+### Retries and rate limits
 
-### Retries and politeness
-
-Public APIs fail transiently and rate-limit heavy users. Two `httr2` functions handle both concerns declaratively:
-
-```{r}
-#| label: httr2-retry
-#| eval: false
-req <- req |>
-  req_retry(max_tries = 3) |>
-  req_throttle(capacity = 30, fill_time_s = 60)
-```
-
-`req_retry()` retries automatically on transient failures with increasing wait times. `req_throttle()` caps your request rate (here, 30 requests per minute) so a loop over many queries does not hammer the server. Both matter more in automated pipelines (@sec-automation), where nobody is watching the requests go out.
+Use bounded retries for transient errors and obey the provider's request limits. An authentication failure or invalid query requires correction, not repeated requests. The request above allows at most three attempts per page. By default, [`req_retry()`](https://httr2.r-lib.org/reference/req_retry.html) retries HTTP 429 and 503 responses and respects a `Retry-After` header when the server supplies one. `req_throttle()` limits the request rate to 30 requests per minute here; choose a rate appropriate to the provider. @sec-apis-practical shows how to archive each page and record whether the pull completed.
 
 ## API Keys and Tokens {#sec-apis-keys}
 
 Many APIs require a key, and others work better with one. The Census API requires a free key. Socrata portals work anonymously but throttle anonymous traffic aggressively; a free app token moves you to a much more generous rate limit. Keys are credentials, and the discipline is the same as for database passwords in @sec-databases-remote: keep them in `.Renviron`, read them with `Sys.getenv()`, and never commit them.
 
-```{r}
-#| label: app-token
-#| eval: false
-# .Renviron (git-ignored):  SOCRATA_APP_TOKEN=xxxxxxxxxx
-
-req <- request("https://data.cdc.gov/resource/x9gk-5huc.json") |>
-  req_headers(`X-App-Token` = Sys.getenv("SOCRATA_APP_TOKEN")) |>
-  req_url_query(`$where` = "label='Pertussis' AND year='2024'")
-```
-
-In a GitHub Actions pipeline, the token goes in the repository's secrets and reaches the job as an environment variable, exactly as described in @sec-automation-actions.
+In a scheduled pipeline, supply the credential through the job's approved secret store (@sec-automation-actions). Avoid writing credentials into request logs, filenames, or archived metadata.
 
 ## Separate the Pull from the Analysis {#sec-apis-pull}
 
-Do not put an API call at the top of an analysis script. Put it in its own script, write the raw response to `data/raw/` with a dated filename (@sec-dataorg-project), and have the analysis read the file.
+Do not put an API call at the top of an analysis script. Put it in its own script, write the raw response to `data/raw/` under a dated filename or directory (@sec-dataorg-project), and have the analysis read the file.
 
-```{r}
-#| label: pull-script
-#| eval: false
-# 01-pull-nndss.R
-resp <- req_perform(req)
+Saving the response preserves the data used by the analysis. An API reflects the data as of right now, and many public health sources revise: CDC's provisional death counts, for example, are updated for recent weeks as certificates arrive, so the same query run a month apart returns different numbers. The archived pages record what you retrieved in that run. Read and combine those files when reproducing the analysis. Separating the pull also means the analysis renders offline and keeps working when the API is down or the dataset moves, and iterating on a report no longer re-downloads the same data on every render.
 
-writeLines(
-  resp_body_string(resp),
-  file.path("data", "raw", paste0(Sys.Date(), "-nndss-pertussis.json"))
-)
-```
-
-The main thing this buys is reproducibility. An API reflects the data as of right now, and many public health sources revise: CDC's provisional death counts, for example, are updated for recent weeks as certificates arrive, so the same query run a month apart returns different numbers. The dated raw file records exactly what you pulled and when, and that file, not the live API, is the input your analysis can be reproduced from. Separating the pull also means the analysis renders offline and keeps working when the API is down or the dataset moves, and iterating on a report no longer re-downloads the same data on every render.
-
-In an automated pipeline, the pull becomes its own step, scheduled with the tools in @sec-automation or declared as a `targets` node (@sec-automation-targets) so downstream steps rerun only when a new file lands.
+In an automated pipeline, the pull becomes its own step, scheduled with the tools in @sec-automation or declared as a `targets` node (@sec-automation-targets) so downstream steps rerun only when a new file arrives.
 
 ## Validate What Comes Back {#sec-apis-validate}
 
-Data from an API deserves the same skepticism as any other input, and it fails in two ways of its own.
+Check the response schema, types, and values before using the data. Required columns may be renamed or removed; a field may disappear from every record when all its values are missing. Distinguish an allowed all-missing field from a missing required identifier.
 
-The first is types. As the JSON example at the start of the chapter showed, numeric fields often arrive as character. Coerce them explicitly, immediately after reading:
+Define how to interpret missing values and suppression flags from the provider's documentation. Do not turn a suppressed count into zero. Reject unexpected text during numeric conversion; a warning that becomes `NA` can otherwise disappear into later calculations.
+
+Also check the requested year, geography, disease, row count, and reporting-period coverage. These checks catch a syntactically valid response to the wrong query. @sec-validation covers implementing checks and stopping the pipeline when required checks fail.
+
+For this example, require the disease label, year, and reporting week. Convert the count field `m1` only after checking that its nonmissing values contain integer text. The validator allows an entirely missing count field but rejects missing identifiers:
 
 ```{r}
-#| label: coerce-types
-#| eval: false
-library(dplyr)
-pertussis <- pertussis |>
-  mutate(
-    year = as.integer(year),
-    week = as.integer(week),
-    m1 = as.integer(m1) # current-week case count
-  )
+#| label: nndss-validator
+validate_nndss <- function(x) {
+  required <- c("label", "year", "week")
+  if (!is.data.frame(x) || !all(required %in% names(x)) || nrow(x) == 0L) {
+    stop("Expected a nonempty table with label, year, and week")
+  }
+  if (anyNA(x[required]) || any(x$label != "Pertussis")) {
+    stop("Unexpected or missing label, year, or week")
+  }
+  # Socrata can omit a field from every row when all values are missing.
+  if (!"m1" %in% names(x)) {
+    x$m1 <- NA_character_
+  }
+  for (field in c("year", "week", "m1")) {
+    raw <- as.character(x[[field]])
+    present <- !is.na(raw)
+    if (any(!grepl("^[0-9]+$", raw[present]))) {
+      stop("Unexpected non-integer text in ", field)
+    }
+    value <- suppressWarnings(as.integer(raw))
+    if (any(present & is.na(value))) {
+      stop("Integer conversion failed in ", field)
+    }
+    x[[field]] <- value
+  }
+  if (any(x$year != 2024L) || any(x$week < 1L | x$week > 53L)) {
+    stop("Unexpected year or reporting week")
+  }
+  # Missing m1 values remain missing; retain provider flag fields for interpretation.
+  x
+}
 ```
 
-Explicit coercion beats automatic guessing because it fails loudly: if a count column suddenly contains `"suppressed"`, `as.integer()` warns and produces `NA`, which your validation will catch. Silent guessing just gives you a character column and a broken sum three steps later.
+The original response files will retain the provider's fields and values. This validator leaves missing counts missing and keeps any flag fields in the table. Check those flags and the dataset's field definitions before interpreting a missing value. The checks here establish the expected schema and basic values; they do not establish geographic coverage or completeness of reporting.
 
-The second is the schema, which can change under you. API responses often omit empty fields entirely. In the NNDSS data, a record with no current-week count simply has no `m1` element, so a pull where every record is empty for some field has no such column at all. Providers also add, rename, and retire columns without ceremony. A pull script that ran cleanly for a year can start returning something structurally different.
+You can check the missing-count behavior without making a request:
 
-Both problems have the same answer as in @sec-validation: validate right after the pull, checking that expected columns exist, types are correct, and values are in range, and fail loudly before anything downstream runs. A `pointblank` agent pointed at the freshly-read file is a few lines and turns a silent upstream change into an immediate, diagnosable error.
+```{r}
+#| label: nndss-validation-example
+example_records <- data.frame(
+  label = c("Pertussis", "Pertussis"),
+  year = c("2024", "2024"),
+  week = c("1", "2"),
+  m1 = c("3", NA_character_)
+)
 
-## Practical Guidance {#sec-apis-practical}
+validate_nndss(example_records)
+```
 
-**Check for a package before writing request code.** A maintained wrapper like `tidycensus` or `RSocrata` already handles pagination, types, and authentication.
+The count becomes numeric, and the missing count stays missing. Replacing `"3"` with an unexpected value such as `"suppressed"` would stop validation. Decide how to interpret such a flag from the provider's documentation before adding a conversion rule.
 
-**Filter on the server.** Use query parameters to request only the rows and columns you need, for the same reason you filter before `collect()` with a database.
+## Download and Reuse {#sec-apis-practical}
 
-**Watch for silent row caps.** If the row count of a pull is a suspiciously round number, you probably got page one of many.
+Use one reader for both a new download and later reuse. It combines the saved JSON pages and applies the validator:
 
-**Archive what you pull.** A dated raw file in `data/raw/` is the reproducible input; the API is not, because the data behind it changes.
+```{r}
+#| label: nndss-archive-reader
+read_nndss_pages <- function(paths) {
+  pages <- lapply(paths, function(path) {
+    jsonlite::fromJSON(path, simplifyVector = TRUE)
+  })
+  validate_nndss(dplyr::bind_rows(pages))
+}
+```
 
-**Treat keys like passwords.** `.Renviron` locally, repository secrets in CI, never in code.
+The download function creates a new archive directory and saves each response before moving to the next page. It continues until the API returns an empty page. Reaching `max_pages` stops the pull with an error, so a loop limit cannot be mistaken for successful completion:
 
-**Validate every pull.** Coerce types explicitly and check the schema, because the provider can change either one without telling you.
+```{r}
+#| label: nndss-download-function
+fetch_nndss <- function(out_dir, max_pages = 100L) {
+  stopifnot(
+    length(max_pages) == 1L,
+    is.finite(max_pages),
+    max_pages >= 1,
+    max_pages == floor(max_pages)
+  )
+  if (!dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)) {
+    stop("Choose a new output directory")
+  }
+  req <- nndss_request()
+  paths <- character()
+  complete <- FALSE
+  for (i in seq_len(max_pages)) {
+    resp <- httr2::req_perform(httr2::req_url_query(
+      req,
+      `$offset` = (i - 1L) * 5000L
+    ))
+    path <- file.path(out_dir, sprintf("page-%04d.json", i))
+    writeBin(httr2::resp_body_raw(resp), path)
+    paths <- c(paths, path)
+    if (length(httr2::resp_body_json(resp)) == 0L) {
+      complete <- TRUE
+      break
+    }
+  }
+  if (!complete) {
+    stop("Page limit reached; incomplete archive, do not analyze")
+  }
+  result <- read_nndss_pages(paths)
+  metadata <- list(
+    retrieved_utc = format(Sys.time(), tz = "UTC", usetz = TRUE),
+    endpoint = "https://data.cdc.gov/resource/x9gk-5huc.json",
+    filter = "label='Pertussis' AND year='2024'",
+    order = ":id",
+    page_size = 5000L,
+    rows = nrow(result),
+    complete = TRUE
+  )
+  # No credential is written to the archive.
+  jsonlite::write_json(
+    metadata,
+    file.path(out_dir, "manifest.json"),
+    auto_unbox = TRUE,
+    pretty = TRUE
+  )
+  result
+}
+```
+
+The completion manifest records the endpoint, filter, ordering, page size, retrieval time, and row count. It is written only after pagination and validation succeed. If a request fails partway through, the pages already downloaded remain available for inspection, but there is no completion manifest. Start a fresh archive when retrying so files from different pulls are not mixed.
+
+To download, run the four function definitions above, then call `fetch_nndss()` from an acquisition script or the console. This example puts the archive in a directory named with its UTC retrieval time:
+
+```{r}
+#| label: nndss-download-run
+#| eval: false
+archive_dir <- file.path(
+  "data",
+  "raw",
+  format(Sys.time(), "%Y%m%dT%H%M%S", tz = "UTC")
+)
+pertussis <- fetch_nndss(archive_dir)
+```
+
+Record the chosen archive path with the analysis. For a later offline run, set `archive_dir` to that existing directory and use the saved pages:
+
+```{r}
+#| label: nndss-reuse-run
+#| eval: false
+metadata <- jsonlite::read_json(file.path(archive_dir, "manifest.json"))
+stopifnot(isTRUE(metadata$complete))
+page_files <- sort(list.files(
+  archive_dir,
+  pattern = "^page-[0-9]+[.]json$",
+  full.names = TRUE
+))
+pertussis <- read_nndss_pages(page_files)
+stopifnot(nrow(pertussis) == metadata$rows)
+```
+
+A missing manifest stops this reuse step. The row-count check detects some accidental changes to an archive; it does not prove the source data was complete or unchanged during pagination. Keep the saved responses with the analysis and apply the coverage checks described in @sec-apis-validate. Report rendering should read this archive without making a new API call.

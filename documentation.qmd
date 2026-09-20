@@ -2,7 +2,7 @@
 
 Code that runs correctly but cannot be understood is a liability. Six months after writing an analysis, even the original author may not remember what a variable represents, why a particular filter was applied, or where a dataset came from. For a new team member inheriting existing work, undocumented code is essentially opaque.
 
-Documentation is the investment that makes analytical work reusable, reviewable, and transferable. It does not mean writing a manual for every script. It means leaving enough information that the next person (or your future self) can pick up the work without starting over.
+Documentation is the investment that makes analytical work reusable, reviewable, and transferable. Leave enough information that the next person (or your future self) can pick up the work without starting over.
 
 ## READMEs {#sec-documentation-readme}
 
@@ -24,8 +24,8 @@ One or two sentences describing what this analysis does and why it was done.
 
 ## Data
 
-What data is used. Where it comes from (source, date accessed, any access 
-requirements). If data files are not in the repository (e.g., because 
+What data is used. Where it comes from (source, date accessed, any access
+requirements). If data files are not in the repository (e.g., because
 they contain PII), explain where they should be placed.
 
 ## Running the Analysis
@@ -42,11 +42,11 @@ Commit the README with the project. Update it when something material changes. A
 
 ### README for Shared Utility Code
 
-If a repository contains functions or tools that other projects use rather than a single self-contained analysis, the README should also document the interface: what the key functions are, what arguments they take, and a short example showing typical use.
+If a repository contains functions or tools used by other projects, the README should also document the interface: what the key functions are, what arguments they take, and a short example showing typical use.
 
 ## Inline Comments {#sec-documentation-inline}
 
-Comments in code explain *why*, not *what*. The code itself shows what is happening; a comment adds value by explaining the reason behind a decision that might otherwise look arbitrary.
+Use comments to explain the reasons for decisions. The code itself shows what is happening; a comment adds value by explaining the reason behind a decision that might otherwise look arbitrary.
 
 A comment that adds no information:
 
@@ -65,7 +65,7 @@ A comment that adds information:
 cases <- cases |> filter(status == "active")
 ```
 
-This explains why only active cases are kept — information that is not in the code itself and that a reviewer or future maintainer genuinely needs.
+This explains why only active cases are kept, information that is not in the code itself and that a reviewer or future maintainer needs.
 
 **Comment when:**
 
@@ -97,13 +97,13 @@ These create an outline in the document navigator (the panel at the bottom of th
 
 ## Documenting Functions with roxygen2 {#sec-documentation-roxygen}
 
-When a function will be reused -- called from multiple scripts, shared across projects, or used by other team members -- it should be documented at the function definition, not in a separate file. The standard tool for this in R is [roxygen2](https://roxygen2.r-lib.org/).
+When a function will be reused across scripts, projects, or team members, it should be documented at the function definition, not in a separate file. The standard tool for this in R is [roxygen2](https://roxygen2.r-lib.org/).
 
 roxygen2 documentation lives in comments immediately above the function definition, starting with `#'`. The most important tags:
 
-- `@param` — documents each argument: its name, expected type, and what it does
-- `@return` — describes what the function returns
-- `@examples` — shows how to call the function, ideally with a runnable example
+- `@param`: documents each argument: its name, expected type, and what it does
+- `@return`: describes what the function returns
+- `@examples`: shows how to call the function, ideally with a runnable example
 
 A minimal documented function:
 
@@ -130,11 +130,7 @@ Even a brief description, one `@param` per argument, and one `@return` is substa
 
 ### When Functions Are More Than Utilities
 
-A handful of shared utility functions can live in a `functions/` or `R/` subdirectory in a project repository and be sourced with `source()`. This is a reasonable approach for a single project.
-
-When utility functions are shared across multiple projects, or when the team is maintaining a set of internal tools that need to be installed and versioned like any other package, the right container is an R package. A package brings in a testing framework, proper namespace management, and the formal documentation infrastructure that roxygen2 was designed for.
-
-Building a complete R package goes beyond the scope of this chapter. The definitive guide is [**R Packages**](https://r-pkgs.org/) by Wickham and Bryan, available free online. Even teams that do not plan to publish to CRAN benefit from the structure a package imposes, it is a format that R itself understands, which makes distribution, installation, and documentation tooling available for free.
+Keep project-specific helpers with the analysis. For functions shared across projects, @sec-package-development explains packaging and distribution; @sec-dependencies-ownpackage covers how to divide the shared code into maintainable packages.
 
 ## Project-Level Documentation {#sec-documentation-project}
 
@@ -142,24 +138,26 @@ Analysis projects involve more than code: there are data sources, methodological
 
 ### Data Dictionaries
 
-If a project uses a dataset with non-obvious columns — abbreviated names, coded values, or columns whose meaning depends on context — maintain a data dictionary alongside the analysis. This can be a simple table in a Markdown or Quarto document:
+If a project uses a dataset with non-obvious columns (abbreviated names, coded values, or context-dependent meanings), maintain a data dictionary alongside the analysis. This can be a simple table in a Markdown or Quarto document:
 
 | Column | Type | Description |
 |---|---|---|
 | `case_id` | character | Unique case identifier; not persistent across system updates |
 | `epi_class` | character | Epidemiologic classification: `confirmed`, `probable`, `suspect` |
-| `rpt_cnty_cd` | integer | FIPS code of the county of report (not necessarily the county of residence) |
+| `rpt_cnty_cd` | character | FIPS code of the county of report, stored as text to preserve leading zeros (not necessarily the county of residence) |
 | `onset_dt` | date | Symptom onset date as reported; missing if not collected for this condition |
 
 A data dictionary does not need to document every column. Document the columns that are confusing, the ones that carry important caveats, and the ones where the name does not tell the full story.
 
+A machine-readable dictionary can also supply labels and definitions to the pipeline. Keeping metric definitions in a machine-readable file that both the R code and the dashboard consume is covered in @sec-bi-metrics.
+
 ### Decision Logs
 
-Analyses involve choices that are not visible in the code: why a particular date range was chosen, why a jurisdiction was excluded, why one method was preferred over another when both were defensible. These decisions are worth recording, because they will be questioned — by a reviewer, by a stakeholder, or by a future analyst who is maintaining the work.
+Analyses involve choices that are not visible in the code: why a particular date range was chosen, why a jurisdiction was excluded, why one method was preferred over another when both were defensible. These decisions are worth recording, because they will be questioned by a reviewer, by a stakeholder, or by a future analyst who is maintaining the work.
 
 A simple decision log entry might look like:
 
-> **2024-11-14** — Excluded 2020 data from trend analysis. COVID-related disruptions to case reporting caused substantial undercounting across multiple conditions; the 2020 data points would distort trend estimates in ways that are not informative about the underlying epidemiology. Analysis covers 2018–2019 and 2021–2023.
+> **2024-11-14**: Excluded 2020 data from trend analysis. COVID-related disruptions to case reporting caused substantial undercounting across multiple conditions; the 2020 data points would distort trend estimates in ways that are not informative about the underlying epidemiology. Analysis covers 2018–2019 and 2021–2023.
 
 This does not need to be elaborate. A short paragraph with a date and a rationale is enough to reconstruct the reasoning later.
 
@@ -171,10 +169,6 @@ This document can be a section of the final report, a standalone Quarto document
 
 ## Documentation as a Team Practice {#sec-documentation-team}
 
-Documentation that exists only on an individual's laptop, or only in one person's head, does not help the team. Documentation practices are only effective when they are shared norms.
+Update project documentation in the same change as the code or data definition it describes. A reviewer should be able to find the inputs, understand the decisions, and reproduce the expected outputs (@sec-peerreview-mechanics).
 
-**Establish a minimum standard.** Teams that define what "documented" means (e.g., a README, a data dictionary for any dataset with coded variables, roxygen comments on shared functions) can build review expectations around that standard. The @sec-peerreview chapter describes how code review (see @sec-peerreview-mechanics) creates a checkpoint for documentation quality.
-
-**Document as you go.** Documentation written after the analysis is finished is usually thinner and less accurate than documentation written alongside it. Writing the README before writing the code helps clarify what the analysis is supposed to do. Noting a methodological decision at the time it is made is more reliable than reconstructing the rationale later.
-
-**Treat stale documentation as a bug.** An incorrect README is worse than no README, because it creates false confidence. When something material changes (a data source is updated, a method is revised, a constant is recalculated), updating the documentation is part of the change, not an optional follow-up.
+Record the team's minimum documentation requirements in its handbook (@sec-onboarding-conventions), and link to each project's README and data dictionary. Keep setup and team procedures in the handbook; keep project-specific explanations with the project.

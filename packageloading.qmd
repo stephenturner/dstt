@@ -1,6 +1,8 @@
 # Package Loading {#sec-packageloading}
 
-Loading packages in R is easy enough to do carelessly. A script accumulates ten or fifteen `library()` calls, and everything runs until it does not. An analyst's `select()` call starts returning the wrong results, and nothing errors to say so. Scrolling to the top of the script reveals that MASS was loaded after dplyr, giving `MASS::select()` precedence over `dplyr::select()`. No warning, just the wrong function running.
+Package load order affects which function R calls. Loading MASS after dplyr gives `MASS::select()` precedence over `dplyr::select()`. R prints a masking message, but it is easy to miss among many `library()` calls. A later call may then fail or use an unintended function.
+
+This chapter is about the packages you have already decided to use: how they interact once loaded, and how to keep that interaction predictable. @sec-dependencies covers the prior question of whether to take on a package at all, and how to assess its maintenance and requirements.
 
 ## How R's search path works {#sec-packageloading-searchpath}
 
@@ -30,12 +32,12 @@ In a script that loads fifteen packages, these messages scroll past. The script 
 ::: {.callout-warning}
 ## R's masking message is easy to miss
 
-R prints a note at load time when a package masks a function from an earlier-loaded one, but in a long block of `library()` calls the messages are easily overlooked. R replaces the earlier function without any error. The `conflicted` package, covered in @sec-packageloading-conflicted, changes this: any ambiguous name throws an error rather than silently resolving to whichever package was loaded last.
+R prints a note at load time when a package masks a function from an earlier-loaded one, but in a long block of `library()` calls the messages are easily overlooked. The earlier function remains available through its package namespace, but the later one takes precedence for an unqualified call. The `conflicted` package, covered in @sec-packageloading-conflicted, changes this: unresolved function-name conflicts produce an error.
 :::
 
 ## Load only what you need {#sec-packageloading-minimal}
 
-Every `library()` call extends the search path. A package block loaded by habit rather than intention is a reliable source of masking bugs in shared scripts.
+Every `library()` call extends the search path. Remove unused package calls to reduce opportunities for masking bugs.
 
 Load a package with `library()` only if you call its functions throughout the script using bare names. If a package appears once or twice, use `::` instead (see @sec-packageloading-doublecolon).
 
@@ -68,7 +70,7 @@ The shorter list documents dependencies. A reader can see what the script uses a
 ::: {.callout-tip}
 ## Loading tidyverse
 
-`library(tidyverse)` loads ggplot2, dplyr, tidyr, readr, purrr, tibble, stringr, forcats, and lubridate in a single call. That is a reasonable choice when you are genuinely using several of those packages. For a script that only needs dplyr and ggplot2, loading individual packages is more explicit about what you depend on and puts fewer packages on the search path.
+`library(tidyverse)` loads ggplot2, dplyr, tidyr, readr, purrr, tibble, stringr, forcats, and lubridate in a single call. That is a reasonable choice when you use several of those packages. For a script that only needs dplyr and ggplot2, loading individual packages is more explicit about what you depend on and puts fewer packages on the search path.
 
 You'll get the following message when you load tidyverse:
 
@@ -78,7 +80,7 @@ You'll get the following message when you load tidyverse:
 ✔ forcats   1.0.1     ✔ stringr   1.6.0
 ✔ ggplot2   4.0.1     ✔ tibble    3.3.0
 ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-✔ purrr     1.2.0     
+✔ purrr     1.2.0
 ── Conflicts ────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
@@ -116,7 +118,7 @@ You do not need to call `library()` before using `::`. As long as a package is i
 
 ## The `conflicted` package {#sec-packageloading-conflicted}
 
-The `conflicted` package [@conflicted2023] changes the default behavior: any ambiguous name throws an error, forcing an explicit choice rather than silently inheriting load order.
+The `conflicted` package [@conflicted2023] changes the default behavior: unresolved function-name conflicts produce an error so you can choose the intended function.
 
 Install from CRAN:
 
@@ -146,7 +148,7 @@ library(MASS)
 result <- mtcars |> select(mpg, cyl)
 ```
 
-This is the point. Load order was deciding which `select()` to use; `conflicted` makes you decide.
+`conflicted` asks you to choose which `select()` to use.
 
 Declare your preferences with `conflicts_prefer()`, once at the top of the script alongside your `library()` calls:
 
@@ -184,7 +186,7 @@ conflicts_prefer(dplyr::select)
 conflicts_prefer(dplyr::lag)
 ```
 
-After these declarations, `filter()`, `select()`, and `lag()` unambiguously refer to dplyr. Any other conflict produces an error rather than a silent wrong answer.
+After these declarations, `filter()`, `select()`, and `lag()` unambiguously refer to dplyr. Other unresolved conflicts produce errors.
 :::
 
 ## Team implications {#sec-packageloading-team}

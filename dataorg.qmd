@@ -1,10 +1,10 @@
 # Data Organization {#sec-dataorg}
 
-Good data organization is foundational to reproducible, efficient research. Decisions made at the moment of data collection and storage ripple through every downstream step—analysis, visualization, sharing, and archiving. This chapter covers practical principles for organizing data in spreadsheets, naming files consistently, structuring project directories, and storing data in formats that work well with code.
+Organize data so that colleagues can find, read, and analyze it without manual cleanup. Consistent spreadsheets, file names, directories, and file formats make that work easier to repeat.
 
 ## Data Organization in Spreadsheets
 
-Broman and Woo's "Data Organization in Spreadsheets" [@broman2018] offers twelve practical recommendations for anyone who stores data in Excel or similar tools. The core philosophy: structure your data so that it can be read directly into R or Python without manual cleanup.
+Broman and Woo's "Data Organization in Spreadsheets" [@broman2018] offers twelve practical recommendations for anyone who stores data in Excel or similar tools. Structure your data so that it can be read directly into R or Python without manual cleanup.
 
 ### Be Consistent
 
@@ -19,20 +19,20 @@ Consistency is the single most important principle. Pick conventions and stick t
 
 Raw data should be a single, clean rectangle:
 
-- **Rows are observations** (subjects, samples, time points)
-- **Columns are variables**
-- **One header row** at the top with short, meaningful column names
+- Rows are observations (subjects, samples, time points)
+- Columns are variables
+- One header row at the top with short, meaningful column names
 - No merged cells, no blank rows used for visual separation, no summary rows mixed in
 
 This is consistent with the principles of **tidy data** [@wickham2014], where each variable forms a column, each observation forms a row, and each type of observational unit forms a table.
 
 ### One Thing Per Cell
 
-Each cell should contain exactly one value. Don't cram multiple pieces of information into a single cell (e.g., `"120/80"` for blood pressure—use two columns instead). Don't use a cell to store a note alongside a value.
+Each cell should contain exactly one value. Don't cram multiple pieces of information into a single cell (e.g., `"120/80"` for blood pressure; use two columns instead). Don't use a cell to store a note alongside a value.
 
 ### Fill in All Cells
 
-Don't leave cells blank to imply "same as above." Every cell should contain an explicit value. Use a consistent missing data code (e.g., `NA`) rather than leaving cells empty—blank cells are ambiguous: was the value missing, not collected, or zero?
+Don't leave cells blank to imply "same as above." Every cell should contain an explicit value. Use a consistent missing data code (e.g., `NA`) and document its meaning. Blank cells can leave readers unsure whether a value was missing, not collected, or zero.
 
 ### Write Dates as YYYY-MM-DD
 
@@ -40,7 +40,7 @@ Use [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format for all dates: `20
 
 - Sorts correctly alphabetically
 - Is unambiguous across locales (`03/04/2024` means different things in the US vs. Europe)
-- Is not mangled by Excel (unlike many other date formats)
+- Is easy to recognize; verify how Excel stores and exports it
 
 ::: {.callout-warning}
 Excel silently converts many text strings to dates (e.g., the human gene name `SEPT1` becomes a date). Consider storing year, month, and day in separate columns if you're collecting data in Excel, or prefix dates with an apostrophe to force text storage.
@@ -50,7 +50,7 @@ Excel silently converts many text strings to dates (e.g., the human gene name `S
 
 Apply consistent naming rules to columns, sheets, and files:
 
-- No spaces—use underscores (`_`) or hyphens (`-`)
+- No spaces; use underscores (`_`) or hyphens (`-`)
 - No special characters (`@`, `#`, `%`, `(`, `)`)
 - Short but meaningful (`participant_id`, not `p` or `the_participant_identifier_number`)
 - All lowercase is a safe default
@@ -58,7 +58,7 @@ Apply consistent naming rules to columns, sheets, and files:
 
 ### No Calculations in Raw Data Files
 
-Keep raw data raw. Don't add sum rows, averages, or derived columns to the data file—do that in your analysis script. The raw data file is a permanent record of what was collected; calculations belong in code that can be inspected, corrected, and rerun.
+Keep raw data raw. Don't add sum rows, averages, or derived columns to the data file; do that in your analysis script. The raw data file is a permanent record of what was collected; calculations belong in code that can be inspected, corrected, and rerun.
 
 ### Don't Use Formatting as Data
 
@@ -91,9 +91,9 @@ Keep the original Excel file if needed, but always export a clean CSV as the fil
 
 Raw data should be treated as read-only and backed up in at least two places (e.g., local drive + cloud storage). Consider these tiers:
 
-- **Primary:** Your working copy
-- **Local backup:** External drive or NAS
-- **Off-site/cloud:** Institutional storage, OneDrive, or similar
+- Primary: Your working copy
+- Local backup: External drive or NAS
+- Off-site/cloud: Institutional storage, OneDrive, or similar
 
 Version control (see @sec-git) is excellent for code and small text files but is not ideal for large binary data files.
 
@@ -107,11 +107,11 @@ Jenny Bryan's ["How to Name Files"](https://github.com/jennybc/how-to-name-files
 
 **1. Machine readable**
 
-File names should be parseable by code without heroics:
+Use file names that are easy to parse in code:
 
 - No spaces (use `_` or `-` instead)
 - No special characters (`&`, `*`, `#`, `(`, `)`, accented letters)
-- No case sensitivity issues—stick to lowercase
+- Avoid case sensitivity issues; stick to lowercase
 - Use delimiters consistently so you can split on them: underscores between metadata fields, hyphens within a field
 
 **2. Human readable**
@@ -156,7 +156,7 @@ consent-form-v2.pdf
 ```
 
 ::: {.callout-tip}
-A good file name is essentially metadata. When you can glob a directory and parse the file names with code—extracting dates, conditions, or sample IDs—you've done it right.
+Consistent file names let you select files by pattern and extract dates, conditions, or sample IDs with code.
 :::
 
 ## Project Directory Structure {#sec-dataorg-project}
@@ -181,15 +181,17 @@ project-name/
 
 Key rules:
 
-- **Raw data is sacred.** The `data/raw/` folder is read-only. Never overwrite or edit raw data files. Also, you don't want to commit large files to version control, so be careful with your `.gitignore`.
-- **All data manipulation is scripted.** Cleaned data in `data/processed/` is generated by a script, not by hand.
-- **One project = one directory.** Keep all files related to a project together.
+- Preserve raw data. The `data/raw/` folder is read-only. Never overwrite or edit raw data files. Also, you don't want to commit large files to version control, so be careful with your `.gitignore`.
+- All data manipulation is scripted. Cleaned data in `data/processed/` is generated by a script, not by hand.
+- One project = one directory. Keep all files related to a project together.
 
 The [ProjectTemplate](http://projecttemplate.net/) (R) and [Cookiecutter Data Science](https://cookiecutter-data-science.drivendata.org/) (Python) tools can scaffold these structures automatically.
 
+If several analysts maintain separate extracts of the same source, consider shared, curated datasets with documented versions and refresh dates. @sec-infrastructure covers the storage and access options.
+
 ### Version controlling code with data on a shared drive {#sec-dataorg-sharedrive}
 
-Finally, it's not uncommon in public health settings to have a setup where you're working with collaborators version controlling code as described in @sec-git, but the data lives on a secure shared drive that cannot be moved or copied into the repository. This creates a tension between reproducibility and security that can be resolved with careful project organization and path management. The governance and access implications of working with data on secure shared drives, including data use agreements and secure data environments, are covered in @sec-governance.
+Finally, it's not uncommon in public health settings to have a setup where you're working with collaborators version controlling code as described in @sec-git, but the data lives on a secure shared drive that cannot be moved or copied into the repository. Keep the code portable by configuring paths to the approved data location. The governance and access implications of working with data on secure shared drives, including data use agreements and secure data environments, are covered in @sec-governance.
 
 Imagine that you have a distributed research team working with sensitive data that:
 
@@ -198,29 +200,29 @@ Imagine that you have a distributed research team working with sensitive data th
 - Requires collaborative code development across Windows, Mac, and Linux machines
 - Needs version control for reproducibility and collaboration
 
-Storing data in a _database_ would be preferable to a shared drive, but many public health agencies don't have the resources or infrastructure to set up and maintain databases. So how can we manage this?
+Storing data in a _database_ would be preferable to a shared drive, but many public health agencies don't have the resources or infrastructure to set up and maintain databases. Configurable paths support this arrangement.
 
 #### The Conflict
 
-Traditional approaches create impossible trade-offs:
+These approaches have drawbacks:
 
-**❌ Option 1: One code repository without proper path management**
+**Option 1: One code repository without proper path management**
 
 - Forces hardcoded paths: `setwd("Z:/Lab/StateA/2024")`
 - Breaks on different operating systems (Z:/ vs /Volumes/)
 - Breaks when different team members have different drive mappings
-- Violates[ project-oriented workflow](https://tidyverse.org/blog/2017/12/workflow-vs-script/) principles
+- Violates [project-oriented workflow](https://tidyverse.org/blog/2017/12/workflow-vs-script/) principles
 - Code is not reproducible
 
-**❌ Option 2: Code repositories inside each data folder**
+**Option 2: Code repositories inside each data folder**
 
 - Creates dozens of scattered git repositories
 - Makes code reuse nearly impossible
-- Version control nightmare (which repo has what function?)
+- Difficulty locating the current version of a shared function
 - Accidental data commits to version control
-- Multiple people doing git operations in the same shared folder causes conflicts. Not merge conflicts, but file locking and permission issues that can break everyone's workflow.
+- Multiple people doing git operations in the same shared folder can cause conflicts. These include file locking and permission errors.
 
-**❌ Option 3: Move data into code repository**
+**Option 3: Move data into code repository**
 
 - Violates data security requirements
 - Data cannot leave the secure shared drive
@@ -229,22 +231,22 @@ Traditional approaches create impossible trade-offs:
 
 #### A Better Way: Centralized Code Repository with Configurable Paths
 
-✅ One way to manage this is with a **single centralized code repository with configurable paths**:
+Use a **single code repository with configurable paths**, cloned to each analyst's machine:
 
-- One repository for all analysis code (easy to find, maintain, collaborate)  
-- Reproducible across team members with different operating systems  
-- Secure: data never leaves the shared drive or enters version control  
-- Flexible: works with nested folder structures  
-- Collaborative: proper git workflow without conflicts  
+- One repository for all analysis code (easy to find, maintain, collaborate)
+- Reproducible across team members with different operating systems
+- Secure: data never leaves the shared drive or enters version control
+- Flexible: works with nested folder structures
+- Collaborative: each analyst works in a separate local clone
 - Project-oriented: no `setwd()`, paths are configurable not hardcoded
 
 See [stephenturner/demo-project-path-config](https://github.com/stephenturner/demo-project-path-config) for an example of one way to do this using configuration files. This can also be achieved with environment variables. **How it works:**
 
-- Code lives in a git repository on each person's **local machine**
+- Code lives in a git repository on each person's local machine
 - Each team member has a personal `config.yml` file (not version controlled) with their specific paths
 - Code uses helper functions to construct paths dynamically
 - Data stays on the shared drive (read-only for most operations)
-- Outputs go to each person's local directories
+- Outputs go to an approved location appropriate for their sensitivity
 - Everyone commits code changes, never data
 
 ## File Formats
@@ -252,18 +254,18 @@ See [stephenturner/demo-project-path-config](https://github.com/stephenturner/de
 | Format | Best for | Avoid when |
 |--------|----------|------------|
 | `.csv` | Tabular data, analysis input/output | Binary data, very wide datasets |
-| `.tsv` | Tabular data with commas in values | — |
+| `.tsv` | Tabular data with commas in values | None specific |
 | `.json` | Nested/hierarchical data, configs | Large flat tables |
 | `.parquet` | Large tabular data, columnar access | Simple small datasets |
 | `.xlsx` | Data entry, sharing with non-coders | Final analysis-ready data |
 
-Plain text formats (CSV, TSV, JSON) are preferred for long-term storage and reproducibility. Proprietary binary formats (`.xlsx`, `.sav`, `.sas7bdat`) may become unreadable as software evolves. If you inherit data in these formats, @sec-legacy-data covers reading them into R and converting them to open formats.
+Plain text formats (CSV, TSV, JSON) are preferred for long-term storage and reproducibility. Keep portable exports of application-specific formats such as `.sav` and `.sas7bdat`. Although `.xlsx` uses an open specification, workbook formulas and formatting may be difficult to reproduce in other software. If you inherit data in these formats, @sec-legacy-data covers reading them into R and converting them to open formats.
 
 ## Additional Best Practices
 
-**Use version control for code, not data.** Git is designed for text files. Large or binary data files should live in dedicated storage (cloud drives, data repositories, databases) and be referenced in your code, not committed to the repository. Use a good `.gitignore`. 
+**Use version control for code, not data.** Git is designed for text files. Large or binary data files should live in dedicated storage (cloud drives, data repositories, databases) and be referenced in your code, not committed to the repository. Use a good `.gitignore`.
 
-**Document your cleaning steps.** The gap between raw and processed data should be bridged entirely by a script that anyone can run. Comments in that script explaining *why* you made certain decisions are invaluable.
+**Document your cleaning steps.** Generate processed data with scripts that authorized colleagues can run. Comments in that script explaining *why* you made certain decisions are invaluable.
 
 **Plan for sharing.** Before a project ends, ask: could someone else reproduce this analysis from the raw data? Good file organization, consistent naming, and a clear README make the answer yes.
 
