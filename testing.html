@@ -524,7 +524,7 @@ Differences:
 <span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="st">"3"</span>, <span class="fl">100000</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed with 1 success 🎊.</code></pre>
+<pre><code>Test passed with 1 success 😀.</code></pre>
 </div>
 </div>
 <p>This simple version passes because R rejects arithmetic on character input. The complete implementation below supplies a more specific message. Matching part of that message in a test helps distinguish the intended input check from an unrelated error.</p>
@@ -593,7 +593,7 @@ target is logical, current is numeric</code></pre>
 <span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span><span class="fu">suppress_small</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed with 3 successes 🥳.</code></pre>
+<pre><code>Test passed with 3 successes 😀.</code></pre>
 </div>
 </div>
 <p>Each input checks a separate decision. Zero is retained, counts 1 and 4 are masked, and 5 is retained because the threshold is exclusive. The last expectation checks an empty result, which may occur after filtering. Test cases like these explain the rule to a future maintainer without requiring them to infer it from the function.</p>
@@ -687,7 +687,7 @@ Lengths differ: 1 is not 2</code></pre>
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed with 4 successes 🎉.</code></pre>
+<pre><code>Test passed with 4 successes 🥇.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://testthat.r-lib.org/reference/test_that.html">test_that</a></span><span class="op">(</span><span class="st">"rates retain the stated units and vector behavior"</span>, <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_equal</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">50000</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span>
@@ -697,7 +697,7 @@ Lengths differ: 1 is not 2</code></pre>
 <span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_equal</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">50000</span>, per <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span>, <span class="fl">0.1</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed with 5 successes 🥳.</code></pre>
+<pre><code>Test passed with 5 successes 🥇.</code></pre>
 </div>
 </div>
 <p>The remaining tests cover empty inputs, invalid values, and changes to the suppression threshold. These cases follow from the stated requirements:</p>
@@ -709,7 +709,7 @@ Lengths differ: 1 is not 2</code></pre>
 <span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span><span class="fu">suppress_small</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed with 4 successes 🎊.</code></pre>
+<pre><code>Test passed with 4 successes 😸.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://testthat.r-lib.org/reference/test_that.html">test_that</a></span><span class="op">(</span><span class="st">"invalid inputs fail instead of being silently recycled or coerced"</span>, <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">200</span>, <span class="fl">300</span><span class="op">)</span><span class="op">)</span>, <span class="st">"equal lengths"</span><span class="op">)</span></span>
@@ -725,7 +725,7 @@ Lengths differ: 1 is not 2</code></pre>
 <span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">calc_rate</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span>, per <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1000</span><span class="op">)</span><span class="op">)</span>, <span class="st">"one finite"</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed with 11 successes 🎉.</code></pre>
+<pre><code>Test passed with 11 successes 😀.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://testthat.r-lib.org/reference/test_that.html">test_that</a></span><span class="op">(</span><span class="st">"suppression implements the illustrative policy without changing type"</span>, <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html">expect_identical</a></span><span class="op">(</span><span class="fu">suppress_small</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">12</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -739,7 +739,7 @@ Lengths differ: 1 is not 2</code></pre>
 <span>  <span class="fu"><a href="https://testthat.r-lib.org/reference/expect_error.html">expect_error</a></span><span class="op">(</span><span class="fu">suppress_small</span><span class="op">(</span><span class="fl">3</span>, threshold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>, <span class="st">"one positive"</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed with 8 successes 😸.</code></pre>
+<pre><code>Test passed with 8 successes 🌈.</code></pre>
 </div>
 </div>
 <p>A passing suite establishes that these cases work. It does not prove correctness for every input. Add tests when requirements change or a new failure exposes a case the suite missed.</p>
