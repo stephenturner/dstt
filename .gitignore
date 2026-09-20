@@ -19,3 +19,6 @@ site_libs/
 .Rhistory
 .DS_Store
 .memory
+
+# Local editorial notes
+_editorial-review.md

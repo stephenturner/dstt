@@ -22,7 +22,7 @@ Accept the default file location (`~/.ssh/id_ed25519`) and optionally set a pass
 cat ~/.ssh/id_ed25519.pub
 ```
 
-In GitHub, go to **Settings → SSH and GPG keys → New SSH key**, paste the output, give it a descriptive title (e.g., your machine name), and save.
+In GitHub, go to **Settings > SSH and GPG keys > New SSH key**, paste the output, give it a descriptive title (e.g., your machine name), and save.
 
 Verify the connection works:
 
@@ -64,7 +64,7 @@ Branches let multiple people work on different features or fixes simultaneously 
 
 ### Internal Organizational Workflow
 
-In most team workflows, the `main` branch is protected — direct pushes are disabled and changes must go through a pull request (PR) with at least one reviewer. Developers create short-lived branches for each piece of work, then open a PR when ready.
+Teams can protect the `main` branch by requiring a pull request (PR) and review before merging changes. Developers create short-lived branches for each piece of work, then open a PR when ready.
 
 Whatever branch naming convention a team adopts (tying the branch name to an issue number, as in `142-fix-denominator`, works well), record it where a new analyst will find it (@sec-onboarding-conventions). A practice repository, where someone can branch, break something, and open a PR without touching a production pipeline, is an effective way to teach this workflow (@sec-onboarding-practice).
 
@@ -119,7 +119,7 @@ On GitHub, navigate to the repository. A banner will appear prompting you to ope
 A reviewer approves the PR and merges it into `main` via the GitHub UI. After merging, delete the branch on GitHub (there is a button on the merged PR page). Locally, clean up with:
 
 ::: {.callout-note}
-Code review is easier when diffs contain only meaningful changes. If one contributor reformats a file by hand and another does not, a PR's diff may be dominated by whitespace changes that obscure the actual logic. Using a formatter like Air (see @sec-style-air) on every save means diffs reflect intent, not style preferences.
+Code review is easier when diffs contain only meaningful changes. If one contributor reformats a file by hand and another does not, a PR's diff may be dominated by whitespace changes that obscure the actual logic. Using a formatter like Air (see @sec-style-air) on every save means diffs are easier to review for changes in logic.
 :::
 
 ```bash
@@ -131,19 +131,19 @@ git branch -d feature/my-analysis
 :::{.callout-tip}
 **Branch naming conventions** help the team understand what a branch is for at a glance. Common prefixes:
 
-- `feature/` — new functionality (e.g., `feature/survival-analysis`)
-- `fix/` — bug fixes (e.g., `fix/date-parsing-error`)
-- `analysis/` — exploratory or one-off analyses (e.g., `analysis/q2-cohort`)
-- `docs/` — documentation updates
+- `feature/`: new functionality (e.g., `feature/survival-analysis`)
+- `fix/`: bug fixes (e.g., `fix/date-parsing-error`)
+- `analysis/`: exploratory or one-off analyses (e.g., `analysis/q2-cohort`)
+- `docs/`: documentation updates
 :::
 
 :::{.callout-note}
-Keep branches short-lived — ideally merged within a few days. Long-running branches diverge significantly from `main`, making merges painful and increasing the likelihood of conflicts.
+Keep branches short-lived, ideally merged within a few days. Long-running branches diverge significantly from `main`, making merges painful and increasing the likelihood of conflicts.
 :::
 
 ### Contributing to External Repositories
 
-When contributing to a repository you don't have write access to — such as an open-source tool or a public project from another team — the fork workflow is used instead. A fork is a personal copy of the repository under your GitHub account.
+Use a fork when contributing to a repository you do not have write access to, such as an open-source tool or another team's public project. A fork is a personal copy of the repository under your GitHub account.
 
 ```{mermaid}
 flowchart TD
@@ -188,7 +188,7 @@ git push -u origin fix/typo-in-readme
 
 **Step 5: Open a pull request to the upstream repository**
 
-On your fork's GitHub page, click **Contribute → Open pull request**. This creates a PR from your fork's branch into the original repository's `main` branch.
+On your fork's GitHub page, click **Contribute > Open pull request**. This creates a PR from your fork's branch into the original repository's `main` branch.
 
 **Step 6: Keep your fork in sync with upstream**
 
@@ -230,7 +230,7 @@ The current branch name appears in the status bar at the bottom of the window. C
 The Source Control panel has **Push** and **Pull** buttons in its toolbar (the `...` menu or the sync icon in the status bar). The sync button performs a pull followed by a push in one action.
 
 :::{.callout-tip}
-The integrated terminal in Positron (**Terminal → New Terminal**) is always available for Git operations that the UI doesn't expose — such as adding a remote, rebasing, cherry-picking, or any command requiring flags. The UI and terminal work on the same repository state, so you can mix both freely.
+The integrated terminal in Positron (**Terminal > New Terminal**) is always available for Git operations that the UI doesn't expose, such as adding a remote, rebasing, cherry-picking, or any command requiring flags. The UI and terminal work on the same repository state, so you can mix both freely.
 :::
 
 ## Merge Conflicts {#sec-git-conflicts}
@@ -278,7 +278,7 @@ flu_clean <- flu |> filter(!is.na(county), cases >= 1)
 
 1. Run `git merge <branch>` (or let a PR trigger the conflict). Git will report which files have conflicts.
 
-2. Open each conflicted file. Positron highlights conflict regions with inline buttons: **Accept Current Change**, **Accept Incoming Change**, **Accept Both Changes**, or **Compare Changes**. Click the appropriate option or edit the file manually to produce the correct final version.
+2. Open each conflicted file. Positron highlights conflict regions with inline buttons: Accept Current Change, Accept Incoming Change, Accept Both Changes, or Compare Changes. Click the appropriate option or edit the file manually to produce the correct final version.
 
 3. After resolving all conflicts in a file, save it and stage it:
 
@@ -299,7 +299,7 @@ Never leave conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) in committed code
 :::
 
 :::{.callout-tip}
-`git status` is your best friend during a conflict. It lists which files are in conflict (`both modified`), which are already resolved and staged, and what step to take next (commit or continue a rebase).
+Use `git status` during a conflict. It lists which files are in conflict (`both modified`), which are already resolved and staged, and what step to take next (commit or continue a rebase).
 
 ```bash
 git status
@@ -308,16 +308,16 @@ git status
 
 ## .gitignore {#sec-git-gitignore}
 
-A `.gitignore` file tells Git which files and directories to leave untracked. Anything listed there will not show up in `git status`, will not be staged by `git add .`, and will never be committed. Every project should have one.
+A `.gitignore` file tells Git which files and directories to leave untracked. Matching untracked files are omitted from ordinary `git status` output and `git add .`. Already tracked files remain tracked, and `git add -f` can override ignore rules. Every project should have one.
 
 ### Why it matters for data science
 
 Data science projects routinely contain files that should never go into version control:
 
-- **Raw and processed data.** Large files bloat a repository and slow every operation. Sensitive data files may have legal or compliance restrictions on where they can be stored. The project directory structure in @sec-dataorg-project places a `.gitignore` directly inside `data/` and `output/` to block these files at the source.
-- **Credentials and secrets.** `.env` files, config files with API keys or database passwords, and personal config files with paths to secure shared drives (see @sec-dataorg-sharedrive) should never be committed. Once a secret is in Git history, it is effectively public even if you delete it later.
-- **Derived outputs.** Figures, rendered reports, and cached results can be regenerated from code. Committing them creates noise in diffs and false impressions that something changed.
-- **Environment and editor artifacts.** Files like `.DS_Store` (macOS), `.Rhistory`, `.RData`, and IDE-specific folders communicate nothing useful to collaborators.
+- Raw and processed data. Large files bloat a repository and slow every operation. Sensitive data files may have legal or compliance restrictions on where they can be stored. The project directory structure in @sec-dataorg-project places a `.gitignore` directly inside `data/` and `output/` to block these files at the source.
+- Credentials and secrets. `.env` files, config files with API keys or database passwords, and personal config files with paths to secure shared drives (see @sec-dataorg-sharedrive) should never be committed. Deleting a secret from the working file does not remove it from history. Revoke or rotate an exposed credential.
+- Derived outputs. Figures, rendered reports, and cached results can be regenerated from code. Committing them creates noise in diffs and false impressions that something changed.
+- Environment and editor artifacts. Files like `.DS_Store` (macOS), `.Rhistory`, `.RData`, and IDE-specific folders communicate nothing useful to collaborators.
 
 ### Syntax
 
@@ -332,8 +332,8 @@ A `.gitignore` at the root of the repository applies to the whole project. The s
 # Ignore all files with this extension
 *.csv
 
-# Ignore a directory and everything in it
-data/raw/
+# Ignore generated outputs
+output/
 
 # Ignore a pattern anywhere in the tree
 **/.DS_Store
@@ -353,7 +353,7 @@ GitHub maintains a collection of language-specific templates at [github.com/gith
 .Rhistory
 .RData
 .Rproj.user/
-*.Rproj          # add back if you want to commit the project file
+# Keep .Rproj files tracked so collaborators can open the project
 
 # Python
 __pycache__/
@@ -371,7 +371,9 @@ output/
 Thumbs.db
 
 # Credentials and personal config
-config.yml       # if it contains paths or secrets
+.Renviron
+# Ignore personal configuration containing paths or secrets
+config.yml
 *.key
 *.pem
 ```

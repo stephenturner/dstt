@@ -8,7 +8,7 @@ Nearly everything listed here is free. @sec-trainingbudget covers the separate q
 
 **[R for Data Science](https://r4ds.hadley.nz/)** (Wickham, Çetinkaya-Rundel, and Grolemund) is the standard starting point for learning the tidyverse. It covers data import, transformation with dplyr, visualization with ggplot2, and the broader workflow of doing data analysis in R. The second edition is freely available online. Most DSTT participants will benefit from working through at least the first half.
 
-**[What They Forgot to Teach You About R](https://rstats.wtf/)** (Bryan and Hester) is not about R syntax — it is about working in R effectively: project-oriented workflows, path discipline, R startup files, and the habits that separate reproducible work from fragile one-off scripts. Short and practical.
+**[What They Forgot to Teach You About R](https://rstats.wtf/)** (Bryan and Hester) covers working in R effectively: project-oriented workflows, path discipline, R startup files, and the habits that separate reproducible work from fragile one-off scripts. Short and practical.
 
 **[The tidyverse style guide](https://style.tidyverse.org/)** documents naming conventions, spacing, and code organization conventions used across the tidyverse. Following a consistent style makes code easier to read, review, and maintain. The [`styler`](https://styler.r-lib.org/) package can apply many of these rules automatically.
 
@@ -16,9 +16,9 @@ Nearly everything listed here is free. @sec-trainingbudget covers the separate q
 
 **[Advanced R](https://adv-r.hadley.nz/)** (Wickham) covers R's object systems, functional programming, metaprogramming, and performance. It is aimed at people who already use R regularly and want to understand why things work the way they do, write more expressive code, and debug problems that go beyond "my package isn't loading."
 
-**[R Packages](https://r-pkgs.org/)** (Wickham and Bryan) is the definitive guide to writing R packages. A package is the right container for analysis code that needs to be shared across projects or team members — it bundles functions, documentation, and tests in a standardized way that makes everything easier to reuse. Even teams that do not plan to publish to CRAN benefit from the structure packages impose. This book walks through the complete workflow using `devtools` and `usethis`.
+**[R Packages](https://r-pkgs.org/)** (Wickham and Bryan) is the definitive guide to writing R packages. A package is the right container for analysis code that needs to be shared across projects or team members. It bundles functions, documentation, and tests in a standardized way that makes everything easier to reuse. Even teams that do not plan to publish to CRAN benefit from the structure packages impose. This book walks through the complete workflow using `devtools` and `usethis`.
 
-**[Mastering Shiny](https://mastering-shiny.org/)** (Wickham) covers building interactive web applications with Shiny. Shiny apps require a running R process (unlike Quarto dashboards) but support arbitrary interactivity — user-driven filtering, on-the-fly modeling, custom inputs. This book covers reactive programming, app architecture, and deployment.
+**[Mastering Shiny](https://mastering-shiny.org/)** (Wickham) covers building interactive web applications with Shiny. Shiny apps require a running R process (unlike Quarto dashboards) but support interactivity such as user-driven filtering, on-the-fly modeling, custom inputs. This book covers reactive programming, app architecture, and deployment.
 
 ## Visualization
 
@@ -34,19 +34,19 @@ Nearly everything listed here is free. @sec-trainingbudget covers the separate q
 
 ## Public Health Data Science
 
-**[The Epidemiologist R Handbook](https://epirhandbook.com/)** is a comprehensive, freely available reference manual written specifically for epidemiologists and public health practitioners using R. It covers data management, descriptive analyses, outbreak investigation, time series, spatial analysis, and reporting -- all with worked examples using realistic public health data. For DSTT teams, this is the most directly applicable reference for day-to-day analytical work.
+**[The Epidemiologist R Handbook](https://epirhandbook.com/)** is a comprehensive, freely available reference manual written specifically for epidemiologists and public health practitioners using R. It covers data management, descriptive analyses, outbreak investigation, time series, spatial analysis, and reporting, with worked examples using realistic public health data. For DSTT teams, this is the most directly applicable reference for day-to-day analytical work.
 
 **[Building Reproducible Analytical Pipelines with R](https://raps-with-r.dev/)** (Rodrigues) covers functional programming, package-based project structure, Docker, and Nix as a complete framework for building analyses that can be re-run reliably. It connects topics from the environments chapter (@sec-environments) and goes substantially deeper on each.
 
 ## Databases from R
 
-Most public health data lives in relational databases -- SQL Server, PostgreSQL, Oracle, SQLite -- not in CSV files on a shared drive. R can query these databases directly, returning results as data frames without any manual export step.
+Many agencies store surveillance data in relational databases such as SQL Server, PostgreSQL, Oracle, or SQLite. R can query these databases directly, returning results as data frames without any manual export step.
 
 **[Posit's database guide](https://solutions.posit.co/connections/db/)** is the best starting point. It covers the overall architecture (DBI as the connection layer, specific driver packages per database type), connection setup in Positron and RStudio, and best practices for credentials and connection management.
 
 **[DBI](https://dbi.r-dbi.org/)** is the foundational package. It defines the interface that all R database drivers implement: `dbConnect()` to open a connection, `dbGetQuery()` to run a SQL query and return results, `dbDisconnect()` to close the connection. If you know the SQL you want to run, DBI is the direct path.
 
-**[dbplyr](https://dbplyr.tidyverse.org/)** extends dplyr to work against database tables. Instead of writing SQL, you write normal dplyr code — `filter()`, `mutate()`, `summarize()` — and dbplyr translates it to SQL and runs it on the database. This is useful when the team knows dplyr well and the database queries are not highly complex. `collect()` pulls the results into R as a local data frame.
+**[dbplyr](https://dbplyr.tidyverse.org/)** extends dplyr to work against database tables. Instead of writing SQL, you write normal dplyr code (`filter()`, `mutate()`, `summarize()`) and dbplyr translates it to SQL and runs it on the database. This is useful when the team knows dplyr well and the database queries are not highly complex. `collect()` pulls the results into R as a local data frame.
 
 ## APIs and Public Data
 
@@ -68,11 +68,11 @@ Most public health data lives in relational databases -- SQL Server, PostgreSQL,
 
 **[The Tableau REST API reference](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api.htm)** documents authentication, publishing, and extract refresh, which are the endpoints worth automating from R (@sec-bi-publishing). The vendor documentation is the only reliable source here, because these APIs version independently of any R wrapper.
 
-**[The Microsoft Fabric and Power BI REST API reference](https://learn.microsoft.com/en-us/rest/api/fabric/)** is the equivalent for Power BI, covering dataset refresh and workspace management.
+**[The Power BI REST API reference](https://learn.microsoft.com/en-us/rest/api/power-bi/)** covers dataset refresh and workspace management. The [Fabric REST API](https://learn.microsoft.com/en-us/rest/api/fabric/) documents additional Fabric services.
 
 ## Package Dependencies
 
-**[Tidyverse design principles: dependencies](https://principles.tidyverse.org/dependencies.html)** documents how the tidyverse team weighs taking on a dependency in a package they maintain. Short, opinionated, and the clearest available statement of the tradeoffs in @sec-dependencies-cost.
+**[Dependencies: Mindset and Background](https://r-pkgs.org/dependencies-mindset-background.html)** in *R Packages* explains the costs and benefits of package dependencies, complementing @sec-dependencies-cost.
 
 **[The lifecycle package documentation](https://lifecycle.r-lib.org/articles/stages.html)** explains what each stage badge (stable, experimental, superseded, deprecated) commits a maintainer to, which is what you need to interpret a function's badge before building on it.
 
@@ -86,7 +86,7 @@ Most public health data lives in relational databases -- SQL Server, PostgreSQL,
 
 ## Automation and Reproducible Environments
 
-**[The targets user manual](https://books.ropensci.org/targets/)** [@landau2021targets] is the reference for the pipeline tool introduced in @sec-automation-targets. The chapters on debugging pipelines and on branching over many inputs are where it pays off for surveillance work.
+**[The targets user manual](https://books.ropensci.org/targets/)** [@landau2021targets] is the reference for the pipeline tool introduced in @sec-automation-targets. The chapters on debugging pipelines and branching over many inputs are useful for recurring surveillance work.
 
 **[The Rocker Project](https://rocker-project.org/)** documents the Docker images used in @sec-environments-rocker, including which image to start from and how the versioned tags work.
 
@@ -96,48 +96,48 @@ Most public health data lives in relational databases -- SQL Server, PostgreSQL,
 
 **[The WCAG 2.2 quick reference](https://www.w3.org/WAI/WCAG22/quickref/)** is the practical, filterable version of the standard behind the requirements in @sec-accessibility-regs. Filter to Level AA and to the guidelines relevant to your output type.
 
-**[The Section508.gov training materials](https://www.section508.gov/training/)** are written for federal staff and are the most concrete guidance available on documents, spreadsheets, and presentations rather than web pages.
+**[The Section508.gov training materials](https://www.section508.gov/training/)** are written for federal staff and cover documents, spreadsheets, and presentations.
 
 ## AI Tools and Governance
 
 **[The NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework)** [@nist2023airmf] and its companion playbook give an agency AI policy a structure that compliance reviewers recognize. The starting point for @sec-aigovernance-contents.
 
-**[The OMB memoranda index](https://www.whitehouse.gov/omb/information-for-agencies/memoranda/)** is where current federal guidance on agency AI use lives. These are revised by administration, so consult the index rather than a specific memo number.
+**[The OMB memoranda index](https://www.whitehouse.gov/omb/information-for-agencies/memoranda/)** is where current federal guidance on agency AI use lives. These are revised by administration, so check the index for current guidance.
 
-**[The Positron Assistant documentation](https://positron.posit.co/assistant.html)** and the [Claude Code documentation](https://code.claude.com/docs/) cover the tools in @sec-ai in more depth than that chapter does, including configuration, permissions, and what context each tool sends.
+**[The Posit Assistant documentation](https://positron.posit.co/assistant.html)** and the [Claude Code documentation](https://code.claude.com/docs/) cover the tools in @sec-ai in more depth than that chapter does, including configuration, permissions, and what context each tool sends.
 
 ## Team Practice and Onboarding
 
-**[The GitLab Handbook](https://handbook.gitlab.com/)** is the largest publicly available example of a handbook-first organization. Far more than a small epidemiology team needs, and the best available model for how a handbook is structured and maintained (@sec-onboarding-maintenance).
+**[The GitLab Handbook](https://handbook.gitlab.com/)** documents how GitLab operates. Its scope exceeds a small epidemiology team's needs, but its structure and maintenance practices provide useful examples (@sec-onboarding-maintenance).
 
 **[The Turing Way](https://book.the-turing-way.org/)** is a community-built guide to reproducible, ethical, collaborative data science. Its guides on project design, collaboration, and communication overlap substantially with the nontechnical part of this book and go deeper on several topics.
 
-**[The Carpentries](https://carpentries.org/lessons/)** publish workshop curricula on R, the shell, Git, and SQL that a team can work through together. The lessons are openly licensed, so they can be adapted into your own onboarding material rather than merely linked.
+**[The Carpentries](https://carpentries.org/lessons/)** publish workshop curricula on R, the shell, Git, and SQL that a team can work through together. The lessons are openly licensed, so they can be adapted for your own onboarding material.
 
 ## Migrating from Legacy Tools
 
-**[R for Excel Users](https://rstudio-conf-2020.github.io/r-for-excel/)** (Lowndes and Horst) is a free, workshop-format course aimed at analysts whose current workflow is Excel, covering the transition to R, RStudio/Positron, and reproducible project habits. A good group-study resource for teams working through the migration described in @sec-legacy.
+**[R for Excel Users](https://rstudio-conf-2020.github.io/r-for-excel/)** (Lowndes and Horst) is a free, workshop-format course aimed at analysts whose current workflow is Excel, covering the transition to R, RStudio, and reproducible project habits. A good group-study resource for teams working through the migration described in @sec-legacy.
 
 **[haven](https://haven.tidyverse.org/)** reads SAS, SPSS, and Stata files into R, preserving value labels and special missing values. Its documentation covers the details of labelled data that matter when converting legacy datasets to open formats.
 
 ## Online Courses
 
-The [**Johns Hopkins Data Science Specialization**](https://www.coursera.org/specializations/jhu-data-science) on Coursera is a 10-course sequence by Roger Peng, Jeff Leek, and Brian Caffo covering the complete applied data science workflow in R: tooling, data acquisition, exploratory analysis, reproducible research, statistical inference, regression, machine learning, and building data products. Individual courses can be audited free. The most standalone-useful courses for public health practitioners are:
+The [**Johns Hopkins Data Science Specialization**](https://www.coursera.org/specializations/jhu-data-science) on Coursera is a 10-course sequence by Roger Peng, Jeff Leek, and Brian Caffo covering the complete applied data science workflow in R: tooling, data acquisition, exploratory analysis, reproducible research, statistical inference, regression, machine learning, and building data products. Check each course's current access options; preview, audit, and certificate terms vary. Public health practitioners may find these individual courses useful:
 
-- **[R Programming](https://www.coursera.org/learn/r-programming)**: the core language, data structures, control flow, and functions. A solid foundation if you are new to R or coming from another language.
-- **[Exploratory Data Analysis](https://www.coursera.org/learn/exploratory-data-analysis)**: visualization and summarization as an investigative tool, not a reporting tool.
-- **[Reproducible Research](https://www.coursera.org/learn/reproducible-research)**: the rationale and practice of literate programming in R, closely aligned with the approach in @sec-reporting.
+- [R Programming](https://www.coursera.org/learn/r-programming): the core language, data structures, control flow, and functions. A solid foundation if you are new to R or coming from another language.
+- [Exploratory Data Analysis](https://www.coursera.org/learn/exploratory-data-analysis): visualization and summarization as an investigative tool, not a reporting tool.
+- [Reproducible Research](https://www.coursera.org/learn/reproducible-research): the rationale and practice of literate programming in R, closely aligned with the approach in @sec-reporting.
 
 The [**Johns Hopkins Executive Data Science Specialization**](https://www.coursera.org/specializations/executive-data-science) (also by Peng, Leek, and Caffo) is a shorter, less technical sequence aimed at managers who lead or commission data science work. It pairs well with @sec-pm and is useful for team leads who want to communicate more effectively with analysts.
 
 ## Version Control
 
-**[Happy Git and GitHub for the useR](https://happygitwithr.com/)** (Bryan) is the companion reference to @sec-git. It covers installation and configuration in detail, the full range of workflows for collaborating on GitHub, and a substantial troubleshooting section for the inevitable moments when Git does something unexpected. Required reading for anyone who wants to move past the basics.
+**[Happy Git and GitHub for the useR](https://happygitwithr.com/)** (Bryan) is the companion reference to @sec-git. It covers installation and configuration in detail, the full range of workflows for collaborating on GitHub, and a substantial troubleshooting section for the inevitable moments when Git does something unexpected. Useful when you want to move beyond the introductory workflow.
 
 ## Quarto
 
-The **[Quarto documentation](https://quarto.org/docs/)** at quarto.org is comprehensive and well-maintained. Key sections beyond what this book covers:
+The **[Quarto documentation](https://quarto.org/docs/guide/)** at quarto.org is comprehensive and well-maintained. Key sections beyond what this book covers:
 
-- [**Quarto Projects**](https://quarto.org/docs/projects/quarto-projects.html) — organizing multiple documents with shared configuration, a prerequisite for generating many parameterized reports at once.
-- [**GitHub Actions for Quarto**](https://quarto.org/docs/publishing/github-pages.html#github-action) — automating rendering and publishing on push, so reports update without manual intervention.
-- [**Quarto Extensions**](https://quarto.org/docs/extensions/) — community-contributed output formats, shortcodes, and filters that extend what Quarto can produce.
+- [Quarto Projects](https://quarto.org/docs/projects/quarto-projects.html): organizing multiple documents with shared configuration, a prerequisite for generating many parameterized reports at once.
+- [GitHub Actions for Quarto](https://quarto.org/docs/publishing/github-pages.html#github-action): automating rendering and publishing on push, so reports update without manual intervention.
+- [Quarto Extensions](https://quarto.org/docs/extensions/): community-contributed output formats, shortcodes, and filters that extend what Quarto can produce.

@@ -1,22 +1,22 @@
 # Peer Review for Data Analysis {#sec-peerreview}
 
-Analysis code is not the same as production software, but the reasons for reviewing it overlap substantially. Errors in analytical code produce wrong results. Wrong results inform wrong decisions. In public health, wrong decisions have consequences. Peer review is the primary mechanism for catching errors before they reach a decision-maker, and for building a team culture where good work is a shared responsibility rather than a solo performance.
+Peer review helps catch errors in analysis code, methods, and interpretation before the results inform a decision. It also gives colleagues a chance to learn how the analysis works and share responsibility for its quality.
 
-This chapter covers what analytical peer review looks like in practice, how to structure a review, and the tools that make it easier — including AI as a review aid.
+This chapter covers what analytical peer review looks like in practice, how to structure a review, and the tools that make it easier, including AI as a review aid.
 
-## What Analytical Peer Review Is (and Is Not) {#sec-peerreview-scope}
+## Scope of Analytical Peer Review {#sec-peerreview-scope}
 
 Peer review in this context means having someone other than the original analyst read and evaluate the analysis before its results are communicated. This is different from:
 
-- **Software code review**, which focuses on correctness, security, and maintainability of code that runs in production. Analytical code has different concerns: Does the question match the data? Are the methods appropriate? Are the results interpreted correctly?
-- **Statistical peer review** in the academic sense, where a journal reviewer evaluates methodological rigor. The bar here is lower and the turnaround is much faster — the goal is to catch errors, not to grant imprimatur.
-- **Proofreading a report**, which catches writing problems but misses analytical ones. A clearly written report can present a wrong answer clearly.
+- Software code review, which focuses on correctness, security, and maintainability of code that runs in production. Analytical code has different concerns: Does the question match the data? Are the methods appropriate? Are the results interpreted correctly?
+- Statistical peer review in the academic sense, where a journal reviewer evaluates methodological rigor. Internal review can be narrower and faster, with depth matched to the consequences of error.
+- Proofreading a report, which catches writing problems but misses analytical ones. A clearly written report can present a wrong answer clearly.
 
 A good analytical peer review evaluates three things:
 
-1. **Correctness of the code**: Does the code do what the analyst says it does? Are there off-by-one errors, filter inversions, or joins that silently drop records?
-2. **Appropriateness of the methods**: Is the analysis designed to answer the question being asked? Are there obvious alternative interpretations the analyst did not consider?
-3. **Validity of the conclusions**: Do the stated findings follow from the results? Are uncertainty and limitations communicated accurately?
+1. Correctness of the code: Does the code do what the analyst says it does? Are there off-by-one errors, filter inversions, or joins that silently drop records?
+2. Appropriateness of the methods: Is the analysis designed to answer the question being asked? Are there obvious alternative interpretations the analyst did not consider?
+3. Validity of the conclusions: Do the stated findings follow from the results? Are uncertainty and limitations communicated accurately?
 
 None of these require the reviewer to rerun the analysis from scratch, though doing so is valuable when stakes are high.
 
@@ -60,13 +60,13 @@ A review is useful only if feedback is acted on, and feedback is acted on only i
 
 **For reviewers:** Be specific about what you are flagging and why. "This join might be producing duplicates: there are multiple rows per `case_id` in `contact_table`, which means a left join on `case_id` will multiply the case rows. Can you verify the row count before and after?" is more actionable than "check the join."
 
-**For analysts:** Treat a review comment as a question, not a criticism. The reviewer may be wrong; if so, a short explanation resolves it. But the reviewer may have caught something real and the fact that the analysis worked correctly in a different case does not mean it works correctly in this one.
+**For analysts:** Investigate review comments and explain your reasoning. The reviewer may be wrong; if so, a short explanation resolves it. But the reviewer may have caught something real and the fact that the analysis worked correctly in a different case does not mean it works correctly in this one.
 
-**For teams:** Normalize review as a default, not an exception reserved for high-stakes work. A team where review is standard for all analysis will catch errors earlier and distribute knowledge more evenly than one where review is triggered only by anxiety.
+**For teams:** Make review a routine part of analytical work. A team where review is standard for all analysis will catch errors earlier and distribute knowledge more evenly than one where review is triggered only by anxiety.
 
 ## Checklists for Analytical Review {#sec-peerreview-checklist}
 
-Checklists help reviewers maintain consistency and avoid the bias of reading the analysis looking to confirm that it is correct. Reviewing analytically requires some skepticism, reading the code as if looking for errors rather than checking off steps.
+Checklists help reviewers maintain consistency and avoid the bias of reading the analysis looking to confirm that it is correct. Reviewing analytically requires some skepticism, checking how the code could fail.
 
 A basic checklist for most analytical peer reviews:
 
@@ -111,13 +111,13 @@ The reciprocal case matters too: code produced by these tools should go through 
 **Where AI tools are not reliable:**
 
 - Verifying that the analytical methods are appropriate for the question (this requires domain knowledge)
-- Detecting errors that require understanding the real-world data (e.g., knowing that a particular jurisdiction stopped reporting in 2021, so a sudden drop is a data artifact rather than a true change)
+- Detecting errors that require understanding the real-world data (e.g., knowing that a particular jurisdiction stopped reporting in 2021, so a sudden drop is a consequence of missing reports)
 - Evaluating whether conclusions are well-supported (this requires both analytical judgment and knowledge of the context)
 
-A practical workflow: use the Positron Assistant (see @sec-ai-positron-assistant) or Claude Code (see @sec-ai-claude-code) to review a script for mechanical issues (does the logic match the description, are there obvious error patterns) and then have a human reviewer focus on whether the analysis is asking the right question and drawing the right conclusions from the results.
+A practical workflow: use Posit Assistant (see @sec-ai-positron-assistant) or Claude Code (see @sec-ai-claude-code) to review a script for mechanical issues (does the logic match the description, are there obvious error patterns) and then have a human reviewer focus on whether the analysis is asking the right question and drawing the right conclusions from the results.
 
 ::: {.callout-note}
-AI tools will sometimes confidently identify a "problem" that is not actually a problem. Any AI-generated review comment should be treated as a starting point for investigation, not a definitive finding. The human reviewer is responsible for the review.
+AI tools will sometimes confidently identify a "problem" that is not actually a problem. Investigate AI-generated review comments before accepting them. The human reviewer is responsible for the review.
 :::
 
 ## High-Stakes Analyses {#sec-peerreview-highstakes}
@@ -135,12 +135,12 @@ For high-stakes work, consider independent replication: a second analyst replica
 
 ## Building a Review Culture {#sec-peerreview-culture}
 
-Peer review works best when it is a team norm, not a gatekeeping mechanism. Teams that review well share a few characteristics:
+Agree on review expectations as a team. Teams that review well share a few characteristics:
 
 **Review is not optional for consequential work.** There is a clear, shared expectation that analyses above a certain threshold of importance are reviewed before results are communicated.
 
-**Review is timely.** A review request that sits for two weeks creates pressure to skip it. Teams that review quickly, i.e. same or next business day for most requests, make review practical rather than theoretical.
+**Review is timely.** A review request that sits for two weeks creates pressure to skip it. Teams that review quickly, i.e. same or next business day for most requests, make time for review in the workflow.
 
 **Reviewers are recognized for good reviews.** Catching an error that would have been embarrassing is a contribution. Teams that treat review as invisible overhead underinvest in it.
 
-**Review is a learning mechanism.** The goal is not to police quality but to improve it. Analysts who receive good reviews get better. Reviewers who read a lot of others' code develop a broader perspective on the team's methods and practices.
+**Review is a learning mechanism.** Use review to help analysts improve their work. Analysts who receive good reviews get better. Reviewers who read a lot of others' code develop a broader perspective on the team's methods and practices.

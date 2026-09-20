@@ -1,28 +1,28 @@
 # Package Development {#sec-package-development}
 
-Most R users start writing functions to avoid repeating themselves. The same data cleaning steps appear in three scripts, so they get pulled into a shared helper. That helper gets sourced into a fourth script. A colleague asks for it and it gets emailed. Then it breaks on their machine because they're missing some dependency. At some point the question becomes: why not just make this a package?
+Most R users start writing functions to avoid repeating themselves. The same data cleaning steps appear in three scripts, so they get pulled into a shared helper. That helper gets sourced into a fourth script. A colleague asks for it and it gets emailed. Then it breaks on their machine because they're missing some dependency. A package provides a standard way to distribute these shared functions.
 
-My general rule is: If you do something more than once, write a function. If you write more than one function, make it a package. 
+My general rule is: If you do something more than once, write a function. If you write more than one function, make it a package.
 
-An R package is the right unit of sharing for reusable code. It gives your functions a home with documentation, a test suite, versioning, and a clear installation path.
+An R package is the right unit of sharing for reusable code. It combines your functions with documentation, a test suite, versioning, and a clear installation path.
 
 This chapter is a brief introduction to R package development. It is not a comprehensive guide, but it will give you the basics and point you to resources for learning more.
 
 ## Why build a package? {#sec-package-development-why}
 
-The most visible benefit is sharing, but that undersells it. Packaging imposes structure that improves code before anyone else touches it.
+Copied helper functions are easy to lose track of. If three reports contain their own copy of a county-cleaning function, a correction in one report may never reach the others. With a shared package, the team maintains one implementation, reviews the correction once, and releases an update that each project can adopt.
 
-Documentation is required, not optional. Every exported function must have a help page describing what each argument does, what the function returns, and what edge cases exist. A comment in a script is optional; `R CMD CHECK` will warn if documentation is missing. Writing it forces careful thinking about the function's interface, and once written, it is available to anyone who types `?your_function`.
+Writing function documentation makes you decide what callers can expect. For a rate calculation, that includes the denominator units, the treatment of missing values, and the result when the population is zero. Those decisions help a colleague use the function without reading its implementation or asking its author. Package help pages make the answers available through `?your_function`, and `R CMD check` warns about undocumented exported objects. @sec-documentation-roxygen covers writing that documentation alongside the code.
 
-Dependencies must be declared. A script accumulates `library()` calls by habit. A package requires you to enumerate exactly what it depends on in a `DESCRIPTION` file. When someone installs your package, those dependencies install automatically. There is no guessing about which packages need to be present. This is the same problem `renv` addresses for project-level reproducibility (see @sec-environments-renv), but solved at the code level rather than the project level.
+Declaring dependencies in `DESCRIPTION` records which packages your code needs. Installation tools use those declarations to install required R packages from the configured sources. A colleague no longer has to reconstruct the set of packages you happened to have loaded when you wrote the helper. The declarations also give reviewers a place to inspect the package's dependencies and assess the cost of adding another one (@sec-dependencies).
 
-Sharing becomes a single command. A package on GitHub can be installed by anyone with `remotes::install_github("yourname/yourpkg")`. No files to transfer, no paths to configure, no sourcing step to explain. The package can also be pinned in a project's `renv` lockfile like any CRAN package.
+A package gives the team a repeatable installation procedure. You can distribute it through an internal repository or a Git repository that colleagues can access; publishing on CRAN is optional. Installation puts the functions and their help pages in the expected locations, so each analysis can load the package without setting paths to a shared helper script. New team members can follow the same setup instructions as everyone else.
 
-Testing has a natural home. Package development pairs with unit testing through the testthat framework. A suite of passing tests is a concrete claim that the functions behave as documented. Finding that a change broke something during development is far cheaper than finding it later.
+Shared functions need tests because a change can affect several analyses. A suppression helper, for example, should have tests for counts just below and at the threshold, as well as zero and missing values. Keeping those tests with the package lets you run them before releasing a change. A colleague fixing one case can check whether the other documented cases still work. @sec-testing covers choosing useful tests and adding regression tests after a bug.
 
-A public health team that builds a shared package of common utilities (data validation functions, standard plot themes, reporting helpers) gets documented interfaces, declared dependencies, and a single install command that works for anyone on the team.
+Versioned releases let projects adopt changes deliberately. A report already under review can continue using the version it was checked with while another project tests an update. Record the package version in each project's `renv` lockfile and retain access to its source so the environment can be restored (@sec-environments-renv). Declaring dependencies tells users what the package needs; the lockfile records the versions a particular analysis used.
 
-The question that follows immediately is how many packages, and how to split them. Several small ones beat one large one, organized by functionality rather than by data source, for reasons covered in @sec-dependencies-ownpackage.
+A package still needs someone responsible for reviewing changes, maintaining documentation, and releasing updates. Start with functions that several projects already share, such as common validation checks or reporting helpers. @sec-dependencies-ownpackage discusses how to divide that code into packages with a manageable scope.
 
 ## The package development workflow {#sec-package-development-workflow}
 
@@ -30,17 +30,17 @@ The core loop of package development (edit code, load and run it, run tests, upd
 
 ![The package development workflow. Source: [Posit Package Development Cheat Sheet](https://rstudio.github.io/cheatsheets/html/package-development.html), CC BY 4.0.](images/pkg-dev-workflow.png){fig-alt="Diagram showing the R package development cycle: edit code feeds into load_all() and back; edit tests feeds into test() and back; edit roxygen feeds into document() and back. test() and document() both feed into check(), which leads to git commit and git push."}
 
-R package development is an entire topic in itself, and this section is just a brief introduction. Below I'll point you to some helpful resources.
+Use the resources below for a complete walkthrough.
 
 ## Resources {#sec-package-development-resources}
 
-The definitive reference is [*R Packages* (2nd ed.)](https://r-pkgs.org/) by Hadley Wickham and Jennifer Bryan [@wickham2023rpkgs], available free online. It covers package structure, function documentation, testing, data, and the publication process. 
+The definitive reference is [*R Packages* (2nd ed.)](https://r-pkgs.org/) by Hadley Wickham and Jennifer Bryan [@wickham2023rpkgs], available free online. It covers package structure, function documentation, testing, data, and the publication process.
 
 The [Posit Package Development cheat sheet](https://rstudio.github.io/cheatsheets/html/package-development.html) is a quick reference for the devtools and usethis commands used throughout development.
 
 ![The Posit Package Development cheat sheet. Source: [Posit](https://rstudio.github.io/cheatsheets/html/package-development.html), CC BY 4.0.](images/pkg-dev-cheatsheet.jpg){fig-alt="The Posit package development cheat sheet, summarizing devtools and usethis functions for creating, documenting, testing, and distributing R packages."}
 
-In January 2026, I gave a two-hour workshop on R package development in Positron covering this workflow end to end: package structure, writing and documenting functions, exported package data, programming with dplyr, unit tests with testthat, code coverage with covr, continuous integration with GitHub Actions, and a pkgdown documentation site. I also demonstrated using Positron Assistant with Claude in a few places..
+In January 2026, I gave a two-hour workshop on R package development in Positron covering this workflow end to end: package structure, writing and documenting functions, exported package data, programming with dplyr, unit tests with testthat, code coverage with covr, continuous integration with GitHub Actions, and a pkgdown documentation site. I also demonstrated using Positron Assistant with Claude in a few places.
 
 All materials are available:
 
@@ -51,4 +51,4 @@ All materials are available:
 
 {{< video https://www.youtube.com/watch?v=hc_RwZx3wNE >}}
 
-Finally, the [Writing R Extensions manual](https://cran.r-project.org/doc/manuals/r-release/R-exts.html) is the official reference for package structure and metadata. It is a bit dry, but it is the source of truth for how packages work under the hood. I'd recommend starting with the R Packages book and asking your favorite AI for help when you run into trouble, but the R Extensions manual is the detailed authoritative guide and is there when you need it.
+Finally, the [Writing R Extensions manual](https://cran.r-project.org/doc/manuals/r-release/R-exts.html) is the official reference for package structure and metadata. It is a bit dry, but it is the source of truth for how packages work internally. I'd recommend starting with the R Packages book and asking your favorite AI for help when you run into trouble, but the R Extensions manual is the detailed authoritative guide and is there when you need it.

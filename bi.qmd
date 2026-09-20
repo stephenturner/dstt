@@ -10,20 +10,20 @@ suppressWarnings(suppressPackageStartupMessages(library(dplyr)))
 
 @sec-dashboards covers dashboards built in Quarto, where the entire product is a text file under version control. Many public health teams publish through Tableau or Power BI instead. The license is already paid, often at the enterprise level; program staff already know the interface; and in agencies where the BI platform is the sanctioned publishing route, a Quarto dashboard is not an accepted substitute regardless of its technical merits.
 
-This chapter covers how to keep an analysis reproducible when the presentation layer is a proprietary application. The organizing principle is that everything reproducible belongs upstream of the extract, in R and in version control, and the BI tool reads a prepared file and draws from it. The more work that sits on the R side of that boundary, the less of the analysis is locked inside a binary artifact.
+This chapter covers how to keep an analysis reproducible when the presentation layer is a proprietary application. The organizing principle is that shared analytical rules belong in version-controlled preparation code, and the BI tool reads the prepared data. Calculations that depend on interactive selections may remain in the BI model, with their definitions and checks under version control where the format supports it.
 
-There is a longer-term argument for the same arrangement. Skills in an open, code-based stack transfer between employers and between platforms, while skills in a specific version of a vendor's interface do not. The same holds for the work itself: an R pipeline survives an agency replacing Tableau with Power BI. This is a reason to be deliberate about where the work lives rather than a reason to avoid the platform.
+There is a longer-term argument for the same arrangement. R skills and reusable analysis code transfer across projects, including those using different BI platforms. The same holds for the work itself: an R pipeline survives an agency replacing Tableau with Power BI. Keep the analysis portable when deciding where to implement it.
 
 ## Dividing the Work {#sec-bi-seam}
 
-Everything on the R side of the boundary is reproducible: it lives in version control, re-runs from raw data, and can be reviewed and tested. Everything on the BI side reads a prepared extract and displays it.
+Keep the R preparation code in version control, test it, and verify that it reruns from raw data. Use the BI application to display the prepared extract.
 
-Logic migrates across that boundary easily, because moving it is faster in the moment. A calculated field that recodes a category, a filter that drops out-of-state records, a computed measure that defines a rate. Individually these are small conveniences. Collectively they produce an analysis that exists only inside a binary file, where it cannot be reviewed, tested, or reproduced.
+It can be convenient to recode categories, exclude records, or define rates inside a workbook. Those rules then need their own documentation, tests, and review. If another report uses the same rules, implement them in shared preparation code to avoid maintaining two versions.
 
-One diagnostic is whether you could produce the same numbers as a table in a written report using only the R code. If not, business logic has migrated into the dashboard.
+For a specified set of filters, check that an independent calculation reproduces the dashboard's numbers. Include any BI measures in that reconciliation, with the same denominator, grouping, and suppression rules.
 
 ::: {.callout-tip}
-The file crossing the boundary should be a tidy, pre-aggregated table whose columns mean exactly what they are named. Reshaping, recoding, and recombining belong upstream.
+Choose the prepared table's level of detail to support the intended views. Keep the components needed for recalculation, including compatible rate numerators and denominators. Document each column's meaning.
 :::
 
 ## Pre-Aggregating Before Import {#sec-bi-aggregate}
@@ -86,23 +86,27 @@ format(object.size(weekly), units = "MB")
 
 Two hundred fifty thousand rows become about six thousand, and the imported file shrinks accordingly. Nothing the dashboard displays is lost.
 
-The cost is that the aggregation grain fixes what the dashboard can show. Drilling down to individual cases or slicing by an unretained variable is no longer possible. For a surveillance dashboard this constraint is usually appropriate, since individual records should not be exposed, but the grain is a design decision to make deliberately rather than discover later.
+The cost is that the aggregation grain fixes what the dashboard can show. Drilling down to individual cases or slicing by an unretained variable is no longer possible. For a surveillance dashboard this constraint is usually appropriate, since individual records should not be exposed, but choose the aggregation level before building the dashboard.
 
 ::: {.callout-warning}
-Aggregation grain interacts with disclosure rules. A view that permits filtering to a single county, a single month, and a single age group will eventually produce a cell below the suppression threshold. Publishing at quarterly rather than monthly granularity is a common remedy. Choose the grain with the thresholds in @sec-governance-disclosure in mind, and apply suppression in R on the way out rather than relying on users not to filter their way to a small cell.
+Aggregation grain interacts with disclosure rules. A view that permits filtering to a single county, a single month, and a single age group can produce cells below the suppression threshold. Quarterly aggregation may reduce the number of small cells, but still requires disclosure checks. Choose the grain with the thresholds in @sec-governance-disclosure in mind, and check suppression before publishing and across all permitted filter combinations.
 :::
 
 ### Default Aggregation
 
-BI tools sum measures by default. The default is correct often enough that it stops attracting attention, and wrong in specific ways that yield a plausible number rather than an error.
+BI tools sum measures by default. Check whether that default makes sense for each measure.
 
 Two cases recur. A measure that should be broken out by a dimension is totaled across it, so a view intended to show the current year's burden silently reports a multi-year total. And a rate or percentage is averaged when it should be recomputed from summed numerators and denominators; the mean of ten county rates is not the state rate.
 
-Neither produces an error, and both produce charts that look correct. The defense is to compute the measure in R, name the column for what it contains, and reconcile the dashboard's totals against the pipeline's. A discrepancy is a default aggregation until demonstrated otherwise.
+For an interactive crude rate, retain compatible numerators and denominators and calculate the ratio for the selected group. Ten cases among 1,000 people and 45 among 9,000 yield different rates; a dashboard combining them should calculate `(10 + 45) / (1000 + 9000) * 100000`, or 550 per 100,000. Do not sum the displayed rates. Summing denominators is valid only when their units, periods, and populations support that operation; repeated population values across weeks, for example, cannot be added to produce an annual population.
+
+Define and review this calculation in the BI model, or limit the dashboard to precomputed groups. Distinct-person counts across overlapping groups and age-adjusted rates also need their own aggregation rules. Reconcile representative filter combinations against independent calculations, including empty selections and zero denominators.
+
+Suppression must apply to the released data and all supported views. Hiding a mark while leaving its count in a downloadable extract does not protect it. Check whether totals, adjacent periods, or combinations of filters reveal a suppressed count by subtraction. Apply complementary suppression, restrict the available views, or release a separately reviewed aggregate when needed (@sec-governance-disclosure).
 
 ## Publishing Programmatically {#sec-bi-publishing}
 
-The manual publishing loop runs the R script, writes a file, opens the workbook, refreshes the data source, saves, and publishes. It works, and because it is tedious it eventually gets skipped, at which point the published dashboard drifts away from the pipeline without announcing it.
+The manual publishing loop runs the R script, writes a file, opens the workbook, refreshes the data source, saves, and publishes. A missed refresh leaves the published dashboard out of date.
 
 Both major platforms expose REST APIs that close the loop from code, using the `httr2` patterns covered in @sec-apis. Tableau Server and Tableau Cloud authenticate with a personal access token and return a credentials token for subsequent calls:
 
@@ -130,7 +134,7 @@ token <- auth$credentials$token
 site_id <- auth$credentials$site$id
 ```
 
-Refreshing a published extract is one further request:
+For an existing published data source, set `datasource_id` to its Tableau ID and request a refresh. The server must be able to reach the source data; this request does not upload a CSV created on your laptop. A successful request starts an asynchronous job, whose completion must also be checked.
 
 ```{r}
 #| label: bi-tableau-refresh
@@ -150,35 +154,37 @@ request(paste0(
   req_perform()
 ```
 
-Power BI follows the same pattern through the Fabric REST API, authenticating against Microsoft Entra ID and posting to a dataset refresh endpoint. The specific endpoints change on the vendor's schedule, so the vendor documentation is the only reliable reference; the pattern is stable.
+Power BI offers a [dataset refresh endpoint in its REST API](https://learn.microsoft.com/en-us/rest/api/power-bi/datasets/refresh-dataset-in-group), with authentication through Microsoft Entra ID. The specific endpoints change on the vendor's schedule, so the vendor documentation is the only reliable reference; the pattern is stable.
 
 ::: {.callout-note}
-A CRAN package wrapping the Tableau API, `vvtableau`, exists and works. It is unmaintained, pinned to an older version of a dependency, and wraps an API that changes independently of it. A thin `httr2` wrapper maintained in-house is a comparable amount of code and fails on your schedule rather than the vendor's. @sec-dependencies covers how to weigh this class of decision.
+Before adopting a Tableau API wrapper such as `vvtableau`, check its current maintenance status and API coverage. Direct `httr2` calls are another option, but your team must maintain them when the vendor changes the API. @sec-dependencies covers how to weigh this class of decision.
 :::
 
 ### Obtaining Permissions
 
-The blocker is usually not the code. Issuing a personal access token or provisioning a service account requires a permission change, and requests of this kind routinely stall.
+Access approval can take longer than implementation. Issuing a personal access token or provisioning a service account requires a permission change, and requests of this kind routinely stall.
 
-Ask early and specifically (@sec-pm-it). What the pipeline needs is a token or service account scoped to publish to a single project or workspace, not administrator rights, and saying so plainly makes the request substantially easier to approve. Name the specific datasource or dataset. State that the alternative is a staff member manually refreshing an extract on a schedule, which carries both a labor cost and a reliability risk. Where the agency requires a service account rather than a personal token, request that instead: a token tied to an individual becomes a broken pipeline when that individual leaves (@sec-onboarding-offboarding).
+Ask early and specifically (@sec-pm-it). What the pipeline needs is a token or service account scoped to publish to a single project or workspace, not administrator rights, and saying so plainly makes the request substantially easier to approve. Name the specific datasource or dataset. State that the alternative is a staff member manually refreshing an extract on a schedule, which carries both a labor cost and a reliability risk. If the agency requires a service account, request one: a token tied to an individual becomes a broken pipeline when that individual leaves (@sec-onboarding-offboarding).
 
-Store credentials as environment variables rather than in the script, following the pattern in @sec-databases-remote.
+Read credentials from environment variables, following the pattern in @sec-databases-remote.
 
 ## Power BI and SharePoint {#sec-bi-sharepoint}
 
-In agencies standardized on Microsoft, a common arrangement has the R pipeline write a prepared file to a SharePoint document library, a Power BI report read from it, and a scheduled refresh run nightly. It works, and it carries one specific hazard.
+In agencies standardized on Microsoft, a common arrangement has the R pipeline write a prepared file to a SharePoint document library, a Power BI report read from it, and a scheduled refresh run nightly. Control who can modify the file.
 
 A file in a SharePoint library is a shared, mutable object. Anyone with write access can open it, sort a column, and save. The scheduled refresh then runs against a file that no longer matches what the pipeline produced, and nothing announces the change.
 
-The mitigations are ordinary. Write pipeline output to a location where only the pipeline writes, and set permissions accordingly. Never have the pipeline overwrite a file that a person is expected to edit. Include a generated-at timestamp in the extract, or a small metadata file, so the dashboard can display when the data was last refreshed, which converts silent staleness into a visible fact. Verify that the scheduled refresh ran rather than assuming it did (@sec-automation-monitoring).
+Restrict write access. Write pipeline output to a location where only the pipeline writes, and set permissions accordingly. Never have the pipeline overwrite a file that a person is expected to edit. Include a generated-at timestamp in the extract, or a small metadata file, so readers can see when the pipeline last produced the data. Monitor the scheduled refresh (@sec-automation-monitoring).
 
-## Version Control for Binary Artifacts {#sec-bi-versioncontrol}
+## Version Control for BI Artifacts {#sec-bi-versioncontrol}
 
-Git operates on text. A `.pbix` file is a compressed archive containing the data model, the queries, the visuals, and a cached copy of the data. Committing it yields a history of opaque snapshots: you can restore a prior version, but you cannot see what changed between two of them or merge concurrent edits.
+Git can store binary files, but its line-based review tools work best with text. A `.pbix` file is a compressed archive containing the data model, the queries, the visuals, and a cached copy of the data. Committing it yields a history of opaque snapshots: you can restore a prior version, but you cannot see what changed between two of them or merge concurrent edits.
 
-Tableau is marginally better. A `.twbx` is a packaged workbook including the data and is opaque for the same reasons. A `.twb` is XML and will produce a diff, though whether a two-hundred-line diff of Tableau's XML conveys anything useful is a separate question, and usually it does not. Preferring `.twb` with a separately managed data source is still worthwhile, because the diff is occasionally readable and the repository stays smaller.
+[Power BI Desktop projects (`.pbip`)](https://learn.microsoft.com/en-us/power-bi/developer/projects/projects-overview) save report and semantic model definitions as text files suitable for Git. Check availability and limitations in your deployment before adopting this format.
 
-The workable arrangement accepts the split. Version control the R preparation code properly, with meaningful commits, branches, and review, since that is where the logic lives and what will need to be audited. Keep the workbook in the repository or a controlled location but treat it as an artifact rather than as source, marking it binary in `.gitattributes` so Git stops attempting to diff it. Maintain a written change log for the workbook, in the repository, updated in the same commit that updates the workbook: two lines per change recording what changed in the view and why. The log is manual, and it is the only mechanism that produces a readable history of a binary file.
+Tableau supports both packaged and plain-text workbooks. A `.twbx` is a packaged workbook including the data and is opaque for the same reasons. A `.twb` is XML and will produce a diff, though the generated XML can make changes difficult to review. Preferring `.twb` with a separately managed data source is still worthwhile, because the diff is occasionally readable and the repository stays smaller.
+
+For binary workbooks, keep a readable change history alongside the file. Version control the R preparation code properly, with meaningful commits, branches, and review, and document any measures implemented in the BI model so they can also be audited. Keep the workbook in the repository or a controlled location but record its changes separately, marking it binary in `.gitattributes` so Git stops attempting to diff it. Maintain a written change log for the workbook, in the repository, updated in the same commit that updates the workbook: two lines per change recording what changed in the view and why. The log is manual, and should accompany the platform's version history where available.
 
 ::: {.callout-tip}
 Large BI files do not belong in the main repository history. A workbook committed weekly for two years produces a repository that is slow to clone. Git LFS addresses this, as does the simpler approach of storing workbooks in a versioned shared location and committing only the change log (@sec-git-gitignore).
@@ -186,13 +192,13 @@ Large BI files do not belong in the main repository history. A workbook committe
 
 ## Concurrent Editing {#sec-bi-concurrency}
 
-Because the artifact does not merge, two people editing the same workbook creates a lost-work problem rather than a merge conflict. Manual coordination is a reasonable answer at small scale, provided it is an explicit rule rather than an assumption. Name one owner per workbook and record it in the team handbook (@sec-onboarding-contents). Anyone else requiring a change requests it from the owner or takes explicit temporary ownership. Where the platform supports checkout or locking, use it.
+Because the artifact does not merge, two people editing the same binary workbook can overwrite each other's work. Agree on how to coordinate edits. Name one owner per workbook and record it in the team handbook (@sec-onboarding-contents). Anyone else requiring a change requests it from the owner or takes explicit temporary ownership. Where the platform supports checkout or locking, use it.
 
-The structural fix is to reduce the surface. If most changes concern what the data says rather than how it is displayed, and the data comes from a pipeline, then most changes never touch the workbook. Two analysts can then work simultaneously on the R side, with branches and review, and neither opens the binary file. Frequent contention over a workbook indicates that too much logic lives in the presentation layer.
+Keeping preparation in the pipeline reduces the number of changes that require editing the workbook. Two analysts can then work simultaneously on the R side, with branches and review, and neither opens the binary file. For text-based project formats, use branches and review where supported, then open and test the merged project in the BI application; a clean text merge does not establish that the dashboard works.
 
 ## Metric Definitions {#sec-bi-metrics}
 
-A dashboard tooltip, a data dictionary in the repository, and a footnote in the quarterly report will diverge, because they are maintained by different people at different times.
+A dashboard tooltip, a data dictionary in the repository, and a footnote in the quarterly report can diverge when they are maintained by different people at different times.
 
 Define each metric once in a machine-readable file that the pipeline reads, and generate the rest from it. A small YAML or CSV in the repository with one row per metric, recording the name, definition, numerator, denominator, units, and any suppression rule, is sufficient:
 
@@ -203,26 +209,21 @@ dict <- readr::read_csv("metadata/metrics.csv")
 
 # The pipeline uses it to label and annotate the extract
 weekly_labeled <- weekly |>
+  tidyr::pivot_longer(
+    cols = c(cases, hospitalizations),
+    names_to = "metric",
+    values_to = "value"
+  ) |>
   left_join(dict, by = "metric")
 
 # And writes the same definitions out for the BI tool to read
 readr::write_csv(dict, "extracts/metric_definitions.csv")
 ```
 
-The BI tool imports the definitions file alongside the data and uses it for tooltips and axis labels. A changed definition changes in one place, in version control, with a commit message recording the reason. @sec-documentation-project covers the data dictionary as a documentation artifact; the addition here is making it an input to the pipeline rather than a description of one.
+The BI tool imports the definitions file alongside the data and uses it for tooltips and axis labels. A changed definition changes in one place, in version control, with a commit message recording the reason. @sec-documentation-project covers the data dictionary as a documentation artifact; the addition here is using that dictionary as an input to the pipeline.
 
 This also removes the apparent competition between BI and reproducible reporting. The same prepared extract and the same definitions can feed a Power BI report for interactive exploration and a Quarto document for the quarterly narrative (@sec-reporting-formats): one input, several outputs, one definition of what a case is.
 
-## Practical Guidance {#sec-bi-practical}
+## Checks Before Publishing {#sec-bi-practical}
 
-**Move logic upstream incrementally.** Rebuilding the workbook is unnecessary. The next time a calculated field would be added, add a column to the R output instead.
-
-**Pre-aggregate to the grain the dashboard displays.** Import the result rather than the raw data, and choose the grain with disclosure thresholds in mind.
-
-**Reconcile totals against the pipeline.** A dashboard figure that does not match the R output indicates a default aggregation until shown otherwise.
-
-**Request a scoped service account early.** The API work is straightforward; the permission is the long lead item and belongs at project kickoff.
-
-**Assign one owner per workbook, in writing.** Binary files do not merge, so ownership has to be enforced socially.
-
-**Treat the R code as the source of truth.** Rebuilding a dashboard on a different platform is a week of work when the logic is in R and a quarter when it is in the workbook.
+Confirm that the prepared data supports the permitted views, that rates and totals reconcile, and that disclosure rules hold across filters and downloads. Review both preparation code and BI measures. Coordinate edits according to the file format, and verify the refreshed published result after deployment.

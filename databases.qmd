@@ -10,9 +10,9 @@ suppressWarnings(suppressPackageStartupMessages(library(duckplyr)))
 suppressWarnings(suppressPackageStartupMessages(library(duckdb)))
 ```
 
-Spreadsheets and CSV files work well for small datasets, but many public health agencies store their surveillance data in relational databases: SQL Server, Oracle, PostgreSQL, or similar systems. These databases are managed by IT, shared across teams, and updated continuously as new data arrives. The data never leaves the server; analysts connect, run a query, and pull back only the rows and columns they need.
+Spreadsheets and CSV files work well for small datasets, but many public health agencies store their surveillance data in relational databases: SQL Server, Oracle, PostgreSQL, or similar systems. These databases are managed by IT, shared across teams, and updated continuously as new data arrives. Analysts query the data on the server and retrieve the rows and columns they need.
 
-This chapter covers how to work with databases from R. The examples use [DuckDB](https://duckdb.org/), an in-process analytical database that requires no server setup and installs as an R package. DuckDB is practical for local analysis of large files, but the same patterns (DBI, dbplyr) apply to institutional databases like SQL Server and PostgreSQL — only the connection call changes. The chapter ends with connection patterns for those remote systems. Data that lives behind a web API rather than in a database you can connect to (CDC's open data portal, the Census Bureau) is covered in @sec-apis.
+This chapter covers how to work with databases from R. The examples use [DuckDB](https://duckdb.org/), an in-process analytical database that requires no server setup and installs as an R package. DuckDB is practical for local analysis of large files, but the same patterns (DBI, dbplyr) apply to institutional databases like SQL Server and PostgreSQL, though SQL support and type handling vary by backend. The chapter ends with connection patterns for those remote systems. @sec-apis covers public web APIs, including CDC's open data portal and the Census Bureau.
 
 This chapter assumes the database already exists and that someone else chose it. If your team is deciding what to stand up, what it will cost, and which budget line pays for it, @sec-infrastructure covers that decision.
 
@@ -36,23 +36,24 @@ The four core DBI functions:
 |---|---|
 | `dbConnect()` | Open a connection to a database |
 | `dbGetQuery()` | Run a SQL `SELECT` and return results as a data frame |
-| `dbExecute()` | Run SQL that modifies data (no results returned) |
+| `dbExecute()` | Run a statement and return the number of affected rows |
 | `dbDisconnect()` | Close the connection |
 
-A connection always needs to be closed when you are done. The safest pattern is `on.exit()`, which runs the disconnect even if an error occurs before the end of the block:
+A connection always needs to be closed when you are done. Inside a function, use `on.exit()` to close the connection even if the function errors:
 
 ```{r}
 #| label: on-exit-pattern
 #| eval: false
-con <- dbConnect(duckdb::duckdb())
-on.exit(dbDisconnect(con), add = TRUE)
-
-# ... work with the database ...
+query_example <- function() {
+  con <- DBI::dbConnect(duckdb::duckdb())
+  on.exit(DBI::dbDisconnect(con), add = TRUE)
+  DBI::dbGetQuery(con, "SELECT 1 AS example")
+}
 ```
 
 ## DuckDB {#sec-databases-duckdb}
 
-[DuckDB](https://duckdb.org/) is an in-process analytical database designed for fast queries over large datasets. It runs inside your R session with no separate server, installs as a single package, and can read CSV and Parquet files directly without loading them into R first. It is a good fit for local analysis of data that is too large to work with comfortably as an R data frame, and its DBI interface is identical to remote databases, so code written against DuckDB transfers to SQL Server or PostgreSQL with only the connection call changed.
+[DuckDB](https://duckdb.org/) is an in-process analytical database designed for fast queries over large datasets. It runs inside your R session with no separate server, installs as a single package, and can read CSV and Parquet files directly without loading them into R first. It is a good fit for local analysis of data that is too large to work with comfortably as an R data frame, and its DBI interface is identical to remote databases, so many connection and query patterns transfer to SQL Server or PostgreSQL. Test SQL expressions and data types on the target backend.
 
 ### Setting up
 
@@ -67,7 +68,7 @@ library(duckdb)
 con <- dbConnect(duckdb())
 ```
 
-To persist the database to disk — so it survives between sessions — pass a file path:
+To keep the database between sessions, pass a file path:
 
 ```{r}
 #| label: duckdb-persistent
@@ -145,7 +146,7 @@ dbGetQuery(
 )
 ```
 
-DuckDB can also read CSV and Parquet files directly using SQL — without loading them into R first:
+DuckDB can also read CSV and Parquet files directly using SQL, without loading them into R first:
 
 ```{r}
 #| label: duckdb-read-csv
@@ -159,7 +160,7 @@ dbGetQuery(con, "SELECT COUNT(*) FROM read_parquet('data/flu-*.parquet')")
 
 ## dbplyr: dplyr Syntax on Any Database {#sec-databases-dbplyr}
 
-Writing SQL by hand is workable for simple queries but awkward for anything that requires multiple joins, filters, and aggregations. The [`dbplyr`](https://dbplyr.tidyverse.org/) package lets you write standard dplyr code against a database connection — it translates your code to SQL automatically.
+Writing SQL by hand is workable for simple queries but awkward for anything that requires multiple joins, filters, and aggregations. The [`dbplyr`](https://dbplyr.tidyverse.org/) package lets you write standard dplyr code against a database connection. It translates your code to SQL automatically.
 
 ### Lazy tables
 
@@ -196,7 +197,7 @@ q <- flu_tbl |>
 q
 ```
 
-Notice the output header says `Source: SQL [?? x 3]` — the query has not run yet. Call `collect()` to execute and bring results into R:
+The `Source: SQL` header identifies a lazy query. Printing it fetches a preview; `collect()` retrieves the full result:
 
 ```{r}
 #| label: dbplyr-collect
@@ -212,7 +213,7 @@ collect(q)
 show_query(q)
 ```
 
-The generated SQL is valid and efficient. For most queries, you never need to write SQL directly — but the ability to inspect it means you always know what is happening.
+Inspect generated SQL when debugging or checking performance. Translation support and query efficiency depend on the database backend.
 
 ::: {.callout-tip}
 Pull as little data as possible. Filter, aggregate, and join on the database side before calling `collect()`. Pulling a million rows to R and then filtering in R is far slower than filtering in SQL and pulling only the rows you need.
@@ -220,7 +221,7 @@ Pull as little data as possible. Filter, aggregate, and join on the database sid
 
 ## duckplyr: DuckDB as a dplyr Backend {#sec-databases-duckplyr}
 
-[`duckplyr`](https://duckplyr.tidyverse.org/) takes a different approach. Instead of requiring an explicit connection, it makes DuckDB the execution engine for ordinary dplyr operations on data frames. You convert a data frame once with `as_duckdb_tibble()`, and subsequent dplyr operations run through DuckDB rather than R's default in-memory engine.
+[`duckplyr`](https://duckplyr.tidyverse.org/) takes a different approach. Instead of requiring an explicit connection, it makes DuckDB the execution engine for ordinary dplyr operations on data frames. You convert a data frame once with `as_duckdb_tibble()`, and subsequent dplyr operations run through DuckDB when supported.
 
 ```{r}
 #| label: duckplyr-basic
@@ -256,12 +257,12 @@ flu_duck |>
 duckplyr is most useful when you have a large data frame already in R and want faster aggregations without the overhead of a separate database connection. dbplyr is the right tool when data lives in a database and you want to query it without pulling it all into R.
 
 ::: {.callout-note}
-duckplyr falls back to standard dplyr automatically when it encounters a verb or expression it cannot execute through DuckDB. The output is always correct — the question is only whether the fast path was used. You can see fallback events with `duckplyr::fallback_review()`.
+duckplyr falls back to standard dplyr automatically when it encounters a verb or expression it cannot execute through DuckDB. Fallback preserves support for operations DuckDB cannot handle; you should still validate results. You can see fallback events with `duckplyr::fallback_review()`.
 :::
 
 ## Connecting to Institutional Databases {#sec-databases-remote}
 
-In practice, surveillance data often lives on a managed SQL Server, Oracle, or PostgreSQL server that IT administers. The `odbc` package provides R drivers for these systems. The connection syntax differs from DuckDB, but everything else — DBI functions, dbplyr queries — works identically.
+In practice, surveillance data often lives on a managed SQL Server, Oracle, or PostgreSQL server that IT administers. The `odbc` package provides R drivers for these systems. The connection syntax differs from DuckDB, while the same DBI and dbplyr interfaces remain available.
 
 ### SQL Server
 
@@ -305,7 +306,7 @@ con <- dbConnect(
 Never put database credentials in code or commit them to version control. Use environment variables instead. Store them in a project-level `.Renviron` file (which your `.gitignore` should exclude):
 
 ```
-# .Renviron  — do not commit this file
+# .Renviron: do not commit this file
 DB_USER=yourname
 DB_PASSWORD=yourpassword
 ```
@@ -316,9 +317,9 @@ Retrieve them in code with `Sys.getenv()`, as shown in the connection examples a
 Add `.Renviron` to your `.gitignore` before adding credentials to it. A credential committed to a repository is a credential that may be exposed.
 :::
 
-### Once connected, everything is the same
+### Reusing Query Patterns
 
-After the connection is open, all DBI and dbplyr patterns work identically regardless of which database system you are connected to:
+After the connection is open, you can reuse common DBI and dbplyr patterns, checking backend support for the functions you use:
 
 ```{r}
 #| label: remote-pattern
@@ -334,7 +335,7 @@ cases_tbl |>
 
 ## Practical Guidance {#sec-databases-practical}
 
-**Always close connections.** Use `on.exit(dbDisconnect(con), add = TRUE)` immediately after opening a connection so it closes even if an error interrupts the script.
+**Always close connections.** Inside a function, use `on.exit(dbDisconnect(con), add = TRUE)`. At script level, close the connection explicitly or use `tryCatch(..., finally = dbDisconnect(con))`.
 
 **Use dbplyr instead of writing SQL.** Unless you need a SQL feature that dbplyr does not support, dplyr verbs are easier to read, easier to debug, and work across database backends without modification.
 

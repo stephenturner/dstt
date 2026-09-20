@@ -35,6 +35,10 @@ Chapters and appendices are declared in `_quarto.yml`. To add content:
 - Unnumbered chapters use `{.unnumbered}` (see `index.qmd`)
 - Appendices go under the `appendices:` key in `_quarto.yml`
 
+After any major change to the book, review `index.qmd` and update its overview, chapter references, and descriptions of examples or downloads as needed. Do this as part of the same change, including when adding or removing chapters, changing their scope, or moving material between the book and companion files.
+
+Keep worked examples and the explanations needed to use them in the chapter text. Do not add separate companion downloads or example-packaging scripts unless explicitly requested.
+
 ## Exercises
 
 **Current status: no chapter uses exercises.** The machinery below is documented and available, but the book is written as reference material rather than a workbook. Do not add exercises to individual chapters piecemeal; adding them is a book-wide pass, not a per-chapter decision. If that pass never happens, delete this section.

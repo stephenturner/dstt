@@ -10,19 +10,19 @@ The decision reaches analytic teams more often than it once did. Agencies are co
 
 The problems that drive these conversations are distinct from one another. Files may be slow, where a quarterly analysis reads a 2 GB CSV, takes ten minutes, and exhausts memory when another year is added. Files may be scattered, where six analysts hold six extracts of one source pulled on six different dates and two reports disagree. The authoritative version of a dataset may exist without being identifiable except by asking a particular person. Access may be manual, where obtaining data requires emailing someone who runs a query and returns a spreadsheet, adding days to every question. Or several people may need concurrent read access with permissions and an access record.
 
-These have different remedies. Scattered files and unclear provenance are organizational problems, and a warehouse purchased without addressing them becomes a warehouse of scattered files. Slow files are frequently solved by changing the file format rather than the platform: Parquet with DuckDB (@sec-databases-duckdb) handles considerably more data than most public health teams hold, on a laptop, at no cost. Concurrent shared access with permissions is the problem that genuinely requires a server.
+These have different remedies. Scattered files and unclear provenance are organizational problems, and a warehouse purchased without addressing them becomes a warehouse of scattered files. Changing the file format can improve slow reads: Parquet with DuckDB (@sec-databases-duckdb) handles considerably more data than most public health teams hold, on a laptop, at no cost. Concurrent writes and centrally managed permissions may call for a server or managed service.
 
 ::: {.callout-tip}
-Record which of these problems apply, in order of severity, before the first vendor conversation. Doing so converts a platform evaluation into a requirements checklist and makes it evident when a demonstration is answering a question you did not ask.
+Record which of these problems apply, in order of severity, before the first vendor conversation. Use that list to evaluate vendor demonstrations against your requirements.
 :::
 
 ## Sizing the Requirement {#sec-infrastructure-sizing}
 
-Obtain the actual numbers before shopping: the size of the largest file, the total volume of non-redundant data, and the growth rate. Projected and aspirational figures are not useful here.
+Obtain the actual numbers before shopping: the size of the largest file, the total volume of non-redundant data, and the growth rate. Distinguish measured usage from projected growth.
 
-Public health data is mostly small. A county health department commonly holds one to two gigabytes of non-redundant data in total, with individual files under ten megabytes. That is a laptop-scale problem. What makes such holdings feel large is their distribution across hundreds of files in dozens of folders, with redundant copies of the same extract, which is a different problem with a considerably cheaper solution.
+If a team holds one to two gigabytes of non-redundant data, with small individual files, a laptop may be sufficient. What makes such holdings feel large is their distribution across hundreds of files in dozens of folders, with redundant copies of the same extract, which is a different problem with a considerably cheaper solution.
 
-Three thresholds are useful. Below roughly 10 GB with a single writer, a single-file analytical database is almost certainly sufficient; DuckDB holds this comfortably and queries it in milliseconds. Between 10 GB and a few hundred gigabytes, one machine with columnar storage remains viable, and a shared server becomes a question of access rather than capacity. Above that, or with genuine concurrent write traffic, or with data arriving continuously from many sources, a managed platform begins to justify its cost.
+As an initial trial, test a single-file analytical database for a dataset under roughly 10 GB with a single writer. Performance depends on the queries and available memory. Between 10 GB and a few hundred gigabytes, one machine with columnar storage remains viable, and a shared server becomes a question of who needs access and how. Above that, or with genuine concurrent write traffic, or with data arriving continuously from many sources, a managed platform begins to justify its cost.
 
 Growth rate matters more than current volume. A dataset doubling annually will cross a threshold on a predictable schedule. One growing by 200 MB per year will not, and sizing it for a decade hence purchases capacity that will never be used.
 
@@ -30,43 +30,45 @@ Growth rate matters more than current volume. A dataset doubling annually will c
 
 One piece of technical background clarifies the rest of the decision.
 
-Traditional databases including SQL Server, Oracle, and PostgreSQL store data by row, keeping all values for one record together. This suits transactional work: retrieving one patient, updating one record, inserting one case report. That workload is termed OLTP, and it is what most institutional databases were procured to support.
+Row-oriented storage keeps values from one record together and often suits retrieving or updating individual records. Column-oriented storage groups values by field and can reduce the work needed to scan a few columns across many records. These are useful distinctions between transactional and analytical workloads, often called OLTP and OLAP.
 
-Analytical databases store data by column, keeping all values for one field together. This suits the queries analysts run: counting cases by county across three years, averaging a rate over a window, scanning one field of a hundred-column table. The engine reads only the columns a query references, and columns compress well because adjacent values resemble one another. That workload is termed OLAP.
+Products can support both designs. For example, [SQL Server supports rowstore and columnstore indexes](https://learn.microsoft.com/en-us/sql/relational-databases/indexes/columnstore-indexes-design-guidance). Before proposing a migration, ask whether the existing system supports a suitable storage or indexing arrangement.
 
-The performance difference on analytical queries is frequently one to two orders of magnitude, which explains why a query that crawls against an institutional SQL Server may return immediately against the same data in a columnar engine.
+Performance depends on the query, data types, indexes, memory, concurrency, and hardware. Benchmark representative queries on realistic data volumes. Record elapsed time and cost, including data loading and recurring updates; a speed ratio from another workload is not a capacity estimate for yours.
 
-[DuckDB](https://duckdb.org/) [@raasveldt2019duckdb] is a columnar analytical database that runs in-process, installs as an R package, requires no server, and reads Parquet and CSV files directly. @sec-databases-duckdb covers its use. For a team whose problem is slow files, it is generally the complete answer at no cost. [MotherDuck](https://motherduck.com/) provides DuckDB with a hosted shared component for cases where several people query the same data without each holding a copy, priced in tens of dollars per month rather than thousands.
+[DuckDB](https://duckdb.org/) [@raasveldt2019duckdb] is a columnar analytical database that runs in-process, installs as an R package, requires no server, and reads Parquet and CSV files directly. @sec-databases-duckdb covers its use. For a team whose problem is slow files, it is generally the complete answer at no cost. [MotherDuck](https://motherduck.com/) provides DuckDB with a hosted shared component for cases where several people query the same data without each holding a copy, with usage-based pricing to evaluate against your expected workload.
 
 ::: {.callout-note}
-Columnar storage and file format are separable decisions. Writing prepared datasets as Parquet rather than CSV provides compression and column-selective reads immediately, works with DuckDB, Python, Snowflake, and every major BI tool, and requires no platform decision at all. It is frequently the highest-value change available in a single afternoon.
+Columnar storage and file format are separable decisions. Writing prepared datasets as Parquet provides compression and column-selective reads immediately, works with DuckDB, Python, Snowflake, and BI tools with a suitable connector, and requires no platform decision at all. Try this before committing to a platform migration.
 :::
 
 ## Managed Platforms {#sec-infrastructure-managed}
 
-Snowflake, BigQuery, Databricks, and Azure Synapse are the platforms a health agency is most likely to be offered. They are capable products, and the question is whether they provide something you could not build.
+Snowflake, BigQuery, Databricks, and Azure Synapse are the platforms a health agency is most likely to be offered. Compare their managed services with the support and capabilities your team needs.
 
-They provide elastic compute that scales for a heavy query and scales back down, concurrency for many simultaneous users without mutual interference, managed backup and disaster recovery, a permissions and audit model that a security review will accept, and vendor staff on call when the system fails outside business hours.
+They provide elastic compute that scales for a heavy query and scales back down, concurrency for many simultaneous users without mutual interference, managed backup and disaster recovery, permissions and audit features for your security team to evaluate, and vendor staff on call when the system fails outside business hours.
 
-They do not provide clean data, agreed metric definitions, an end to scattered extracts, or analysts who know SQL. Those are the problems most teams actually have, and no platform ships with them.
+They do not provide clean data, agreed metric definitions, an end to scattered extracts, or analysts who know SQL. Your team still needs to do that work.
 
-The strongest practical argument for a managed platform in state and local public health is rarely performance. It is that the state health department already operates one, other programs are already on it, and shared tenancy brings shared datasets, shared access controls, and an existing support path. That is a legitimate reason, and it has nothing to do with the technology, which is worth recognizing when comparing against alternatives.
+The strongest practical argument for a managed platform in state and local public health is rarely performance. It is that the state health department already operates one, other programs are already on it, and shared tenancy brings shared datasets, shared access controls, and an existing support path. Include those support arrangements when comparing alternatives.
 
 ## Consumption Pricing {#sec-infrastructure-pricing}
 
-Managed warehouses bill by consumption. The purchase is not a server at a fixed monthly fee but compute time, usually denominated in credits at roughly \$2 to \$4 per credit depending on edition and contract. Storage bills separately and is generally inexpensive. Compute accrues whenever a warehouse is running, and compute is what costs money.
+Managed platforms use different billing models. Snowflake, for example, charges for warehouse compute in credits, with prices that depend on the edition, region, and contract. Storage bills separately and is generally inexpensive. Compute accrues whenever a warehouse is running, and compute is what costs money.
 
 By default there is no ceiling. A query left running, a scheduled job that fails and retries, a dashboard configured to refresh every five minutes against a large table, or a warehouse that never auto-suspends will accumulate charges with nothing to stop them. This is the standard mechanism by which organizations are surprised by a cloud invoice.
 
-The controls exist and must be enabled deliberately.
+The following controls use Snowflake terminology; check the equivalent controls and their coverage on your chosen platform.
 
-Configure auto-suspend so the warehouse suspends after a short idle period, one to five minutes. A warehouse that remains warm for an hour after a two-second query costs roughly a hundred times what the query required.
+Configure auto-suspend so the warehouse suspends after a short idle period, one to five minutes. Idle compute can cost more than the queries themselves; account for minimum billing periods when setting auto-suspend.
 
-Configure resource monitors with a monthly credit quota and attached actions: notify at 50 percent, notify again at 75, suspend at 100. This belongs in place before anyone runs a query.
+Configure a warehouse resource monitor with a credit quota, notification recipients, and suspension actions. For example, notify at 50 and 75 percent and suspend below the budget limit, leaving a buffer for usage while suspension takes effect. Test that notifications reach the responsible staff.
+
+A monitor is not a cap on the total invoice. Snowflake resource monitors cover warehouses, exclude serverless and AI services, and may exceed a threshold before suspension completes. Cloud-services charges can also continue after a warehouse stops. Use the relevant budgets and alerts for other services, and include storage and contract charges in the overall budget. [Snowflake documents the monitor's coverage and limitations](https://docs.snowflake.com/en/user-guide/resource-monitors).
 
 Set query runtime limits so a runaway scan cannot consume a month's budget overnight.
 
-Right-size the compute. Warehouse size is a dial, and larger sizes cost proportionally more per second. Most public health analytical queries run acceptably at the smallest size, which is where to start.
+Right-size the compute. Larger warehouse sizes cost more per second. Most public health analytical queries run acceptably at the smallest size, which is where to start.
 
 Review cost attribution weekly for the first several months. Every major vendor ships tooling that attributes spend to users, warehouses, and individual queries. The team lead needs access to it, not only IT.
 
@@ -76,19 +78,19 @@ Ask the vendor in writing what occurs when committed spend is exceeded. Contract
 
 ## Build Versus Buy {#sec-infrastructure-buildbuy}
 
-The academic reflex is to build, which appears cheaper, more flexible, and more interesting.
+Self-hosting can appear cheaper and more flexible than a managed service.
 
-For infrastructure the reflex is usually wrong, because the apparent savings omit the expensive component. Self-hosting means someone patches the server, manages backups, tests restores, resolves a full disk over a holiday weekend, and completes the security questionnaire. On a small analytic team, that person is an epidemiologist hired to do epidemiology.
+Include maintenance work when comparing costs. Self-hosting means someone patches the server, manages backups, tests restores, resolves a full disk over a holiday weekend, and completes the security questionnaire. On a small analytic team, that person is an epidemiologist hired to do epidemiology.
 
-The applicable heuristic is to build for practical complexity rather than asymptotic optimization: solve the problem you have at the scale you have it. A DuckDB file in a controlled shared location with a documented refresh process is unglamorous, and for a team holding two gigabytes it is the correct engineering decision.
+Choose an approach that meets the measured workload and access requirements. For a small dataset, a DuckDB file with a documented refresh process may be sufficient; check the filesystem and concurrency requirements before sharing the file.
 
-Self-hosting does win in specific circumstances, and one of them recurs in county government. Where procurement and infrastructure barriers make a commercial cloud purchase slower and harder than standing up open-source tooling internally, self-hosting is the pragmatic answer rather than the purist one. The tradeoff remains staff time, and it should be acknowledged explicitly rather than absorbed silently.
+Self-hosting does win in specific circumstances, and one of them recurs in county government. Where procurement and infrastructure barriers make a commercial cloud purchase slower and harder than standing up open-source tooling internally, self-hosting may be practical. Budget staff time for its maintenance.
 
 ## Funding the Cost {#sec-infrastructure-whopays}
 
-Warehouse costs do not fit within a categorical epidemiology budget line, and this obstacle terminates more infrastructure projects than any technical objection.
+A categorical epidemiology budget may not cover warehouse costs. Confirm allowable expenses with the budget owner.
 
-Four options exist, in rough order of how often they succeed.
+Consider these funding options.
 
 Adding your program to an existing enterprise license usually works best. Where the state health department holds a platform contract, ask whether counties or programs can be added as tenants. The marginal cost to the state is small and the case is straightforward: shared platform, shared datasets, less duplicated effort.
 
@@ -98,7 +100,7 @@ Some public health funding streams permit infrastructure explicitly. Data modern
 
 Paying from the program budget is feasible only where the amount is small and predictable, which argues for the less expensive options in @sec-infrastructure-olap.
 
-Two things improve any of these requests. Bring a specific number derived from the sizing exercise and a vendor quote, rather than a range. And bring the cost of the status quo: analyst hours spent reconciling extracts, reporting delays, duplicated storage. An infrastructure request competing against zero loses. One competing against a quantified current cost sometimes succeeds.
+Two things improve any of these requests. Bring a cost estimate based on measured usage and a vendor quote, including uncertainty in future usage. And bring the cost of the status quo: analyst hours spent reconciling extracts, reporting delays, duplicated storage. This lets decision-makers compare the proposed expense with the cost of current work.
 
 ## Protected Data on a Managed Platform {#sec-infrastructure-phi}
 
@@ -119,33 +121,33 @@ Establish what is logged and for how long. Audit logging is what makes "who acce
 Review the terms governing secondary services separately. Warehouse-hosted machine learning and AI features frequently fall under different terms than the warehouse itself. @sec-aigovernance covers that question in detail.
 
 ::: {.callout-note}
-Platform selection and AI governance have become a single conversation. The features that make a modern warehouse attractive include model training and natural-language querying over agency data, so the platform decision now contains an AI policy decision. Conduct both discussions together rather than discovering the second after signing.
+If you plan to use a platform's AI features, include them in the procurement review. The features that make a modern warehouse attractive include model training and natural-language querying over agency data, so the platform decision now contains an AI policy decision. Review those features and their terms before signing.
 :::
 
 ## Migrating From Flat Files {#sec-infrastructure-enterprise}
 
-The technical migration is straightforward; loading two gigabytes of CSVs into any database takes an afternoon. The surrounding work takes months, and skipping it produces a database that is a shared drive with SQL syntax.
+Loading files is only part of a migration. Allow time to agree on dataset ownership, definitions, quality checks, and access.
 
-**Standardize on shared enterprise datasets rather than project extracts.** The arrangement worth building toward is a small number of curated, documented, authoritative datasets that all projects read from, replacing the pattern where each project pulls its own extract on its own schedule. This is what resolves disagreement between reports, and it is an organizational commitment more than a technical one: each dataset has an owner, its refresh cadence is documented, and projects consume it rather than reproducing it.
+**Maintain shared, documented datasets.** The arrangement worth building toward is a small number of curated, documented, authoritative datasets that all projects read from, replacing the pattern where each project pulls its own extract on its own schedule. This is what resolves disagreement between reports, and it is an organizational commitment more than a technical one: each dataset has an owner, its refresh cadence is documented, and projects read from it.
 
 **Translate existing QC into the database.** Every flat-file workflow contains quality checks, some documented and many residing in an analyst's habits. Before migrating, document them: the row count that should fall within a range, the date field that should never hold a future value, the county codes that should match a known list. Then reimplement them as validation that runs on load (@sec-validation). Teams that devote a working session to this documentation routinely discover checks nobody had ever written down.
 
-**Specify training datasets in the same effort.** While defining the shared datasets, define de-identified versions of the same shape for onboarding, development, and debugging (@sec-onboarding-practice). The schema work is already being done.
+**Specify training datasets in the same effort.** While defining the shared datasets, define synthetic training versions with the same structure for onboarding, development, and debugging (@sec-onboarding-practice). The schema work is already being done.
 
 **Budget for the SQL learning curve.** Analysts moving from flat files reasonably worry about learning SQL, organizing the data, maintaining QC, and sustaining collaboration through the transition. Allocate training time explicitly (@sec-trainingbudget-skills), and expect a period during which the old flat-file process runs in parallel with the new one, as in a SAS migration (@sec-legacy-cutover).
 
-**Resolve inconsistent data handling before it hardens.** Inconsistency in how team members handle data tends to emerge as they begin working more independently. A migration is an opportunity to correct it, because it forces conventions to be written down. It is equally an opportunity to encode the inconsistency permanently in a schema, if nobody does that work.
+**Agree on data handling conventions.** Inconsistency in how team members handle data tends to emerge as they begin working more independently. A migration is an opportunity to correct it, because it forces conventions to be written down. It is equally an opportunity to encode the inconsistency permanently in a schema, if nobody does that work.
 
 ## Practical Guidance {#sec-infrastructure-practical}
 
-**Measure before shopping.** Largest file, total non-redundant volume, growth rate. Many teams find they hold a two-gigabyte problem and were preparing to purchase a two-terabyte solution.
+**Measure before shopping.** Largest file, total non-redundant volume, growth rate. Use these measurements to avoid buying unnecessary capacity.
 
 **Evaluate the free option seriously.** Parquet with DuckDB, for two weeks, against real data. If it resolves the problem, that is the answer. If it does not, the platform request now rests on a specific, defensible finding.
 
-**Configure cost controls on day one.** Auto-suspend, a resource monitor with a quota, and a query timeout, before the first analyst receives access.
+**Configure cost controls on day one.** Configure auto-suspend, warehouse quotas with a suspension buffer, query timeouts, and alerts covering other billed services before the first analyst receives access.
 
 **Settle funding before settling on a product.** The budget conversation is slower than the technical one and is the one that stalls projects.
 
-**Execute the BAA and read the DUA before moving protected data,** confirming coverage per service rather than per vendor.
+**Execute the BAA and read the DUA before moving protected data,** confirming coverage for each service.
 
-**Treat the data organization work as the project.** Shared datasets, documented QC, and agreed metric definitions determine whether the infrastructure is worth having. The platform is the straightforward part.
+**Treat the data organization work as the project.** Shared datasets, documented QC, and agreed metric definitions determine whether the infrastructure is worth having. Include this work in the migration plan.

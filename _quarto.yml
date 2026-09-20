@@ -3,6 +3,7 @@ project:
 
 book:
   title: "Data Science Team Training"
+  subtitle: "_Second edition_"
   author: "Stephen D. Turner, Ph.D."
   page-footer:
     left: "&copy; 2026 Stephen D. Turner"
@@ -82,3 +83,6 @@ format:
     template-partials:
       - typst-show.typ
 
+
+metadata:
+  edition: 2

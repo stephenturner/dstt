@@ -4,17 +4,17 @@ A technically correct analysis that does not reach its audience (or reaches them
 
 @sec-pm-communication introduces the core principles: know your audience, communicate uncertainty honestly, match the output format to the need. This chapter goes deeper on each, with concrete guidance on structure, visualization, and how to handle the cases that are hardest to communicate well.
 
-## Start with the Bottom Line {#sec-comms-bottomline}
+## Lead with the Finding {#sec-comms-bottomline}
 
 The most common failure mode in communicating analysis results is burying the finding. Reports structured like academic papers (Introduction, Methods, Results, Discussion) force busy decision-makers to read through to the end to learn what the analysis concluded. Many do not make it that far.
 
-The fix is to lead with the finding, not with the context. State the bottom line first. Then provide the evidence that supports it.
+Lead with the finding, then provide the supporting evidence and context.
 
-Compare these two openings for the same analysis:
+Compare these two openings for a hypothetical analysis:
 
 > *Version A:* "Overdose mortality in the state has been a growing public health concern. This analysis used death certificate data from the National Vital Statistics System for 2015–2023 to examine trends in overdose deaths by county and age group. The results showed that rates in rural counties increased substantially."
 
-> *Version B:* "Overdose death rates in rural counties increased 34% from 2019 to 2023, compared to a 22% increase in urban counties, a reversal from the 2015–2019 period, when urban rates were higher. The shift is driven primarily by illicitly manufactured fentanyl, which first appeared in rural county toxicology reports at scale in 2020."
+> *Version B:* "Overdose death rates in rural counties increased 34% from 2019 to 2023, compared to a 22% increase in urban counties, a change from 2015–2019, when rates increased faster in urban counties. The shift is driven primarily by illicitly manufactured fentanyl, which first appeared in rural county toxicology reports at scale in 2020."
 
 Version B leads with what changed, by how much, and what is driving it. A health officer who reads only the first two sentences of Version B has the main finding. Version A makes them work for it.
 
@@ -92,7 +92,7 @@ The summary fits on one page. The full report follows. Decision-makers read the 
 
 ## Choosing the Right Output {#sec-comms-format}
 
-The analysis determines what can be said; the output format determines whether it is heard. A well-chosen format reduces friction between the finding and the decision-maker.
+Choose a format that helps the intended audience use the findings.
 
 | Situation | Best format |
 |---|---|
@@ -128,12 +128,12 @@ Visualization for communication is different from visualization for exploration.
 
 No chart type is universally wrong, but some common combinations fail reliably:
 
-- **Pie charts with many slices:** humans cannot judge angles accurately; a bar chart is almost always clearer
-- **Dual y-axes:** charts with two y-axes are nearly always misleading because the visual relationship between the two lines depends entirely on how the axes are scaled, which the designer chooses
-- **3D charts:** the added dimension carries no data but introduces distortion; never use them
-- **Truncated y-axes:** starting a bar chart's y-axis above zero exaggerates differences; if differences are small, say so in text rather than making them look large on a chart
+- Pie charts with many slices: humans cannot judge angles accurately; a bar chart is almost always clearer
+- Dual y-axes: charts with two y-axes are nearly always misleading because the visual relationship between the two lines depends entirely on how the axes are scaled, which the designer chooses
+- 3D charts: the added dimension carries no data but introduces distortion; never use them
+- Truncated y-axes: starting a bar chart's y-axis above zero exaggerates differences; if differences are small, describe their size in text
 
-### Design for the Finding, Not the Data
+### Make the Finding Clear
 
 A communication chart has one job: make the finding clear. Every element that does not support that job should be removed.
 
@@ -147,7 +147,7 @@ A communication chart has one job: make the finding clear. Every element that do
 
 ## Communicating Uncertainty {#sec-comms-uncertainty}
 
-Every analysis involves uncertainty, and communicating it honestly, without either overstating it into uselessness or understating it into false precision, is one of the harder craft challenges in public health communication. @sec-pm-communication introduces this; what follows is more specific guidance.
+Explain uncertainty in terms the audience can use, without overstating precision or obscuring a clear finding. @sec-pm-communication introduces this; what follows is more specific guidance.
 
 ### Natural Language Over Statistical Formalism
 
@@ -163,25 +163,27 @@ When explaining what drives the uncertainty, be specific: "The estimate is impre
 
 ### Null Results Are Findings
 
-An analysis that finds no statistically significant difference has found something: the absence of a detectable effect with the available data. This is not a failure; it is a result, and it should be communicated as one.
+A nonsignificant result can be consistent with both small and practically important effects. Report the estimate and interval, and state what difference would matter for the decision. Statistical significance does not measure effect size or practical importance, as the [ASA statement on p-values](https://doi.org/10.1080/00031305.2016.1154108) explains.
 
-> *Weak:* "There was no statistically significant difference in rates between the two groups (p = 0.23)."
+For a hypothetical comparison of vaccination coverage, suppose the team specified a five-percentage-point difference as practically important before analysis:
 
-> *Stronger:* "We found no evidence of a meaningful difference in rates between the two groups. With the available data, we would have been able to detect a difference of 15 percentage points or larger; smaller differences, if they exist, are not detectable with this dataset."
+> "Estimated coverage was 2 percentage points higher in group A than in group B, with a 95% confidence interval from 3 points lower to 7 points higher. This interval includes both no difference and an increase exceeding our five-point threshold. The data do not resolve whether the groups differ by an amount that would change the program decision."
 
-The second version tells the reader what the analysis could and could not detect, which helps them calibrate what further inquiry is warranted.
+If discussing power, name the assumed effect size and the probability of detecting it under the study design. Power is not a cutoff below which detection is impossible. A claim of equivalence needs a prespecified equivalence margin and an analysis that supports it.
 
 ### Preliminary and Provisional Data
 
-Public health data is often released in provisional form before it is final. Death certificate data typically takes 12–24 months to complete as late reports arrive and codes are finalized. When using provisional data, say so explicitly:
+Provisional counts can change as reports arrive and records are revised. Name the data product, extraction date, and period covered. Use the provider's completeness estimates or a documented comparison of successive releases to describe likely revisions. Do not assume reporting delays are the same across periods or groups.
 
-> "These counts are based on provisional data as of [date]. Counts are typically revised upward by 5–10% as late reports arrive; the trend is reliable even if specific numbers will change."
+A reusable statement with values to fill from that evidence:
 
-Telling the audience the direction and magnitude of likely revision is more useful than a generic caveat.
+> "These are provisional [data product] counts retrieved on [date], covering [period]. In [documented comparison periods], counts changed by [range] between releases [specified time apart]. Completeness for the current period is [assessment]. We will reassess the apparent trend after [next release or completeness criterion]."
+
+If revision evidence is unavailable, say that its direction or magnitude is unknown. Avoid assuring readers that a trend will persist unless you have checked its sensitivity to incomplete reporting.
 
 ### Data Quality Problems
 
-When data has known quality issues (a reporting system that changed, a year with underreporting, a jurisdiction that did not report), be transparent about them without letting them swallow the finding.
+When data has known quality issues (a reporting system that changed, a year with underreporting, a jurisdiction that did not report), be transparent about them and explain how they affect the finding.
 
 A pattern that holds despite a known data quality problem is stronger evidence than one that depends on a single year or jurisdiction. Point that out explicitly:
 
@@ -189,7 +191,7 @@ A pattern that holds despite a known data quality problem is stronger evidence t
 
 ### Suppression
 
-When cells are suppressed due to small counts (see @sec-governance-disclosure), explain why in plain language rather than leaving an unexplained asterisk:
+When cells are suppressed due to small counts (see @sec-governance-disclosure), explain why in plain language:
 
 > "Data for counties with fewer than 5 deaths in a given year are not shown to protect individual privacy."
 

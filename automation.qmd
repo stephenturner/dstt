@@ -12,7 +12,7 @@ The same logic applies to publishing steps that sit downstream of the analysis. 
 
 It pays off poorly, or not at all, for one-off analyses, for work that requires a human decision partway through, and for exploratory work where the whole point is that you do not yet know what you are going to do. A useful test: would you run this code, in this same way, more than a handful of times? If yes, automate it. If no, the time spent automating is time not spent on the analysis.
 
-One caution before going further. Automation amplifies whatever you point it at. A correct, validated pipeline run a hundred times produces a hundred correct outputs; a subtly broken one produces a hundred broken outputs, faster than anyone can check them. Automation presumes the underlying work is already validated (@sec-validation) and reproducible (@sec-environments). Automating an unreliable pipeline does not save labor, it industrializes the errors.
+An automated pipeline can repeat errors across many outputs. Automation presumes the underlying work is already validated (@sec-validation) and reproducible (@sec-environments). Test the pipeline before scheduling it and keep validation in each run.
 
 ## Scheduling on Your Own Machine {#sec-automation-local}
 
@@ -31,12 +31,12 @@ This is the same parameterized render from @sec-reporting-params, just invoked f
 Once the work is a single command, the operating system can run it on a schedule. On macOS and Linux that scheduler is `cron`. A crontab entry is a schedule followed by a command; this one runs the render every Monday at 6am:
 
 ```
-0 6 * * 1 Rscript /Users/you/projects/surveillance/render_report.R
+0 6 * * 1 cd /Users/you/projects/surveillance && /usr/local/bin/Rscript render_report.R
 ```
 
-The five fields before the command are minute, hour, day-of-month, month, and day-of-week. The [`cronR`](https://github.com/bnosac/cronR) package can create and manage these entries from R if you would rather not edit a crontab by hand. On Windows the equivalent is Task Scheduler, which the [`taskscheduleR`](https://github.com/bnosac/taskscheduleR) package wraps in the same way.
+The five fields before the command are minute, hour, day-of-month, month, and day-of-week. The `cd` sets the working directory before R starts, so the relative report path and project startup files resolve correctly. Replace both paths for your machine; `command -v Rscript` in a terminal shows the R executable you normally use. Quote paths containing spaces. The [`cronR`](https://github.com/bnosac/cronR) package can create and manage these entries from R if you would rather not edit a crontab by hand. On Windows the equivalent is Task Scheduler, which the [`taskscheduleR`](https://github.com/bnosac/taskscheduleR) package wraps in the same way.
 
-Machine scheduling is easy to set up and good enough for plenty of internal work, but it has real limits. The machine has to be powered on and awake at 6am Monday, which rules out a laptop that goes home in a bag on Friday. Paths must be absolute, because a scheduled job does not start in your project directory or with your usual environment. And, most dangerously, if the job fails there is nobody watching: the report simply does not appear, and you find out when the program team asks where it is. The next two sections address each of these in turn.
+Machine scheduling is easy to set up and good enough for plenty of internal work, but it has real limits. The machine has to be powered on and awake at 6am Monday, which rules out a laptop that goes home in a bag on Friday. Paths must be absolute, because a scheduled job does not start in your project directory or with your usual environment. If nobody receives an alert when the job fails, the report simply does not appear, and you find out when the program team asks where it is. The next two sections address each of these in turn.
 
 ## Continuous Automation with GitHub Actions {#sec-automation-actions}
 
@@ -65,7 +65,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r@v2
 
-      - uses: r-lib/actions/setup-renv@v2  
+      - uses: r-lib/actions/setup-renv@v2
 
       - uses: quarto-dev/quarto-actions/publish@v2
         with:
@@ -80,51 +80,130 @@ The steps read top to bottom: check out the repository, install Quarto and R, re
 The `cron` schedule in a GitHub Actions workflow runs on UTC, not your local time zone, and does not adjust for daylight saving. A "6am Monday" job will land at a different local hour depending on the season. For a surveillance report this rarely matters; when it does, schedule against UTC deliberately.
 :::
 
-When a job needs a credential (an API token as in @sec-apis-keys, a database password), that secret never goes in the workflow file or anywhere else in the repository. GitHub stores it under the repository's **Settings → Secrets and variables**, and the workflow reads it as an environment variable at run time (the `secrets.GITHUB_TOKEN` reference above is the built-in example). This is the same discipline as the `.Renviron` pattern in @sec-databases: credentials live outside version control, and code reads them from the environment.
+When a job needs a credential (an API token as in @sec-apis-keys, a database password), that secret never goes in the workflow file or anywhere else in the repository. GitHub stores it under the repository's **Settings > Secrets and variables**, and the workflow reads it as an environment variable at run time (the `secrets.GITHUB_TOKEN` reference above is the built-in example). This is the same discipline as the `.Renviron` pattern in @sec-databases: credentials live outside version control, and code reads them from the environment.
 
 ## Multi-Step Pipelines with targets {#sec-automation-targets}
 
-A single render is one step. Many real projects are a chain: read the raw extract, clean it, validate it, summarize, then render a report from the summary. When any one input changes, you want to rerun the steps that depend on it and skip the ones that do not. Rerunning everything every time wastes compute on a large dataset; rerunning the wrong subset is how stale intermediate files poison a result.
+A single render is one step. Many real projects are a chain: read the raw extract, clean it, validate it, summarize, then render a report from the summary. When any one input changes, you want to rerun the steps that depend on it and skip the ones that do not. Rerunning everything every time wastes compute on a large dataset; rerunning the wrong subset can leave results based on stale intermediate files.
 
-The [`targets`](https://docs.ropensci.org/targets/) package solves this by treating the pipeline as a dependency graph. You declare each step and what it depends on in a `_targets.R` file:
+The [`targets`](https://docs.ropensci.org/targets/) package tracks dependencies between pipeline steps. Files must be declared as file targets, helper functions must be loaded, and report dependencies must be visible to the pipeline.
 
-```r
-# _targets.R
+This small project reads invented case counts, checks and cleans them, and produces a weekly report. Create an empty project directory with the following files and two subdirectories, `R/` and `data/`. Each code block below gives the complete contents of one file:
+
+```text
+surveillance/
+  _quarto.yml
+  _targets.R
+  R/
+    functions.R
+  data/
+    line_list.csv
+  report.qmd
+```
+
+Install the Quarto command-line application and the R packages `targets`, `tarchetypes`, `quarto`, `knitr`, and `rmarkdown`. This example runs locally and does not publish anything.
+
+Save the input as `data/line_list.csv`:
+
+```{.csv filename="data/line_list.csv"}
+week,county,cases
+1,Fairfax,23
+1,Arlington,41
+2,Fairfax,30
+2,Arlington,38
+```
+
+In `R/functions.R`, define the helpers. These checks require the expected columns, at least one row, no missing values in those columns, and nonnegative numeric counts. A production pipeline should add checks for its reporting periods, allowed county names, and other input requirements (@sec-validation).
+
+```{.r filename="R/functions.R"}
+clean_line_list <- function(x) {
+  needed <- c("week", "county", "cases")
+  stopifnot(all(needed %in% names(x)), nrow(x) > 0L,
+            !anyNA(x[needed]), is.numeric(x$cases), all(x$cases >= 0))
+  x$county <- trimws(x$county)
+  x
+}
+
+summarize_by_week <- function(x) {
+  stats::aggregate(cases ~ week, data = x, FUN = sum)
+}
+```
+
+The pipeline definition goes in `_targets.R`. Declaring the CSV with `format = "file"` lets `targets` detect changes to its contents. Loading the helper functions makes their code available for dependency tracking:
+
+```{.r filename="_targets.R"}
 library(targets)
-tar_option_set(packages = c("dplyr", "readr"))
+library(tarchetypes)
+source("R/functions.R")
 
 list(
-  tar_target(raw_file, "data/raw/line_list.csv", format = "file"),
-  tar_target(raw,      read_csv(raw_file)),
-  tar_target(clean,    clean_line_list(raw)),
-  tar_target(summary,  summarize_by_week(clean)),
-  tar_target(report,   quarto::quarto_render("report.qmd"))
+  tar_target(raw_file, "data/line_list.csv", format = "file"),
+  tar_target(raw, read.csv(raw_file)),
+  tar_target(clean, clean_line_list(raw)),
+  tar_target(summary, summarize_by_week(clean)),
+  tar_quarto(report, path = "report.qmd", quiet = FALSE)
 )
 ```
 
-Running `tar_make()` builds the pipeline. The first run executes every step. On later runs, `targets` reruns only the steps whose inputs changed and reuses the cached results of the rest; if only the report template changed, the data is not re-read or re-cleaned. `tar_visnetwork()` draws the graph and colors each node by whether it is up to date, which is a fast way to see what a change will trigger before you run it.
+The report reads the summary by name in an active code cell. Save this as `report.qmd`:
 
-For automation, this self-correcting behavior is the point. A scheduled job that calls `tar_make()` does the minimum work required to bring every output up to date, and an output is rebuilt exactly when, and only when, something it depends on has actually changed. This is the same reproducibility discipline framed as a project commitment in @sec-pm; `targets` is the tool that enforces it mechanically. The RAPS book linked in @sec-resources goes much deeper on building pipelines this way.
+````{.markdown filename="report.qmd"}
+---
+title: "Simulated weekly case summary"
+format: html
+---
+
+This report uses invented counts for a pipeline demonstration.
+
+```{{r}}
+#| echo: false
+summary <- targets::tar_read(summary)
+knitr::kable(summary)
+```
+````
+
+[`tarchetypes::tar_quarto()`](https://docs.ropensci.org/tarchetypes/reference/tar_quarto.html) detects that target read and tracks the report's input and output files. Keep reads explicit in the report: dynamically constructed target names or reads hidden in helper functions may not be detected. Declare additional file dependencies when automatic detection does not cover them.
+
+Save the following configuration as `_quarto.yml`. Keep Quarto freezing and caching disabled so they do not prevent execution when the pipeline requests a render:
+
+```{.yaml filename="_quarto.yml"}
+project:
+  type: default
+format: html
+execute:
+  freeze: false
+  cache: false
+```
+
+From the project root, run:
+
+```r
+targets::tar_make()
+```
+
+Open `report.html`. It should show 64 cases for week 1 and 68 for week 2. Running the pipeline again without changing anything should skip all targets.
+
+Before scheduling the pipeline, check which steps rerun after each kind of change. Changing a count in the CSV should rebuild the data preparation and report. Changing `summarize_by_week()` should rebuild the summary and report. Editing only the report text should rerender the report without repeating data preparation. `targets::tar_outdated()` lists targets that need updating, and `targets::tar_visnetwork()` displays the dependency graph. A dependency the pipeline does not know about cannot trigger a rebuild.
 
 ## Running in a Reproducible Environment {#sec-automation-environment}
 
-A scheduled job that relies on whatever packages happen to be installed on the machine is living on borrowed time. Eventually a package updates, a function's default changes, and the Monday report renders differently or fails outright. And because nobody changed the code, the cause is hard to find.
+A scheduled job that relies on whatever packages happen to be installed on the machine can fail after an unrecorded package update. Eventually a package updates, a function's default changes, and the Monday report renders differently or fails outright. And because nobody changed the code, the cause is hard to find.
 
-The fix is to pin the environment so that the scheduled run matches the one you tested. Recording dependencies with `renv` (@sec-environments-renv) lets the job restore the exact package versions it was built against; the GitHub Actions example above did this with the `setup-renv` step. For jobs with system-level dependencies, or where you want the operating system itself fixed, running inside a Docker container (@sec-environments-docker) freezes the whole environment, not just the R packages. @sec-environments-choosing covers when each approach is worth the overhead. The principle is the same either way: an automated job should run in a defined environment, not an incidental one.
+The fix is to pin the environment so that the scheduled run matches the one you tested. Recording dependencies with `renv` (@sec-environments-renv) lets the job restore the exact package versions it was built against; the GitHub Actions example above did this with the `setup-renv` step. A Docker image can also record the system libraries and tools the job needs (@sec-environments-docker). @sec-environments-choosing covers when each approach is worth the overhead. Record the environment used by the scheduled job.
 
 ## Knowing When It Breaks {#sec-automation-monitoring}
 
-A failure mode of automation is often silence instead of a crash. The dashboard still loads, the page still shows numbers, and nobody notices that the data feeding it stopped refreshing three weeks ago. A job that fails with an alert is recoverable; a job that fails silently erodes trust in everything the team publishes.
+An automated job can fail without anyone noticing. A dashboard may continue displaying old results for weeks after a refresh fails. Alert the person responsible so they can investigate.
 
-Build in failure signals from the start. GitHub Actions emails the repository owners when a workflow fails, which covers the basic case at no effort. For higher-stakes pipelines, add a step that posts to a Slack or Teams channel on failure so the alert lands where the team actually looks.
+Build in failure signals from the start. Configure GitHub Actions notifications for the people responsible for the workflow and verify that they receive failure alerts. For higher-stakes pipelines, add a step that posts to a Slack or Teams channel on failure so the alert lands where the team actually looks.
 
-Validation belongs inside the automated job in addition to interactive work. A `pointblank` stop-on-fail check (@sec-validation-stop) placed before the publish step turns a data problem into a hard failure that halts the run and triggers the alert, rather than letting bad numbers sail through to a published report. The validation gate is a circuit breaker: better a missing report and an alert than a confidently wrong one.
+Validation belongs inside the automated job in addition to interactive work. A `pointblank` stop-on-fail check (@sec-validation-pointblank) placed before publishing can halt the run and trigger an alert when the data fails a required check.
 
 ## Sensitive Data and Automation {#sec-automation-sensitive}
 
 Most of this chapter's cloud examples assume the data is safe to send to GitHub's machines. Much public health data is not. Protected health information, restricted-use files, and data governed by a use agreement generally must not run on GitHub-hosted runners or any other shared cloud infrastructure, because doing so moves the data outside the boundary where its handling is authorized.
 
-This does not rule out automation; it changes where the automation runs. The options are to use self-hosted runners that sit inside the agency's secure network (so GitHub orchestrates the job but the data never leaves), to schedule the job on an approved on-premises server with cron or Task Scheduler, or to use whatever managed analytics platform the agency already operates. The mechanics from earlier in this chapter still apply; only the location changes.
+This does not rule out automation; it changes where the automation runs. The options are to use self-hosted runners that sit inside the agency's secure network (while preventing protected data from appearing in uploaded logs, caches, or artifacts), to schedule the job on an approved on-premises server with cron or Task Scheduler, or to use whatever managed analytics platform the agency already operates. The mechanics from earlier in this chapter still apply; only the location changes.
 
 The decision of where a scheduled job may run is a governance decision before it is a technical one. The terms of the relevant data use agreement, the HIPAA considerations, and the secure-environment requirements in @sec-governance determine what is permissible, and provisioning a scheduled job on a shared server is an IT request that should start early (@sec-pm-it). Work that out before building the pipeline, not after, because a pipeline built for the wrong environment cannot simply be moved into the right one.
 

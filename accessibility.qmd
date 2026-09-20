@@ -1,12 +1,12 @@
 # Accessibility {#sec-accessibility}
 
-A report that cannot be read by a screen reader, a chart that disappears for someone with color blindness, a PDF that fails institutional archiving requirements: these are not edge cases. Approximately 8% of men have some form of color vision deficiency. Screen reader users include blind and low-vision users but also people with dyslexia, motor impairments, and situational limitations. For most public health organizations, accessible outputs are a legal requirement, not a nice-to-have.
+A report that cannot be read by a screen reader, a chart that disappears for someone with color blindness, a PDF with no usable reading order: each can prevent someone from using your work. Approximately 8% of men have some form of color vision deficiency. Screen reader users include blind and low-vision users but also people with dyslexia, motor impairments, and situational limitations. For most public health organizations, accessible outputs are a legal requirement.
 
 Quarto handles much of the structural work automatically: semantic HTML headings, document metadata flowing into PDF fields, proper reading order. What it cannot do automatically is supply meaning that only you have: descriptive alt text for figures, color choices that work without color, and table structure a screen reader can navigate. Quarto 1.8 added HTML accessibility checks, and Quarto 1.9 added PDF standards support, so there are now tools to verify your work.
 
-This chapter assumes familiarity with Quarto documents and code chunks. For background on Quarto's output formats and rendering workflow, see [Chapter @sec-reporting].
+This chapter assumes familiarity with Quarto documents and code chunks. For background on Quarto's output formats and rendering workflow, see @sec-reporting.
 
-## The Regulatory Landscape {#sec-accessibility-regs}
+## Accessibility Requirements {#sec-accessibility-regs}
 
 Digital accessibility is not optional for most public health organizations. The legal and policy framework has tightened considerably in recent years.
 
@@ -14,21 +14,21 @@ Digital accessibility is not optional for most public health organizations. The 
 
 **OMB Memorandum M-24-08** (December 2023) was the first major Section 508 guidance update in a decade. It requires federal agencies to designate a Section 508 program manager accountable for digital accessibility oversight, establish processes for tracking and resolving accessibility issues, and incorporate accessibility into procurement. If your team develops tools or reports for federal partners, M-24-08 shapes what they can accept.
 
-**ADA Title II** extends accessibility requirements to state and local government entities. A 2024 DOJ final rule set WCAG 2.1 Level AA as the compliance standard. Compliance deadlines depend on entity size: April 24, 2026 for entities with a total population of 50,000 or more, and April 26, 2027 for those with populations under 50,000 or any special district government. State and local health agencies are covered directly by this rule. Note that these deadlines are specific to Title II public entities; private institutions receiving federal funding have general accessibility obligations under Section 504, but the specific WCAG conformance deadlines from the 2024 rule do not apply to them.
+**ADA Title II** extends accessibility requirements to state and local government entities. A 2024 DOJ final rule set WCAG 2.1 Level AA as the compliance standard. DOJ extended the compliance dates in an [April 2026 interim final rule](https://www.ada.gov/assets/pdfs/2026-ifr.pdf): April 26, 2027 for entities with a total population of 50,000 or more, and April 26, 2028 for those with populations under 50,000 or any special district government. State and local health agencies are covered directly by this rule. Note that these deadlines are specific to Title II public entities; private institutions receiving federal funding have general accessibility obligations under Section 504, but the specific WCAG conformance deadlines from the 2024 rule do not apply to them.
 
 **WCAG 2.2** organizes accessibility requirements around four principles, often abbreviated **POUR**:
 
-- **Perceivable**: Information must be presentable in ways users can perceive, including text alternatives for non-text content
-- **Operable**: Interface components and navigation must be operable, including keyboard navigation and sufficient time to interact
-- **Understandable**: Information and operation must be understandable, including readable text and predictable behavior
-- **Robust**: Content must work with current and future assistive technologies
+- Perceivable: Information must be presentable in ways users can perceive, including text alternatives for non-text content
+- Operable: Interface components and navigation must be operable, including keyboard navigation and sufficient time to interact
+- Understandable: Information and operation must be understandable, including readable text and predictable behavior
+- Robust: Content must work with current and future assistive technologies
 
 WCAG organizes success criteria into three conformance levels: A (minimum), AA (the standard required by Section 508's WCAG 2.0 floor and ADA Title II's WCAG 2.1 rule), and AAA (enhanced). Level AA covers the requirements most organizations face.
 
 ::: {.callout-note}
 ## WCAG versions and backwards compatibility
 
-WCAG 2.0, 2.1, and 2.2 are backwards compatible: meeting 2.2 automatically satisfies 2.1 and 2.0. The most practically relevant additions in 2.2 include minimum touch target sizes (2.5.8) and constraints on cognitive demands during login (3.3.8). For static reports and dashboards, the changes in 2.1 and 2.2 are mostly felt in interactive applications rather than documents.
+WCAG 2.0, 2.1, and 2.2 are backwards compatible: meeting 2.2 automatically satisfies 2.1 and 2.0. The most practically relevant additions in 2.2 include minimum touch target sizes (2.5.8) and constraints on cognitive demands during login (3.3.8). For static reports and dashboards, the changes in 2.1 and 2.2 often concern interactive features.
 :::
 
 ## Alt Text for Figures {#sec-accessibility-alttext}
@@ -59,7 +59,7 @@ ggplot(ili_data, aes(x = week, y = cases, color = region)) +
   theme_minimal()
 ```
 
-Good alt text describes the data, not the chart type. "A line chart" tells a screen reader user almost nothing. "Weekly ILI case counts peak in the Northeast in week 5 at 2,400 cases, then decline through summer" tells them what the chart is about.
+Describe the information the figure conveys, including relevant trends and comparisons. "A line chart" tells a screen reader user almost nothing. "Weekly ILI case counts peak in the Northeast in week 5 at 2,400 cases, then decline through summer" tells them what the chart is about.
 
 A few guidelines:
 
@@ -70,7 +70,7 @@ A few guidelines:
 ::: {.callout-tip}
 ## Generating alt text with Claude Code
 
-Writing good alt text for many figures is tedious. Emil Hvitfeldt developed a Claude Code skill that automates it: given a `.qmd` file, it reads each code chunk, runs the code mentally, and inserts a `fig-alt` option with a descriptive summary. See [this post on adding alt text to Quarto documents with a Claude Code skill](https://blog.stephenturner.us/p/alt-text-quarto-claude-code-skill) for installation instructions and examples.
+Writing good alt text for many figures is tedious. Emil Hvitfeldt developed a Claude Code skill that automates it: given a `.qmd` file, it reads the code and drafts `fig-alt` descriptions. Check each description against the rendered figure and underlying data. See [this post on adding alt text to Quarto documents with a Claude Code skill](https://blog.stephenturner.us/p/alt-text-quarto-claude-code-skill) for installation instructions and examples.
 
 Once installed, the skill is available as a slash command:
 
@@ -253,8 +253,8 @@ Quarto 1.9 introduced experimental support for PDF accessibility standards, buil
 
 Two standards are supported:
 
-- **PDF/UA-1** (Universal Accessibility, first edition): the widely-used baseline standard, supported via Typst
-- **PDF/UA-2** (second edition): a newer standard built on PDF 2.0, supported via LaTeX
+- PDF/UA-1 (Universal Accessibility, first edition): the widely-used baseline standard, supported via Typst
+- PDF/UA-2 (second edition): a newer standard built on PDF 2.0, supported via LaTeX
 
 ### Enabling PDF Standards
 
@@ -300,19 +300,19 @@ Once installed, Quarto runs veraPDF automatically after rendering when `pdf-stan
 ::: {.callout-tip}
 ## Typst vs. LaTeX for accessibility
 
-Typst currently offers better practical PDF accessibility than LaTeX. It validates UA-1 cleanly on typical documents, requires no TeX installation, and is not affected by the margin-content restriction that blocks LaTeX's UA-2 compliance. If accessible PDF output is a priority and you are starting a new document, Typst is worth considering. See [Chapter @sec-reporting] for guidance on Quarto output formats.
+Typst currently offers better practical PDF accessibility than LaTeX. It validates UA-1 cleanly on typical documents, requires no TeX installation, and is not affected by the margin-content restriction that blocks LaTeX's UA-2 compliance. If accessible PDF output is a priority and you are starting a new document, Typst is worth considering. See @sec-reporting for guidance on Quarto output formats.
 :::
 
-## Pulling It Together {#sec-accessibility-checklist}
+## Authoring Workflow {#sec-accessibility-checklist}
 
 Accessibility is easier to build in during authoring than to retrofit after the fact. A practical workflow for a Quarto report:
 
-1. **Write alt text** for every figure using `fig-alt`. Do this when you write the code chunk, not at the end. Consider using the [Claude Code alt text skill](https://blog.stephenturner.us/p/alt-text-quarto-claude-code-skill) to generate first drafts.
-2. **Use an accessible palette**: viridis or a colorblind-safe ColorBrewer palette. Verify by simulating color vision deficiency or viewing in grayscale.
-3. **Structure tables** with captions and descriptive column labels via `gt` or `kable`.
-4. **Check HTML output** with `axe: true` during local preview; resolve flagged violations before publishing.
-5. **Enable `pdf-standard`** for PDF deliverables (`ua-1` for Typst, `ua-2` for LaTeX) and install veraPDF to validate.
-6. **Avoid margin content in LaTeX** if UA-2 compliance is required.
+1. Write alt text for every figure using `fig-alt`. Do this when you write the code chunk, not at the end. Consider using the [Claude Code alt text skill](https://blog.stephenturner.us/p/alt-text-quarto-claude-code-skill) to generate first drafts.
+2. Use an accessible palette: viridis or a colorblind-safe ColorBrewer palette. Verify by simulating color vision deficiency or viewing in grayscale.
+3. Structure tables with captions and descriptive column labels via `gt` or `kable`.
+4. Check HTML output with `axe: true` during local preview; resolve flagged violations before publishing.
+5. Enable `pdf-standard` for PDF deliverables (`ua-1` for Typst, `ua-2` for LaTeX) and install veraPDF to validate.
+6. Avoid margin content in LaTeX if UA-2 compliance is required.
 
 ::: {.callout-note}
 ## Accessibility benefits everyone

@@ -1,12 +1,12 @@
 # Code Style {#sec-style}
 
-Writing code that works is necessary. Writing code that others can read and modify is what makes a team functional over time. As teams grow, people rotate, and analyses are revisited months after they were written, the gap between "it runs" and "anyone can understand and extend it" becomes the gap between a one-time deliverable and a sustainable workflow.
+Consistent code style helps colleagues read, review, and modify an analysis. It also makes your own work easier to revisit months later.
 
-Style conventions close that gap. They are agreements, sometimes explicit and sometimes just accumulated habit, about how code is written: how things are named, where spaces go, how long lines get before they break. None of these decisions affect what the code computes, but all of them affect how quickly a reader can understand it and how cleanly changes show up in version control.
+Style conventions specify how code is written: how things are named, where spaces go, how long lines get before they break. None of these decisions affect what the code computes, but all of them affect how quickly a reader can understand it and how cleanly changes show up in version control.
 
 This chapter covers the [Tidyverse Style Guide](https://style.tidyverse.org/) as the standard for R, the [Air formatter](https://posit-dev.github.io/air/) for automatically applying that standard, and the [`lintr`](https://lintr.r-lib.org/) package for catching issues that a formatter cannot.
 
-Style is one of the conventions a team has to agree on once and then stop arguing about. Recording the choice in the team handbook (@sec-onboarding-conventions), and enforcing it automatically rather than in review comments (@sec-peerreview-mechanics), is what keeps it from becoming a recurring discussion.
+Record the team's style conventions in the handbook (@sec-onboarding-conventions) and automate formatting so reviewers can focus on the analysis (@sec-peerreview-mechanics).
 
 ## The Tidyverse Style Guide {#sec-style-guide}
 
@@ -14,12 +14,12 @@ The [Tidyverse Style Guide](https://style.tidyverse.org/) is the de facto standa
 
 The most important conventions:
 
-- **Names**: use `snake_case`, all lowercase, words separated by underscores. Prefer `flu_cases` over `fluCases` or `FluCases`. Object names should be nouns; function names should be verbs.
-- **Spacing**: put spaces around most operators (`<-`, `+`, `-`, `==`, and others) and after commas. Do not put spaces inside parentheses or before a comma.
-- **Line length**: keep lines to 80 characters or fewer. Long expressions should be broken across lines with consistent indentation.
-- **Indentation**: two spaces per level. Not tabs.
-- **Assignment**: use `<-` for assignment, not `=`.
-- **Pipes**: when chaining multiple operations, put each step on its own line, indented two spaces.
+- Names: use `snake_case`, all lowercase, words separated by underscores. Prefer `flu_cases` over `fluCases` or `FluCases`. Object names should be nouns; function names should be verbs.
+- Spacing: put spaces around most operators (`<-`, `+`, `-`, `==`, and others) and after commas. Do not put spaces inside parentheses or before a comma.
+- Line length: keep lines to 80 characters or fewer. Long expressions should be broken across lines with consistent indentation.
+- Indentation: two spaces per level. Not tabs.
+- Assignment: use `<-` for assignment, not `=`.
+- Pipes: when chaining multiple operations, put each step on its own line, indented two spaces.
 
 The full guide covers function naming, documentation, ggplot2 layering, and much more. It is worth reading once and returning to when questions arise. The key practical point: you do not have to memorize all of it. A formatter handles most of the mechanical rules automatically.
 
@@ -97,7 +97,7 @@ flu_summary <- flu |>
   arrange(desc(total_cases))
 ```
 
-The formatted version is longer in line count but far shorter in reading time. Each transformation appears on its own line, arguments that belong together are grouped, and indentation reflects the structure of the pipeline. When this code appears in a pull request, a reviewer can check each step independently rather than scanning a wall of characters for the one thing that changed.
+The formatted version uses more lines to show the steps separately. Each transformation appears on its own line, arguments that belong together are grouped, and indentation reflects the structure of the pipeline. When this code appears in a pull request, a reviewer can identify which step changed.
 
 ::: {.callout-note}
 Air's configuration lives in an optional `air.toml` file at the project root. The defaults (2-space indentation, 80-character line width) follow the Tidyverse Style Guide and are suitable for most projects. The most common reason to configure `air.toml` is to exclude specific functions from Air's table-formatting behavior, using the `skip` field.
@@ -105,7 +105,7 @@ Air's configuration lives in an optional `air.toml` file at the project root. Th
 
 ## Linting with lintr {#sec-style-lintr}
 
-A formatter handles whitespace. A linter goes further: it reads code statically and flags patterns that are likely wrong or poor style, without running the code and without changing anything. Think of it as a careful reviewer pointing out potential problems for you to decide on.
+A formatter handles whitespace. A linter goes further: it reads code statically and flags patterns that are likely wrong or poor style, without running the code and without changing anything.
 
 The [`lintr`](https://lintr.r-lib.org/) package is the standard linting tool for R. It checks for issues including:
 
@@ -161,7 +161,7 @@ analysis.R:5:27: style: [trailing_blank_lines_linter] Add a terminal newline.
 if (flag == TRUE) print(y)
 ```
 
-Working through these one at a time: `=` for assignment is flagged because `<-` is the R convention and `=` is reserved for function arguments. The missing spaces around `<-` and `*` on the second line are spacing violations. `T` as a shorthand for `TRUE` is flagged because `T` is just a variable that happens to default to `TRUE` and can be overwritten (`T <- 42` is legal R). And `flag == TRUE` is redundant: if `flag` is already a logical value, `if (flag)` says exactly the same thing.
+Working through these one at a time: `=` for assignment is flagged because the style guide prefers `<-` for assignment, although R also permits `=` in this context. The missing spaces around `<-` and `*` on the second line are spacing violations. `T` as a shorthand for `TRUE` is flagged because `T` is just a variable that happens to default to `TRUE` and can be overwritten (`T <- 42` is legal R). And `flag == TRUE` is redundant: if `flag` is already a logical value, `if (flag)` says exactly the same thing.
 
 A second example shows naming convention warnings. Given a file with:
 
